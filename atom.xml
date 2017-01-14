@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-14T09:14:38.000Z</updated>
+  <updated>2017-01-14T09:38:28.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>post</title>
+    <link href="http://yoursite.com/2017/01/14/post/"/>
+    <id>http://yoursite.com/2017/01/14/post/</id>
+    <published>2017-01-14T09:38:28.000Z</published>
+    <updated>2017-01-14T09:38:28.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>2016再见，2017再见。</title>
@@ -545,27 +559,6 @@ umake web visual-studio-code
       <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
     
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>我慶幸我堅持了下來</title>
-    <link href="http://yoursite.com/2016/02/29/1.%E6%88%91%E6%85%B6%E5%B9%B8%E6%88%91%E5%A0%85%E6%8C%81%E4%BA%86%E4%B8%8B%E4%BE%86/"/>
-    <id>http://yoursite.com/2016/02/29/1.我慶幸我堅持了下來/</id>
-    <published>2016-02-28T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　個人網站終於開啦，之前雖然也開過兩次，但是難度遠遠沒有這次的大。也許我是個例吧。<br><br>　　從昨天下午兩三點開始，我邊在網上查資料，邊在linux上安裝部署網站，但是直到晚上3點我還是沒有搞定，昨天最終的進度停留在開啓本地服務階段，並且網頁是有問題的，默認主題下沒有CSS樣式，裝了主題會不會正常我沒有去測試，因爲沒什麼意義，那時候我碰到的問題是本地文件無法同步到Github上，一直報錯。<a id="more"></a>所以本地就算正常了也沒森麼用，根本發佈不了。做到這步的時候已經快3點了，加上前一天也是一兩點睡的，所以就沒有繼續下去，洗漱了一下就睡覺了。<br><br>　　今天7點多又醒過來了，躺倒8點多的時候又起來開始折騰。昨天我試過一堆命令，今天我篩選了一下，挑了幾條感覺有希望成功的，然後重裝系統，如果失敗了接着重裝，接着換命令試，索性今天第一次的時候本地服務開了後頁面顯示正常了，我欣喜若狂。在重裝4遍後，終於能上傳本地文件到Gethub倉庫了，這時候剛好是12點。之後的改主題什麼的就是小事了。<br><br>　　在經歷了快一天的折騰後，最後看着自己的網站上線無疑是值得的。這段時間中我不知道看了多少人的建站方案，硬着頭皮看了一堆英文網站，聽絕望的，差點就打算放棄在windows上建站了，但還好我堅持下來了。我也感受到了，英語真的很重要啊。<br><br>　　第一次用markdown寫東西，不過這篇文章裏我只用了幾個html裏的換行符，markdown語法抽空看一下，手機上的錘子便籤好像也支持markdown，可以拿來練手。<br><br>　　這次因爲沒考慮到做教程，所也沒有記錄下過程，如果我記錄下來了感覺能幫到不少人的忙，但我的博客也沒人來啊，新博客百度谷歌也不會收錄吧。下次折騰什麼了我就記錄下來分享到博客上。我也不清楚這個博客是傾向記錄心情還是記錄我學習成長的過程。積累得多了自然會知道的吧。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　個人網站終於開啦，之前雖然也開過兩次，但是難度遠遠沒有這次的大。也許我是個例吧。&lt;/br&gt;&lt;br&gt;　　從昨天下午兩三點開始，我邊在網上查資料，邊在linux上安裝部署網站，但是直到晚上3點我還是沒有搞定，昨天最終的進度停留在開啓本地服務階段，並且網頁是有問題的，默認主題下沒有CSS樣式，裝了主題會不會正常我沒有去測試，因爲沒什麼意義，那時候我碰到的問題是本地文件無法同步到Github上，一直報錯。
-    
-    </summary>
-    
-    
-      <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
     
   </entry>
   
