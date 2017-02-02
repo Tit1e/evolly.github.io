@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-28T08:22:49.000Z</updated>
+  <updated>2017-02-02T13:43:39.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Javascript循环添加</title>
+    <link href="http://yoursite.com/2017/02/02/22.js_for_temp/"/>
+    <id>http://yoursite.com/2017/02/02/22.js_for_temp/</id>
+    <published>2017-02-02T13:23:03.000Z</published>
+    <updated>2017-02-02T13:43:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>工作中遇到的一种挺好的循环添加列表的方式，用模板，记录一下。<br><br>以前遇到要循环添加相同的元素用的都是字符串拼接的方式，后来工作中遇到了这种方式，发现这个比字符串拼接好用很多，简洁明了。</p>
+<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--目标div--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="comment">&lt;!--模板div,模板所在div不会被复制--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span> <span class="attr">style</span>=<span class="string">"display: none;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>hello,my name is TITLE<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>I'm CONTENT years old!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//模拟后端传过来的json数据</span></div><div class="line"><span class="keyword">var</span> data = &#123;</div><div class="line">    <span class="attr">datali</span>: [&#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl1"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad1"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl2"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad2"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl3"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad3"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl4"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad4"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl5"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad5"</span></div><div class="line">    &#125;]</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> lilength = data.datali.length;</div><div class="line"><span class="keyword">var</span> arr = data.datali;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</div><div class="line">    &lt;!--获取模板div中的html--&gt;</div><div class="line">    <span class="keyword">var</span> tihuan = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>).innerHTML;</div><div class="line">    <span class="xml"><span class="comment">&lt;!--用replace替换模板中要替换的部分，替换顺序最好是先替换长的再替换短的--&gt;</span></span></div><div class="line">    tihuan = tihuan.replace(/TITLE/, arr[i].name)</div><div class="line">        .replace(/CONTENT/, arr[i].age);</div><div class="line">    <span class="comment">&lt;!--创建一个div将修改完成后的代码放进去，再将这个div添加到目标位置--&gt;</span></div><div class="line">    div = document.createElement("div");</div><div class="line">    div.innerHTML = tihuan;</div><div class="line">    document.getElementById("div").appendChild(div);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注：模板中只能用class不能使用id。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;工作中遇到的一种挺好的循环添加列表的方式，用模板，记录一下。&lt;br&gt;&lt;br&gt;以前遇到要循环添加相同的元素用的都是字符串拼接的方式，后来工作中遇到了这种方式，发现这个比字符串拼接好用很多，简洁明了。&lt;/p&gt;
+&lt;h3 id=&quot;HTML&quot;&gt;&lt;a href=&quot;#HTML&quot; class=&quot;headerlink&quot; title=&quot;HTML&quot;&gt;&lt;/a&gt;HTML&lt;/h3&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!--目标div--&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;div&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!--模板div,模板所在div不会被复制--&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;test&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;style&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;display: none;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;hello,my name is TITLE&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;I&#39;m CONTENT years old!&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>原生Javascript实现鼠标拖拽div</title>
+    <link href="http://yoursite.com/2017/02/02/21.js_mouse_drag/"/>
+    <id>http://yoursite.com/2017/02/02/21.js_mouse_drag/</id>
+    <published>2017-02-02T12:38:03.000Z</published>
+    <updated>2017-02-02T13:42:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>鼠标拖拽是一种常见的js效果，下面贴一下原生js的实现方法。<br><br>注：第一段段js代码来自网络，第二段是在第一段基础上改进实现的。由于时间太久找不到出处，侵删。<br><br>先贴上一张对象和窗口之间距离的示意图方便理解，下文中也有注释。</p>
+<p><center><img src="https://cloud.githubusercontent.com/assets/17524418/22550750/7f157632-e98c-11e6-9d76-79e0ffb08e6c.gif"></center><br><a id="more"></a></p>
+<h3 id="HTML代码"><a href="#HTML代码" class="headerlink" title="HTML代码"></a>HTML代码</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"move"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="CSS代码"><a href="#CSS代码" class="headerlink" title="CSS代码"></a>CSS代码</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">html</span>,<span class="selector-tag">body</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">    <span class="attribute">position</span>: relative;</div><div class="line">    <span class="attribute">overflow</span>: hidden;</div><div class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#move</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">background-color</span>: <span class="number">#ddd</span>;</div><div class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#000</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">z-index</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Javascript代码"><a href="#Javascript代码" class="headerlink" title="Javascript代码"></a>Javascript代码</h3><h4 id="可以将元素拖拽出窗口外"><a href="#可以将元素拖拽出窗口外" class="headerlink" title="可以将元素拖拽出窗口外"></a>可以将元素拖拽出窗口外</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// clientX 设置或获取鼠标指针位置相对于当前窗口的 x 坐标，其中客户区域不包括窗口自身的控件和滚动条。 </span></div><div class="line"><span class="comment">// clientY 设置或获取鼠标指针位置相对于当前窗口的 y 坐标，其中客户区域不包括窗口自身的控件和滚动条。 </span></div><div class="line"><span class="comment">// offsetX 设置或获取鼠标指针位置相对于触发事件的对象的 x 坐标。 </span></div><div class="line"><span class="comment">// offsetY 设置或获取鼠标指针位置相对于触发事件的对象的 y 坐标。 </span></div><div class="line"><span class="comment">// screenX 设置或获取获取鼠标指针位置相对于用户屏幕的 x 坐标。 </span></div><div class="line"><span class="comment">// screenY 设置或获取鼠标指针位置相对于用户屏幕的 y 坐标。 </span></div><div class="line"><span class="comment">// x 设置或获取鼠标指针位置相对于父文档的 x 像素坐标(亦即相对于当前窗口)。 </span></div><div class="line"><span class="comment">// y 设置或获取鼠标指针位置相对于父文档的 y 像素坐标(亦即相对于当前窗口)。</span></div><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">"move"</span>);</div><div class="line">    move.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> e = e || event;</div><div class="line">        <span class="built_in">console</span>.log(e);</div><div class="line">        <span class="keyword">var</span> target = e.target || e.srcElement;</div><div class="line">        <span class="keyword">var</span> disX = e.clientX - target.offsetLeft;</div><div class="line">        <span class="keyword">var</span> disY = e.clientY - target.offsetTop;</div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            target.style.left = e.clientX - disX + <span class="string">"px"</span>;</div><div class="line">            target.style.top = e.clientY - disY + <span class="string">"px"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="built_in">document</span>.onmousemove = <span class="literal">null</span>;</div><div class="line">            <span class="built_in">document</span>.onmousedown = <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="无法将元素拖拽出窗口"><a href="#无法将元素拖拽出窗口" class="headerlink" title="无法将元素拖拽出窗口"></a>无法将元素拖拽出窗口</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">"move"</span>);</div><div class="line">    move.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> e = e || event;</div><div class="line">        <span class="keyword">var</span> target = e.target || e.srcElement;</div><div class="line">        <span class="keyword">var</span> disX = e.clientX - target.offsetLeft;</div><div class="line">        <span class="keyword">var</span> disY = e.clientY - target.offsetTop;</div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            target.style.left = e.clientX - disX + <span class="string">"px"</span>;</div><div class="line">            target.style.top = e.clientY - disY + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">if</span> (target.offsetLeft + target.offsetWidth &gt;= <span class="built_in">document</span>.body.clientWidth) &#123;</div><div class="line">                target.style.left = <span class="built_in">document</span>.body.clientWidth - target.offsetWidth + <span class="string">"px"</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (target.offsetLeft &lt; <span class="number">0</span>) &#123;</div><div class="line">                target.style.left = <span class="number">0</span> + <span class="string">"px"</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (target.offsetTop + target.offsetHeight &gt;= <span class="built_in">document</span>.body.clientHeight) &#123;</div><div class="line">                target.style.top = <span class="built_in">document</span>.body.clientHeight - target.offsetHeight + <span class="string">"px"</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (target.offsetTop &lt; <span class="number">0</span>) &#123;</div><div class="line">                target.style.top = <span class="number">0</span> + <span class="string">"px"</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="built_in">document</span>.onmousemove = <span class="literal">null</span>;</div><div class="line">            <span class="built_in">document</span>.onmousedown = <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;鼠标拖拽是一种常见的js效果，下面贴一下原生js的实现方法。&lt;br&gt;&lt;br&gt;注：第一段段js代码来自网络，第二段是在第一段基础上改进实现的。由于时间太久找不到出处，侵删。&lt;br&gt;&lt;br&gt;先贴上一张对象和窗口之间距离的示意图方便理解，下文中也有注释。&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/22550750/7f157632-e98c-11e6-9d76-79e0ffb08e6c.gif&quot;&gt;&lt;/center&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>2017年计划</title>
@@ -108,9 +161,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -164,9 +217,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -193,9 +246,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -248,9 +301,9 @@
     
       <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -294,11 +347,11 @@
     </summary>
     
     
+      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
+    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
-    
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
   </entry>
   
@@ -332,9 +385,9 @@
     
       <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -357,9 +410,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -412,9 +465,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -525,63 +578,6 @@
     
     
       <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu下安裝 Visual Studio Code</title>
-    <link href="http://yoursite.com/2016/03/14/3.Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%9D-Visual-Studio-Code/"/>
-    <id>http://yoursite.com/2016/03/14/3.Ubuntu下安裝-Visual-Studio-Code/</id>
-    <published>2016-03-13T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　 昨天在寫eOS的使用體驗的時候，無意間發現VS Code在linux可以用，於是寫完博客後就立馬去安裝VSC，但是照着網上的教程，安裝過程中還是遇到了不少的問題。所以我總結了下，希望能幫到有需要的人。<br>　　<br>　　 <strong>我的系統是elementary OS，不過是基於Ubuntu的，所以安裝方法相同</strong><br>　　 <a id="more"></a><br>　　 <strong>Ubuntu Make安裝Visual Studio Code</strong><br>　　 首先使用PPA方式安裝ubuntu-make</p>
-<pre><code>sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make
-sudo apt-get update
-sudo apt-get install ubuntu-make
-umake web visual-studio-code
-</code></pre><p>　　第四步安裝過程中會讓你確認兩次，第一次是讓你確認安裝目錄，你可以隨意更改，第二次的時候輸入a，回車就行，之後就等待下載安裝完成。如果運氣好的話，安裝按成後啓動器裏應該會出現VSC的圖標。</p>
-<center><img src="https://cloud.githubusercontent.com/assets/17524418/13726698/8984851a-e90e-11e5-8979-cc6a31b36e00.png" alt="enter image description here"></center><br>　　但如果你的臉也和我一樣黑，沒出現的話，沒關係，進入/home/tit1e/.local/share/applications/（系統有區別路徑也可能不一樣，找不到可以直接搜文件夾），你會發現這裏是有圖標的，你可以試着運行它，我發現我無法運行。用編輯器打開它，你會看到如下代碼<br><br>        <pre><code>[Desktop Entry]<br>        Version=1.0<br>        Type=Application<br>        Name=Visual Studio Code<br>        Icon=/home/tit1e/visual-studio-code/resources/app/resources/linux/code.png<br>        Exec=/home/tit1e/visual-studio-code/Code //把Code改成你安裝目錄下這個文件的名字，我目錄下的名字是code，文件名是分大小寫的哦<br>        Comment=Visual Studio focused on modern web and cloud<br>        Categories=Development;IDE;<br>        Terminal=false</code></pre><br>　　這時候你再試着運行試試，你會發現可以打開了。<br>　　至於啓動器的圖標無法顯示，你把這個圖標剪切到其他目錄下，在剪切回來就會顯示了。以上是我的安裝方法。只是這樣安裝的VSC不出現在右鍵運行方式的列表裏，所以打開文檔只能通過VSC內部的open打開。<br>　　<br>　　<strong>下載壓縮包安裝Visual Studio Code</strong><br>　　首先去<a href="https://code.visualstudio.com/" target="_blank" rel="external">官網</a>下載VSC的zip壓縮包，下載下來後解壓到你想安裝的目錄。<br>　　然後在啓動器目錄下創建visualstudiocode.desktop文件，名字可以隨意，就是啓動其中顯示的名字。<br>　　用編輯器打開這個文件，添加如下代碼<br><br>        <pre><code>[Desktop Entry]<br>        Version=1.0<br>        Type=Application<br>        Name=Visual Studio Code<br>        Icon=/home/tit1e/visual-studio-code/resources/app/resources/linux/code.png  //圖標路徑，在解壓的文件夾下的/resources/app/resources/linux/目錄下<br>        Exec=/home/tit1e/visual-studio-code/Code  //解壓目錄下code文件的路徑<br>        Comment=Visual Studio focused on modern web and cloud<br>        Categories=Development;IDE;<br>        Terminal=false</code></pre><br>　　接下來保存退出文件，文件夾中就多了一個VSC圖標了，如果圖標不顯示，同樣剪切到其他目錄再剪切回來就OK。<br>　　請盡情使用吧：)<br>　　<center><img src="https://cloud.githubusercontent.com/assets/17524418/13726700/9a1c261c-e90e-11e5-8b88-e1ca351ca37c.png" alt="enter image description here"></center>
-
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　 昨天在寫eOS的使用體驗的時候，無意間發現VS Code在linux可以用，於是寫完博客後就立馬去安裝VSC，但是照着網上的教程，安裝過程中還是遇到了不少的問題。所以我總結了下，希望能幫到有需要的人。&lt;br&gt;　　&lt;br&gt;　　 &lt;strong&gt;我的系統是elementary OS，不過是基於Ubuntu的，所以安裝方法相同&lt;/strong&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
-    
-      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-      <category term="ubuntu" scheme="http://yoursite.com/tags/ubuntu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Elementary OS使用體驗</title>
-    <link href="http://yoursite.com/2016/03/13/2.elementaryos%E4%BD%BF%E7%94%A8%E9%AB%94%E9%A9%97/"/>
-    <id>http://yoursite.com/2016/03/13/2.elementaryos使用體驗/</id>
-    <published>2016-03-12T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><center><img src="https://cloud.githubusercontent.com/assets/17524418/13726468/a7485ca8-e903-11e5-9b4d-f65a8e09d0b3.png" alt="enter image description here"></center><br><strong>系統信息</strong><br><a href="https://elementary.io" target="_blank" rel="external">elementary OS 0.3.2 Freya (64-bit)</a>基于 Ubuntu 14.04 构建</p>
-<p><strong>硬件信息</strong><br>ThinkPad x201<br>處理器：四核 Intel® Core™ i5 CPU       M 540  @ 2.53GHz<br>內存：4GB（實際可用3.7GB）<br>顯卡：Intel Corporation Core Processor Integrated Graphics Controller (rev 02)<br>硬盤：朗科128G固態硬盤<br><a id="more"></a><br>　　使用elementary OS已經不是第一次，剛接觸linux系統的時候，百度了挺久，最後選擇了大多數人都推薦的ubuntu，但是由於界面無法忍受，外加當時對linux沒什麼概念，安裝了沒多久就刪了。之後的後場一段時間都沒有再碰linux。<br>　　後來在一次逛軟件網站的時候，偶然發現了eOS，一下子被它的標題吸引了：<a href="http://www.iplaysoft.com/elementary-os.html" target="_blank" rel="external">Elementary OS 中文版 - 号称最漂亮的 Linux 系统！</a>Ps：我在找這個網址的時候突然發現微軟的<a href="https://code.visualstudio.com/" target="_blank" rel="external">Visual Studio Code</a>竟然在linux下也能用，當初只是有瞭解到VSC免費開源了，但那時候沒注意到跨平臺，現在想想我折騰編輯器到底在幹嘛，有這 等神器不用，畢竟在windows下已經習慣了。回到正題，作爲顏值黨，看到最漂亮立馬就被吸引了，然後看了下簡介，還有介紹視頻，覺得不錯，於是又撿起linux開始折騰了，當然那時候折騰也主要在系統的美化方面，裝主題，改圖標，改頂欄透明度什麼的，其實就是爲閒的，或者說爲了顯示自己的特例獨行，而且那時候windows下的美化已經被我折騰得差不多了，所以就像嘗試下新鮮的事物。於是當天我就把系統下載下來開始折騰了。<br>　　當時的eOS系統還是Luna，而不是現在的Freya。Luna折騰幾次後我也放棄過，之後Freya出來後我又折騰過，總之前前後後一共折騰了有五六次，直到現在。<br>　　迴歸正題中的整體，談談這段時間的使用感受，這小黑是我專門從鹹魚上淘來來折騰系統的，到手第二天就買了塊固態換上了。固態還是新的，流暢度暫時沒問題，就是不知道這固態經不經得住考驗，當然這和系統關係不大。因爲eOS基於ubuntu，所以應用相對來說還是不缺的，和windows就另當別論了。ubuntu的教程百度谷歌也較多，出了問題查詢比較方便。eOS從Luna以來bug從來沒斷過，這是不可避免的，雖然一直有問題，但我還是愛eOS。現在的0.3.2版本我也遇到了不少bug，比如桌面壁紙都無法自定義……這真的是有點過分了吧……比如終端第一個窗口無法在中dock顯示，要打開第二個新窗口纔會顯示兩個窗口，再比如有時候切換窗口會閃屏，畫面撕裂，這可能是電腦配置低的原因也說不定，還不確定是不是bug。<br>　　雖然有bug但對使用體驗影響不大，現在除了沒QQ不是怎麼方便，其他沒什麼大問題，雖然討厭QQ，但是沒有確實不方便，至少傳文件QQ方便太多。微信有網頁版，chrome應用商店也有微信，問題不大。上上網，看看在線視頻，寫寫博客已經足夠可，電腦也夠用了，反正玩不了遊戲，至於辦公有WPS，不過我也用不到，所以對我來說這足夠了。<br>　　對要求不是特別高的用戶來說，eOS是一個兼顧實用與美觀的系統，雖然會有小問題，但並不影響，至於不穩定，一般人不會去開服務器，會開服務器的人也不會去用eOS，而且我這段時間使用下來也沒有出現不穩定的情況。<br>　　總之elementary OS是一個值得你一試的系統。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;center&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/13726468/a7485ca8-e903-11e5-9b4d-f65a8e09d0b3.png&quot; alt=&quot;enter image description here&quot;&gt;&lt;/center&gt;&lt;br&gt;&lt;strong&gt;系統信息&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://elementary.io&quot;&gt;elementary OS 0.3.2 Freya (64-bit)&lt;/a&gt;基于 Ubuntu 14.04 构建&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;硬件信息&lt;/strong&gt;&lt;br&gt;ThinkPad x201&lt;br&gt;處理器：四核 Intel® Core™ i5 CPU       M 540  @ 2.53GHz&lt;br&gt;內存：4GB（實際可用3.7GB）&lt;br&gt;顯卡：Intel Corporation Core Processor Integrated Graphics Controller (rev 02)&lt;br&gt;硬盤：朗科128G固態硬盤&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
-    
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
   </entry>
   
