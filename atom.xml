@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-02T12:11:07.000Z</updated>
+  <updated>2017-03-02T12:16:40.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/03/02/23.Interview-%20summary/"/>
     <id>http://yoursite.com/2017/03/02/23.Interview- summary/</id>
     <published>2017-03-02T09:29:32.000Z</published>
-    <updated>2017-03-02T12:11:07.000Z</updated>
+    <updated>2017-03-02T12:16:40.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天去参加了一次前端的面试，这是我转行以来遇到的第二次面试。第一次面试都没问什么技术上的问题，问了一些基本情况就进了公司。这次是我遇到的比较正规的面试了，吧？因为实在没有经历过几次面试，也不好判断什么。自我觉得今天表现得不是很好，问得的确挺基础，但是工作中关注点都在实现功能上了，基础的东西的确有些淡忘。趁现在还有记忆做下总结。<br><a id="more"></a></p>
 <h3 id="工作中用到的HTML5的新特性"><a href="#工作中用到的HTML5的新特性" class="headerlink" title="工作中用到的HTML5的新特性"></a>工作中用到的HTML5的新特性</h3><p>这个还真把我问住了，平时经常把HTML5挂嘴边，但是真要我说出点东西来我还真说不出来。查了下资料，发现其实很多东西在工作中是有用到的，但是我并不知道这是HTML5才添加进去。比如各类标签:<code>&lt;header&gt;</code>、<code>&lt;footer&gt;</code>、<code>&lt;nav&gt;</code>、<code>&lt;video&gt;</code>等。<br><br><a href="http://www.voidcn.com/blog/rh57b1f7/article/p-6394442.html" target="_blank" rel="external">参考资料（不完全）</a></p>
@@ -36,7 +36,7 @@
 <p>304(未修改)自从上次请求后，请求的网页未修改过。服务器返回此响应时，不会返回网页内容。</p>
 </blockquote>
 <p><a href="http://knowledge.300176.net/http/28544841114576550071.html" target="_blank" rel="external">参考资料</a></p>
-<h3 id="jQuery中的-function-和window-onload-function-有什么区别"><a href="#jQuery中的-function-和window-onload-function-有什么区别" class="headerlink" title="jQuery中的$(function(){})和window.onload=function(){}有什么区别"></a>jQuery中的$(function(){})和window.onload=function(){}有什么区别</h3><p>这个我因为当初有过这个疑问，所以查过资料有印象，jQuery是不用等到页面完全加载完成就可以开始执行，而window.onload不行。<br><a href="http://www.jb51.net/article/21628.htm" target="_blank" rel="external">参考资料</a></p>
+<h3 id="jQuery中的-function-和window-onload-function-有什么区别"><a href="#jQuery中的-function-和window-onload-function-有什么区别" class="headerlink" title="jQuery中的$(function(){})和window.onload=function(){}有什么区别"></a>jQuery中的$(function(){})和window.onload=function(){}有什么区别</h3><p>这个我因为当初有过这个疑问，所以查过资料有印象，jQuery是不用等到页面完全加载完成就可以开始执行，而window.onload不行。<br><br>当然还有其他区别，比如window.onload只能写一个，而jQuery的写法可以写很多个。<br><a href="http://www.jb51.net/article/21628.htm" target="_blank" rel="external">参考资料</a></p>
 <p>我现在记得的就这些了，可能还有遗漏，剩下的都是关于我个人情况的一些问题，不再多说。</p>
 ]]></content>
     
