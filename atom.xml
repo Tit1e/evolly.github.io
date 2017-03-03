@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-03T06:02:37.000Z</updated>
+  <updated>2017-03-03T13:05:16.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>apply和call的区别</title>
+    <link href="http://yoursite.com/2017/03/03/25.apply-and-call/"/>
+    <id>http://yoursite.com/2017/03/03/25.apply-and-call/</id>
+    <published>2017-03-03T12:01:15.000Z</published>
+    <updated>2017-03-03T13:05:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天看原生js的时候看到了<code>call</code>和<code>apply</code>,对这两个方法印象不是很清楚，只记得这两个方法很相似，作用大概是让A通过<code>call</code>或<code>apply</code>能够调用B独有的方法，但是具体的使用方法已经模糊，所以网上查了资料重新理了一遍。<br><br>先看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Createpeople</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">            <span class="keyword">this</span>.name = name;</div><div class="line">            <span class="keyword">this</span>.age = age;</div><div class="line">        &#125;</div><div class="line">Createpeople.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Hello!My name is '</span> + <span class="keyword">this</span>.name);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> Amy = <span class="keyword">new</span> Createpeople(<span class="string">'Amy'</span>, <span class="number">18</span>);</div><div class="line">Amy.say();  <span class="comment">//Hello!My name is Amy</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> john = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'john'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="number">20</span></div><div class="line">        &#125;</div><div class="line">john.say();  <span class="comment">//john.say is not a function</span></div><div class="line">Amy.say.call(john);  <span class="comment">//Hello!My name is john</span></div><div class="line">Amy.say.apply(john);  <span class="comment">//Hello!My name is john</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p><code>Createpeople</code>是一个构造函数，并且在原型中写入了一个<code>say</code>方法。我们用<code>Createpeople</code>创造了<code>Amy</code>对象，所以<code>Amy</code>理所当然地可以调用<code>say</code>方法。而<code>john</code>是我们手动创建的一个对象，所以<code>john</code>调用<code>say</code>方法理所应当会报错。那么如何让<code>john</code>能够调用<code>say</code>方法呢？那就要通过<code>call</code>方法或<code>apply</code>方法了。通过<code>Amy.say.call(john)</code>，从输出结果来看<code>john</code>正确的调用了<code>say</code>方法,<code>apply</code>也同样。</p>
+<p>为什么呢？原因就在于<code>call</code>和<code>apply</code>在调用的时候会传入一个调用对象，即<code>this</code>，它们能将原来不指向传入对象的函数的<code>this</code>强行指向传入对象。可能这样说不是很明白，下面我来解释一下：</p>
+<p>在其他方法执行的时候会默认传入一个调用对象，比如在<code>Amy</code>调用<code>say</code>方法的时候，默认传入的调用对象为<code>Amy</code>，<code>say</code>方法作为<code>Amy</code>的一部分正常情况下因为正常情况下<code>this</code>只能指向<code>Amy</code>，但是通过<code>call</code>和<code>apply</code>方法能让<code>say</code>方法的<code>this</code>强行指向传入的<code>john</code>，<code>this</code>变成了<code>john</code>，理所当然，<code>say</code>方法就能正常执行了。</p>
+<h4 id="那么call和apply有什么区别呢？"><a href="#那么call和apply有什么区别呢？" class="headerlink" title="那么call和apply有什么区别呢？"></a><strong>那么<code>call</code>和<code>apply</code>有什么区别呢？</strong></h4><p>区别在于<strong>参数</strong>的传入方式不同。<br>举个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">console</span>.log(a + b);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sub</span>(<span class="params">c, d</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">console</span>.log(c - d);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">sub.apply(add, [<span class="number">2</span>, <span class="number">3</span>]);  <span class="comment">//-1</span></div><div class="line">sub.call(add, <span class="number">2</span>, <span class="number">3</span>);  <span class="comment">//-1</span></div><div class="line">add.apply(sub, [<span class="number">1</span>, <span class="number">2</span>]);  <span class="comment">//3</span></div><div class="line">add.call(sub, <span class="number">1</span>, <span class="number">2</span>);  <span class="comment">//3</span></div></pre></td></tr></table></figure></p>
+<p><code>call</code>方法参数是一个一个传的，而<code>apply</code>方法，除了<code>this</code>，其他参数是用数组的方式传的。<br>由于<code>apply</code>传数组这个特点，我们可以很方便地对数组进行某些操作，比如拼接两个数组：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> list1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> list2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</div><div class="line">[].push.apply(list1, list2);  <span class="comment">//6</span></div><div class="line"><span class="built_in">console</span>.log(list1);  <span class="comment">//[1, 2, 3, 4, 5, 6]</span></div></pre></td></tr></table></figure></p>
+<p><code>push</code>方法可以传很多参数，但是不能传数组，正常情况下凭借数组只能够通过循环一个一个添加，但是<code>apply</code>正好需要把多饿传入的参数打包成数组，所以正好满足了条件。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天看原生js的时候看到了&lt;code&gt;call&lt;/code&gt;和&lt;code&gt;apply&lt;/code&gt;,对这两个方法印象不是很清楚，只记得这两个方法很相似，作用大概是让A通过&lt;code&gt;call&lt;/code&gt;或&lt;code&gt;apply&lt;/code&gt;能够调用B独有的方法，但是具体的使用方法已经模糊，所以网上查了资料重新理了一遍。&lt;br /&gt;&lt;br&gt;先看代码：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Createpeople&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;name, age&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Createpeople.prototype.say = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;Hello!My name is &#39;&lt;/span&gt; + &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; Amy = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Createpeople(&lt;span class=&quot;string&quot;&gt;&#39;Amy&#39;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Amy.say();  &lt;span class=&quot;comment&quot;&gt;//Hello!My name is Amy&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; john = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;john&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;age&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;john.say();  &lt;span class=&quot;comment&quot;&gt;//john.say is not a function&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Amy.say.call(john);  &lt;span class=&quot;comment&quot;&gt;//Hello!My name is john&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Amy.say.apply(john);  &lt;span class=&quot;comment&quot;&gt;//Hello!My name is john&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>一个前端面试题引发的思考</title>
@@ -228,9 +258,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -284,9 +314,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -313,9 +343,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -366,9 +396,9 @@
     </summary>
     
     
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
       <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
     
@@ -414,9 +444,9 @@
     </summary>
     
     
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
@@ -452,9 +482,9 @@
     
       <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
   </entry>
   
@@ -477,9 +507,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -532,9 +562,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -572,29 +602,6 @@
     <summary type="html">
     
       &lt;center&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/16709379/0a955360-4642-11e6-92fc-d105e79c6af6.jpeg&quot; style=&quot;border:0px;&quot;&gt;&lt;/center&gt;&lt;br&gt;　　前天去看了期待了挺久的《大鱼海棠》。&lt;br&gt;&lt;br&gt;　　定档发佈会后一直期待着《大鱼海棠》上映，可真正看完了，又有点失落，感觉心里少了点什麽东西，大概这下真的没什麽电影可以期待了。至少暂时是这样。到现在爲止，只有两部电影有让我想去电影院看的衝动。一部是《哆啦A梦：伴我同行》，另一部就是《大鱼海棠》了。现在，心愿都了了。&lt;br&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>喝完这瓶酒 下城再无三捞</title>
-    <link href="http://yoursite.com/2016/06/15/6.%E5%96%9D%E5%AE%8C%E9%80%99%E7%93%B6%E9%85%92%20%E4%B8%8B%E5%9F%8E%E5%86%8D%E7%84%A1%E4%B8%89%E6%92%88/"/>
-    <id>http://yoursite.com/2016/06/15/6.喝完這瓶酒 下城再無三撈/</id>
-    <published>2016-06-14T16:00:00.000Z</published>
-    <updated>2017-02-20T13:12:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　这是我一个大学同学的一条朋友圈，称作K（king of face）好了<br><br><br>　　今天他回去了。<br></p>
-<center><br><img src="https://cloud.githubusercontent.com/assets/17524418/16083728/b13ef5d4-3348-11e6-8642-542f148d26d6.jpg" alt="图片已丢失"><br></center><br><a id="more"></a><br>　　一年前的这个时候，我们还在爲实习单位发愁，之后爲租房子发愁。大学时K是504寝室，我是506寝室，我们两个寝室因爲LOL一直保持著联系，当然其中也有另一位室友J的功劳。找实习单位那会儿，他和我的一个室友F成爲了同事，他们因爲同是台州人而被录取。之后K和F就开始一起找房子合租，一起生活。双捞就在那时候形成了。<br><br><br>第三捞的形成也算个巧合，我实习后不久504的另一位成员G也来杭州了。本以爲失业的他突然收到了很多人梦寐以求的公司的电话，不久后就来杭州找我，那时候我已经在萧山开始实习有一阵子，房子也找好了。他在我这里呆了有三四天（可能有一两天误差），来的时候他基本已经被录取了，然后他去找了房子，找房子的时候顺便去看公司位置，结果一下车就看到了K和F的公司，而且G的公司就在他们公司对面。下城三捞就这么诞生了。<br><br><br>实习的一年就这么过去了，一年前的场景我还能清晰地记起，一年后已物是人非，我那批实习生祗剩下了我，公司的主任也换了，如今三捞不再有，心里总觉得有点失落。但这是迟早的，就像当初我们对学校有多么不捨，除了校门，不还是照样生活么。<br><br><br>这一年里，我去下城不知道有没有10次，应该差不多，一般去那都是装系统去的。刚开始实习的时候，K和F被轮流派去了工地先是F，天天在工地放綫，K那时候一个人，经常跑去女同学租的地方进行交流，也挺快活。之后去了工地，爲了和我们开黑经常是走好久的路去网吧。后来，工地的活做完了，K也正式回来了，<br>K和F终于过上了正常的生活，一起上班，一起下班，一起吃饭，互相BB，一起被我们BB，当然对于F来说这当然不是正常的，毕竟有女朋友的人。G那时候也经常往他们那边跑，一起吹吹牛，互相伤害。<br><br><br>　　后来F女朋友和F一起合租，K搬去了隔壁的房间一个人住。那时候G早就搬了房子，不过纸是小区里换了幢楼而已。<br><br>之前我们在K创建的讨论组里成天BB，你黑我，我黑你，一天记录能有几十页，后来我建了一个群，转移了阵地，但热闹依旧。K和F整天在群里开著群嘲，结果往往是被集火。哪怕现在也是。<br><br><br>　　再后来，我们要毕业了。<br><br><br>　　我看了一下QQ群，这货已经在家里了，又开始嘲讽，这东西就是欠打。<br><br><br><center><br><img src="https://cloud.githubusercontent.com/assets/17524418/16083111/6af3357e-3346-11e6-865a-e8d6ba353ced.jpg" alt="图片已丢失"><br></center><br><br>　　他回去还能开心地和我们装逼就好，那证明他还是那个他。<br><br><br>　　6月23号，好像是给我们下的最后的通牒。<br><br><br>　　之后，各奔天涯。<br><br><br><br><br><br><br><br><br><br>　　其实我还是很在意他没请我吃到饭。<br><br><br><center><br><img src="https://cloud.githubusercontent.com/assets/17524418/16083953/7b734404-3349-11e6-9df3-f172bbd7f1aa.jpg" alt="图片已丢失"><br></center><br><center><br><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=5330992&auto=1&height=66"></iframe><br></center>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　这是我一个大学同学的一条朋友圈，称作K（king of face）好了&lt;/br&gt;&lt;/br&gt;&lt;br&gt;　　今天他回去了。&lt;/br&gt;&lt;/p&gt;
-&lt;center&gt;&lt;br&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/16083728/b13ef5d4-3348-11e6-8642-542f148d26d6.jpg&quot; alt=&quot;图片已丢失&quot;&gt;&lt;br&gt;&lt;/center&gt;&lt;br&gt;
     
     </summary>
     
