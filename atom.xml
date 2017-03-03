@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-02T12:16:40.000Z</updated>
+  <updated>2017-03-03T06:02:37.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一个前端面试题引发的思考</title>
+    <link href="http://yoursite.com/2017/03/03/24.code_majorization/"/>
+    <id>http://yoursite.com/2017/03/03/24.code_majorization/</id>
+    <published>2017-03-03T05:12:09.000Z</published>
+    <updated>2017-03-03T06:02:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨晚群上有个小伙伴扔出了一个前端面试题，内容是这样的：</p>
+<blockquote>
+<p>写个js函数func(str)，传参str为一个字符串，实现把这个字符串语句中的单词（空格隔开的）次序逆序。比如把 I am a coder变成 coder a am I，不允许使用reverse，join，substring，split。</p>
+</blockquote>
+<a id="more"></a>
+<p>如果没有附加条件实现起来很容易，当然加了条件做出这题也不是很难。这都不是重点。重点是我从这个题引发出来的想法，当然这些想法只代表我个人。<br><br>昨晚看到题目的时候手上没有电脑，所以不了了之，今天就做了一下。<br><br>我写完后的代码是下面这个样子的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">str2</span>(<span class="params">str</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> arr = [];</div><div class="line">            <span class="keyword">var</span> words = <span class="string">''</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; length = str.length, i &lt; length; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (str[i] != <span class="string">" "</span> &amp;&amp; i != length - <span class="number">1</span>) &#123;</div><div class="line">                    words += str[i];</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (str[i] === <span class="string">" "</span>) &#123;</div><div class="line">                    arr.unshift(words);</div><div class="line">                    arr.unshift(str[i]);</div><div class="line">                    words = <span class="string">""</span>;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (str[i] != <span class="string">" "</span> &amp;&amp; i === length - <span class="number">1</span>) &#123;</div><div class="line">                    words += str[i];</div><div class="line">                    arr.unshift(words);</div><div class="line">                    words = <span class="string">""</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">var</span> result = <span class="string">""</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; length2 = arr.length, j &lt; length2; j++) &#123;</div><div class="line">                result += arr[j];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>我的思路是循环传入的字符串，然后根据空格开分割字符串，将空格之间的单词拼成新的小字符串，然后添加到一个数组中，空格单独添加为一个数组元素，最后循环数组，将数组中的元素拼成一个新的字符串。<br><br>然后我将自己的代码发到了群上，然后有个人默默的发了个自己的代码的截图出来，看到后我愣了一下，第一反应是：这么短？！然后看了下他的思路，自己敲了一遍，没啥毛病。<br><br>这是他的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">strr</span>(<span class="params">start</span>) </span>&#123;</div><div class="line">            <span class="keyword">let</span> temp = <span class="string">''</span>;</div><div class="line">            <span class="keyword">let</span> re = <span class="string">''</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; start.length; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (start[i] !== <span class="string">' '</span>) &#123;</div><div class="line">                    temp = temp + start[i];</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    re = temp + <span class="string">' '</span> + re;</div><div class="line">                    temp = <span class="string">''</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            re = temp + <span class="string">' '</span> + re;</div><div class="line">            <span class="keyword">return</span> re;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>他的思路和我差不多，也是根据空格判断，但他是遇到空格直接拼成字符串了，而不是像我一样要经过数组，所以就少了一个循环，节省了时间。<br><br>虽然两个函数在字符串较短的情况下运行时间差不多，但是一旦字符串变长或者处理大量字符串的时候，运行速度上的差距就会体现出来。我觉得这不是代码能力上的问题，而是思维上的问题。实现一个效果、功能可以有很多种方法，但是能立马想到用一种比较好的方法就不是每个人能做到的了。这就需要拓展自己的思维，多看别人的代码，从别人的代码中学习他人的思维，或者不断地积累，从项目中总结。<br><br><strong>仍需努力,你我共勉。</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;昨晚群上有个小伙伴扔出了一个前端面试题，内容是这样的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;写个js函数func(str)，传参str为一个字符串，实现把这个字符串语句中的单词（空格隔开的）次序逆序。比如把 I am a coder变成 coder a am I，不允许使用reverse，join，substring，split。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="前端总结" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
   
   <entry>
     <title>面试总结</title>
@@ -197,9 +228,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -253,9 +284,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -282,9 +313,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -335,9 +366,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
     
@@ -383,9 +414,9 @@
     </summary>
     
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
@@ -421,9 +452,9 @@
     
       <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -446,9 +477,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -501,9 +532,9 @@
     </summary>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -564,30 +595,6 @@
     
       &lt;p&gt;　　这是我一个大学同学的一条朋友圈，称作K（king of face）好了&lt;/br&gt;&lt;/br&gt;&lt;br&gt;　　今天他回去了。&lt;/br&gt;&lt;/p&gt;
 &lt;center&gt;&lt;br&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/16083728/b13ef5d4-3348-11e6-8642-542f148d26d6.jpg&quot; alt=&quot;图片已丢失&quot;&gt;&lt;br&gt;&lt;/center&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谢谢你们的陪伴</title>
-    <link href="http://yoursite.com/2016/04/06/5.%E8%AC%9D%E8%AC%9D%E4%BD%A0%E5%80%91%E7%9A%84%E9%99%AA%E4%BC%B4/"/>
-    <id>http://yoursite.com/2016/04/06/5.謝謝你們的陪伴/</id>
-    <published>2016-04-05T16:00:00.000Z</published>
-    <updated>2017-02-20T13:11:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　今天在网上刷刷刷的时候,突然看到和田光司去世的消息，一查才知道原来四月三号就去世了。<br><a id="more"></a><br>　　对和田光司这个人并不是很熟悉，但是他的歌对我这个年龄段的人来说肯定是再熟悉不过了。《Butter-Fly》，每次听到总是会让我振奋，在bilibili看有关这首歌视频（包括以这首歌作为背景音乐的视频）的时候，唱到高潮部分，总是满屏的大无限，虽然我不是很懂，我也没特地去查过这种现象，但是每次看到满屏的大无限我总是会觉得震撼，起一身的鸡皮疙瘩。《数码宝贝》小时候看的并不多，熟悉的也就两首歌，一首是《Butter-Fly》，另一首是数码宝贝进化时的BGM，宫崎步的《brave heart》。《数码宝贝》在我童年中占的比例非常小，小时候家裡没条件，电视频道是用天线搜的，遇到恶劣天气信号还会特别的差，经常还要人工去调整天线的方向，所以那时候我对动画片基本上也没什麽挑剔，有的看就看，但现在想想《数码宝贝》的剧情真的没记住多少，电视画面印象中也没多少，其他动画倒是有挺深的印象。但很庆幸童年时的动画片是那麽丰富，《哆啦A梦》，《四驱兄弟》，《魔动王》，《高智能方程式》，《阿拉蕾》，《七龙珠》，《聪明的一休》，《灌篮高手》，就算国产的当时好的动画也有一堆，《蓝猫淘气三千问》，《马丁的造成》，《鸭子侦探》，《哪吒传奇》，《小虎还乡》，还有《快乐星球》，《家有儿女》这样的电视剧，简直太多了，还有太多我看过记不起名字的。而现在呢，《喜羊羊与灰太狼》这个相对现在来说已经算是老动画了吧，05年出的，我初中的时候火得一塌糊涂，智障的浙江卫视在暑假的时候天天播，播完一轮又一轮。清明回家，外甥女嚷嚷著要看动画片，我打开电视一看，热门的都是……抱歉我好想就记得一个《超级飞侠》(熊出没，喜洋洋，小魔仙之类我自然认识），一看造型，怎麽这麽像铁胆火车侠的造型，其他还有一堆动画，看过忘了，当然我现在对这个已经不上心，记不住也很正常，但这些动画基本都是3D製作的，国产3D动画就算备受好评的《秦时明月》我看著动作也很难受，更不用说这些他们想著给小孩子看的动画了。当然国漫现在也在发展，今年也有不少不错的国漫要出来，但是这些精品国漫基本上都不是幼儿园小学那个年龄段看的，而且这些动漫也基本只会在网络上播，一般的小孩根本接触不到，有了电脑肯定也是以游戏为主。我十分不想我外甥女，还有我未来的小孩在这样的环境下长大，但是你就算推荐自认为好看的动画给现在的小孩看，他们根本融不进小伙伴的圈子。是在是无奈。</p>
-<p>　　最后，致那些在我们童年给我们鼓励，带给我们难忘回忆的动画。</p>
-<p><center><img src="https://cloud.githubusercontent.com/assets/17524418/14389734/93c3175c-fde6-11e5-89c5-18edb09f7d77.jpg" alt="Alt text"></center></p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=4940920&auto=1&height=66"></iframe>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　今天在网上刷刷刷的时候,突然看到和田光司去世的消息，一查才知道原来四月三号就去世了。&lt;br&gt;
     
     </summary>
     
