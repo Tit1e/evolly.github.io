@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-07T11:33:31.000Z</updated>
+  <updated>2017-03-07T11:34:50.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,17 +20,18 @@
     <link href="http://yoursite.com/2017/03/07/28.jsNote3/"/>
     <id>http://yoursite.com/2017/03/07/28.jsNote3/</id>
     <published>2017-03-07T02:00:35.000Z</published>
-    <updated>2017-03-07T11:33:31.000Z</updated>
+    <updated>2017-03-07T11:34:50.000Z</updated>
     
     <content type="html"><![CDATA[<h4 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h4><ul>
 <li><p>对象</p>
 <ul>
 <li>对象拥有多个属性，用逗号隔开，并且最后一个属性后面不能加逗号</li>
-<li>访问对象属性的方法有两种，用<code>.</code>和用<code>[‘XXX’]</code><ul>
+<li><p>访问对象属性的方法有两种，用<code>.</code>和用<code>[‘XXX’]</code></p>
+<ul>
 <li>例：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="string">'first name'</span> : <span class="string">'Chen'</span>,  <span class="comment">//这种情况下属性名要用字符串形式</span></div><div class="line">    age : <span class="number">10</span></div><div class="line">&#125;</div><div class="line">obj.age;  <span class="comment">//10</span></div><div class="line">obj[<span class="string">'first name'</span>];  <span class="comment">//"Chen"</span></div><div class="line"><span class="comment">//方括号形式可以用变量来取值</span></div><div class="line"><span class="keyword">var</span> firstName = <span class="string">'first name'</span>;</div><div class="line">obj[firstName];  <span class="comment">//"Chen"</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
+<a id="more"></a></li>
 </ul>
 </li>
 <li><p>数组</p>
@@ -131,7 +132,11 @@
 &lt;li&gt;&lt;p&gt;对象&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;对象拥有多个属性，用逗号隔开，并且最后一个属性后面不能加逗号&lt;/li&gt;
-&lt;
+&lt;li&gt;&lt;p&gt;访问对象属性的方法有两种，用&lt;code&gt;.&lt;/code&gt;和用&lt;code&gt;[‘XXX’]&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例：&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; obj = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&#39;first name&#39;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&#39;Chen&#39;&lt;/span&gt;,  &lt;span class=&quot;comment&quot;&gt;//这种情况下属性名要用字符串形式&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    age : &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;obj.age;  &lt;span class=&quot;comment&quot;&gt;//10&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;obj[&lt;span class=&quot;string&quot;&gt;&#39;first name&#39;&lt;/span&gt;];  &lt;span class=&quot;comment&quot;&gt;//&quot;Chen&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//方括号形式可以用变量来取值&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; firstName = &lt;span class=&quot;string&quot;&gt;&#39;first name&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;obj[firstName];  &lt;span class=&quot;comment&quot;&gt;//&quot;Chen&quot;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
