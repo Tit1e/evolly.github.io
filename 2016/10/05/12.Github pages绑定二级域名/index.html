@@ -1,2 +1,242 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Github绑定自定义二级域名 · I'm Tit1e</title><meta name="description" content="Github绑定自定义二级域名 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="I'm Tit1e"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Github绑定自定义二级域名</h1><div class="post-info">2016年10月5日</div><div class="post-content"><p>　　网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资料，自己已经摸索成功了。下面贴上方法。<br><br>　　我用的是阿里云，所以下面就一阿里云的为例子。<br><br><a id="more"></a><br>　　首先进入github的项目主页，切换到你项目文件所在的分支[我的项目是一个网页，所以项目在gh-pages上]，然后点击Create new file新建一个文件。<br><img src="https://cloud.githubusercontent.com/assets/17524418/19103334/d3407294-8b08-11e6-929d-bc15c3716c5e.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"><br>　　名字命名为CNAME，内容填上自定义的裸二级域名，注意不要加http/https协议。保存。<br><br><img src="https://cloud.githubusercontent.com/assets/17524418/19103034/09dd6d68-8b07-11e6-85dd-c5c45280c4b1.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"><br>然后进入阿里云的控制台，点击已解析的域名进入域名控制台，可以看到你之前解析的域名，点击添加解析，记录类型选择A，主机记录选择之前新建的CNAME文件中填写的域名的前缀，如我之前填的是demo.tit1e.xyz，那么在主机记录只需填demo，记录值则填你的主机IP，然后确认，等待几分钟就可以访问了。时长根据运营商不同也会不一样。<br><img src="https://cloud.githubusercontent.com/assets/17524418/19103336/d3a77728-8b08-11e6-8b0d-068bef2a488f.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2016/10/06/13.ubuntu16.04网易云托盘图标显示出做及微信应用分享/" class="prev">PREV</a><a href="/2016/10/04/11.git克隆远程仓库进行修改提交/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://yoursite.com">Tit1e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github绑定自定义二级域名">
+<meta property="og:url" content="http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/index.html">
+<meta property="og:site_name" content="I'm Tit1e">
+<meta property="og:description" content="网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/17524418/19103334/d3407294-8b08-11e6-929d-bc15c3716c5e.jpeg">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/17524418/19103034/09dd6d68-8b07-11e6-85dd-c5c45280c4b1.jpeg">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/17524418/19103336/d3a77728-8b08-11e6-8b0d-068bef2a488f.jpeg">
+<meta property="og:updated_time" content="2017-01-14T09:14:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Github绑定自定义二级域名">
+<meta name="twitter:description" content="网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/17524418/19103334/d3407294-8b08-11e6-929d-bc15c3716c5e.jpeg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Github绑定自定义二级域名</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/10/06/13.ubuntu16.04网易云托盘图标显示出做及微信应用分享/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/10/04/11.git克隆远程仓库进行修改提交/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&text=Github绑定自定义二级域名"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&is_video=false&description=Github绑定自定义二级域名"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Github绑定自定义二级域名&body=Check out this article: http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&name=Github绑定自定义二级域名&description=&lt;p&gt;　　网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资料，自己已经摸索成功了。下面贴上方法。&lt;br&gt;&lt;br&gt;　　我用的是阿里云，所以下面就一阿里云的为例子。&lt;br&gt;&lt;br&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Github绑定自定义二级域名
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">I'm Tit1e</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-10-04T16:00:00.000Z" itemprop="datePublished">2016-10-05</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/git/">git</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>　　网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资料，自己已经摸索成功了。下面贴上方法。<br><br>　　我用的是阿里云，所以下面就一阿里云的为例子。<br><br><a id="more"></a><br>　　首先进入github的项目主页，切换到你项目文件所在的分支[我的项目是一个网页，所以项目在gh-pages上]，然后点击Create new file新建一个文件。<br><img src="https://cloud.githubusercontent.com/assets/17524418/19103334/d3407294-8b08-11e6-929d-bc15c3716c5e.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"><br>　　名字命名为CNAME，内容填上自定义的裸二级域名，注意不要加http/https协议。保存。<br><br><img src="https://cloud.githubusercontent.com/assets/17524418/19103034/09dd6d68-8b07-11e6-85dd-c5c45280c4b1.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"><br>然后进入阿里云的控制台，点击已解析的域名进入域名控制台，可以看到你之前解析的域名，点击添加解析，记录类型选择A，主机记录选择之前新建的CNAME文件中填写的域名的前缀，如我之前填的是demo.tit1e.xyz，那么在主机记录只需填demo，记录值则填你的主机IP，然后确认，等待几分钟就可以访问了。时长根据运营商不同也会不一样。<br><img src="https://cloud.githubusercontent.com/assets/17524418/19103336/d3a77728-8b08-11e6-8b0d-068bef2a488f.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&text=Github绑定自定义二级域名"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&is_video=false&description=Github绑定自定义二级域名"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Github绑定自定义二级域名&body=Check out this article: http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&title=Github绑定自定义二级域名"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/&name=Github绑定自定义二级域名&description=&lt;p&gt;　　网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资料，自己已经摸索成功了。下面贴上方法。&lt;br&gt;&lt;br&gt;　　我用的是阿里云，所以下面就一阿里云的为例子。&lt;br&gt;&lt;br&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Tit1e
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

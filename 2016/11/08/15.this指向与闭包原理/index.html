@@ -1,4 +1,141 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> this指向与闭包原理 · I'm Tit1e</title><meta name="description" content="this指向与闭包原理 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="I'm Tit1e"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">this指向与闭包原理</h1><div class="post-info">2016年11月8日</div><div class="post-content"><p>　　今天理解两个难点，闭包和<code>this</code>指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。<br><br>　　先说下<code>this</code>指向问题：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"The Window"</span>;</div><div class="line">　　<span class="keyword">var</span> object = &#123;</div><div class="line">　　　　<span class="attr">name</span> : <span class="string">"My Object"</span>,</div><div class="line">　　　　<span class="attr">getNameFunc</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　　　<span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">　　　　　　&#125;;</div><div class="line">　　　　&#125;</div><div class="line">　　&#125;;</div><div class="line">　　<span class="built_in">console</span>.log(object.getNameFunc()());<span class="comment">//The Window</span></div><div class="line">        <span class="built_in">console</span>.log(object.getNameFunc();</div><div class="line">  <span class="comment">//  function()&#123;</span></div><div class="line">　<span class="comment">//　　　　return function()&#123;</span></div><div class="line">　<span class="comment">//　　　　　　return this.name;</span></div><div class="line">　<span class="comment">//　　　　&#125;;</span></div></pre></td></tr></table></figure></p>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="今天理解两个难点，闭包和this指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。　　先说下this指向问题：123456789101112131415var name = &quot;The Window&quot;;　　var object = &amp;#123;　　　　name : &quot;My Object&quot;,　　　　getNameFunc : function()&amp;#123;　　　　　　retur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this指向与闭包原理">
+<meta property="og:url" content="http://yoursite.com/2016/11/08/15.this指向与闭包原理/index.html">
+<meta property="og:site_name" content="I'm Tit1e">
+<meta property="og:description" content="今天理解两个难点，闭包和this指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。　　先说下this指向问题：123456789101112131415var name = &quot;The Window&quot;;　　var object = &amp;#123;　　　　name : &quot;My Object&quot;,　　　　getNameFunc : function()&amp;#123;　　　　　　retur">
+<meta property="og:updated_time" content="2017-01-14T09:14:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="this指向与闭包原理">
+<meta name="twitter:description" content="今天理解两个难点，闭包和this指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。　　先说下this指向问题：123456789101112131415var name = &quot;The Window&quot;;　　var object = &amp;#123;　　　　name : &quot;My Object&quot;,　　　　getNameFunc : function()&amp;#123;　　　　　　retur">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>this指向与闭包原理</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/11/13/16.这不是书评/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/11/07/14.Ajax发送请求获取数据/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/11/08/15.this指向与闭包原理/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&text=this指向与闭包原理"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&is_video=false&description=this指向与闭包原理"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=this指向与闭包原理&body=Check out this article: http://yoursite.com/2016/11/08/15.this指向与闭包原理/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&name=this指向与闭包原理&description=&lt;p&gt;　　今天理解两个难点，闭包和&lt;code&gt;this&lt;/code&gt;指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。&lt;br&gt;&lt;br&gt;　　先说下&lt;code&gt;this&lt;/code&gt;指向问题：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; name = &lt;span class=&quot;string&quot;&gt;&quot;The Window&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; object = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　&lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;My Object&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　&lt;span class=&quot;attr&quot;&gt;getNameFunc&lt;/span&gt; : &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　　　&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　　　　　&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　　　&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(object.getNameFunc()());&lt;span class=&quot;comment&quot;&gt;//The Window&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(object.getNameFunc();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//  function()&amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　&lt;span class=&quot;comment&quot;&gt;//　　　　return function()&amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　&lt;span class=&quot;comment&quot;&gt;//　　　　　　return this.name;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　&lt;span class=&quot;comment&quot;&gt;//　　　　&amp;#125;;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;　　学习闭包的时候这段代码看得我很懵，想不清楚为什么this是指向window的。那么我们先了解一下&lt;code&gt;this&lt;/code&gt;指向问题。&lt;br&gt;&lt;br&gt;　　&lt;code&gt;this&lt;/code&gt;的指向在函数定义的时候是确定不了的，&lt;strong&gt;只有函数执行的时候才能确定&lt;/strong&gt;&lt;code&gt;this&lt;/code&gt;到底指向谁，实际上&lt;code&gt;this&lt;/code&gt;的最终指向的是&lt;code&gt;this&lt;/code&gt;所在函数的&lt;strong&gt;上一级对象&lt;/strong&gt;。&lt;br&gt;&lt;br&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        this指向与闭包原理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">I'm Tit1e</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-11-08T14:42:43.000Z" itemprop="datePublished">2016-11-08</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>　　今天理解两个难点，闭包和<code>this</code>指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。<br><br>　　先说下<code>this</code>指向问题：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"The Window"</span>;</div><div class="line">　　<span class="keyword">var</span> object = &#123;</div><div class="line">　　　　<span class="attr">name</span> : <span class="string">"My Object"</span>,</div><div class="line">　　　　<span class="attr">getNameFunc</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　　　<span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">　　　　　　&#125;;</div><div class="line">　　　　&#125;</div><div class="line">　　&#125;;</div><div class="line">　　<span class="built_in">console</span>.log(object.getNameFunc()());<span class="comment">//The Window</span></div><div class="line">        <span class="built_in">console</span>.log(object.getNameFunc();</div><div class="line">  <span class="comment">//  function()&#123;</span></div><div class="line">　<span class="comment">//　　　　return function()&#123;</span></div><div class="line">　<span class="comment">//　　　　　　return this.name;</span></div><div class="line">　<span class="comment">//　　　　&#125;;</span></div></pre></td></tr></table></figure></p>
 <p>　　学习闭包的时候这段代码看得我很懵，想不清楚为什么this是指向window的。那么我们先了解一下<code>this</code>指向问题。<br><br>　　<code>this</code>的指向在函数定义的时候是确定不了的，<strong>只有函数执行的时候才能确定</strong><code>this</code>到底指向谁，实际上<code>this</code>的最终指向的是<code>this</code>所在函数的<strong>上一级对象</strong>。<br><br><a id="more"></a><br>　　上面这句话非常重要，这是<code>this</code>非常重要的特点：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">this</span>.x = <span class="number">1</span>;<span class="comment">//给对象写入属性x=1,如果this指向全局，则表示创建全局对象x=1</span></div><div class="line">　　　　<span class="built_in">console</span>.log(<span class="keyword">this</span>.x);</div><div class="line">　　&#125;</div><div class="line">　　test(); <span class="comment">// 1</span></div><div class="line">    x;  <span class="comment">//1</span></div></pre></td></tr></table></figure></p>
 <p>　　如果这不够直观，那么换种更加直观的写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">this</span>.x = <span class="number">0</span>; <span class="comment">//表示将this指向的对象中的x的值修改为0</span></div><div class="line">　　&#125;</div><div class="line">　　test();</div><div class="line">　　<span class="built_in">console</span>.log(x); <span class="comment">//0，证明全局中声明的x值被修改了，说明this指向window</span></div></pre></td></tr></table></figure></p>
 <p>　　上面是直接在全局调用函数，<code>this</code>指向<code>window</code>对象，函数还可以作为对象的方法调用，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="built_in">console</span>.log(<span class="keyword">this</span>.x);</div><div class="line">　　&#125;</div><div class="line">　　<span class="keyword">var</span> o = &#123;&#125;;</div><div class="line">　　o.x = <span class="number">1</span>; <span class="comment">//此时o = &#123;x:1&#125;</span></div><div class="line">　　o.m = test; <span class="comment">// 此时o = &#123;x:1,m:test&#125;</span></div><div class="line">　　o.m(); <span class="comment">// 1 说明test执行的时候this指向的是o这个对象，所以才能获取到x</span></div></pre></td></tr></table></figure></p>
@@ -7,4 +144,105 @@
 <p>　　这样看下来后应该对<code>this</code>的指向有一个基本的了解了。接下来说闭包：<br><br>　　文章开头引用的代码其实就是一个闭包，是我在看阮一峰闭包博客的时候看到的代码，开始是想了解闭包的，接过被带偏跑去看<code>this</code>指向了。<br><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> n=<span class="number">999</span>;</div><div class="line">　　　　<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　alert(n);</div><div class="line">　　　　&#125;</div><div class="line">　　　　<span class="keyword">return</span> f2;</div><div class="line">　　&#125;</div><div class="line">　　<span class="keyword">var</span> result=f1();</div><div class="line">　　result(); <span class="comment">// 999</span></div></pre></td></tr></table></figure></p>
 <p>　　将<code>f2</code>返回出来后，<code>f2</code>处于全局环境中，但是由于Js是静态作用域，变量的作用域在声明的时候就已经确定并且不会再改变，所以<code>f2</code>函数执行的时候作用域还是<code>f1</code>，因此<code>f2</code>在全局环境下执行的时候还是可以访问到<code>f1</code>中的变量，而<code>f2</code>执行后返回的值，由于<code>f2</code>处于全局变量，所以返回出来的值也在全局环境中，但是返回后这个值一直存在于全局环境中，而这个值的存在依赖于<code>f2</code>，<code>f2</code>又依赖于外部的<code>f1</code>，所以<code>f1</code>函数在调用完成后不会被内存回收机制回收，一直存在于内存中。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> n=<span class="number">999</span>;</div><div class="line">　　　　nAdd=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;n+=<span class="number">1</span>&#125;</div><div class="line">　　　　<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　alert(n);</div><div class="line">　　　　&#125;</div><div class="line">　　　　<span class="keyword">return</span> f2;</div><div class="line">　　&#125;</div><div class="line">　　<span class="keyword">var</span> result=f1();</div><div class="line">　　result(); <span class="comment">// 999</span></div><div class="line">　　nAdd();</div><div class="line">　　result(); <span class="comment">// 1000</span></div></pre></td></tr></table></figure></p>
 <p>　　上面代码中<code>f1</code>函数调用了两次，返回的结果都是正常的，说明<code>var n = 999;</code>一直在内存中，如果被回收了那么第二次调用的时候局部变量n就应该无法被访问到。<br>　　参考链接：<a href="http://www.codeceo.com/article/javascript-this-pointer.html" target="_blank" rel="external">码农社</a>　<a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html" target="_blank" rel="external">Javascript的this用法</a>　<a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="external">学习Javascript闭包（Closure）</a></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2016/11/13/16.这不是书评/" class="prev">PREV</a><a href="/2016/11/07/14.Ajax发送请求获取数据/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://yoursite.com">Tit1e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/11/08/15.this指向与闭包原理/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&text=this指向与闭包原理"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&is_video=false&description=this指向与闭包原理"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=this指向与闭包原理&body=Check out this article: http://yoursite.com/2016/11/08/15.this指向与闭包原理/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&title=this指向与闭包原理"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/08/15.this指向与闭包原理/&name=this指向与闭包原理&description=&lt;p&gt;　　今天理解两个难点，闭包和&lt;code&gt;this&lt;/code&gt;指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。&lt;br&gt;&lt;br&gt;　　先说下&lt;code&gt;this&lt;/code&gt;指向问题：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; name = &lt;span class=&quot;string&quot;&gt;&quot;The Window&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; object = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　&lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;My Object&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　&lt;span class=&quot;attr&quot;&gt;getNameFunc&lt;/span&gt; : &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　　　&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　　　　　&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　　　&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　　　&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　　&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(object.getNameFunc()());&lt;span class=&quot;comment&quot;&gt;//The Window&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(object.getNameFunc();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//  function()&amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　&lt;span class=&quot;comment&quot;&gt;//　　　　return function()&amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　&lt;span class=&quot;comment&quot;&gt;//　　　　　　return this.name;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;　&lt;span class=&quot;comment&quot;&gt;//　　　　&amp;#125;;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;　　学习闭包的时候这段代码看得我很懵，想不清楚为什么this是指向window的。那么我们先了解一下&lt;code&gt;this&lt;/code&gt;指向问题。&lt;br&gt;&lt;br&gt;　　&lt;code&gt;this&lt;/code&gt;的指向在函数定义的时候是确定不了的，&lt;strong&gt;只有函数执行的时候才能确定&lt;/strong&gt;&lt;code&gt;this&lt;/code&gt;到底指向谁，实际上&lt;code&gt;this&lt;/code&gt;的最终指向的是&lt;code&gt;this&lt;/code&gt;所在函数的&lt;strong&gt;上一级对象&lt;/strong&gt;。&lt;br&gt;&lt;br&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Tit1e
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
