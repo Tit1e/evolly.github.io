@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-23T00:59:42.000Z</updated>
+  <updated>2017-05-31T13:48:00.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>端午游记</title>
+    <link href="http://yoursite.com/2017/05/31/29.%E4%BD%A0%E7%9C%8B%E9%82%A3%E7%89%87%E6%98%9F%E7%A9%BA/"/>
+    <id>http://yoursite.com/2017/05/31/29.你看那片星空/</id>
+    <published>2017-05-31T11:56:09.000Z</published>
+    <updated>2017-05-31T13:48:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>二十五日和同事一起去滨江的彩虹跑道相约跑步，跑完同事问我端午露营去吗？他说起的那一刻我非常心动，但想了想要回家，我还是拒绝了。第二天，我挣扎了好久还是决定去。因为觉得自己的生活实在太无聊，两点一线。<br><a id="more"></a><br>龙哥说他要去拍星空，这才是驱使我去的真正原因。我真的很喜欢星空啊！小时候天黑了，村子里也就黑了，天上还有很多的星星，但是现在天黑了，灯还亮着，星星都不见了。</p>
+<p>曾经用 <strong>星灯亦是心灯</strong> 做过很长时间的网名。高中的时候喜欢听《星星点灯》，天上的星星也是我心中的明灯，这就是那个名字的来历。后来网名换了，换成了 <strong>evollyone</strong>、<strong>Tit1e</strong>，但我最喜欢的还是 <strong>星灯亦是心灯</strong> 。</p>
+<p>我心中的明灯未曾灭过。</p>
+<p>晚上九点多的时候，星星已经升起，但是由于露营地的照明灯太亮，站在下面只看得到稀疏的几颗星星。于是我和龙哥便一同登上天池大坝。1000米的海拔和200阶阶梯，登上大坝时已经气喘吁吁。一抬头，星星不再稀疏，北斗七星悬在头顶。这是我见过最美的星空。</p>
+<p>十一点多的时候再次登坝，星星更密了，银河已从东边升起。架起拍星轨的相机后，我们一行人去了旁边拍照玩。</p>
+<p>我望着头顶的星空，想着如果你在我旁边和我一同抬头仰望这片星空那该有多好。你望着星空，我望着你，透过你的眼睛感受你眼里温柔的星空。我的眼里，有星空，有你。</p>
+<p>于是，我以星空为背景，写下了你的名字。</p>
+<center><br><br><img src="http://opzfmbyhp.bkt.clouddn.com/2017-05-31-%E6%98%9F%E8%BD%A8%E5%89%AF%E6%9C%AC.jpg" alt=""><br><br></center>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;二十五日和同事一起去滨江的彩虹跑道相约跑步，跑完同事问我端午露营去吗？他说起的那一刻我非常心动，但想了想要回家，我还是拒绝了。第二天，我挣扎了好久还是决定去。因为觉得自己的生活实在太无聊，两点一线。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>关于消费观</title>
@@ -1017,31 +1044,6 @@
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>响应式页面的简单实现</title>
-    <link href="http://yoursite.com/2016/08/31/9.%E5%93%8D%E5%BA%94%E5%BC%8F%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://yoursite.com/2016/08/31/9.响应式页面的简单实现/</id>
-    <published>2016-08-30T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p></p><h1 id="响应式网页设计"><a href="#响应式网页设计" class="headerlink" title="响应式网页设计"></a>响应式网页设计</h1><blockquote><p></p>
-<p>响应式网页设计（英语：Responsive web design，通常缩写为RWD），或称自适应网页设计、回应式网页设计、对应式网页设计。 是一种网页设计的技术做法，该设计可使网站在多种浏览设备（从桌面电脑显示器到移动电话或其他移动产品设备）上阅读和导航，同时减少缩放、平移和滚动。——摘自维基百科</p><br></blockquote><br><a id="more"></a><br><a id="more"></a><br><h1 id="响应式网站的简单实现"><a href="#响应式网站的简单实现" class="headerlink" title="响应式网站的简单实现"></a>响应式网站的简单实现</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">“viewport”</span> <span class="attr">content</span>=<span class="string">“</span><br><span class="line">    width=device-width, </span><br><span class="line">    initial-scale=1.0,</span><br><span class="line">    user-scalable=no</span><br><span class="line">“</span> /&gt;</span></span><br></pre></td></tr></table></figure><br><p>上述代码是对<strong>viewport</strong>的设置，&lt;meta&gt;标签嵌套在&lt;head&gt;标签中。<br><br><strong>“width=device-width”</strong> 属性是设置页面宽度为设备宽度。<br><br><strong>“initial-scale=1.0”</strong> 属性是设置页面缩放比例为1.0，即正常大小。<br><br><strong>“user-scalable=no”</strong>  属性是设置禁止用户手动缩放页面大小，因为响应式网站一般在不同设备都能正常显示网站内容，所以一般不需要用户手动缩放。<br><br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/<em>设备屏幕宽度大于所设的最小宽度时，使用该样式</em>/</span></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width:)&#123;</span><br><span class="line">    <span class="comment">/<em>CSS样式</em>/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/<em>设备屏幕宽度小于于所设的最大宽度时，使用该样式</em>/</span></span><br><span class="line">@<span class="keyword">media</span> screen and (max-width:)&#123;</span><br><span class="line">    <span class="comment">/<em>CSS样式</em>/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/<em>设备屏幕宽度在所设宽度区间内时，使用该样式</em>/</span></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width:) and (max-width:)&#123;</span><br><span class="line">    <span class="comment">/<em>CSS样式</em>/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><br><p><strong>注：”@media”需写在CSS样式中，并且要放在一般显示样式之后，只有当一般显示样式不适配的时候才会匹配@media中的样式。</strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;h1 id=&quot;响应式网页设计&quot;&gt;&lt;a href=&quot;#响应式网页设计&quot; class=&quot;headerlink&quot; title=&quot;响应式网页设计&quot;&gt;&lt;/a&gt;响应式网页设计&lt;/h1&gt;&lt;blockquote&gt;&lt;/p&gt;
-&lt;p&gt;响应式网页设计（英语：Responsive web design，通常缩写为RWD），或称自适应网页设计、回应式网页设计、对应式网页设计。 是一种网页设计的技术做法，该设计可使网站在多种浏览设备（从桌面电脑显示器到移动电话或其他移动产品设备）上阅读和导航，同时减少缩放、平移和滚动。——摘自维基百科&lt;/p&gt;&lt;br&gt;&lt;/blockquote&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
