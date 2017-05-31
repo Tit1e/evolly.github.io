@@ -17,8 +17,8 @@
   
   <entry>
     <title>你快看那片星空</title>
-    <link href="http://yoursite.com/2017/05/31/29.%E4%BD%A0%E7%9C%8B%E9%82%A3%E7%89%87%E6%98%9F%E7%A9%BA/"/>
-    <id>http://yoursite.com/2017/05/31/29.你看那片星空/</id>
+    <link href="http://yoursite.com/2017/05/31/29.The_starry_sky%20/"/>
+    <id>http://yoursite.com/2017/05/31/29.The_starry_sky /</id>
     <published>2017-05-31T11:56:09.000Z</published>
     <updated>2017-05-31T13:49:09.000Z</updated>
     
@@ -1039,11 +1039,11 @@
     </summary>
     
     
+      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
       <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
