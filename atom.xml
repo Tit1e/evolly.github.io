@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-16T09:51:50.000Z</updated>
+  <updated>2017-07-16T09:52:45.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/07/16/30.mobile_web_footer/"/>
     <id>http://yoursite.com/2017/07/16/30.mobile_web_footer/</id>
     <published>2017-07-16T09:20:28.000Z</published>
-    <updated>2017-07-16T09:51:50.000Z</updated>
+    <updated>2017-07-16T09:52:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>在写移动端的网页应用的时候经常会遇到底部导航，或者说是底部菜单。而当触发虚拟键盘的时候，底部的导航会被顶起来，遮挡住网页内容。定位方法对此也并不管用。我这有两种解决方式（都基于jQuery）。<br><a id="more"></a><br>第一种：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  这种方法的思路是，当输入框获得焦点的时候，就隐藏，失去焦点就显示</span></div><div class="line">$(<span class="string">'input[type=text],textarea'</span>).focus(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'footer'</span>).hide();</div><div class="line">&#125;)</div><div class="line">$(<span class="string">'input[type=text],textarea'</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'footer'</span>).show();</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
@@ -37,6 +37,10 @@
     
     </summary>
     
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
