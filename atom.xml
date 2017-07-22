@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-16T09:52:45.000Z</updated>
+  <updated>2017-07-22T13:28:58.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,9 +16,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>一些工作中常用到的代码(二)</title>
+    <link href="http://yoursite.com/2017/07/22/30.work-tips2/"/>
+    <id>http://yoursite.com/2017/07/22/30.work-tips2/</id>
+    <published>2017-07-22T12:11:41.000Z</published>
+    <updated>2017-07-22T13:28:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="jQuery操作单选、复选框选中状态"><a href="#jQuery操作单选、复选框选中状态" class="headerlink" title="jQuery操作单选、复选框选中状态"></a>jQuery操作单选、复选框选中状态</h2><p>工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 <code>checked</code> 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//修改选中状态</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>,<span class="literal">true</span>);<span class="comment">//选中</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>,<span class="literal">false</span>);<span class="comment">//取消选中</span></div><div class="line"><span class="comment">//判断是否选中</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>);</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="使用FormData对象异步传输-form-表单数据"><a href="#使用FormData对象异步传输-form-表单数据" class="headerlink" title="使用FormData对象异步传输 form 表单数据"></a>使用FormData对象异步传输 form 表单数据</h2><p>我们工作中有时候会遇到表单需要用 AJAX 的方式传输，但是如果遇到表单元素数量比较多的情况，获取表单的数据内容会占据大量的时间，而 formData 可以将表单中的数据像提交表单那样将表单中的数据“打包”，然后通过 AJAX 传输。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"uploadForm"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- code... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">url</span>: <span class="string">'/upload'</span>,</div><div class="line">        <span class="attr">type</span>: <span class="string">'POST'</span>,</div><div class="line">        <span class="attr">cache</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">data</span>: <span class="keyword">new</span> FormData($(<span class="string">'#uploadForm'</span>)[<span class="number">0</span>]),</div><div class="line">        <span class="attr">processData</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">contentType</span>: <span class="literal">false</span></div><div class="line">    &#125;).done(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line"></div><div class="line">    &#125;).fail(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line"></div><div class="line">    &#125;);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意点</strong></p>
+<ul>
+<li><code>processData</code> 设置为 <code>false</code>。因为 <code>data</code> 值是 <code>FormData</code> 对象，不需要对数据做处理。</li>
+<li><code>\<form></form></code> 标签添加 <code>enctype=”multipart/form-data”</code> 属性。</li>
+<li><code>cache</code> 设置为 <code>false</code>，上传文件不需要缓存。</li>
+<li><code>contentType</code> 设置为<code>false</code>。因为是由 <code>\<form></form></code> 表单构造的 <code>FormData</code>对象，且已经声明了属性 <code>enctype=”multipart/form-data”</code>，所以这里设置为 <code>false</code>。<h2 id="使网页文字无法被选中"><a href="#使网页文字无法被选中" class="headerlink" title="使网页文字无法被选中"></a>使网页文字无法被选中</h2>给 html 标签加上 <code>onselectstart=”return false”</code> 就可以实现<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onselectstart</span>=<span class="string">"return false"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="不让-input-输入框显示历史输入记录"><a href="#不让-input-输入框显示历史输入记录" class="headerlink" title="不让 input 输入框显示历史输入记录"></a>不让 input 输入框显示历史输入记录</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">autocomplete</span>=<span class="string">"off"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="layDate日期插件，样式发生错位"><a href="#layDate日期插件，样式发生错位" class="headerlink" title="layDate日期插件，样式发生错位"></a>layDate日期插件，样式发生错位</h2><p>layDate日期插件在与 bootstrap 一起使用的时候，layDate的日期选择框按钮会发生错位的现象，在layDate的 css 文件中加入一下几行样式可解决：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.laydate_box</span>, <span class="selector-class">.laydate_box</span> * &#123;</div><div class="line">    <span class="attribute">box-sizing</span>:content-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="代码触发-change-事件"><a href="#代码触发-change-事件" class="headerlink" title="代码触发 change 事件"></a>代码触发 change 事件</h2><p>有些时候，我们希望用代码触发change事件，可以直接调用无参数的 <code>change()</code>方法来触发该事件</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;jQuery操作单选、复选框选中状态&quot;&gt;&lt;a href=&quot;#jQuery操作单选、复选框选中状态&quot; class=&quot;headerlink&quot; title=&quot;jQuery操作单选、复选框选中状态&quot;&gt;&lt;/a&gt;jQuery操作单选、复选框选中状态&lt;/h2&gt;&lt;p&gt;工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 &lt;code&gt;checked&lt;/code&gt; 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//修改选中状态&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//取消选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//判断是否选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>移动端网页底部导航被虚拟键盘顶起解决方法</title>
-    <link href="http://yoursite.com/2017/07/16/30.mobile_web_footer/"/>
-    <id>http://yoursite.com/2017/07/16/30.mobile_web_footer/</id>
+    <link href="http://yoursite.com/2017/07/16/29.mobile_web_footer/"/>
+    <id>http://yoursite.com/2017/07/16/29.mobile_web_footer/</id>
     <published>2017-07-16T09:20:28.000Z</published>
     <updated>2017-07-16T09:52:45.000Z</updated>
     
@@ -46,8 +82,8 @@
   
   <entry>
     <title>你快看那片星空</title>
-    <link href="http://yoursite.com/2017/05/31/29.The_star_sky%20/"/>
-    <id>http://yoursite.com/2017/05/31/29.The_star_sky /</id>
+    <link href="http://yoursite.com/2017/05/31/28.The_star_sky%20/"/>
+    <id>http://yoursite.com/2017/05/31/28.The_star_sky /</id>
     <published>2017-05-31T11:56:09.000Z</published>
     <updated>2017-05-31T13:49:09.000Z</updated>
     
@@ -63,51 +99,6 @@
     <summary type="html">
     
       &lt;p&gt;二十五日和同事一起去滨江的彩虹跑道相约跑步，跑完同事问我端午露营去吗？他说起的那一刻我非常心动，但想了想要回家，我还是拒绝了。第二天，我挣扎了好久还是决定去。因为觉得自己的生活实在太无聊，两点一线。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于消费观</title>
-    <link href="http://yoursite.com/2017/05/14/28.talk-about-my-consumption/"/>
-    <id>http://yoursite.com/2017/05/14/28.talk-about-my-consumption/</id>
-    <published>2017-05-14T15:00:50.000Z</published>
-    <updated>2017-05-23T00:59:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>挺久没有更新博文，这篇博客虽然显示的时间是5月14号发布，但实际内容是15号写的。14号写得被我删了大半。</p>
-<p>此次我主要想讲讲我这一两年来消费观念的转变。<br><a id="more"></a><br>刚开始工作那会儿，拿着一个月 1000 的薪水，房租都是父母来承担，所以日子也不是过不下去。因为吃的对我来说并不重要，那时候对各种电子产品倒是很感兴趣（现在也是）。所以就拼命省钱把钱花在没卵用的地方了：</p>
-<ul>
-<li>1200 买的二手的 ThinkPad X201（ 2016 年过年的时候放同学那里被偷了，那时候刚买了MBP,对那个已经完全无感了，所以偷了也不心疼），当初买来就为了折腾linux，结果基本吃灰。</li>
-<li>出了个「勇者斗恶龙·建造者」，因为买不起PS4，所以专门为这个买了个PSV，加上游戏 1600+，结果：玩了第一章后，丢一边吃灰。</li>
-<li>想体验win10m，买了个lumian930，1000+，还是吃灰。</li>
-<li>最有用的大概是那个 650 买的二手戴尔显示器了吧。确实挺有用的，玩游戏挺有用的……</li>
-<li>淘宝这种乱七八糟的买……</li>
-<li>Porker 2不想用了，卖给骥宝，然后买了个 ikbc 的87吧好像，500+，从旧键盘回收的300，实际出了200+？（记不清了），现在反正也是在吃灰，因为用了MBP后就不用外接键盘了。</li>
-<li>买的GTA5，我没玩多久就被辉哥给玩通关了。</li>
-<li>买的小米手环已经完全送辉哥了……（后面这几件基本可以忽略了）</li>
-</ul>
-<p>反正那时候很穷，但是很会花钱，还都是花在没卵用的地方。工资开始1000，后来1500，再后来2000，中途还因为我表现好会给我一点额外的补贴，500，800……然而，全用来买这种东西了……MDZZ</p>
-<p>后来买了MBP后，我就觉得东西就应该买贵的，宁缺毋滥。贵的东西至少质量摆在那，用起来不会糟心。当时头脑发热买了一堆回来结果都是吃灰，还是买东西太冲动。MBP让我掉入了果坑，最初买这个的原因有很大一部分是因为MBP开发环境比较好，其次是软件没广告，还有就是界面和屏幕，顺带说一下win10新的设计语言也 很好看呢！</p>
-<p>总之，我以前买东西是什么不好买什么，基本上和94年加入国民党差不多；现在觉得，常用的东西还是买贵的，特别是电子产品！至少省心。不过以前买那堆东西和我喜欢折腾也有关系，那时候整天折腾手机电脑，各种重装刷机，那时候还信誓旦旦说不会买iphone，因为iphone的消息推送太傻逼了，现在折腾不动了，想想还不如买iPhone。</p>
-<p>接下来的购物清单：</p>
-<ul>
-<li>iPhone7 OR SE2（更加偏向7）</li>
-<li>AirPods （觉得贵要想想这么个东西里面塞了多少科技结晶）</li>
-<li>Switch （想玩塞尔达，在同事那体验后，确实觉得比psv好多了，到时候把psv出了）</li>
-<li>Apple Watch（这个是可以慢慢来的东西，放到最后）</li>
-</ul>
-<center><br><br><img src="http://opzfmbyhp.bkt.clouddn.com/2017-05-15-1-160R3143416.gif" alt="我控几不住我记几啊！"><br><br></center>
-
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;挺久没有更新博文，这篇博客虽然显示的时间是5月14号发布，但实际内容是15号写的。14号写得被我删了大半。&lt;/p&gt;
-&lt;p&gt;此次我主要想讲讲我这一两年来消费观念的转变。&lt;br&gt;
     
     </summary>
     
