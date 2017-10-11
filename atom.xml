@@ -406,7 +406,7 @@
     <link href="http://yoursite.com/2017/03/04/24.jsNote/"/>
     <id>http://yoursite.com/2017/03/04/24.jsNote/</id>
     <published>2017-03-04T03:46:34.000Z</published>
-    <updated>2017-03-05T11:54:36.000Z</updated>
+    <updated>2017-10-11T14:22:33.000Z</updated>
     
     <content type="html"><![CDATA[<p>「JavaScript高级程序」这本书知道的不用说太多。但是这书厚得跟板砖一样，而且长时间阅读又枯燥无味，啃下来的确很难。这段时间打算把JS原生捡起来复习一遍，因为jQuery用的太多导致原生都快忘光了。以后笔记可能会做的比较精炼，这里就记一些比较重点的东西。</p>
 <h4 id="完整的JavaScript组成"><a href="#完整的JavaScript组成" class="headerlink" title="完整的JavaScript组成"></a>完整的JavaScript组成</h4><ul>
@@ -520,11 +520,13 @@
 <li>String类型的<strong>空字符串</strong></li>
 <li>Number类型的<strong>0和NaN</strong></li>
 <li>Object类型的<strong>null</strong></li>
-<li>Undefined类型的<strong>undefined</strong><h4 id="Number类型"><a href="#Number类型" class="headerlink" title="Number类型"></a>Number类型</h4></li>
+<li>Undefined类型的<strong>undefined</strong></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h4 id="Number类型"><a href="#Number类型" class="headerlink" title="Number类型"></a>Number类型</h4><ul>
 <li>Number类型可以用十进制表示，也可以用八进制和十六进制表示</li>
 <li>用八进制表示时，如果含有数字超过8则会被解析成十进制</li>
 <li>算数计算事八进制和十六进制都会被转换成十进制数值</li>
