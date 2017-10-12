@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-12T09:55:47.633Z</updated>
+  <updated>2017-10-12T13:30:41.079Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,90 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>块级元素靠右的实现方式</title>
+    <link href="http://yoursite.com/2017/10/12/33.div_to_right/"/>
+    <id>http://yoursite.com/2017/10/12/33.div_to_right/</id>
+    <published>2017-10-12T13:07:56.000Z</published>
+    <updated>2017-10-12T13:30:41.079Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个块级元素靠右的实现方式有那些呢? 今天从别人哪里刚刚又学到了点东西, 整理了一下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 基本结构 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"block"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="使用-margin-属性"><a href="#使用-margin-属性" class="headerlink" title="使用 margin 属性"></a>使用 margin 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">margin-left</span>: auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将 <code>margin-left</code> 设为 <code>auto</code> 后, 元素左边的 <code>margin</code> 会被尽可能的撑大, 所以自然就把元素挤到右边去了. </p>
+<h4 id="使用-position-属性"><a href="#使用-position-属性" class="headerlink" title="使用 position 属性"></a>使用 position 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#parent</span>&#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用定位, 绝对能把元素放到右边去. </p>
+<h4 id="使用-float-属性"><a href="#使用-float-属性" class="headerlink" title="使用 float 属性"></a>使用 float 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">float</span>: right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用浮动将元素浮动到右边. </p>
+<h4 id="使用-text-align-属性"><a href="#使用-text-align-属性" class="headerlink" title="使用 text-align 属性"></a>使用 text-align 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#parent</span>&#123;</div><div class="line">  <span class="attribute">text-align</span>: right;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">display</span>: inline-block;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将块设为行内元素,然后父元素使用 <code>text-align: right;</code> 是块到右边. </p>
+<h4 id="使用-flex-属性"><a href="#使用-flex-属性" class="headerlink" title="使用 flex 属性"></a>使用 flex 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#parent</span>&#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">  <span class="attribute">justify-content</span>: flex-end;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将父元素变为弹性容器, 然后将 <code>justify-content</code> 设为 <code>flex-end</code>, 那么容器中的弹性元素会从右开始排列. </p>
+<p>以上就是我整理块级元素靠右排列的几种方式, 如有遗漏, 欢迎补充. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个块级元素靠右的实现方式有那些呢? 今天从别人哪里刚刚又学到了点东西, 整理了一下:&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>div 包裹 img 底部出现空隙问题</title>
+    <link href="http://yoursite.com/2017/10/12/32.div-img/"/>
+    <id>http://yoursite.com/2017/10/12/32.div-img/</id>
+    <published>2017-10-12T11:33:53.000Z</published>
+    <updated>2017-10-12T12:53:44.507Z</updated>
+    
+    <content type="html"><![CDATA[<p>工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: </p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img.png" alt=""></p>
+<a id="more"></a>
+<p>页面代码如下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">style</span>=<span class="string">"background-color:blueviolet"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color:#000;color:#fff;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./2.png"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这是什么造成的呢? 这样看也许你看不出来, 但是像下面这样也许你就大概知道是为什么了:</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img2.png" alt=""></p>
+<p>没错, 就是因为 <code>&lt;img&gt;</code> 不是块级元素,所以在一个 DIV 中它相当于一个文字, 而文字是有 baseline 的, 英文四线格中, baseline 处于倒数第二条而不是最后一条, 所以在图像底部才会出现一段空隙. 所以可以推测出: 在文字变大的时候, 空隙也会相应变大:</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img6.png" alt=""></p>
+<p>在<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img" target="_blank" rel="external"> MDN </a>中有这样一段文字来描述 <code>&lt;img&gt;</code> 标签: </p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img3.png" alt=""></p>
+<p>那么什么是替换元素呢? </p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img4.png" alt=""></p>
+<p>也就是说 <code>&lt;img&gt;</code> 是一个可以设置款高的行内元素, 是不是和 css 属性中的 <code>display: inline-block</code> 有点像呢? 不过 <code>&lt;img&gt;</code> 可是一个实打实的 <strong>行内元素</strong> (第 3 排第 4 个):</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img5.png" alt=""></p>
+<p>到这里已经完全了解了问题产生的原因, 那么相应解决问题的方法也就比较好找了:</p>
+<ol>
+<li>设置图片的 <code>vertical-align</code> 属性为 <code>bottom / top / middle</code> , 这样 <code>&lt;img&gt;</code> 的 baseline 就是最下面的线了,  也就不会产生空隙了. </li>
+<li>既然因为它是替换元素的缘故, 那把它转为块级元素不就好了吗? 所以设置<code>display: block</code> 也可以解决这个问题.</li>
+<li>把父元素的高度直接设置为图片想要的高度, 如果这个高度不是图片默认的高度, 再把图片的高度设为<code>height: 100%</code> 也可以解决这个问题. </li>
+</ol>
+<p>效果如图: </p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img7.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>浅谈 GET 和 POST 使用场景</title>
     <link href="http://yoursite.com/2017/10/12/31.post-and-get/"/>
     <id>http://yoursite.com/2017/10/12/31.post-and-get/</id>
     <published>2017-10-12T08:55:43.000Z</published>
-    <updated>2017-10-12T09:55:47.633Z</updated>
+    <updated>2017-10-12T11:35:23.000Z</updated>
     
     <content type="html"><![CDATA[<p>网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: <strong>这两者的本质是一样的.</strong> </p>
 <a id="more"></a>
@@ -44,6 +123,10 @@
     
     </summary>
     
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -981,61 +1064,6 @@
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ubuntu16.04网易云托盘图标显示出做及微信应用分享</title>
-    <link href="http://yoursite.com/2016/10/06/13.ubuntu16.04%E7%BD%91%E6%98%93%E4%BA%91%E6%89%98%E7%9B%98%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E5%87%BA%E5%81%9A%E5%8F%8A%E5%BE%AE%E4%BF%A1%E5%BA%94%E7%94%A8%E5%88%86%E4%BA%AB/"/>
-    <id>http://yoursite.com/2016/10/06/13.ubuntu16.04网易云托盘图标显示出做及微信应用分享/</id>
-    <published>2016-10-05T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　今天无意间打开贴吧发现之前在elementary OS吧发的关于网易云托盘图标的求助帖有了回复,试了一下发现问题解决了,顺便还发现了一个第三方微信应用,虽然是基于网页版的,但是这个版本是有托盘的，所以拿出来分享给大家。<br><br>　　先说云音乐问题：<br></p>
-<p><center><img src="https://cloud.githubusercontent.com/assets/17524418/19153864/badbf2f2-8c0a-11e6-8102-213021f310f1.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"></center><br>　　这是我之前网易云的托盘图标，无法正常显示，贴吧也有不少吧友遇到和我一样的问题。</p>
-<p><center><img src="https://cloud.githubusercontent.com/assets/17524418/19153857/b6aa1920-8c0a-11e6-9952-e7c47b3240e5.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"></center><br>　　这是修复后的托盘，小问题还是有，但至少使用上是没问题了，这样直接看也看不出什么，点击的时候有点小问题。<br><a id="more"></a><br>　　下面贴上方法：<br><br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">编辑云音乐的.desktop文件：sudo vi /usr/share/applications/netease-cloud-music.desktop（编辑工具根据实际情况而定）</div><div class="line">在原来的<span class="built_in">Exec</span>那行的前面加上：env XDG_CURRENT_DESKTOP=Unity</div><div class="line">比如：然后把原来的<span class="built_in">Exec</span>那行：<span class="built_in">Exec</span>=netease-cloud-music %U修改为：<span class="built_in">Exec</span>=env XDG_CURRENT_DESKTOP=Unity netease-cloud-music %U</div><div class="line">保存关闭编辑器，再打开就会发现托盘能正常使用了。</div></pre></td></tr></table></figure></p>
-<p>　　下面说我分享的微信应用：<br><br>    <a href="https://github.com/geeeeeeeeek/electronic-wechat" target="_blank" rel="external">Electronic WeChat</a>是基于<a href="https://github.com/electron/electron" target="_blank" rel="external">Electron</a>开发的应用，Electron应用我一直在用，但不知道微信也有，今天看到回复我云音乐的吧友回复我才知道这么个应用。<br><br>　　这是官方的图：</p>
-<p><center><img src="https://cloud.githubusercontent.com/assets/17524418/19154618/dc77430a-8c0d-11e6-966a-f4ed44e7b469.png" style="box-shadow:2px 2px 3px #aaaaaa;"></center><br>    安装很简单：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/geeeeeeeeek/electronic-wechat.git</div><div class="line">cd electronic-wechat</div><div class="line">npm install &amp;&amp; npm <span class="literal">start</span>(这一步如果出错就把clone下来的文件夹删除后从头执行一遍)</div><div class="line">也可以下载压缩包解压然后运行里面的程序，不过我用这种方法微信无法在托盘显示</div></pre></td></tr></table></figure></p>
-<p>　　更多Electronic小应用可以去<a href="http://electron.atom.io/apps/" target="_blank" rel="external">这里</a>下载，还是有不少有意思的应用。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　今天无意间打开贴吧发现之前在elementary OS吧发的关于网易云托盘图标的求助帖有了回复,试了一下发现问题解决了,顺便还发现了一个第三方微信应用,虽然是基于网页版的,但是这个版本是有托盘的，所以拿出来分享给大家。&lt;br&gt;&lt;br&gt;　　先说云音乐问题：&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/19153864/badbf2f2-8c0a-11e6-8102-213021f310f1.jpeg&quot; style=&quot;box-shadow:2px 2px 3px #aaaaaa;&quot;&gt;&lt;/center&gt;&lt;br&gt;　　这是我之前网易云的托盘图标，无法正常显示，贴吧也有不少吧友遇到和我一样的问题。&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/17524418/19153857/b6aa1920-8c0a-11e6-9952-e7c47b3240e5.jpeg&quot; style=&quot;box-shadow:2px 2px 3px #aaaaaa;&quot;&gt;&lt;/center&gt;&lt;br&gt;　　这是修复后的托盘，小问题还是有，但至少使用上是没问题了，这样直接看也看不出什么，点击的时候有点小问题。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="隨筆" scheme="http://yoursite.com/tags/%E9%9A%A8%E7%AD%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Github绑定自定义二级域名</title>
-    <link href="http://yoursite.com/2016/10/05/12.Github%20pages%E7%BB%91%E5%AE%9A%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D/"/>
-    <id>http://yoursite.com/2016/10/05/12.Github pages绑定二级域名/</id>
-    <published>2016-10-04T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资料，自己已经摸索成功了。下面贴上方法。<br><br>　　我用的是阿里云，所以下面就一阿里云的为例子。<br><br><a id="more"></a><br>　　首先进入github的项目主页，切换到你项目文件所在的分支[我的项目是一个网页，所以项目在gh-pages上]，然后点击Create new file新建一个文件。<br><img src="https://cloud.githubusercontent.com/assets/17524418/19103334/d3407294-8b08-11e6-929d-bc15c3716c5e.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"><br>　　名字命名为CNAME，内容填上自定义的裸二级域名，注意不要加http/https协议。保存。<br><br><img src="https://cloud.githubusercontent.com/assets/17524418/19103034/09dd6d68-8b07-11e6-85dd-c5c45280c4b1.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"><br>然后进入阿里云的控制台，点击已解析的域名进入域名控制台，可以看到你之前解析的域名，点击添加解析，记录类型选择A，主机记录选择之前新建的CNAME文件中填写的域名的前缀，如我之前填的是demo.tit1e.xyz，那么在主机记录只需填demo，记录值则填你的主机IP，然后确认，等待几分钟就可以访问了。时长根据运营商不同也会不一样。<br><img src="https://cloud.githubusercontent.com/assets/17524418/19103336/d3a77728-8b08-11e6-8b0d-068bef2a488f.jpeg" style="box-shadow:2px 2px 3px #aaaaaa;"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　网上有很多利用github pages搭建个人博客网站并绑定域名的教程，但是有时候也许你想再开一个github pages放自己做的demo，但是如果不绑定耳机域名，这个项目的网址默认是[tit1e.xyz/XXX/XXX.html]，这是我自己的网页dome的默认网址形式，这样一来会url会比较难看，那怎么把一个二级域名将这个网站的网址解析为[demo.tit1e.xyz]呢？网上查了一些资料，自己已经摸索成功了。下面贴上方法。&lt;br&gt;&lt;br&gt;　　我用的是阿里云，所以下面就一阿里云的为例子。&lt;br&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
   </entry>
   
