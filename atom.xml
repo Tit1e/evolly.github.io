@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-22T13:41:53.000Z</updated>
+  <updated>2017-10-12T09:55:47.633Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅谈 GET 和 POST 使用场景</title>
+    <link href="http://yoursite.com/2017/10/12/31.post-and-get/"/>
+    <id>http://yoursite.com/2017/10/12/31.post-and-get/</id>
+    <published>2017-10-12T08:55:43.000Z</published>
+    <updated>2017-10-12T09:55:47.633Z</updated>
+    
+    <content type="html"><![CDATA[<p>网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: <strong>这两者的本质是一样的.</strong> </p>
+<a id="more"></a>
+<p>现在抛开那些东西不谈, 我就单单来谈谈 GET 和 POST 在语义和应用场景方面我的理解. 单单从语义上来讲, 能很容易理解 GET 和 POST 之间的区别. 很多刚接触前端的新人一开始接触这两个请求的时候可能第一直觉就是 GET 是用来获取数据的, POST 是用来发送数据的. 到后来他们可能才会知道原来 GET 是可以发送数据的, POST 也是可以单单来获取数据的. </p>
+<p>虽然这两者到可以用来获取/发送数据, 但是在实际场景中, 还是要按需来使用比较合适的请求方式. 比如你要分享一片文章给朋友, 那么在文章的地址中就必须带有这篇文章的一些信息, 比如文章的 ID . 当你想分享一个带有搜索条件的页面时, 那么页面的地址中也必须包含又相应的搜索信息, 不然对方打开的是一个不带任何参数的url, 那对方怎么知道你在当时选中的文章或搜索条件是什么呢? 所以这种场景下, 用 GET 就比 POST 更加符合我们实际的应用场景. 而如果你发表了一片文章, 那么 GET 提交就不是太合适了, 因为 url 是有长度限制的, 虽然各家浏览器对 url 对长度的限制各不相同, 但是开发者又如何知道用户用什么浏览器来访问呢. 所以这种情况下, POST 明显比 GET 更加适合. </p>
+<p>所以我觉得下面这些最最表面的区别从使用场景的角度来说并没有错, 因为这些的的确确是在实际的使用场景中能直观感受到的区别</p>
+<blockquote>
+<p>1.GET后退按钮/刷新无害，POST数据会被重新提交（浏览器应该告知用户数据会被重新提交）。</p>
+<p>2.GET书签可收藏，POST为书签不可收藏。GET能被缓存，POST不能缓存 。</p>
+<p>3.GET历史参数保留在浏览器历史中。POST参数不会保存在浏览器历史中。GET对数据长度有限制，当发送数据时，GET 方法向 URL 添加数据；URL 的长度是受限制的（URL 的最大长度是 2048 个字符）。POST无限制。</p>
+<p>4.GET只允许 ASCII 字符。POST没有限制。也允许二进制数据。与 POST 相比，GET 的安全性较差，因为所发送的数据是 URL 的一部分。在发送密码或其他敏感信息时绝不要使用 GET ！POST 比 GET 更安全，因为参数不会被保存在浏览器历史或 web 服务器日志中。</p>
+<p>5.GET的数据在 URL 中对所有人都是可见的。POST的数据不会显示在 URL 中。</p>
+</blockquote>
+<p>而要往深了说的话,这些答案就给人一种答非所问的感觉了. </p>
+<p>所以,在问这个问题的时候最好也带上一些” GET 参数”, 比如: “ GET 和 POST 在使用场景下有什么区别?”; 再如: “ GET 和 POST 本质上有什么区别?”</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: &lt;strong&gt;这两者的本质是一样的.&lt;/strong&gt; &lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>一些工作中常用到的代码(二)</title>
@@ -1000,31 +1032,6 @@
     
     </summary>
     
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="git" scheme="http://yoursite.com/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>git克隆远程仓库进行修改提交</title>
-    <link href="http://yoursite.com/2016/10/04/11.git%E5%85%8B%E9%9A%86%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E8%BF%9B%E8%A1%8C%E4%BF%AE%E6%94%B9%E6%8F%90%E4%BA%A4/"/>
-    <id>http://yoursite.com/2016/10/04/11.git克隆远程仓库进行修改提交/</id>
-    <published>2016-10-03T16:00:00.000Z</published>
-    <updated>2017-01-14T09:14:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　之前云课堂大作业在windows下开发，现在因为使用EOS比较多，所以想把项目克隆下来然后修改提交，但是由于没接触过git命令行，windows下是使用客户端进行提交的，所以到了ubuntu下对着这对命令行是一脸懵逼，网上找了半天教程总算是能达到我想要的要求了。<br><a id="more"></a><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">cd至目标文件夹</div><div class="line">git init</div><div class="line">git clone https:<span class="comment">//github.com/Tit1e/homework.git</span></div><div class="line">cd进入仓库文件夹</div><div class="line">git checkout -<span class="selector-tag">b</span> gh-pages origin/gh-pages</div><div class="line">git status<span class="comment">//查看修改了哪些文件，可以不执行</span></div><div class="line">git add .</div><div class="line">git commit <span class="comment">//修改说明</span></div><div class="line">git config --global push<span class="selector-class">.default</span> simple <span class="comment">//第一次提交的时候执行，之后直接直接git push</span></div><div class="line">git push <span class="comment">//提交</span></div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　之前云课堂大作业在windows下开发，现在因为使用EOS比较多，所以想把项目克隆下来然后修改提交，但是由于没接触过git命令行，windows下是使用客户端进行提交的，所以到了ubuntu下对着这对命令行是一脸懵逼，网上找了半天教程总算是能达到我想要的要求了。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="elementary OS" scheme="http://yoursite.com/tags/elementary-OS/"/>
     
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
