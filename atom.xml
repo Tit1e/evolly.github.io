@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-19T15:08:51.576Z</updated>
+  <updated>2017-10-19T15:09:56.980Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/10/19/low-net-problems/"/>
     <id>http://yoursite.com/2017/10/19/low-net-problems/</id>
     <published>2017-10-19T11:19:51.000Z</published>
-    <updated>2017-10-19T15:08:51.576Z</updated>
+    <updated>2017-10-19T15:09:56.980Z</updated>
     
     <content type="html"><![CDATA[<p>前段时间抽空重写了陋网,,还没开发完成, 还有很多细节需要完善. 所以这篇博客随着开发还会更新.<br><a id="more"></a></p>
 <h3 id="配置记录"><a href="#配置记录" class="headerlink" title="配置记录"></a>配置记录</h3><h4 id="注-下面的文件都是以实际项目中的-program-目录为根目录来写路径的"><a href="#注-下面的文件都是以实际项目中的-program-目录为根目录来写路径的" class="headerlink" title="注: 下面的文件都是以实际项目中的 program 目录为根目录来写路径的"></a>注: 下面的文件都是以实际项目中的 <code>program</code> 目录为根目录来写路径的</h4><h4 id="package-json"><a href="#package-json" class="headerlink" title="/package.json"></a><code>/package.json</code></h4><p>用过 <code>node.js</code> 的基本都知道, 主要用来管理包依赖,当然里面还会有些项目作者, 项目描述等配置,不过这都不是主要的.<br>说到依赖, 在 <code>/package.json</code> 中有两种依赖,分别是 <code>dependencies</code> 和 <code>devDependencies</code>, 从字面上大致可以看出两者的区别在于一个是生产环境用到的依赖, 一个是开发环境用到的依赖, 比如 <code>axios</code> 要在线上用于 <code>http</code> 请求, 所以这个依赖肯定得配置在 <code>dependencies</code> 下, 在安装的时候只要在命令后面加上 <code>--save</code> 就能自动写进 <code>dependencies</code>. 而像 <code>eslint</code> 这种依赖是在开发阶段用于代码检查的, 生产环境中不需要的,那么就配置在 <code>devDependencies</code> 下, 安装的时候在命令后面加上 <code>--save-dev</code>就自动写进 <code>devDependencies</code> 中.</p>
@@ -41,9 +41,11 @@
 <li><p>嵌套路由</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attribute">path</span>: <span class="string">'/home'</span>,</div><div class="line">  children: [</div><div class="line">    &#123;</div><div class="line">      path: <span class="string">'/home/index'</span>,</div><div class="line">      component: Index</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>动态路由<br>{<br>path: ‘/people/id/:id’,<br>component: People<br>}<br>例子中的配置在地址中的渲染效果会是 <code>/people/id/1</code>.</p>
+<li><p>动态路由</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attribute">path</span>: <span class="string">'/people/id/:id'</span>,</div><div class="line">  component: People</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>例子中的配置在地址中的渲染效果会是 <code>/people/id/1</code>.</p>
 <p>未完待续…</p>
 ]]></content>
     
