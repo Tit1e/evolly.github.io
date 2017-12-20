@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-17T13:51:43.575Z</updated>
+  <updated>2017-12-20T08:54:15.975Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>element-theme 配合 vue-cli 进行二次开发</title>
+    <link href="http://yoursite.com/2017/12/20/40.element-theme-develop-twice/"/>
+    <id>http://yoursite.com/2017/12/20/40.element-theme-develop-twice/</id>
+    <published>2017-12-20T07:38:03.000Z</published>
+    <updated>2017-12-20T08:54:15.975Z</updated>
+    
+    <content type="html"><![CDATA[<p>公司新平台我打算使用<code>element-ui</code>和<code>vue-cli</code>来开发，既然用的是现成的ui，那么就涉及到ui的定制问题，虽然是一个后台项目，并且让设计参照<code>element-ui</code>的文档去作图，但是设计不可能照搬默认主题，不在组件功能上修改，但在主题配色上肯定会进行调整。虽然官方有 <a href="https://elementui.github.io/theme-chalk-preview/#/zh-CN" target="_blank" rel="external">在线主题生成工具</a> ，但这个工具只能修改一个整体的主题色，连按钮的颜色都无法定制，更不用说定制圆角阴影这些效果了，所以还是要自己改文件编译才能实现最大化定制。折腾过程中遇到了点问题，在此记录一下。</p>
+<p>官方也提供了定制的 <a href="https://github.com/ElementUI/element-theme" target="_blank" rel="external">文档</a> ，那当然是相信官方，照着官方的教程来！</p>
+<h4 id="安装element-theme"><a href="#安装element-theme" class="headerlink" title="安装element-theme"></a>安装<code>element-theme</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#只在当前项目安装</span></div><div class="line">npm i element-theme -D</div><div class="line"></div><div class="line"><span class="comment">#全局安装</span></div><div class="line">sudo npm i element-theme -g</div></pre></td></tr></table></figure>
+<p>然而我第一步就报错了……ORZ。</p>
+<p>我使用的是<code>npm</code>命令，但源用的是淘宝的源。但安装的时候报错：<code>not found python2</code>。于是我去找安装<code>python2</code>的方法，结果发现 Mac 是默认集成了<code>python</code>的，那我就郁闷了，试了半天，一直报错，最后突发奇想想用<code>cnpm</code>试试，结果竟然成功了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#终于装上了</span></div><div class="line">sudo cnpm i element-theme -g</div></pre></td></tr></table></figure></p>
+<p>好，继续。</p>
+<h4 id="安装-theme-chalk"><a href="#安装-theme-chalk" class="headerlink" title="安装 theme-chalk"></a>安装 <code>theme-chalk</code></h4><p>因为我一开始构思的定制流程是在其他目录下把样式写好编译后到现有项目中替换，所以我就建了一个空文件夹，然后执行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i element-theme-chalk -D</div></pre></td></tr></table></figure></p>
+<p>结果当然是提醒我找不到<code>package.json</code>文件。后来我望着命令中的<code>-D</code>若有所思……，终于反应过来了，这是装在项目中的。</p>
+<p>好，顺利安装，继续。</p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#初始化</span></div><div class="line">et -i</div></pre></td></tr></table></figure>
+<p>执行完后会在根目录下生成一个<code>element-variables.scss</code>的文件。然后你就可以在这个文件中修改主题色，按钮颜色，圆角，阴影等这些样式，修改好了之后，就可以编译了。</p>
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 监听并编译</span></div><div class="line">et --watch [--config variable file path] [--out theme path]</div><div class="line"></div><div class="line"><span class="comment"># 编译</span></div><div class="line">et [--config variable file path] [--out theme path] [--minimize]</div></pre></td></tr></table></figure>
+<p><code>et --watch</code>可以监听<code>element-variables.scss</code>文件。如果文件被修改了，那么就会自动进行编译。</p>
+<p><code>et --config 文件路径/element-variables.scss</code>这个命令是可以指定<code>element-variables.scss</code>的路径，因为这个文件不一定放在项目根目录下。</p>
+<p><code>et --out 目录</code>这个命令是指定编译后的文件输出目录，默认是输出在根目录下的<code>theme</code>文件夹中。</p>
+<p>但这就会产生一个文件替换问题，每次编译后都需要手动替换文件，之后才能看效果。所以我直接把输出路径改成了项目引用的<code>element-ui</code>的路径：<code>node_modules/element-ui/lib/theme-chalk/</code>，这样配合<code>-w</code>就可以实现实时编译，再配合<code>npm run dev</code>就可以实时编译实时预览了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;公司新平台我打算使用&lt;code&gt;element-ui&lt;/code&gt;和&lt;code&gt;vue-cli&lt;/code&gt;来开发，既然用的是现成的ui，那么就涉及到ui的定制问题，虽然是一个后台项目，并且让设计参照&lt;code&gt;element-ui&lt;/code&gt;的文档去作图，但是设计不可能
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
+    
+      <category term="element-ui" scheme="http://yoursite.com/tags/element-ui/"/>
+    
+  </entry>
   
   <entry>
     <title>css 实现圆角平行四边形</title>
@@ -1046,32 +1086,6 @@
     
     
       <category term="前端总结" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Javascript循环添加</title>
-    <link href="http://yoursite.com/2017/02/02/20.js_for_temp/"/>
-    <id>http://yoursite.com/2017/02/02/20.js_for_temp/</id>
-    <published>2017-02-02T13:23:03.000Z</published>
-    <updated>2017-02-02T13:43:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>工作中遇到的一种挺好的循环添加列表的方式，用模板，记录一下。<br><br>以前遇到要循环添加相同的元素用的都是字符串拼接的方式，后来工作中遇到了这种方式，发现这个比字符串拼接好用很多，简洁明了。</p>
-<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--目标div--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="comment">&lt;!--模板div,模板所在div不会被复制--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span> <span class="attr">style</span>=<span class="string">"display: none;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>hello,my name is TITLE<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>I'm CONTENT years old!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//模拟后端传过来的json数据</span></div><div class="line"><span class="keyword">var</span> data = &#123;</div><div class="line">    <span class="attr">datali</span>: [&#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl1"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad1"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl2"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad2"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl3"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad3"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl4"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad4"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">"chkl5"</span>,</div><div class="line">        <span class="attr">age</span>: <span class="string">"sad5"</span></div><div class="line">    &#125;]</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> lilength = data.datali.length;</div><div class="line"><span class="keyword">var</span> arr = data.datali;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</div><div class="line">    &lt;!--获取模板div中的html--&gt;</div><div class="line">    <span class="keyword">var</span> tihuan = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>).innerHTML;</div><div class="line">    <span class="xml"><span class="comment">&lt;!--用replace替换模板中要替换的部分，替换顺序最好是先替换长的再替换短的--&gt;</span></span></div><div class="line">    tihuan = tihuan.replace(/TITLE/, arr[i].name)</div><div class="line">        .replace(/CONTENT/, arr[i].age);</div><div class="line">    <span class="comment">&lt;!--创建一个div将修改完成后的代码放进去，再将这个div添加到目标位置--&gt;</span></div><div class="line">    div = document.createElement("div");</div><div class="line">    div.innerHTML = tihuan;</div><div class="line">    document.getElementById("div").appendChild(div);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注：模板中只能用class不能使用id。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;工作中遇到的一种挺好的循环添加列表的方式，用模板，记录一下。&lt;br&gt;&lt;br&gt;以前遇到要循环添加相同的元素用的都是字符串拼接的方式，后来工作中遇到了这种方式，发现这个比字符串拼接好用很多，简洁明了。&lt;/p&gt;
-&lt;h3 id=&quot;HTML&quot;&gt;&lt;a href=&quot;#HTML&quot; class=&quot;headerlink&quot; title=&quot;HTML&quot;&gt;&lt;/a&gt;HTML&lt;/h3&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!--目标div--&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;div&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!--模板div,模板所在div不会被复制--&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;test&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;style&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;display: none;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;hello,my name is TITLE&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;I&#39;m CONTENT years old!&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
