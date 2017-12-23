@@ -89,9 +89,9 @@
 </li>
 </ul>
 <h4 id="Null类型"><a href="#Null类型" class="headerlink" title="Null类型"></a>Null类型</h4><ul>
-<li>Null类型只有一个值：null</li>
-<li>null是一个空对象指针，用typeof检测返回object</li>
-<li>当一个变量将来要储存为对象的时候，最好先将这个变量设置为null</li>
+<li><code>Null</code>类型只有一个值：<code>null</code></li>
+<li><code>null</code>是一个空对象指针，用<code>typeof</code>检测返回object</li>
+<li>当一个变量将来要储存为对象的时候，最好先将这个变量设置为<code>null</code></li>
 <li>null == undefined</li>
 </ul>
 <h4 id="Boolean类型"><a href="#Boolean类型" class="headerlink" title="Boolean类型"></a>Boolean类型</h4><ul>
@@ -139,11 +139,11 @@
 <li><p><code>number()</code>、<code>parseInt()</code>、<code>parseFloat()</code>可以把非数值转换成数值</p>
 <ul>
 <li><code>number()</code>转换规则：<ul>
-<li>Boolean类型的true和false会被转换成0和1</li>
-<li>Number类型返回传入的值</li>
-<li>Null类型的null返回0</li>
-<li>Undefined类型的值返回NaN</li>
-<li>String类型的如果只有数字，包括浮点数、八进制表示的、十进制表示的，负数，都会被转换成对应的十进制数值，如果包含其他字符，则返回NaN，空字符串返回0</li>
+<li><code>Boolean</code>类型的<code>true</code>和<code>false</code>会被转换成0和1</li>
+<li><code>Number</code>类型返回传入的值</li>
+<li><code>Null</code>类型的<code>null</code>返回0</li>
+<li><code>Undefined</code>类型的值返回NaN</li>
+<li><code>String</code>类型的如果只有数字，包括浮点数、八进制表示的、十进制表示的，负数，都会被转换成对应的十进制数值，如果包含其他字符，则返回NaN，空字符串返回0</li>
 </ul>
 </li>
 <li><p><code>parseInt()</code>转换规则</p>
@@ -172,7 +172,7 @@
 <li>字符串可以由单引号(‘)或者双引号(“)表示，但是前后引号必须对应</li>
 <li>\用于转义</li>
 <li>字符串创建后是不可变的，要改变某个字符串的内容，必须先销毁原字符串</li>
-<li><p><code>toString()</code>方法用于将其他类型的值转换为字符串类型，除了null和undefined</p>
+<li><p><code>toString()</code>方法用于将其他类型的值转换为字符串类型，除了<code>null</code>和<code>undefined</code></p>
 <ul>
 <li>例：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="number">11</span>).toString();  <span class="comment">//"11"  使用()将数字包裹起来</span></div><div class="line"><span class="number">11.</span>.toString();  <span class="comment">//"11"  因为第一个点会被解析为小数点，第二个点才是调用方法</span></div><div class="line"><span class="literal">true</span>.toString();  <span class="comment">//"true"</span></div></pre></td></tr></table></figure>
 </li>
@@ -186,9 +186,9 @@
 </li>
 <li><p><code>String()</code>方法可以将包括null和undefined在在内的所有数据类型转换为字符串类型。</p>
 <ul>
-<li>如果值有 toString()方法，则调用该方法(没有参数)并返回相应的结果;</li>
-<li>如果值是 null，则返回”null”;</li>
-<li>如果值时 undefined，则返回”undefined”;</li>
+<li>如果值有 <code>toString()</code>方法，则调用该方法(没有参数)并返回相应的结果;</li>
+<li>如果值是 <code>null</code>，则返回”null”;</li>
+<li>如果值时 <code>undefined</code>，则返回”undefined”;</li>
 </ul>
 </li>
 </ul>
@@ -199,10 +199,10 @@
 </li>
 </ul>
 </li>
-<li><p>Object是所有对象的基础，Object 的每个实例都具有下列属性和方法</p>
+<li><p>Object是所有对象的基础<code>Object</code>的每个实例都具有下列属性和方法</p>
 <ul>
-<li><code>constructor</code>:保存着用于创建当前对象的函数。对于前面的例子而言，构造函数(constructor)就是 Object()。</li>
-<li><code>hasOwnProperty(propertyName)</code>:用于检查给定的属性在当前对象实例中(而不是在实例 的原型中)是否存在。其中，作为参数的属性名(propertyName)必须以字符串形式指定(例 如:o.hasOwnProperty(“name”))</li>
+<li><code>constructor</code>:保存着用于创建当前对象的函数。对于前面的例子而言，构造函数(<code>constructor</code>)就是 <code>Object()</code>。</li>
+<li><code>hasOwnProperty(propertyName)</code>:用于检查给定的属性在当前对象实例中(而不是在实例 的原型中)是否存在。其中，作为参数的属性名(<code>propertyName</code>)必须以字符串形式指定(例 如:<code>o.hasOwnProperty(&quot;name&quot;)</code>)</li>
 <li><code>isPrototypeOf(object)</code>:用于检查传入的对象是否是传入对象的原型</li>
 <li><code>toLocaleString()</code>:返回对象的字符串表示，该字符串与执行环境的地区对应</li>
 <li><code>toString()</code>:返回对象的字符串表示</li>
@@ -210,4 +210,4 @@
 </ul>
 </li>
 </ul>
-</div></article></div></main><footer><div class="paginator"><a href="/2017/03/06/25.jsNote2/" class="prev">PREV</a><a href="/2017/03/03/23.apply-and-call/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://yoursite.com">Tit1e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/03/06/25.jsNote2/" class="prev">上一篇</a><a href="/2017/03/03/23.apply-and-call/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://yoursite.com">Tit1e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
