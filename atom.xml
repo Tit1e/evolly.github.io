@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-26T13:20:21.781Z</updated>
+  <updated>2017-12-31T15:40:39.881Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>你好呀，2018</title>
+    <link href="http://yoursite.com/2017/12/31/43.hello-2018/"/>
+    <id>http://yoursite.com/2017/12/31/43.hello-2018/</id>
+    <published>2017-12-31T15:18:51.000Z</published>
+    <updated>2017-12-31T15:40:39.881Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="2017-回顾"><a href="#2017-回顾" class="headerlink" title="2017 回顾"></a>2017 回顾</h3><p>回顾了一下 2017 年的计划，其实太多没有完成的，比如后端的 ThinkPHP 框架，可以说是毫无长进，不过精力倒是全放在前端上了。身体方面，开始去健身房了，不过是从 10 月份才刚开始的锻炼，到现在的话，体重略有上升，可能两三斤吧，练的部位肉的确是结实了不少。爱好方面我就不谈了，今年过的狗一样，快过年了情况才有所好转。哪来的闲钱买这个！积蓄没有，MacBook 的钱是换完了（爸妈帮我还的……）。</p>
+<p>今年对我来说还是发生了挺多变化的一年。去年这个时候，我刚步入前端，入职 2 个月而已，然后到年后2月份的辞职，三月份的再入职，无论是哪方面，去年的这个时候和今年的这个时候都有了挺大的变化。</p>
+<p>希望在迎接 2019 年的时候，我还是能像现在这样开心。<br><a id="more"></a></p>
+<h3 id="2018-计划"><a href="#2018-计划" class="headerlink" title="2018 计划"></a>2018 计划</h3><ol>
+<li>前端技能上能有大的提升（如何衡量大呢？我也不知道）</li>
+<li>增重到130斤（是增肌，不是增脂！）</li>
+<li>一定要买个 switch（塞尔达天下第一！）</li>
+<li>薪水上涨 30%</li>
+<li>攒钱</li>
+<li>希望认识更多的人？（这个太难了）</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;2017-回顾&quot;&gt;&lt;a href=&quot;#2017-回顾&quot; class=&quot;headerlink&quot; title=&quot;2017 回顾&quot;&gt;&lt;/a&gt;2017 回顾&lt;/h3&gt;&lt;p&gt;回顾了一下 2017 年的计划，其实太多没有完成的，比如后端的 ThinkPHP 框架，可以说是毫无长进，不过精力倒是全放在前端上了。身体方面，开始去健身房了，不过是从 10 月份才刚开始的锻炼，到现在的话，体重略有上升，可能两三斤吧，练的部位肉的确是结实了不少。爱好方面我就不谈了，今年过的狗一样，快过年了情况才有所好转。哪来的闲钱买这个！积蓄没有，MacBook 的钱是换完了（爸妈帮我还的……）。&lt;/p&gt;
+&lt;p&gt;今年对我来说还是发生了挺多变化的一年。去年这个时候，我刚步入前端，入职 2 个月而已，然后到年后2月份的辞职，三月份的再入职，无论是哪方面，去年的这个时候和今年的这个时候都有了挺大的变化。&lt;/p&gt;
+&lt;p&gt;希望在迎接 2019 年的时候，我还是能像现在这样开心。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="新年计划" scheme="http://yoursite.com/tags/%E6%96%B0%E5%B9%B4%E8%AE%A1%E5%88%92/"/>
+    
+  </entry>
   
   <entry>
     <title>vuex的简单使用教程</title>
@@ -1047,38 +1080,6 @@
       <category term="前端笔记" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/"/>
     
       <category term="高程笔记" scheme="http://yoursite.com/tags/%E9%AB%98%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>apply和call的区别</title>
-    <link href="http://yoursite.com/2017/03/03/23.apply-and-call/"/>
-    <id>http://yoursite.com/2017/03/03/23.apply-and-call/</id>
-    <published>2017-03-03T12:01:15.000Z</published>
-    <updated>2017-12-22T13:44:24.534Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天看原生js的时候看到了<code>call</code>和<code>apply</code>,对这两个方法印象不是很清楚，只记得这两个方法很相似，作用大概是让A通过<code>call</code>或<code>apply</code>能够调用B独有的方法，但是具体的使用方法已经模糊，所以网上查了资料重新理了一遍。</p>
-<p>先看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Createpeople</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">            <span class="keyword">this</span>.name = name;</div><div class="line">            <span class="keyword">this</span>.age = age;</div><div class="line">        &#125;</div><div class="line">Createpeople.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Hello!My name is '</span> + <span class="keyword">this</span>.name);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> Amy = <span class="keyword">new</span> Createpeople(<span class="string">'Amy'</span>, <span class="number">18</span>);</div><div class="line">Amy.say();  <span class="comment">//Hello!My name is Amy</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> john = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'john'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="number">20</span></div><div class="line">        &#125;</div><div class="line">john.say();  <span class="comment">//john.say is not a function</span></div><div class="line">Amy.say.call(john);  <span class="comment">//Hello!My name is john</span></div><div class="line">Amy.say.apply(john);  <span class="comment">//Hello!My name is john</span></div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p><code>Createpeople</code>是一个构造函数，并且在原型中写入了一个<code>say</code>方法。我们用<code>Createpeople</code>创造了<code>Amy</code>对象，所以<code>Amy</code>理所当然地可以调用<code>say</code>方法。而<code>john</code>是我们手动创建的一个对象，所以<code>john</code>调用<code>say</code>方法理所应当会报错。那么如何让<code>john</code>能够调用<code>say</code>方法呢？那就要通过<code>call</code>方法或<code>apply</code>方法了。通过<code>Amy.say.call(john)</code>，从输出结果来看<code>john</code>正确的调用了<code>say</code>方法,<code>apply</code>也同样。</p>
-<p>为什么呢？原因就在于<code>call</code>和<code>apply</code>在调用的时候会传入一个调用对象，即<code>this</code>，它们能将原来不指向传入对象的函数的<code>this</code>强行指向传入对象。可能这样说不是很明白，下面我来解释一下：</p>
-<p>在其他方法执行的时候会默认传入一个调用对象，比如在<code>Amy</code>调用<code>say</code>方法的时候，默认传入的调用对象为<code>Amy</code>，<code>say</code>方法作为<code>Amy</code>的一部分正常情况下因为正常情况下<code>this</code>只能指向<code>Amy</code>，但是通过<code>call</code>和<code>apply</code>方法能让<code>say</code>方法的<code>this</code>强行指向传入的<code>john</code>，<code>this</code>变成了<code>john</code>，理所当然，<code>say</code>方法就能正常执行了。</p>
-<h4 id="那么call和apply有什么区别呢？"><a href="#那么call和apply有什么区别呢？" class="headerlink" title="那么call和apply有什么区别呢？"></a><strong>那么<code>call</code>和<code>apply</code>有什么区别呢？</strong></h4><p>区别在于<strong>参数</strong>的传入方式不同。<br>举个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">console</span>.log(a + b);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sub</span>(<span class="params">c, d</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">console</span>.log(c - d);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">sub.apply(add, [<span class="number">2</span>, <span class="number">3</span>]);  <span class="comment">//-1</span></div><div class="line">sub.call(add, <span class="number">2</span>, <span class="number">3</span>);  <span class="comment">//-1</span></div><div class="line">add.apply(sub, [<span class="number">1</span>, <span class="number">2</span>]);  <span class="comment">//3</span></div><div class="line">add.call(sub, <span class="number">1</span>, <span class="number">2</span>);  <span class="comment">//3</span></div></pre></td></tr></table></figure></p>
-<p><code>call</code>方法参数是一个一个传的，而<code>apply</code>方法，除了<code>this</code>，其他参数是用数组的方式传的。<br>由于<code>apply</code>传数组这个特点，我们可以很方便地对数组进行某些操作，比如拼接两个数组：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> list1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> list2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</div><div class="line">[].push.apply(list1, list2);  <span class="comment">//6</span></div><div class="line"><span class="built_in">console</span>.log(list1);  <span class="comment">//[1, 2, 3, 4, 5, 6]</span></div></pre></td></tr></table></figure></p>
-<p><code>push</code>方法可以传很多参数，但是不能传数组，正常情况下凭借数组只能够通过循环一个一个添加，但是<code>apply</code>正好需要把多个传入的参数打包成数组，所以正好满足了条件。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天看原生js的时候看到了&lt;code&gt;call&lt;/code&gt;和&lt;code&gt;apply&lt;/code&gt;,对这两个方法印象不是很清楚，只记得这两个方法很相似，作用大概是让A通过&lt;code&gt;call&lt;/code&gt;或&lt;code&gt;apply&lt;/code&gt;能够调用B独有的方法，但是具体的使用方法已经模糊，所以网上查了资料重新理了一遍。&lt;/p&gt;
-&lt;p&gt;先看代码：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Createpeople&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;name, age&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Createpeople.prototype.say = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;Hello!My name is &#39;&lt;/span&gt; + &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; Amy = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Createpeople(&lt;span class=&quot;string&quot;&gt;&#39;Amy&#39;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Amy.say();  &lt;span class=&quot;comment&quot;&gt;//Hello!My name is Amy&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; john = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;john&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;age&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;john.say();  &lt;span class=&quot;comment&quot;&gt;//john.say is not a function&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Amy.say.call(john);  &lt;span class=&quot;comment&quot;&gt;//Hello!My name is john&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Amy.say.apply(john);  &lt;span class=&quot;comment&quot;&gt;//Hello!My name is john&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
