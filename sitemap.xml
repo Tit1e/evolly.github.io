@@ -4,7 +4,7 @@
   <url>
     <loc>http://yoursite.com/2017/12/31/43.hello-2018/</loc>
     
-    <lastmod>2017-12-31T15:40:39.881Z</lastmod>
+    <lastmod>2017-12-31T15:42:45.244Z</lastmod>
     
   </url>
   
@@ -310,6 +310,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2017-03-08T04:57:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
@@ -318,13 +325,6 @@
   
   <url>
     <loc>http://yoursite.com/tools/index.html</loc>
-    
-    <lastmod>2017-03-08T04:57:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
