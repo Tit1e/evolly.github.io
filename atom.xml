@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-31T15:42:45.244Z</updated>
+  <updated>2018-04-26T14:41:24.042Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅谈 localStorage 和 sessionStorage</title>
+    <link href="http://yoursite.com/2018/04/26/43.sessionStorage-localStorage/"/>
+    <id>http://yoursite.com/2018/04/26/43.sessionStorage-localStorage/</id>
+    <published>2018-04-26T12:52:47.000Z</published>
+    <updated>2018-04-26T14:41:24.042Z</updated>
+    
+    <content type="html"><![CDATA[<p>说到前端的本地存储，一般人都会想到 localStorage、sessionStorage 和 Cookie。但这里我暂且不谈 cookie，来说说这两个长得比较像的。</p>
+<p><code>localStorage</code> 是 HTML5 的新特性，用于数据的存储，但是不同于 <code>sessionStorage</code>，它的存储期限可以是无期限，只要用户不手动去清除它。而 <code>sessionStorage</code> 则在页面被关闭时就会被清除。它们可以存储的大小都为 5M。而 <code>Cookie</code> 则如它的名字，存储空间也只有小小的 4kb。</p>
+<p>我们先来看下 <code>localStroage</code> 是个什么东西，在 chrome 的控制台直接打印，我门可以看到这些东西：</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-localStroage.png" alt=""></p>
+<p>我们可以直观地看到 <code>localStroage</code> 是一个对象，并且在有一个 length 属性，先猜测它是用来表示键值对数量的，并且我们可以看到 <code>localStroage</code> 的一些 API ：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最常用的为上面三个</span></div><div class="line">localStorage.setItem() <span class="comment">//设置 localStorage</span></div><div class="line">localStorage.getItem() <span class="comment">//读取 localStorage</span></div><div class="line">localStorage.removeItem() <span class="comment">//移除 localStorage</span></div><div class="line"></div><div class="line">localStorage.clear() <span class="comment">//清空 localStorage</span></div><div class="line">localStorage.key() <span class="comment">//获取某个位置的键名</span></div></pre></td></tr></table></figure></p>
+<p>不过需要注意的是，<code>localStorage</code> 不能直接存储对象，需要先将对象转成 json 才能存储。否则你将看到这样的结果：</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-saveObj.png" alt=""></p>
+<p>接下来我们来实际操作一下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>设置<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"key"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    值：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"input"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"setValue()"</span>&gt;</span>写入<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>读取<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"getKey"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"getValue()"</span>&gt;</span>读取<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">    读取内容：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"value"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>清除<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"removeKey"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"removeValue()"</span>&gt;</span>清除<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 设置</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setValue</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> key = <span class="built_in">document</span>.getElementById(<span class="string">'key'</span>).value</div><div class="line">  <span class="keyword">var</span> value = <span class="built_in">document</span>.getElementById(<span class="string">'input'</span>).value</div><div class="line">  localStorage.setItem(key,value)</div><div class="line">&#125;</div><div class="line"><span class="comment">// 获取</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getValue</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> getKey = <span class="built_in">document</span>.getElementById(<span class="string">'getKey'</span>).value</div><div class="line">  <span class="keyword">var</span> value = localStorage.getItem(getKey)</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'value'</span>).innerText = value</div><div class="line">&#125;</div><div class="line"><span class="comment">// 移除</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeValue</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> removeKey = <span class="built_in">document</span>.getElementById(<span class="string">'removeKey'</span>).value</div><div class="line">  localStorage.removeItem(removeKey)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码渲染出来的界面应该这这样的：</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-ui.png" alt=""></p>
+<p>然后，在对应输入框中输入内容就可以进行操作了。<br>至于存储的内容，我们可以在控制台的 Application 中看到：</p>
+<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-demo.png" alt=""></p>
+<p>值得注意的是，如果键名相同，之前的键值会被覆盖。并且，因为这些存储的内容可以在控制台被浏览和修改，所以这里并不推荐用来存一些比较私密的信息，避免信息的泄露。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;说到前端的本地存储，一般人都会想到 localStorage、sessionStorage 和 Cookie。但这里我暂且不谈 cookie，来说说这两个长得比较像的。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;localStorage&lt;/code&gt; 是 HTML5 的新特性，用于数据的存
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>你好呀，2018</title>
@@ -833,246 +868,6 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="前端笔记" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="高程笔记" scheme="http://yoursite.com/tags/%E9%AB%98%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript高级程序设计笔记（一）</title>
-    <link href="http://yoursite.com/2017/03/04/24.jsNote/"/>
-    <id>http://yoursite.com/2017/03/04/24.jsNote/</id>
-    <published>2017-03-04T03:46:34.000Z</published>
-    <updated>2017-12-22T13:49:11.635Z</updated>
-    
-    <content type="html"><![CDATA[<p>「JavaScript高级程序」这本书知道的不用说太多。但是这书厚得跟板砖一样，而且长时间阅读又枯燥无味，啃下来的确很难。这段时间打算把JS原生捡起来复习一遍，因为jQuery用的太多导致原生都快忘光了。以后笔记可能会做的比较精炼，这里就记一些比较重点的东西。</p>
-<h4 id="完整的JavaScript组成"><a href="#完整的JavaScript组成" class="headerlink" title="完整的JavaScript组成"></a>完整的JavaScript组成</h4><ul>
-<li><code>ECMAScript</code>（核心）</li>
-<li><code>DOM</code>（文档对象模型）</li>
-<li><code>BOM</code>（浏览器对象模型）</li>
-</ul>
-<p>但在通常人们口中所说的JavaScript常常指的是ECMAScript。<br><a id="more"></a></p>
-<h4 id="插入JavaScript代码方法"><a href="#插入JavaScript代码方法" class="headerlink" title="插入JavaScript代码方法"></a>插入JavaScript代码方法</h4><ul>
-<li><p>通过<code>&lt;script&gt;&lt;/script&gt;</code>标签直接在网页中写JS代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">    <span class="comment">// code...</span></div><div class="line"> &lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>通过<code>&lt;script&gt;</code>标签的<code>src</code>属性引入外部JS代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"url"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>注：为了不影响网页的加载速度，JS代码一般放在网页尾部。</strong></p>
-<h4 id="JavaScript基本概念"><a href="#JavaScript基本概念" class="headerlink" title="JavaScript基本概念"></a>JavaScript基本概念</h4><ul>
-<li>区分大小写<ul>
-<li>JavaScript中的变量，函数名或操作符都区分大小写</li>
-</ul>
-</li>
-<li>标识符<ul>
-<li>标识符：指的是JS代码中的变量、函数、属性、函数参数的名字</li>
-<li>标识符的<strong>第一个字符</strong>必须是字母、下划线(_)或者美元符号($)</li>
-<li>标识符的<strong>其他组成</strong>可以是字母、下划线、美元符号或者数字</li>
-<li>一般情况下标识符采用驼峰法命名，如myPage、helloWorld</li>
-</ul>
-</li>
-<li>注释<ul>
-<li>单行注释 <ul>
-<li><code>//单行注释</code></li>
-</ul>
-</li>
-<li>多行注释<ul>
-<li><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> *多行注释</div><div class="line"> *多行注释</div><div class="line"> *／</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h4><ul>
-<li>全局使用严格模式<ul>
-<li>脚本顶部加入<code>&#39;use strict&#39;;</code></li>
-</ul>
-</li>
-<li>函数内使用严格模式<ul>
-<li><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="meta">  'use strict'</span>;</div><div class="line">  <span class="comment">//code...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><ul>
-<li>变量声明<ul>
-<li>var定义的变量会成为定义这个变量作用域中的局部变量（在全局中声明就是全局对象，在函数中声明，函数执行完成后变量自行销毁）</li>
-<li>不用var声明的变量，无论在函数内或函数外声明，都是全局变量</li>
-<li>可以一次声明多个变量，用<code>,</code>隔开：<code>var a = 1,b = &quot;123&quot;,c = true;</code></li>
-</ul>
-</li>
-<li><p>JavaScript的变量是松散类型，所以通过重新赋值可以改变变量的类型</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">typeof</span> a;  <span class="comment">//number，typeof操作符下文数据类型中有解释</span></div><div class="line">a = <span class="string">"你好"</span>;</div><div class="line"><span class="keyword">typeof</span> a;  <span class="comment">//string</span></div></pre></td></tr></table></figure>
-<p><strong>在实际开发中不建议直接改变某个变量的类型。</strong></p>
-</li>
-</ul>
-<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><ul>
-<li>JavaScript中有五种基本数据类型和一种复杂数据类型<ul>
-<li>Undefined</li>
-<li>Null</li>
-<li>Boolean</li>
-<li>Number</li>
-<li>String</li>
-<li>Object(复杂类型)</li>
-</ul>
-</li>
-<li><p>typeof操作符用于检测变量的数据类型，返回的类型有以下几种</p>
-<ul>
-<li><code>&#39;undefined&#39;</code></li>
-<li><code>&#39;boolean&#39;</code></li>
-<li><code>&#39;string&#39;</code></li>
-<li><code>&#39;number&#39;</code></li>
-<li><code>&#39;object&#39;</code></li>
-<li><code>&#39;function&#39;</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typeof</span> <span class="literal">null</span>  <span class="comment">//'object'</span></div><div class="line"><span class="keyword">typeof</span> &#123;&#125;  <span class="comment">//"object"</span></div><div class="line"><span class="keyword">typeof</span> []  <span class="comment">//"object"</span></div><div class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span>  <span class="comment">//"undefined"</span></div><div class="line"><span class="keyword">typeof</span> <span class="string">"你好"</span>  <span class="comment">//"string"</span></div><div class="line"><span class="keyword">typeof</span> <span class="number">1</span>  <span class="comment">//"number"</span></div><div class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>  <span class="comment">//"number"</span></div><div class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;  <span class="comment">//"function"</span></div><div class="line"><span class="keyword">typeof</span> <span class="literal">true</span>  <span class="comment">//"boolean"</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>由上代码可以看出typeof操作符并不是可以非常准确地返回数据的类型。那么如何区分<code>null</code>、<code>[]</code>、<code>{}</code>的数据类型呢？<br>我们可以用<code>Object.prototype.toString.call(变量)</code>来区分：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.prototype.toString.call([])  <span class="comment">//"[object Array]"</span></div><div class="line"><span class="built_in">Object</span>.prototype.toString.call(&#123;&#125;)  <span class="comment">//"[object Object]"</span></div><div class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">null</span>)  <span class="comment">//"[object Null]"</span></div><div class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">NaN</span>)  <span class="comment">//"[object Number]"</span></div><div class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="number">1</span>)  <span class="comment">//"[object Number]"</span></div></pre></td></tr></table></figure>
-<p>我们发现<code>NaN</code>和<code>1</code>还是无法区分，那么这个又怎么区分呢？<br>我们可以用一个专门用来辨别<code>NaN</code>的方法来区分：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">isNaN</span>(<span class="literal">NaN</span>)  <span class="comment">//true</span></div><div class="line"><span class="built_in">isNaN</span>(<span class="number">1</span>)  <span class="comment">//false</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Null类型"><a href="#Null类型" class="headerlink" title="Null类型"></a>Null类型</h4><ul>
-<li><code>Null</code>类型只有一个值：<code>null</code></li>
-<li><code>null</code>是一个空对象指针，用<code>typeof</code>检测返回object</li>
-<li>当一个变量将来要储存为对象的时候，最好先将这个变量设置为<code>null</code></li>
-<li>null == undefined</li>
-</ul>
-<h4 id="Boolean类型"><a href="#Boolean类型" class="headerlink" title="Boolean类型"></a>Boolean类型</h4><ul>
-<li>Boolean类型只有true和false两个值</li>
-<li><code>true == 1</code>，<code>false == 0</code>，但是true不一定等于1，false也不一定等于0</li>
-<li>JavaScript中的任何一个值都可以通过<code>Boolean()</code>方法转换为Boolean值。<ul>
-<li>转换为true的值有：<ul>
-<li>Boolean类型的<strong>true</strong></li>
-<li>String类型的<strong>任何非空字符串</strong></li>
-<li>Number类型的<strong>任何非零数值，包括无穷大</strong></li>
-<li>Object类型的<strong>任何对像</strong>，包括{}，从中可以看出{}与null不同</li>
-</ul>
-</li>
-<li>转换为false的值的有：<ul>
-<li>Boolean类型的<strong>flase</strong></li>
-<li>String类型的<strong>空字符串</strong></li>
-<li>Number类型的<strong>0和NaN</strong></li>
-<li>Object类型的<strong>null</strong></li>
-<li>Undefined类型的<strong>undefined</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="Number类型"><a href="#Number类型" class="headerlink" title="Number类型"></a>Number类型</h4><ul>
-<li>Number类型可以用十进制表示，也可以用八进制和十六进制表示</li>
-<li>用八进制表示时，如果含有数字超过8则会被解析成十进制</li>
-<li>算数计算事八进制和十六进制都会被转换成十进制数值</li>
-<li><p>浮点数，即带小数的数值</p>
-<ul>
-<li><p>浮点数的两种写法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> floatNum1 = <span class="number">0.1</span>;</div><div class="line"><span class="keyword">var</span> floatNum2 = <span class="number">.1</span>;<span class="comment">//这种写法有效，但是不推荐</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>下列两种情况下，浮点会被转换成整数保存</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> floatNum1 = <span class="number">1.</span>; <span class="comment">// 小数点后面没有数字——解析为 1 </span></div><div class="line"><span class="keyword">var</span> floatNum2 = <span class="number">10.0</span>; <span class="comment">// 整数——解析为 10</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>浮点数支持科学计数法表示</p>
-</li>
-<li>浮点数最高精确度是17位小数</li>
-<li>JavaScript最小能表示的数值为<code>5e-324</code></li>
-<li>JavaScript最大能表示的数值为<code>1.7976931348623157e+308</code>，如果超出这个范围会被转换成<code>Infinity</code>（正无穷），如果这个值是负的，那就被转换成<code>-Infinity</code>（负无穷）</li>
-<li>0除以0会得到<code>NaN</code>，<strong>并且<code>NaN</code>不等于<code>NaN</code></strong></li>
-<li><p><code>number()</code>、<code>parseInt()</code>、<code>parseFloat()</code>可以把非数值转换成数值</p>
-<ul>
-<li><code>number()</code>转换规则：<ul>
-<li><code>Boolean</code>类型的<code>true</code>和<code>false</code>会被转换成0和1</li>
-<li><code>Number</code>类型返回传入的值</li>
-<li><code>Null</code>类型的<code>null</code>返回0</li>
-<li><code>Undefined</code>类型的值返回NaN</li>
-<li><code>String</code>类型的如果只有数字，包括浮点数、八进制表示的、十进制表示的，负数，都会被转换成对应的十进制数值，如果包含其他字符，则返回NaN，空字符串返回0</li>
-</ul>
-</li>
-<li><p><code>parseInt()</code>转换规则</p>
-<ul>
-<li><p><code>parseInt()</code>可用来提取字符串中的有效数字</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num1 = <span class="built_in">parseInt</span>(<span class="string">"1234blue"</span>);  <span class="comment">// 1234</span></div><div class="line"><span class="keyword">var</span> num2 = <span class="built_in">parseInt</span>(<span class="string">""</span>);  <span class="comment">// NaN</span></div><div class="line"><span class="keyword">var</span> num3 = <span class="built_in">parseInt</span>(<span class="string">"0xA"</span>);  <span class="comment">// 10(十六进制数)</span></div><div class="line"><span class="keyword">var</span> num4 = <span class="built_in">parseInt</span>(<span class="number">22.5</span>);  <span class="comment">// 22  小数点不是数字，所以遇到小数点停止解析</span></div><div class="line"><span class="keyword">var</span> num5 = <span class="built_in">parseInt</span>(<span class="string">"070"</span>);<span class="comment">// 56(八进制数)</span></div><div class="line"><span class="keyword">var</span> num6 = <span class="built_in">parseInt</span>(<span class="string">"70"</span>);  <span class="comment">// 70(十进制数)</span></div><div class="line"><span class="keyword">var</span> num7 = <span class="built_in">parseInt</span>(<span class="string">"0xf"</span>);  <span class="comment">// 15(十六进制数)</span></div><div class="line"><span class="keyword">var</span> num8 = <span class="built_in">parseInt</span>(<span class="string">"a123"</span>)  <span class="comment">//NaN  遇到非数字就停止解析</span></div><div class="line"><span class="keyword">var</span> num8 = <span class="built_in">parseInt</span>(<span class="string">"  123"</span>)  <span class="comment">//123  前面空格会被忽略</span></div></pre></td></tr></table></figure>
-</li>
-<li><p><code>parseInt()</code>可以指定传入的数字的进制</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num1 = <span class="built_in">parseInt</span>(<span class="string">"AF"</span>, <span class="number">16</span>);  <span class="comment">//175</span></div><div class="line"><span class="keyword">var</span> num2 = <span class="built_in">parseInt</span>(<span class="string">"AF"</span>);  <span class="comment">//NaN</span></div><div class="line"><span class="keyword">var</span> num3 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">2</span>);  <span class="comment">//2 (按二进制解析)</span></div><div class="line"><span class="keyword">var</span> num4 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">8</span>);  <span class="comment">//8 (按八进制解析)</span></div><div class="line"><span class="keyword">var</span> num5 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">10</span>);  <span class="comment">//10(按十进制解析)</span></div><div class="line"><span class="keyword">var</span> num6 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">16</span>);  <span class="comment">//16(按十六进制解析)</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>parseFloat()</code>转换规则</p>
-<ul>
-<li><code>parseFloat()</code>只能解析十进制</li>
-<li>十六进制格式的字符串始终会被转换成0</li>
-<li><code>parseFloat()</code>转换<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num1 = <span class="built_in">parseFloat</span>(<span class="string">"1234blue"</span>);  <span class="comment">//1234 (整数)</span></div><div class="line"><span class="keyword">var</span> num2 = <span class="built_in">parseFloat</span>(<span class="string">"0xA"</span>);  <span class="comment">//0</span></div><div class="line"><span class="keyword">var</span> num3 = <span class="built_in">parseFloat</span>(<span class="string">"22.5"</span>);  <span class="comment">//22.5</span></div><div class="line"><span class="keyword">var</span> num4 = <span class="built_in">parseFloat</span>(<span class="string">"22.34.5"</span>);  <span class="comment">//22.34</span></div><div class="line"><span class="keyword">var</span> num5 = <span class="built_in">parseFloat</span>(<span class="string">"0908.5"</span>);  <span class="comment">//908.5</span></div><div class="line"><span class="keyword">var</span> num6 = <span class="built_in">parseFloat</span>(<span class="string">"3.125e7"</span>);  <span class="comment">//31250000</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h4><ul>
-<li>String 类型用于表示由零或多个 16 位 Unicode 字符组成的字符序列，即字符串</li>
-<li>字符串可以由单引号(‘)或者双引号(“)表示，但是前后引号必须对应</li>
-<li>\用于转义</li>
-<li>字符串创建后是不可变的，要改变某个字符串的内容，必须先销毁原字符串</li>
-<li><p><code>toString()</code>方法用于将其他类型的值转换为字符串类型，除了<code>null</code>和<code>undefined</code></p>
-<ul>
-<li>例：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="number">11</span>).toString();  <span class="comment">//"11"  使用()将数字包裹起来</span></div><div class="line"><span class="number">11.</span>.toString();  <span class="comment">//"11"  因为第一个点会被解析为小数点，第二个点才是调用方法</span></div><div class="line"><span class="literal">true</span>.toString();  <span class="comment">//"true"</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>toString()</code>可以传入参数，但是只有在对数字使用<code>toString()</code>时才可以传入参数，传的参数是返回的字符串中的数字用什么进制数表示</p>
-<ul>
-<li>例：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</div><div class="line">num.toString();  <span class="comment">//"10"</span></div><div class="line">num.toString(<span class="number">2</span>);  <span class="comment">//"1010"</span></div><div class="line">num.toString(<span class="number">8</span>);  <span class="comment">//"12"</span></div><div class="line">num.toString(<span class="number">10</span>);  <span class="comment">//"10"</span></div><div class="line">num.toString(<span class="number">16</span>);  <span class="comment">//"a"</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>String()</code>方法可以将包括null和undefined在在内的所有数据类型转换为字符串类型。</p>
-<ul>
-<li>如果值有 <code>toString()</code>方法，则调用该方法(没有参数)并返回相应的结果;</li>
-<li>如果值是 <code>null</code>，则返回”null”;</li>
-<li>如果值时 <code>undefined</code>，则返回”undefined”;</li>
-</ul>
-</li>
-</ul>
-<h4 id="Object类型"><a href="#Object类型" class="headerlink" title="Object类型"></a>Object类型</h4><ul>
-<li><p>创建对象</p>
-<ul>
-<li>例：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj1 = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line"><span class="keyword">var</span> obj2 = <span class="keyword">new</span> <span class="built_in">Object</span>;  <span class="comment">//不推荐这种方法</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Object是所有对象的基础<code>Object</code>的每个实例都具有下列属性和方法</p>
-<ul>
-<li><code>constructor</code>:保存着用于创建当前对象的函数。对于前面的例子而言，构造函数(<code>constructor</code>)就是 <code>Object()</code>。</li>
-<li><code>hasOwnProperty(propertyName)</code>:用于检查给定的属性在当前对象实例中(而不是在实例 的原型中)是否存在。其中，作为参数的属性名(<code>propertyName</code>)必须以字符串形式指定(例 如:<code>o.hasOwnProperty(&quot;name&quot;)</code>)</li>
-<li><code>isPrototypeOf(object)</code>:用于检查传入的对象是否是传入对象的原型</li>
-<li><code>toLocaleString()</code>:返回对象的字符串表示，该字符串与执行环境的地区对应</li>
-<li><code>toString()</code>:返回对象的字符串表示</li>
-<li><code>valueOf()</code>:返回对象的字符、串布尔值、或数值。</li>
-</ul>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;「JavaScript高级程序」这本书知道的不用说太多。但是这书厚得跟板砖一样，而且长时间阅读又枯燥无味，啃下来的确很难。这段时间打算把JS原生捡起来复习一遍，因为jQuery用的太多导致原生都快忘光了。以后笔记可能会做的比较精炼，这里就记一些比较重点的东西。&lt;/p&gt;
-&lt;h4 id=&quot;完整的JavaScript组成&quot;&gt;&lt;a href=&quot;#完整的JavaScript组成&quot; class=&quot;headerlink&quot; title=&quot;完整的JavaScript组成&quot;&gt;&lt;/a&gt;完整的JavaScript组成&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ECMAScript&lt;/code&gt;（核心）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;DOM&lt;/code&gt;（文档对象模型）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;BOM&lt;/code&gt;（浏览器对象模型）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;但在通常人们口中所说的JavaScript常常指的是ECMAScript。&lt;br&gt;
     
     </summary>
     
