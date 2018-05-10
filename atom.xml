@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-10T05:22:26.299Z</updated>
+  <updated>2018-05-10T14:50:16.286Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,16 +20,16 @@
     <link href="http://yoursite.com/2018/05/07/46.mac-create-htaccess/"/>
     <id>http://yoursite.com/2018/05/07/46.mac-create-htaccess/</id>
     <published>2018-05-07T12:41:53.000Z</published>
-    <updated>2018-05-10T05:22:26.299Z</updated>
+    <updated>2018-05-10T14:50:16.286Z</updated>
     
-    <content type="html"><![CDATA[<p>在正常情况下，Mac 不允许用户创建以 <code>.</code> 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。<br><img src="http://opzfmbyhp.bkt.clouddn.com/2018-05-07-createfile-1.png" alt=""><br><a id="more"></a><br>但是有时候我们又必须要创建，比如用 Apache 的服务器要重写路径，<code>.htaccess</code>文件必不可少。接下来就来说说如何创建以 <code>.</code> 开头的为文件或文件夹：<br>先打开终端，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">true</span> ; killall Finder</div></pre></td></tr></table></figure></p>
+    <content type="html"><![CDATA[<p>在正常情况下，Mac 不允许用户创建以 <code>.</code> 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144331.png" alt=""><br><a id="more"></a><br>但是有时候我们又必须要创建，比如用 Apache 的服务器要重写路径，<code>.htaccess</code>文件必不可少。接下来就来说说如何创建以 <code>.</code> 开头的为文件或文件夹：<br>先打开终端，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">true</span> ; killall Finder</div></pre></td></tr></table></figure></p>
 <p>然后你会发现 Finder 重启了，而且可能目录中多了很多半透明的文件夹，这些都是隐藏文件或文件夹，平时是受系统保护的。现在就可以创建以 <code>.</code> 开头的文件或文件夹了，修改完成后，只要运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">false</span> ; killall Finder</div></pre></td></tr></table></figure></p>
 <p>就可以恢复原状。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在正常情况下，Mac 不允许用户创建以 &lt;code&gt;.&lt;/code&gt; 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。&lt;br&gt;&lt;img src=&quot;http://opzfmbyhp.bkt.clouddn.com/2018-05-07-createfile-1.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+      &lt;p&gt;在正常情况下，Mac 不允许用户创建以 &lt;code&gt;.&lt;/code&gt; 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。&lt;br&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144331.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
     
     </summary>
     
@@ -43,7 +43,7 @@
     <link href="http://yoursite.com/2018/05/03/45.vue-webpack-static/"/>
     <id>http://yoursite.com/2018/05/03/45.vue-webpack-static/</id>
     <published>2018-05-03T11:53:26.000Z</published>
-    <updated>2018-05-10T05:22:08.611Z</updated>
+    <updated>2018-05-10T14:50:16.320Z</updated>
     
     <content type="html"><![CDATA[<p>今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 <code>index.html</code> 和 <code>static</code> 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打包的绝对路径改成相对路径，结果是打包生成的 <code>js</code> 、 <code>css</code> 文件引用正常了，但是图片什么静态资源路径全部出错了，然后 Google 了好久，终于在 <a href="https://blog.csdn.net/a120120yyyy/article/details/78048838" target="_blank" rel="external">这里</a> 找到了解决办法，就是在 <code>build/utils.js</code> 文件中，找到<code>ExtractTextPlugin.extract</code>，加上 <code>publicPath: &#39;../../&#39;</code> 就能使静态资源正确引用。<br><a id="more"></a></p>
 ]]></content>
@@ -68,20 +68,20 @@
     <link href="http://yoursite.com/2018/04/26/44.sessionStorage-localStorage/"/>
     <id>http://yoursite.com/2018/04/26/44.sessionStorage-localStorage/</id>
     <published>2018-04-26T12:52:47.000Z</published>
-    <updated>2018-04-26T14:44:43.273Z</updated>
+    <updated>2018-05-10T14:50:16.309Z</updated>
     
     <content type="html"><![CDATA[<p>说到前端的本地存储，一般人都会想到 localStorage、sessionStorage 和 Cookie。但这里我暂且不谈 cookie，来说说这两个长得比较像的。<br><a id="more"></a><br><code>localStorage</code> 是 HTML5 的新特性，用于数据的存储，但是不同于 <code>sessionStorage</code>，它的存储期限可以是无期限，只要用户不手动去清除它。而 <code>sessionStorage</code> 则在页面被关闭时就会被清除。它们可以存储的大小都为 5M。而 <code>Cookie</code> 则如它的名字，存储空间也只有小小的 4kb。</p>
 <p>我们先来看下 <code>localStroage</code> 是个什么东西，在 chrome 的控制台直接打印，我门可以看到这些东西：</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-localStroage.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144749.png" alt=""></p>
 <p>我们可以直观地看到 <code>localStroage</code> 是一个对象，并且在有一个 length 属性，先猜测它是用来表示键值对数量的，并且我们可以看到 <code>localStroage</code> 的一些 API ：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最常用的为上面三个</span></div><div class="line">localStorage.setItem() <span class="comment">//设置 localStorage</span></div><div class="line">localStorage.getItem() <span class="comment">//读取 localStorage</span></div><div class="line">localStorage.removeItem() <span class="comment">//移除 localStorage</span></div><div class="line"></div><div class="line">localStorage.clear() <span class="comment">//清空 localStorage</span></div><div class="line">localStorage.key() <span class="comment">//获取某个位置的键名</span></div></pre></td></tr></table></figure></p>
 <p>不过需要注意的是，<code>localStorage</code> 不能直接存储对象，需要先将对象转成 json 才能存储。否则你将看到这样的结果：</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-saveObj.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144803.png" alt=""></p>
 <p>接下来我们来实际操作一下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>设置<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"key"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    值：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"input"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"setValue()"</span>&gt;</span>写入<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>读取<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"getKey"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"getValue()"</span>&gt;</span>读取<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">    读取内容：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"value"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>清除<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"removeKey"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"removeValue()"</span>&gt;</span>清除<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 设置</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setValue</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> key = <span class="built_in">document</span>.getElementById(<span class="string">'key'</span>).value</div><div class="line">  <span class="keyword">var</span> value = <span class="built_in">document</span>.getElementById(<span class="string">'input'</span>).value</div><div class="line">  localStorage.setItem(key,value)</div><div class="line">&#125;</div><div class="line"><span class="comment">// 获取</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getValue</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> getKey = <span class="built_in">document</span>.getElementById(<span class="string">'getKey'</span>).value</div><div class="line">  <span class="keyword">var</span> value = localStorage.getItem(getKey)</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'value'</span>).innerText = value</div><div class="line">&#125;</div><div class="line"><span class="comment">// 移除</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeValue</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> removeKey = <span class="built_in">document</span>.getElementById(<span class="string">'removeKey'</span>).value</div><div class="line">  localStorage.removeItem(removeKey)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上面的代码渲染出来的界面应该这这样的：</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-ui.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144820.png" alt=""></p>
 <p>然后，在对应输入框中输入内容就可以进行操作了。<br>至于存储的内容，我们可以在控制台的 Application 中看到：</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2018-04-26-demo.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144835.png" alt=""></p>
 <p>值得注意的是，如果键名相同，之前的键值会被覆盖。并且，因为这些存储的内容可以在控制台被浏览和修改，所以这里并不推荐用来存一些比较私密的信息，避免信息的泄露。</p>
 ]]></content>
     
@@ -101,7 +101,7 @@
     <link href="http://yoursite.com/2017/12/31/43.hello-2018/"/>
     <id>http://yoursite.com/2017/12/31/43.hello-2018/</id>
     <published>2017-12-31T15:18:51.000Z</published>
-    <updated>2017-12-31T15:42:45.244Z</updated>
+    <updated>2018-05-10T14:50:16.304Z</updated>
     
     <content type="html"><![CDATA[<h3 id="2017-回顾"><a href="#2017-回顾" class="headerlink" title="2017 回顾"></a>2017 回顾</h3><p>回顾了一下 <a href="https://tit1e.xyz/2017/01/28/hello-2017/" target="_blank" rel="external">2017 年的计划</a>，其实太多没有完成的，比如后端的 ThinkPHP 框架，可以说是毫无长进，不过精力倒是全放在前端上了。身体方面，开始去健身房了，不过是从 10 月份才刚开始的锻炼，到现在的话，体重略有上升，可能两三斤吧，练的部位肉的确是结实了不少。爱好方面我就不谈了，今年过的狗一样，快过年了情况才有所好转。哪来的闲钱买这个！积蓄没有，MacBook 的钱是换完了（爸妈帮我还的……）。</p>
 <p>今年对我来说还是发生了挺多变化的一年。去年这个时候，我刚步入前端，入职 2 个月而已，然后到年后2月份的辞职，三月份的再入职，无论是哪方面，去年的这个时候和今年的这个时候都有了挺大的变化。</p>
@@ -134,7 +134,7 @@
     <link href="http://yoursite.com/2017/12/26/42.vuex-use/"/>
     <id>http://yoursite.com/2017/12/26/42.vuex-use/</id>
     <published>2017-12-26T13:11:39.000Z</published>
-    <updated>2017-12-26T13:20:21.781Z</updated>
+    <updated>2018-05-10T14:50:16.306Z</updated>
     
     <content type="html"><![CDATA[<p>公司数据平台现在的规模已经有点大了，考虑到以后，可能会出现数据共享的问题，所以我先粗略了解一下<code>vuex</code>以备不时之需。<br>首先安装<code>vuex</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#生产环境中也需要使用</span></div><div class="line">npm install vuex --save</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
@@ -163,7 +163,7 @@
     <link href="http://yoursite.com/2017/12/21/41.webpack-dev-server/"/>
     <id>http://yoursite.com/2017/12/21/41.webpack-dev-server/</id>
     <published>2017-12-21T12:15:47.000Z</published>
-    <updated>2017-12-21T12:46:51.553Z</updated>
+    <updated>2018-05-10T14:50:16.289Z</updated>
     
     <content type="html"><![CDATA[<p>今天继续在公司思考关于前后端分离的问题，困扰我最大的问题其实就是我用 vue-cli 在本地开发的时候，怎么和后端进行接口的调试，总不可能每次都打包一下放到服务器上看运行正不正常，有没有报错吧？我知道有个反向代理的东西，可是知道它的大致作用，但是我没用过导致我无从下手，但前段时间折腾模拟数据的时候，有用到用<code>json-server</code>和<code>faker.js</code>本地开服务器，批量生成模拟数据，然后通过反向代理去请求本地另一个服务器的数据。于是我想，既然这样我可以请求到数据，那么局域网的话我也可以直接通过 ip 直接访问局域网内的服务器，那么我应该也可以通过代理去请求局域网上内其他同事开的本地服务器中的接口，于是就开始折腾了。<br><a id="more"></a><br>由于之前去请求模拟数据的时候，代理配置是写在<code>/config/index.js</code>中的，于是我依样画葫芦，把之前的配置的地址，路径全改了，但结果却发现请求一只 404 ，这就让我很难受了，于是我去 Google 了一圈，原来这个代理是用的<code>webpack-dev-server</code>，于是我找到了<code>/build/webpack.dev.conf.js</code>,按照网上说的，在<code>devServer</code>中添加了一个<code>proxy</code>属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">proxy: &#123;</div><div class="line">  <span class="string">'/Home'</span>: &#123;</div><div class="line">    <span class="attr">target</span>: <span class="string">'http://192.168.1.1/'</span>,</div><div class="line">    <span class="attr">secure</span>: <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这样，我就成功通过代理请求到了同事服务器上的数据。</p>
@@ -190,7 +190,7 @@
     <link href="http://yoursite.com/2017/12/20/40.element-theme-develop-twice/"/>
     <id>http://yoursite.com/2017/12/20/40.element-theme-develop-twice/</id>
     <published>2017-12-20T07:38:03.000Z</published>
-    <updated>2017-12-29T08:07:24.599Z</updated>
+    <updated>2018-05-10T14:50:16.308Z</updated>
     
     <content type="html"><![CDATA[<p>公司新平台我打算使用<code>element-ui</code>和<code>vue-cli</code>来开发，既然用的是现成的ui，那么就涉及到ui的定制问题，虽然是一个后台项目，并且让设计参照<code>element-ui</code>的文档去作图，但是设计不可能照搬默认主题，不在组件功能上修改，但在主题配色上肯定会进行调整。虽然官方有 <a href="https://elementui.github.io/theme-chalk-preview/#/zh-CN" target="_blank" rel="external">在线主题生成工具</a> ，但这个工具只能修改一个整体的主题色，连按钮的颜色都无法定制，更不用说定制圆角阴影这些效果了，所以还是要自己改文件编译才能实现最大化定制。折腾过程中遇到了点问题，在此记录一下。</p>
 <p>官方也提供了定制的 <a href="https://github.com/ElementUI/element-theme" target="_blank" rel="external">文档</a> ，那当然是相信官方，照着官方的教程来！<br><a id="more"></a></p>
@@ -232,12 +232,12 @@
     <link href="http://yoursite.com/2017/12/17/39.radio-rhomboid/"/>
     <id>http://yoursite.com/2017/12/17/39.radio-rhomboid/</id>
     <published>2017-12-17T13:31:07.000Z</published>
-    <updated>2017-12-17T13:51:43.575Z</updated>
+    <updated>2018-05-10T14:50:16.303Z</updated>
     
     <content type="html"><![CDATA[<p>公司管理平台首页改版中有个圆角平行四边形的标签页。由于以前没接触到过这个，没什么经验，所以我只好求助万能的 google ，但是我用关键字“css 圆角平行四边形”并没有搜出答案来，于是我退而求其次，那就搜“css 平行四边形”，这个我有把握 100% 能用 强大的css 实现，果然一搜就出现了：<a href="https://www.w3cplus.com/css3/css-secrets/parallelograms.html" target="_blank" rel="external">CSS秘密花园：平行四边形</a>。<br><a id="more"></a><br>实现代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.button</span>&#123;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">skewX</span>(-30deg);</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(to right, #7BBBB2, #46AEAA); </div><div class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</div><div class="line">  <span class="attribute">text-align</span>: center;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">8px</span> <span class="number">20px</span>;</div><div class="line">  <span class="attribute">display</span>: inline-block;</div><div class="line">  <span class="attribute">border-radius</span>: <span class="number">4px</span>;</div><div class="line">  <span class="attribute">box-sizing</span>: border-box;</div><div class="line">  <span class="attribute">margin-left</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">box-shadow</span>: <span class="number">0px</span> <span class="number">5px</span> <span class="number">10px</span> -<span class="number">3px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.5);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.button</span> &gt; <span class="selector-tag">div</span>&#123;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">skewX</span>(30deg);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">    首页</div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">    采集管理</div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">    数据管理</div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>简单来说就是利用css的<code>transform: skewX(deg)</code>属性来实现元素的扭曲，但是元素扭曲的同时，会使元素内的内容也随之扭曲，所以就需要用另一个元素把不想扭曲的元素包裹起来，然后对外层使用扭曲，内层元素再使用反向扭曲来抵消，一次来实现效果。然后我又给外层元素添加了<code>border-radios</code>，于是圆角平行四边形就诞生啦！</p>
-<p>效果图：<br><img src="http://opzfmbyhp.bkt.clouddn.com/2017-12-17-tab.png" alt=""></p>
+<p>效果图：<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144722.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -258,7 +258,7 @@
     <link href="http://yoursite.com/2017/12/17/38.v-charts-bar/"/>
     <id>http://yoursite.com/2017/12/17/38.v-charts-bar/</id>
     <published>2017-12-17T13:03:48.000Z</published>
-    <updated>2017-12-17T13:29:15.097Z</updated>
+    <updated>2018-05-10T14:50:16.318Z</updated>
     
     <content type="html"><![CDATA[<p>其实在考虑使用<code>echarts</code>之前我还考虑过使用饿了么的<code>v-charts</code>，但后来考虑到实际情况，还是使用了没有经过二次封装的<code>echarts</code>。虽然没有最终没有使用<code>v-charts</code>，但还是记录一下。</p>
 <p><code>v-charts</code>的使用方法<a href="https://elemefe.github.io/v-charts/#/" target="_blank" rel="external"> 官方文档 </a>讲得已经比较详细了，但我的需求有个柱状图使用渐变色的需求，这里没有详细讲，但其实运行报错已经说得很清楚了。<br>首先安装<code>v-charts</code><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="selector-tag">i</span> v-charts -S</div></pre></td></tr></table></figure></p>
@@ -289,7 +289,7 @@
     <link href="http://yoursite.com/2017/12/17/37.vue-cli-use-echarts-liquidfill/"/>
     <id>http://yoursite.com/2017/12/17/37.vue-cli-use-echarts-liquidfill/</id>
     <published>2017-12-17T12:14:50.000Z</published>
-    <updated>2017-12-17T13:28:48.981Z</updated>
+    <updated>2018-05-10T14:50:16.305Z</updated>
     
     <content type="html"><![CDATA[<p>公司有个平台有改版的打算，UI 出了首页的设计稿，我看了下，大致构思了一下，打算用 vue 和 Element-UI 来写。前阵子刚忙完，这几天比较空，我就看着 UI 稿在想实现方式，其中一个是水球图。这篇先记录一下 vue-cli 中生成水球图的方法。<br><a id="more"></a><br>首先<code>npm</code>包下载必不可少：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//安装 ECharts</span></div><div class="line">npm install echarts</div><div class="line"><span class="comment">//安装 水球图插件</span></div><div class="line">npm install echarts-liquidfill</div></pre></td></tr></table></figure></p>
 <p>随后在<code>.vue</code>文件中引入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> echarts <span class="keyword">from</span> <span class="string">"echarts"</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">"echarts-liquidfill/src/liquidFill.js"</span>;</div></pre></td></tr></table></figure></p>
@@ -314,7 +314,7 @@
     <link href="http://yoursite.com/2017/12/14/36.vue-import-sass-global/"/>
     <id>http://yoursite.com/2017/12/14/36.vue-import-sass-global/</id>
     <published>2017-12-14T14:11:52.000Z</published>
-    <updated>2017-12-23T02:51:04.265Z</updated>
+    <updated>2018-05-10T14:50:16.315Z</updated>
     
     <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>我们平时在使用 vue-cli 开发项目的时候，写 css 会用到预处理器来提高 css 的编写效率。我们在使用 sass 的时候一般会先在一个全局的<code>.scss</code>文件中定义好一些颜色变量或其他变量，然后在需要用的这些变量的组件内把这个文件通过<code>@import</code>的方式引入，然后就可以使用文件中定义的变量了。但是这也出现一个问题，因为这个文件中定义的都是比较通用的变量，所以几乎每个<code>.vue</code>文件几乎都会将它引入，当组件多了之后，没次要引入这个文件就显得累赘，而且如果这个文件换了路径，那维护起来就比较麻烦，还容易出错。所以最好就是一个地方配置后，全局都可以直接使用，这样是最高效，也是最容易维护的。于是我在网上找了一圈，试了网上的 N 多方法，终于在 <a href="https://segmentfault.com/q/1010000008731809" target="_blank" rel="external">这里</a> 找到了我能用的方法，而且配置简单。<br><a id="more"></a></p>
 <h4 id="使用sass，这两个包是前提"><a href="#使用sass，这两个包是前提" class="headerlink" title="使用sass，这两个包是前提:"></a>使用<code>sass</code>，这两个包是前提:</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install <span class="keyword">node</span><span class="title">-sass</span> --save-dev</div><div class="line">npm install sass-loader --save-dev</div></pre></td></tr></table></figure>
@@ -341,7 +341,7 @@
     <link href="http://yoursite.com/2017/10/19/35.low-net-problems/"/>
     <id>http://yoursite.com/2017/10/19/35.low-net-problems/</id>
     <published>2017-10-19T11:19:51.000Z</published>
-    <updated>2017-12-23T02:49:24.748Z</updated>
+    <updated>2018-05-10T14:50:16.299Z</updated>
     
     <content type="html"><![CDATA[<p>前段时间抽空重写了陋网,还没开发完成, 还有很多细节需要完善. 所以这篇博客随着开发还会更新.<br><a id="more"></a></p>
 <h3 id="配置记录"><a href="#配置记录" class="headerlink" title="配置记录"></a>配置记录</h3><h4 id="注-下面的文件都是以实际项目中的-program-目录为根目录来写路径的"><a href="#注-下面的文件都是以实际项目中的-program-目录为根目录来写路径的" class="headerlink" title="注: 下面的文件都是以实际项目中的 program 目录为根目录来写路径的"></a>注: 下面的文件都是以实际项目中的 <code>program</code> 目录为根目录来写路径的</h4><h4 id="package-json"><a href="#package-json" class="headerlink" title="/package.json"></a><code>/package.json</code></h4><p>用过 <code>node.js</code> 的基本都知道, 主要用来管理包依赖,当然里面还会有些项目作者, 项目描述等配置,不过这都不是主要的.<br>说到依赖, 在 <code>/package.json</code> 中有两种依赖,分别是 <code>dependencies</code> 和 <code>devDependencies</code>, 从字面上大致可以看出两者的区别在于一个是生产环境用到的依赖, 一个是开发环境用到的依赖, 比如 <code>axios</code> 要在线上用于 <code>http</code> 请求, 所以这个依赖肯定得配置在 <code>dependencies</code> 下, 在安装的时候只要在命令后面加上 <code>--save</code> 就能自动写进 <code>dependencies</code>. 而像 <code>eslint</code> 这种依赖是在开发阶段用于代码检查的, 生产环境中不需要的,那么就配置在 <code>devDependencies</code> 下, 安装的时候在命令后面加上 <code>--save-dev</code>就自动写进 <code>devDependencies</code> 中.</p>
@@ -386,7 +386,7 @@
     <link href="http://yoursite.com/2017/10/18/34.low-net/"/>
     <id>http://yoursite.com/2017/10/18/34.low-net/</id>
     <published>2017-10-18T14:28:16.000Z</published>
-    <updated>2017-12-23T02:48:39.353Z</updated>
+    <updated>2018-05-10T14:50:16.314Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前阵子把今年四五月份时候写的陋网重写了. 之前用的是 vue.js, vue-resource 和 jQuery, 现在想想就算是那时候, jQuery也是完全没必要引入的.后来不知道为何网站在 PC 端列表无法渲染了, 原因是 PC 端获取到的 data 编程字符串格式了, 而我之前开发的时候明明是能正常获取的, 而且移动端是能正确渲染列表的, 这个原因我至今没有想明白. </p>
 <p>现在会了 vue-cli 之后, 就想着把网站重写了, 做成 SPA 单页应用, 这样才更像个 App.于是就有了这个项目.<br><a id="more"></a></p>
@@ -427,7 +427,7 @@
     <link href="http://yoursite.com/2017/10/12/33.div_to_right/"/>
     <id>http://yoursite.com/2017/10/12/33.div_to_right/</id>
     <published>2017-10-12T13:07:56.000Z</published>
-    <updated>2017-10-12T13:35:35.000Z</updated>
+    <updated>2018-05-10T14:50:16.316Z</updated>
     
     <content type="html"><![CDATA[<p>一个块级元素靠右的实现方式有那些呢? 今天从别人哪里刚刚又学到了点东西, 整理了一下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 基本结构 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"block"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <a id="more"></a>
@@ -462,22 +462,22 @@
     <link href="http://yoursite.com/2017/10/12/32.div-img/"/>
     <id>http://yoursite.com/2017/10/12/32.div-img/</id>
     <published>2017-10-12T11:33:53.000Z</published>
-    <updated>2017-12-23T02:45:10.756Z</updated>
+    <updated>2018-05-10T14:50:16.296Z</updated>
     
     <content type="html"><![CDATA[<p>工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: </p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144347.png" alt=""></p>
 <a id="more"></a>
 <p>页面代码如下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">style</span>=<span class="string">"background-color:blueviolet"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color:#000;color:#fff;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./2.png"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>这是什么造成的呢? 这样看也许你看不出来, 但是像下面这样也许你就大概知道是为什么了:</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img2.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144403.png" alt=""></p>
 <p>没错, 就是因为 <code>&lt;img&gt;</code> 不是块级元素,所以在一个 DIV 中它相当于一个文字, 而文字是有 baseline 的, 英文四线格中, baseline 处于倒数第二条而不是最后一条, 所以在图像底部才会出现一段空隙. 所以可以推测出: 在文字变大的时候, 空隙也会相应变大:</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img6.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144416.png" alt=""></p>
 <p>在<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img" target="_blank" rel="external"> MDN </a>中有这样一段文字来描述 <code>&lt;img&gt;</code> 标签: </p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img3.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144435.png" alt=""></p>
 <p>那么什么是替换元素呢? </p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img4.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144447.png" alt=""></p>
 <p>也就是说 <code>&lt;img&gt;</code> 是一个可以设置款高的行内元素, 是不是和 css 属性中的 <code>display: inline-block</code> 有点像呢? 不过 <code>&lt;img&gt;</code> 可是一个实打实的 <strong>行内元素</strong> (第 3 排第 4 个):</p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img5.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144508.png" alt=""></p>
 <p>到这里已经完全了解了问题产生的原因, 那么相应解决问题的方法也就比较好找了:</p>
 <ol>
 <li>设置图片的 <code>vertical-align</code> 属性为 <code>bottom / top / middle</code> , 这样 <code>&lt;img&gt;</code> 的 baseline 就是最下面的线了,  也就不会产生空隙了. </li>
@@ -485,13 +485,13 @@
 <li>把父元素的高度直接设置为图片想要的高度, 如果这个高度不是图片默认的高度, 再把图片的高度设为<code>height: 100%</code> 也可以解决这个问题. </li>
 </ol>
 <p>效果如图: </p>
-<p><img src="http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img7.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144519.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
     
       &lt;p&gt;工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: &lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://opzfmbyhp.bkt.clouddn.com/2017-10-12-div_img.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144347.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -507,7 +507,7 @@
     <link href="http://yoursite.com/2017/10/12/31.post-and-get/"/>
     <id>http://yoursite.com/2017/10/12/31.post-and-get/</id>
     <published>2017-10-12T08:55:43.000Z</published>
-    <updated>2017-12-23T02:43:09.224Z</updated>
+    <updated>2018-05-10T14:50:16.311Z</updated>
     
     <content type="html"><![CDATA[<p>网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: <strong>这两者的本质是一样的.</strong> </p>
 <a id="more"></a>
@@ -543,7 +543,7 @@
     <link href="http://yoursite.com/2017/07/22/30.work-tips2/"/>
     <id>http://yoursite.com/2017/07/22/30.work-tips2/</id>
     <published>2017-07-22T12:11:41.000Z</published>
-    <updated>2017-12-23T02:42:50.061Z</updated>
+    <updated>2018-05-10T14:50:16.301Z</updated>
     
     <content type="html"><![CDATA[<h2 id="jQuery操作单选、复选框选中状态"><a href="#jQuery操作单选、复选框选中状态" class="headerlink" title="jQuery操作单选、复选框选中状态"></a>jQuery操作单选、复选框选中状态</h2><p>工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 <code>checked</code> 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//修改选中状态</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>,<span class="literal">true</span>);<span class="comment">//选中</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>,<span class="literal">false</span>);<span class="comment">//取消选中</span></div><div class="line"><span class="comment">//判断是否选中</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>);</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
@@ -579,7 +579,7 @@
     <link href="http://yoursite.com/2017/07/16/29.mobile_web_footer/"/>
     <id>http://yoursite.com/2017/07/16/29.mobile_web_footer/</id>
     <published>2017-07-16T09:20:28.000Z</published>
-    <updated>2017-07-16T09:52:45.000Z</updated>
+    <updated>2018-05-10T14:50:16.313Z</updated>
     
     <content type="html"><![CDATA[<p>在写移动端的网页应用的时候经常会遇到底部导航，或者说是底部菜单。而当触发虚拟键盘的时候，底部的导航会被顶起来，遮挡住网页内容。定位方法对此也并不管用。我这有两种解决方式（都基于jQuery）。<br><a id="more"></a><br>第一种：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  这种方法的思路是，当输入框获得焦点的时候，就隐藏，失去焦点就显示</span></div><div class="line">$(<span class="string">'input[type=text],textarea'</span>).focus(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'footer'</span>).hide();</div><div class="line">&#125;)</div><div class="line">$(<span class="string">'input[type=text],textarea'</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'footer'</span>).show();</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
@@ -608,7 +608,7 @@
     <link href="http://yoursite.com/2017/05/31/28.The_star_sky%20/"/>
     <id>http://yoursite.com/2017/05/31/28.The_star_sky /</id>
     <published>2017-05-31T11:56:09.000Z</published>
-    <updated>2017-08-05T13:43:25.000Z</updated>
+    <updated>2018-05-10T14:50:16.300Z</updated>
     
     <content type="html"><![CDATA[<p>二十五日和同事一起去滨江的彩虹跑道相约跑步，跑完同事问我端午露营去吗？他说起的那一刻我非常心动，但想了想要回家，我还是拒绝了。第二天，我挣扎了好久还是决定去。因为觉得自己的生活实在太无聊，两点一线。<br><a id="more"></a><br>龙哥说他要去拍星空，这才是驱使我去的真正原因。我真的很喜欢星空啊！小时候天黑了，村子里也就黑了，天上还有很多的星星，但是现在天黑了，灯还亮着，星星都不见了。</p>
 <p>曾经用 <strong>星灯亦是心灯</strong> 做过很长时间的网名。高中的时候喜欢听《星星点灯》，天上的星星也是我心中的明灯，这就是那个名字的来历。后来网名换了，换成了 <strong>evollyone</strong>、<strong>Tit1e</strong>，但我最喜欢的还是 <strong>星灯亦是心灯</strong> 。</p>
@@ -616,7 +616,7 @@
 <p>晚上九点多的时候，星星已经升起，但是由于露营地的照明灯太亮，站在下面只看得到稀疏的几颗星星。于是我和龙哥便一同登上天池大坝。1000米的海拔和200阶阶梯，登上大坝时已经气喘吁吁。一抬头，星星不再稀疏，北斗七星悬在头顶。这是我见过最美的星空。</p>
 <p>十一点多的时候再次登坝，星星更密了，银河已从东边升起。架起拍星轨的相机后，我们一行人去了旁边拍照玩。</p>
 <p>我望着头顶的星空，想着如果你在我旁边和我一同抬头仰望这片星空那该有多好。你望着星空，我望着你，透过你的眼睛感受你眼里温柔的星空。我的眼里，有星空，有你。</p>
-<center><br><br><img src="http://opzfmbyhp.bkt.clouddn.com/2017-05-31-%E6%98%9F%E8%BD%A8%E5%89%AF%E6%9C%AC.jpg" alt=""><br><br></center>]]></content>
+<center><br><br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144643.jpg" alt=""><br><br></center>]]></content>
     
     <summary type="html">
     
@@ -634,7 +634,7 @@
     <link href="http://yoursite.com/2017/05/14/27.work-tips/"/>
     <id>http://yoursite.com/2017/05/14/27.work-tips/</id>
     <published>2017-05-14T12:17:00.000Z</published>
-    <updated>2017-05-15T10:13:39.000Z</updated>
+    <updated>2018-05-10T14:50:16.285Z</updated>
     
     <content type="html"><![CDATA[<p>很久没有写博客了，回原来的公司后就基本上没有更新了，到现在也快两个月了。这个博客其实很早前久应该写了，然后一直拖拖拖拖到现在。之前我全部记在了bear中，现在搬到博客上来，后续有更新就在现在基础上接着更新。其实不光涉及到工作中经常用的，还有一些经常是平时折腾的时候记下来怕日后忘记的。</p>
 <p><strong>因为公司业务基本用的是jQuery，所以这里用到的代码基本上是基于jQuery。</strong></p>
