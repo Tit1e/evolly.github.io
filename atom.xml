@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-07T13:00:50.499Z</updated>
+  <updated>2018-05-10T05:22:26.299Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,16 +20,16 @@
     <link href="http://yoursite.com/2018/05/07/46.mac-create-htaccess/"/>
     <id>http://yoursite.com/2018/05/07/46.mac-create-htaccess/</id>
     <published>2018-05-07T12:41:53.000Z</published>
-    <updated>2018-05-07T13:00:50.499Z</updated>
+    <updated>2018-05-10T05:22:26.299Z</updated>
     
-    <content type="html"><![CDATA[<p>在;正常情况下，Mac 不允许用户创建以 <code>.</code> 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。<br><img src="http://opzfmbyhp.bkt.clouddn.com/2018-05-07-createfile-1.png" alt=""><br>但是有时候我们又必须要创建，比如用 Apache 的服务器要重写路径，<code>.htaccess</code>文件必不可少。接下来就来说说如何创建以 <code>.</code> 开头的为文件或文件夹：<br>先打开终端，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">true</span> ; killall Finder</div></pre></td></tr></table></figure></p>
+    <content type="html"><![CDATA[<p>在正常情况下，Mac 不允许用户创建以 <code>.</code> 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。<br><img src="http://opzfmbyhp.bkt.clouddn.com/2018-05-07-createfile-1.png" alt=""><br><a id="more"></a><br>但是有时候我们又必须要创建，比如用 Apache 的服务器要重写路径，<code>.htaccess</code>文件必不可少。接下来就来说说如何创建以 <code>.</code> 开头的为文件或文件夹：<br>先打开终端，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">true</span> ; killall Finder</div></pre></td></tr></table></figure></p>
 <p>然后你会发现 Finder 重启了，而且可能目录中多了很多半透明的文件夹，这些都是隐藏文件或文件夹，平时是受系统保护的。现在就可以创建以 <code>.</code> 开头的文件或文件夹了，修改完成后，只要运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">false</span> ; killall Finder</div></pre></td></tr></table></figure></p>
 <p>就可以恢复原状。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在;正常情况下，Mac 不允许用户创建以 &lt;code&gt;.&lt;/code&gt; 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。&lt;br&gt;&lt;img src=&quot;http://opzfmbyhp.bkt.clouddn.com/2018-05-07-createfile-1.p
+      &lt;p&gt;在正常情况下，Mac 不允许用户创建以 &lt;code&gt;.&lt;/code&gt; 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。&lt;br&gt;&lt;img src=&quot;http://opzfmbyhp.bkt.clouddn.com/2018-05-07-createfile-1.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
     
     </summary>
     
@@ -43,14 +43,14 @@
     <link href="http://yoursite.com/2018/05/03/45.vue-webpack-static/"/>
     <id>http://yoursite.com/2018/05/03/45.vue-webpack-static/</id>
     <published>2018-05-03T11:53:26.000Z</published>
-    <updated>2018-05-03T13:08:10.851Z</updated>
+    <updated>2018-05-10T05:22:08.611Z</updated>
     
-    <content type="html"><![CDATA[<p>今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 <code>index.html</code> 和 <code>static</code> 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打包的绝对路径改成相对路径，结果是打包生成的 <code>js</code> 、 <code>css</code> 文件引用正常了，但是图片什么静态资源路径全部出错了，然后 Google 了好久，终于在 <a href="https://blog.csdn.net/a120120yyyy/article/details/78048838" target="_blank" rel="external">这里</a> 找到了解决办法，就是在 <code>build/utils.js</code> 文件中，找到<code>ExtractTextPlugin.extract</code>，加上 <code>publicPath: &#39;../../&#39;</code> 就能使静态资源正确引用。</p>
+    <content type="html"><![CDATA[<p>今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 <code>index.html</code> 和 <code>static</code> 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打包的绝对路径改成相对路径，结果是打包生成的 <code>js</code> 、 <code>css</code> 文件引用正常了，但是图片什么静态资源路径全部出错了，然后 Google 了好久，终于在 <a href="https://blog.csdn.net/a120120yyyy/article/details/78048838" target="_blank" rel="external">这里</a> 找到了解决办法，就是在 <code>build/utils.js</code> 文件中，找到<code>ExtractTextPlugin.extract</code>，加上 <code>publicPath: &#39;../../&#39;</code> 就能使静态资源正确引用。<br><a id="more"></a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 &lt;code&gt;index.html&lt;/code&gt; 和 &lt;code&gt;static&lt;/code&gt; 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打
+      &lt;p&gt;今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 &lt;code&gt;index.html&lt;/code&gt; 和 &lt;code&gt;static&lt;/code&gt; 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打包的绝对路径改成相对路径，结果是打包生成的 &lt;code&gt;js&lt;/code&gt; 、 &lt;code&gt;css&lt;/code&gt; 文件引用正常了，但是图片什么静态资源路径全部出错了，然后 Google 了好久，终于在 &lt;a href=&quot;https://blog.csdn.net/a120120yyyy/article/details/78048838&quot;&gt;这里&lt;/a&gt; 找到了解决办法，就是在 &lt;code&gt;build/utils.js&lt;/code&gt; 文件中，找到&lt;code&gt;ExtractTextPlugin.extract&lt;/code&gt;，加上 &lt;code&gt;publicPath: &amp;#39;../../&amp;#39;&lt;/code&gt; 就能使静态资源正确引用。&lt;br&gt;
     
     </summary>
     
