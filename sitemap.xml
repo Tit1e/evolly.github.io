@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/05/12/47.mac-mamp-redis/</loc>
+    
+    <lastmod>2018-05-12T07:50:32.130Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/10/05/12.Github-pages/</loc>
     
     <lastmod>2018-05-12T05:40:18.122Z</lastmod>
@@ -107,14 +114,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/03/03/22.code_majorization/</loc>
+    <loc>http://yoursite.com/2016/11/08/15.js-this/</loc>
     
     <lastmod>2018-05-10T14:50:16.312Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/11/08/15.js-this/</loc>
+    <loc>http://yoursite.com/2017/03/03/22.code_majorization/</loc>
     
     <lastmod>2018-05-10T14:50:16.312Z</lastmod>
     
@@ -205,14 +212,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/05/31/28.The_star_sky%20/</loc>
+    <loc>http://yoursite.com/2016/02/29/1.hello-world/</loc>
     
     <lastmod>2018-05-10T14:50:16.300Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/02/29/1.hello-world/</loc>
+    <loc>http://yoursite.com/2017/05/31/28.The_star_sky%20/</loc>
     
     <lastmod>2018-05-10T14:50:16.300Z</lastmod>
     
@@ -338,14 +345,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tools/index.html</loc>
+    <loc>http://yoursite.com/tags/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>http://yoursite.com/tools/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
