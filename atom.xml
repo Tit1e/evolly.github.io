@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-12T07:50:32.130Z</updated>
+  <updated>2018-06-26T11:32:25.871Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>webpack 通过 NODE_ENV 判断当前环境</title>
+    <link href="http://yoursite.com/2018/06/26/48.NODE_ENV/"/>
+    <id>http://yoursite.com/2018/06/26/48.NODE_ENV/</id>
+    <published>2018-06-26T11:19:39.000Z</published>
+    <updated>2018-06-26T11:32:25.871Z</updated>
+    
+    <content type="html"><![CDATA[<p>公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来，偶尔还会出现忘记清前缀的情况，这多多少少造成了不便。</p>
+<p>后来从网上找到了判断环境的变量：<code>process.env.NODE_ENV</code>，这可以在 js 中直接获取到，如果它的值为 development 则说明是开发环境，否则就是生产环境，通过这个判断，我就可以用三元运算符给变量赋值，这样打包就不用每次去改吧，变量值了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Mac 下为 MAMP (Pro) 安装 redis 扩展</title>
     <link href="http://yoursite.com/2018/05/12/47.mac-mamp-redis/"/>
     <id>http://yoursite.com/2018/05/12/47.mac-mamp-redis/</id>
     <published>2018-05-12T07:04:42.000Z</published>
-    <updated>2018-05-12T07:50:32.130Z</updated>
+    <updated>2018-05-12T07:51:29.267Z</updated>
     
-    <content type="html"><![CDATA[<p>Mac 用户一般开本地服务器环境的时候用得比较多的就是 <a href="https://www.mamp.info/en/" target="_blank" rel="external">MAMP</a> 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 <a href="https://redis.io/" target="_blank" rel="external">redis</a> ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。</p>
+    <content type="html"><![CDATA[<p>Mac 用户一般开本地服务器环境的时候用得比较多的就是 <a href="https://www.mamp.info/en/" target="_blank" rel="external">MAMP</a> 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 <a href="https://redis.io/" target="_blank" rel="external">redis</a> ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。<br><a id="more"></a></p>
 <h3 id="下载-amp-解压-amp-amp-编译-PHP-源码"><a href="#下载-amp-解压-amp-amp-编译-PHP-源码" class="headerlink" title="下载 &amp; 解压 &amp;&amp; 编译 PHP 源码"></a>下载 &amp; 解压 &amp;&amp; 编译 PHP 源码</h3><p><strong>教程中将以 php 5.5.30 版本作为例子，实际操作中请将版本号做相应替换</strong></p>
 <p>为方便下载，我在这放上下载地址，我这里的地址是 5.5.30 的 php 版本，如果需要其他版本，只需将地址中的版本号进行相应替换。<br>下载地址： <a href="http://us3.php.net/get/php-5.5.30.tar.gz/from/a/mirror" target="_blank" rel="external">http://us3.php.net/get/php-5.5.30.tar.gz/from/a/mirror</a></p>
 <p>下载完成后，将源码解压至 <code>/applications/MAMP/bin/php/php5.5.30/include/php</code></p>
@@ -40,7 +64,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;Mac 用户一般开本地服务器环境的时候用得比较多的就是 &lt;a href=&quot;https://www.mamp.info/en/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MAMP&lt;/a&gt; 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服
+      &lt;p&gt;Mac 用户一般开本地服务器环境的时候用得比较多的就是 &lt;a href=&quot;https://www.mamp.info/en/&quot;&gt;MAMP&lt;/a&gt; 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 &lt;a href=&quot;https://redis.io/&quot;&gt;redis&lt;/a&gt; ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。&lt;br&gt;
     
     </summary>
     
@@ -636,32 +660,6 @@
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你快看那片星空</title>
-    <link href="http://yoursite.com/2017/05/31/28.The_star_sky%20/"/>
-    <id>http://yoursite.com/2017/05/31/28.The_star_sky /</id>
-    <published>2017-05-31T11:56:09.000Z</published>
-    <updated>2018-05-10T14:50:16.300Z</updated>
-    
-    <content type="html"><![CDATA[<p>二十五日和同事一起去滨江的彩虹跑道相约跑步，跑完同事问我端午露营去吗？他说起的那一刻我非常心动，但想了想要回家，我还是拒绝了。第二天，我挣扎了好久还是决定去。因为觉得自己的生活实在太无聊，两点一线。<br><a id="more"></a><br>龙哥说他要去拍星空，这才是驱使我去的真正原因。我真的很喜欢星空啊！小时候天黑了，村子里也就黑了，天上还有很多的星星，但是现在天黑了，灯还亮着，星星都不见了。</p>
-<p>曾经用 <strong>星灯亦是心灯</strong> 做过很长时间的网名。高中的时候喜欢听《星星点灯》，天上的星星也是我心中的明灯，这就是那个名字的来历。后来网名换了，换成了 <strong>evollyone</strong>、<strong>Tit1e</strong>，但我最喜欢的还是 <strong>星灯亦是心灯</strong> 。</p>
-<p>我心中的明灯未曾灭过。</p>
-<p>晚上九点多的时候，星星已经升起，但是由于露营地的照明灯太亮，站在下面只看得到稀疏的几颗星星。于是我和龙哥便一同登上天池大坝。1000米的海拔和200阶阶梯，登上大坝时已经气喘吁吁。一抬头，星星不再稀疏，北斗七星悬在头顶。这是我见过最美的星空。</p>
-<p>十一点多的时候再次登坝，星星更密了，银河已从东边升起。架起拍星轨的相机后，我们一行人去了旁边拍照玩。</p>
-<p>我望着头顶的星空，想着如果你在我旁边和我一同抬头仰望这片星空那该有多好。你望着星空，我望着你，透过你的眼睛感受你眼里温柔的星空。我的眼里，有星空，有你。</p>
-<center><br><br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144643.jpg" alt=""><br><br></center>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;二十五日和同事一起去滨江的彩虹跑道相约跑步，跑完同事问我端午露营去吗？他说起的那一刻我非常心动，但想了想要回家，我还是拒绝了。第二天，我挣扎了好久还是决定去。因为觉得自己的生活实在太无聊，两点一线。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
