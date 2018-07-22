@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-22T14:53:16.748Z</updated>
+  <updated>2018-07-22T14:56:40.332Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2018/07/22/49.mamp-virtual-host/"/>
     <id>http://yoursite.com/2018/07/22/49.mamp-virtual-host/</id>
     <published>2018-07-22T14:16:31.000Z</published>
-    <updated>2018-07-22T14:53:16.748Z</updated>
+    <updated>2018-07-22T14:56:40.332Z</updated>
     
-    <content type="html"><![CDATA[<p>公司由于项目调整，在跑本都项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。</p>
+    <content type="html"><![CDATA[<p>公司由于项目调整，在跑本地项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。</p>
 <p>MAMP 我用的是免费版的，MAMP Pro 好像可以直接在界面设置，但是免费版也是可以实现的，只是设置过程没那么简单明了，但也不是非常难。<br><a id="more"></a><br>第一步：打开 <code>/Applications/MAMP/conf/apache/httpd.conf</code></p>
 <p>第二步：搜索 <code>httpd-vhosts</code>，定位至 <code>#Include /Applications/MAMP/conf/apache/extra/httpd-vhosts.conf</code>，删除前面的 <code>#</code>，保存。</p>
 <p>第三步：打开 <code>/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf</code>。这个文件中你可以看到被 <code>&lt;VirtualHost *:80&gt;&lt;/VirtualHost&gt;</code> 标签包裹的代码，我的是这样的，可能略微有些不同，但没关系。</p>
@@ -37,7 +37,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;公司由于项目调整，在跑本都项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。&lt;/p&gt;
+      &lt;p&gt;公司由于项目调整，在跑本地项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。&lt;/p&gt;
 &lt;p&gt;MAMP 我用的是免费版的，MAMP Pro 好像可以直接在界面设置，但是免费版也是可以实现的，只是设置过程没那么简单明了，但也不是非常难。&lt;br&gt;
     
     </summary>
