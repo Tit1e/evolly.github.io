@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-26T11:32:25.871Z</updated>
+  <updated>2018-07-22T14:53:16.748Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,19 +16,54 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MAMP 配置虚拟主机</title>
+    <link href="http://yoursite.com/2018/07/22/49.mamp-virtual-host/"/>
+    <id>http://yoursite.com/2018/07/22/49.mamp-virtual-host/</id>
+    <published>2018-07-22T14:16:31.000Z</published>
+    <updated>2018-07-22T14:53:16.748Z</updated>
+    
+    <content type="html"><![CDATA[<p>公司由于项目调整，在跑本都项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。</p>
+<p>MAMP 我用的是免费版的，MAMP Pro 好像可以直接在界面设置，但是免费版也是可以实现的，只是设置过程没那么简单明了，但也不是非常难。<br><a id="more"></a><br>第一步：打开 <code>/Applications/MAMP/conf/apache/httpd.conf</code></p>
+<p>第二步：搜索 <code>httpd-vhosts</code>，定位至 <code>#Include /Applications/MAMP/conf/apache/extra/httpd-vhosts.conf</code>，删除前面的 <code>#</code>，保存。</p>
+<p>第三步：打开 <code>/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf</code>。这个文件中你可以看到被 <code>&lt;VirtualHost *:80&gt;&lt;/VirtualHost&gt;</code> 标签包裹的代码，我的是这样的，可能略微有些不同，但没关系。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="selector-tag">VirtualHost</span> *<span class="selector-pseudo">:80</span>&gt;</div><div class="line">    <span class="selector-tag">ServerAdmin</span> <span class="selector-tag">webmaster</span>@<span class="keyword">dummy</span>-<span class="keyword">host2</span>.<span class="keyword">example</span>.<span class="keyword">com</span></div><div class="line">    DocumentRoot <span class="string">"/Users/xxxx/Public/Program/dmp"</span></div><div class="line">    ServerName localhost</div><div class="line">    ServerAlias localhost</div><div class="line">    ErrorLog <span class="string">"logs/dummy-host2.example.com-error_log"</span></div><div class="line">    CustomLog <span class="string">"logs/dummy-host2.example.com-access_log"</span> common</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure>
+<p>这就是我们需要修改的配置。默认应该有个 localhost 的配置（有点忘了）。</p>
+<p>第四步：修改 <code>DocumentRoot</code> 为这是项目目录，修改 <code>ServerName</code> 为你想设定的域名，<code>ServerAlias</code> 可以为域名设定别别名，可以不设置。保存文件。</p>
+<p>到此 MAMP 的配置结束了，我们还需要配置 hosts 文件，将 127.0.0.1 指向我们设定的域名，不然用域名还是无法访问到。<br>Mac 上推荐使用 <a href="https://itunes.apple.com/cn/app/ihosts-%E7%BC%96%E8%BE%91%E7%A5%9E%E5%99%A8/id1102004240?mt=12" target="_blank" rel="external">iHosts</a> 来设置 hosts，很实用的一个小工具，免费版的足够日常使用了。当然你也可以用其他方式，具体也可以搜索引擎搜索，网上教程一大堆。</p>
+<p>在 hosts 文件中加入 <code>127.0.0.1  配置的域名</code>，保存。重启服务器，重连一下网络即可。</p>
+<p>用 shadowsocks 的小伙伴要注意，要把代理模式设为 PAC自动模式，全局模式会导致域名无法访问，这个问题当初找了好久才发现。</p>
+<p><a href="https://blog.csdn.net/it_r00t/article/details/75254933" target="_blank" rel="external">参考地址</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;公司由于项目调整，在跑本都项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。&lt;/p&gt;
+&lt;p&gt;MAMP 我用的是免费版的，MAMP Pro 好像可以直接在界面设置，但是免费版也是可以实现的，只是设置过程没那么简单明了，但也不是非常难。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="Mac" scheme="http://yoursite.com/tags/Mac/"/>
+    
+  </entry>
+  
+  <entry>
     <title>webpack 通过 NODE_ENV 判断当前环境</title>
     <link href="http://yoursite.com/2018/06/26/48.NODE_ENV/"/>
     <id>http://yoursite.com/2018/06/26/48.NODE_ENV/</id>
     <published>2018-06-26T11:19:39.000Z</published>
-    <updated>2018-06-26T11:32:25.871Z</updated>
+    <updated>2018-07-22T14:53:32.820Z</updated>
     
     <content type="html"><![CDATA[<p>公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来，偶尔还会出现忘记清前缀的情况，这多多少少造成了不便。</p>
+<a id="more"></a>
 <p>后来从网上找到了判断环境的变量：<code>process.env.NODE_ENV</code>，这可以在 js 中直接获取到，如果它的值为 development 则说明是开发环境，否则就是生产环境，通过这个判断，我就可以用三元运算符给变量赋值，这样打包就不用每次去改吧，变量值了。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来
+      &lt;p&gt;公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来，偶尔还会出现忘记清前缀的情况，这多多少少造成了不便。&lt;/p&gt;
     
     </summary>
     
@@ -624,35 +659,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;jQuery操作单选、复选框选中状态&quot;&gt;&lt;a href=&quot;#jQuery操作单选、复选框选中状态&quot; class=&quot;headerlink&quot; title=&quot;jQuery操作单选、复选框选中状态&quot;&gt;&lt;/a&gt;jQuery操作单选、复选框选中状态&lt;/h2&gt;&lt;p&gt;工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 &lt;code&gt;checked&lt;/code&gt; 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//修改选中状态&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//取消选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//判断是否选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>移动端网页底部导航被虚拟键盘顶起解决方法</title>
-    <link href="http://yoursite.com/2017/07/16/29.mobile_web_footer/"/>
-    <id>http://yoursite.com/2017/07/16/29.mobile_web_footer/</id>
-    <published>2017-07-16T09:20:28.000Z</published>
-    <updated>2018-05-10T14:50:16.313Z</updated>
-    
-    <content type="html"><![CDATA[<p>在写移动端的网页应用的时候经常会遇到底部导航，或者说是底部菜单。而当触发虚拟键盘的时候，底部的导航会被顶起来，遮挡住网页内容。定位方法对此也并不管用。我这有两种解决方式（都基于jQuery）。<br><a id="more"></a><br>第一种：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  这种方法的思路是，当输入框获得焦点的时候，就隐藏，失去焦点就显示</span></div><div class="line">$(<span class="string">'input[type=text],textarea'</span>).focus(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'footer'</span>).hide();</div><div class="line">&#125;)</div><div class="line">$(<span class="string">'input[type=text],textarea'</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'footer'</span>).show();</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>但第一种方法有个缺点，就是当用户输入完成后可能只是收起了键盘，而此时输入框并没有失去焦点，但底部的导航还是隐藏状态，这样容易给用户造成困惑，所以第二种方法能很好地解决这个问题。</p>
-<p>第二种：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这种方法的思路是监听窗口高度的变化来判断是否有触发虚拟键盘，以此来控制底部导航的显示与隐藏</span></div><div class="line"><span class="keyword">var</span> height = $(<span class="built_in">window</span>),height();</div><div class="line"><span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> n_height = $(<span class="built_in">window</span>).height();</div><div class="line">    <span class="keyword">if</span>( height != n_height )&#123;</div><div class="line">        $(<span class="string">'footer'</span>).hide();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        $(<span class="string">'footer'</span>).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>第二种方法也间接解释了为什么会定位失效，因为因为虚拟键盘是把整个浏览器窗口顶起来了，而不是覆盖在浏览器上，所以定位在底部还是会在输入法上方。</p>
-<p>上述第一种方法来自网络，由于时间太久，来源已无从考察；第二种方法是同事的思路，至于来源我并不清楚是来自网络还是自己远程，我只是在此做一个总结。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在写移动端的网页应用的时候经常会遇到底部导航，或者说是底部菜单。而当触发虚拟键盘的时候，底部的导航会被顶起来，遮挡住网页内容。定位方法对此也并不管用。我这有两种解决方式（都基于jQuery）。&lt;br&gt;
     
     </summary>
     
