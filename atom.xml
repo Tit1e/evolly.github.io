@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-22T14:56:40.332Z</updated>
+  <updated>2018-07-23T12:39:03.616Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,22 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jsTree 不同节点不同右键菜单</title>
+    <link href="http://yoursite.com/2018/07/23/50.jstree/"/>
+    <id>http://yoursite.com/2018/07/23/50.jstree/</id>
+    <published>2018-07-23T12:36:59.000Z</published>
+    <updated>2018-07-23T12:39:03.616Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>MAMP 配置虚拟主机</title>
@@ -623,42 +639,6 @@
     <summary type="html">
     
       &lt;p&gt;网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: &lt;strong&gt;这两者的本质是一样的.&lt;/strong&gt; &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一些工作中常用到的代码(二)</title>
-    <link href="http://yoursite.com/2017/07/22/30.work-tips2/"/>
-    <id>http://yoursite.com/2017/07/22/30.work-tips2/</id>
-    <published>2017-07-22T12:11:41.000Z</published>
-    <updated>2018-05-10T14:50:16.301Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="jQuery操作单选、复选框选中状态"><a href="#jQuery操作单选、复选框选中状态" class="headerlink" title="jQuery操作单选、复选框选中状态"></a>jQuery操作单选、复选框选中状态</h2><p>工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 <code>checked</code> 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//修改选中状态</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>,<span class="literal">true</span>);<span class="comment">//选中</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>,<span class="literal">false</span>);<span class="comment">//取消选中</span></div><div class="line"><span class="comment">//判断是否选中</span></div><div class="line">$(<span class="string">'input[type=checkbox],input[type=radio]'</span>).prop(<span class="string">'checked'</span>);</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="使用FormData对象异步传输-form-表单数据"><a href="#使用FormData对象异步传输-form-表单数据" class="headerlink" title="使用FormData对象异步传输 form 表单数据"></a>使用FormData对象异步传输 form 表单数据</h2><p>我们工作中有时候会遇到表单需要用 Ajax 的方式传输，但是如果遇到表单元素数量比较多的情况，获取表单的数据内容会占据大量的时间，而 <code>formData</code> 可以将表单中的数据像提交表单那样将表单中的数据“打包”，然后通过 Ajax 传输。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"uploadForm"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- code... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">url</span>: <span class="string">'/upload'</span>,</div><div class="line">        <span class="attr">type</span>: <span class="string">'POST'</span>,</div><div class="line">        <span class="attr">cache</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">data</span>: <span class="keyword">new</span> FormData($(<span class="string">'#uploadForm'</span>)[<span class="number">0</span>]),</div><div class="line">        <span class="attr">processData</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">contentType</span>: <span class="literal">false</span></div><div class="line">    &#125;).done(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line"></div><div class="line">    &#125;).fail(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line"></div><div class="line">    &#125;);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p><strong>注意点</strong></p>
-<ul>
-<li><code>processData</code> 设置为 <code>false</code>。因为 <code>data</code> 值是 <code>FormData</code> 对象，不需要对数据做处理。</li>
-<li><code>form</code> 标签添加 <code>enctype=&quot;multipart/form-data&quot;</code> 属性。</li>
-<li><code>cache</code> 设置为 <code>false</code>，上传文件不需要缓存。</li>
-<li><code>contentType</code> 设置为<code>false</code>。因为是由 <code>form</code> 表单构造的 <code>FormData</code>对象，且已经声明了属性 <code>enctype=&quot;multipart/form-data&quot;</code>，所以这里设置为 <code>false</code>。<h2 id="使网页文字无法被选中"><a href="#使网页文字无法被选中" class="headerlink" title="使网页文字无法被选中"></a>使网页文字无法被选中</h2>给 html 标签加上 <code>onselectstart=&quot;return false&quot;</code> 就可以实现<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onselectstart</span>=<span class="string">"return false"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="不让-input-输入框显示历史输入记录"><a href="#不让-input-输入框显示历史输入记录" class="headerlink" title="不让 input 输入框显示历史输入记录"></a>不让 input 输入框显示历史输入记录</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">autocomplete</span>=<span class="string">"off"</span> /&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="layDate日期插件，样式发生错位"><a href="#layDate日期插件，样式发生错位" class="headerlink" title="layDate日期插件，样式发生错位"></a>layDate日期插件，样式发生错位</h2><p>layDate日期插件在与 bootstrap 一起使用的时候，layDate的日期选择框按钮会发生错位的现象，在layDate的 css 文件中加入一下几行样式可解决：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.laydate_box</span>, <span class="selector-class">.laydate_box</span> * &#123;</div><div class="line">    <span class="attribute">box-sizing</span>:content-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="代码触发-change-事件"><a href="#代码触发-change-事件" class="headerlink" title="代码触发 change 事件"></a>代码触发 change 事件</h2><p>有些时候，我们希望用代码触发change事件，可以直接调用无参数的 <code>change()</code>方法来触发该事件。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;jQuery操作单选、复选框选中状态&quot;&gt;&lt;a href=&quot;#jQuery操作单选、复选框选中状态&quot; class=&quot;headerlink&quot; title=&quot;jQuery操作单选、复选框选中状态&quot;&gt;&lt;/a&gt;jQuery操作单选、复选框选中状态&lt;/h2&gt;&lt;p&gt;工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 &lt;code&gt;checked&lt;/code&gt; 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//修改选中状态&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//取消选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//判断是否选中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;input[type=checkbox],input[type=radio]&#39;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
