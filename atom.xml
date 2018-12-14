@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-23T14:38:53.515Z</updated>
+  <updated>2018-12-14T17:42:54.070Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,89 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从零开始：Ubuntu 部署 Node 环境</title>
+    <link href="http://yoursite.com/2018/12/14/51.ubuntu-reset-mysql-password/"/>
+    <id>http://yoursite.com/2018/12/14/51.ubuntu-reset-mysql-password/</id>
+    <published>2018-12-14T12:29:48.000Z</published>
+    <updated>2018-12-14T17:42:54.070Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近注册了一个亚马逊的 AWS 账号，有一年的免费体验时间，于是打算这次机会来折腾折腾服务器方面的东西，顺便学学 Node。折腾过程中遇到了挺多问题，我都会一一记录下来。</p>
+<p>这次记录的是我在 Ubuntu 下安装了 mysql 时，没提醒我输入密码，Google 了一圈解决，在这里做个记录。</p>
+<a id="more"></a>
+<p>……</p>
+<p>……</p>
+<p>……</p>
+<p>本来这篇文章叫做“Ubuntu 安装 mysql 未提示输入密码”，但在我想去服务器上执行命令验证下命令是否正确的时候，发现 AWS 连不上了……然后我折腾了一个多小时，放弃了原来的服务器，重新新建了一个实例，又从头到尾折腾了一遍，所以这篇文章也正式更名为“从零开始：Ubuntu 部署 Node 环境”。</p>
+<h3 id="基本说明"><a href="#基本说明" class="headerlink" title="基本说明"></a>基本说明</h3><ul>
+<li>服务器：<a href="https://aws.amazon.com/cn/" target="_blank" rel="external">Amazon Web Services</a> EC2（新用户免费体验 1 年）</li>
+<li>服务器系统：Ubuntu 16.04.5 LTS</li>
+<li>操作环境：mac OS Mojave 10.14.2</li>
+<li>终端：iterm2</li>
+</ul>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><h4 id="一、创建实例"><a href="#一、创建实例" class="headerlink" title="一、创建实例"></a>一、创建实例</h4><p>1、登录控制台，开始创建<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-35-09.png" alt=""><br>2、选择系统（免费用户只能选择带有“符合条件的免费套餐”字样的项）<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-37-31.png" alt=""><br>3、选择实例类型<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-37-57.png" alt=""><br>4、启动<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-38-26.png" alt=""><br>5、创建密钥<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-41-35.png" alt=""></p>
+<p>密钥需要保管好，因为通过 SSH 连接服务器的时候需要用到。我将密钥存在 <code>~/.ssh/</code> 路径下。</p>
+<p>注：新建的实例默认情况下是 ping 不通的，因为它默认只允许 SSH 流量，需要设置一下<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_01-36-33.png" alt=""></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_01-39-26.png" alt=""></p>
+<h4 id="二、SSH-连接服务器"><a href="#二、SSH-连接服务器" class="headerlink" title="二、SSH 连接服务器"></a>二、SSH 连接服务器</h4><p>打开终端，输入命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ip 或 公有 DNS 可在创建实例的第一步图中的列表中找到</span></div><div class="line">sudo ssh -i ~/.ssh/zyd.pem ubuntu@[ip 或 公有 DNS]</div></pre></td></tr></table></figure></p>
+<h4 id="三、安装-node-js"><a href="#三、安装-node-js" class="headerlink" title="三、安装 node.js"></a>三、安装 node.js</h4><p>Ubuntu 下直接执行 <code>sudo apt install nodejs</code> 安装的 node 版本回会非常低，所以不推荐直接用这个命令安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#更新软件</span></div><div class="line">sudo apt update</div><div class="line">sudo apt upgrade</div><div class="line"><span class="comment">#添加 node 源</span></div><div class="line">curl <span class="_">-s</span>L https://deb.nodesource.com/setup_9.x | sudo -E bash -</div><div class="line"><span class="comment">#安装</span></div><div class="line">sudo apt install -y nodejs</div></pre></td></tr></table></figure></p>
+<p>安装完后安装 node 版本管理工具，我用的是 n ：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo npm <span class="keyword">install</span> n -g</div></pre></td></tr></table></figure></p>
+<p>n 的使用方法可参考 <a href="https://www.npmjs.com/package/n" target="_blank" rel="external">这里</a>。</p>
+<h4 id="四、Nginx-服务器代理设置"><a href="#四、Nginx-服务器代理设置" class="headerlink" title="四、Nginx 服务器代理设置"></a>四、Nginx 服务器代理设置</h4><p>1、安装 Nginx，安装完通过 <code>nginx -v</code> 查看版本号来看是否安装成功<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt <span class="keyword">install</span> nginx</div><div class="line">nginx -v</div></pre></td></tr></table></figure></p>
+<p>2、配置代理<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /etc/nginx/conf.d/</div><div class="line"><span class="comment">#文件名自定义</span></div><div class="line">sudo vi <span class="built_in">test</span>-3000.conf</div></pre></td></tr></table></figure></p>
+<p>按 <code>i</code> 进入 vim 的编辑模式，粘贴如下内容：</p>
+<p>粘贴前把注释内容删除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#这里需要对应域名</span></div><div class="line">upstream <span class="built_in">test</span> &#123;</div><div class="line">    <span class="comment">#端口需要根据之后 node 服务运行后的实际端口来配置，Express 的默认端口为 3000</span></div><div class="line">    server 127.0.0.1:3000;</div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    <span class="comment">#绑定的完整域名</span></div><div class="line">    server_name test.evolly.one;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header Host  <span class="variable">$http_host</span>;</div><div class="line">        proxy_set_header X-Real-IP  <span class="variable">$remote_addr</span>;  </div><div class="line">        proxy_set_header X-Forwarded-For  <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        proxy_set_header X-Nginx-proxy <span class="literal">true</span>;</div><div class="line">        <span class="comment">#这里需要对应域名</span></div><div class="line">        proxy_pass http://<span class="built_in">test</span>;</div><div class="line">        proxy_redirect off;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>按 <code>esc</code> 并直接在用键盘输出 <code>:wq</code> ，回车，保存并关闭文件。终端输入 <code>ls</code> 可查看当前目录下的文件列表。</p>
+<p>将域名解析至服务器，我的域名是在 GoDaddy 上买的，域名解析都差不多，添加一条 A 类型的解析。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_00-30-50.png" alt=""></p>
+<p>然后输入运行 <code>sudo nginx -t</code> 查看是否配置成功<br>成功终端会打印如下信息：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nginx: the configuration <span class="keyword">file</span> /etc/nginx/nginx.<span class="keyword">conf</span> <span class="keyword">syntax</span> <span class="keyword">is</span> ok</div><div class="line">nginx: configuration <span class="keyword">file</span> /etc/nginx/nginx.<span class="keyword">conf</span> test <span class="keyword">is</span> successful</div></pre></td></tr></table></figure></p>
+<p>重启 nginx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nginx <span class="_">-s</span> reload</div></pre></td></tr></table></figure></p>
+<h4 id="五、创建和部署-hello-world"><a href="#五、创建和部署-hello-world" class="headerlink" title="五、创建和部署 hello world"></a>五、创建和部署 hello world</h4><p>到根目录创建 <code>www</code> 目录并进入目录<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /</div><div class="line">sudo <span class="built_in">mkdir</span> www</div><div class="line"><span class="built_in">cd</span> www</div></pre></td></tr></table></figure></p>
+<p>创建 hello.js<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi hello.js</div></pre></td></tr></table></figure></p>
+<p>写入以下内容：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>) </span>&#123;</div><div class="line">res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;)</div><div class="line">res.end(<span class="string">'hello world'</span>)</div><div class="line">&#125;).listen(<span class="number">3000</span>) <span class="comment">//端口对应之前 nginx 配置中配置的端口</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'server test'</span>)</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node hello.js</div></pre></td></tr></table></figure></p>
+<p>现在访问之前解析的域名，就能在页面上看到 <code>hello world</code> 字样。<br>那么有个问题，现在 node 服务是启动了，但是终端被占用了，无法执行其他操作了。这时候我们就需要 pm2，pm2 是 node 进程管理工具，有了它，node 就不会占用你的终端了，当然它的功能不止只一个，还有如性能监控、自动重启、负载均衡等功能。</p>
+<p>安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo npm install -g pm2</div></pre></td></tr></table></figure></p>
+<p>运行 node 服务<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pm2 <span class="literal">start</span> hello.js</div></pre></td></tr></table></figure></p>
+<p>如果你使用了框架，如 Express，那你可以 cd 至项目跟目录，运行 <code>pm2 start &#39;./bin/WWW&#39;</code>。或者你可以看 <code>package.json</code> 中运行项目的实际命令是什么。</p>
+<p>运行后可以看到终端打印出了所有进程状态，并且终端没有被占用。pm2 的其他用法可以 <a href="https://www.npmjs.com/package/pm2" target="_blank" rel="external">参考这里</a></p>
+<h4 id="六、安装-mysql"><a href="#六、安装-mysql" class="headerlink" title="六、安装 mysql"></a>六、安装 mysql</h4><p>1、执行安装命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server</div><div class="line">sudo apt install mysql-client</div><div class="line">sudo apt install libmysqlclient-dev</div></pre></td></tr></table></figure></p>
+<p>正常情况下安装过程中会让你输入两次初始密码</p>
+<p>通过 <code>sudo netstat -tap | grep mysql</code> 测试是否安装成功，如果成功则显示如下：<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_01-05-52.png" alt=""></p>
+<p>2、设置 mysql 允许远程访问，否则数据库工具无法远程连接<br>编辑文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf</div></pre></td></tr></table></figure></p>
+<p>注释掉 bind-address = 127.0.0.1 行（最前面加<code>#</code>）</p>
+<p>保存退出</p>
+<p>连接 mysql,执行以下命令后，输入密码<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">mysql -uroot -p</span></div></pre></td></tr></table></figure></p>
+<p>执行授权命令并退出（命令中的 <code>；</code> 也要复制）：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> *.* <span class="keyword">to</span> root@<span class="string">'%'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'你的密码'</span> <span class="keyword">with</span> <span class="keyword">grant</span> <span class="keyword">option</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div><div class="line">quit</div></pre></td></tr></table></figure></p>
+<p>重启 mysql<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo service mysql restart</span></div></pre></td></tr></table></figure></p>
+<p>现在你就可以通过 Navicat 工具连接 mysql 了。</p>
+<h4 id="mysql-安装过程中没有提示输入初始密码"><a href="#mysql-安装过程中没有提示输入初始密码" class="headerlink" title="mysql 安装过程中没有提示输入初始密码"></a>mysql 安装过程中没有提示输入初始密码</h4><p>如果遇到这种情况，可以打开该文件查看默认密码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/mysql/debian.cnf</div></pre></td></tr></table></figure></p>
+<p>在这个文件里面有着 MySQL 默认的用户名和用户密码<br>正常情况下该文件中的 <code>user</code> 为 <code>debian-sys-maint</code>，而密码是由比较复杂的大小写数字构成，我们先通过这个账户连接 mysql,然后执行修改密码命令给 root 用户修改密码：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">mysql -u debian-sys-maint -p</span></div></pre></td></tr></table></figure></p>
+<p>输入密码后连接 mysql ,执行：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> mysql.user <span class="keyword">set</span> authentication_string=<span class="keyword">password</span>(<span class="string">'重置的密码'</span>) <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'root'</span><span class="keyword">and</span> Host = <span class="string">'localhost'</span>;</div></pre></td></tr></table></figure></p>
+<p>如果显示以下内容则说明修改成功：<br><figure class="highlight excel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Query OK, <span class="number">1</span> <span class="built_in">row</span> affected, <span class="number">1</span> warning (<span class="number">0.00</span> <span class="built_in">sec</span>)</div><div class="line"><span class="built_in">Rows</span> <span class="built_in">match</span><span class="symbol">ed:</span> <span class="number">1</span>  Chang<span class="symbol">ed:</span> <span class="number">1</span>  Warnin<span class="symbol">gs:</span> <span class="number">1</span></div></pre></td></tr></table></figure></p>
+<p>重启 mysql<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo service mysql restart</span></div></pre></td></tr></table></figure></p>
+<p>这样 root 用户的密码就被重置了。</p>
+<p>教程到此结束，最后感谢下面这几位作者提供的参考：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000010098126" target="_blank" rel="external">nodejs 服务器部署教程</a></li>
+<li><a href="https://blog.csdn.net/xiangwanpeng/article/details/54562362" target="_blank" rel="external">在 Ubuntu16.04 下安装 mysql</a></li>
+<li><a href="https://blog.csdn.net/sinat_21302587/article/details/76870457" target="_blank" rel="external">ubuntu 安装 mysql 时未提示输入密码</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近注册了一个亚马逊的 AWS 账号，有一年的免费体验时间，于是打算这次机会来折腾折腾服务器方面的东西，顺便学学 Node。折腾过程中遇到了挺多问题，我都会一一记录下来。&lt;/p&gt;
+&lt;p&gt;这次记录的是我在 Ubuntu 下安装了 mysql 时，没提醒我输入密码，Google 了一圈解决，在这里做个记录。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="折腾" scheme="http://yoursite.com/tags/%E6%8A%98%E8%85%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>jsTree 不同节点不同右键菜单</title>
@@ -613,42 +696,6 @@
     
       &lt;p&gt;工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: &lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144347.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浅谈 GET 和 POST 使用场景</title>
-    <link href="http://yoursite.com/2017/10/12/31.post-and-get/"/>
-    <id>http://yoursite.com/2017/10/12/31.post-and-get/</id>
-    <published>2017-10-12T08:55:43.000Z</published>
-    <updated>2018-05-10T14:50:16.311Z</updated>
-    
-    <content type="html"><![CDATA[<p>网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: <strong>这两者的本质是一样的.</strong> </p>
-<a id="more"></a>
-<p>现在抛开那些东西不谈, 我就单单来谈谈 GET 和 POST 在语义和应用场景方面我的理解. 单单从语义上来讲, 能很容易理解 GET 和 POST 之间的区别. 很多刚接触前端的新人一开始接触这两个请求的时候可能第一直觉就是 GET 是用来获取数据的, POST 是用来发送数据的. 到后来他们可能才会知道原来 GET 是可以发送数据的, POST 也是可以单单来获取数据的. </p>
-<p>虽然这两者到可以用来获取/发送数据, 但是在实际场景中, 还是要按需来使用比较合适的请求方式. 比如你要分享一片文章给朋友, 那么在文章的地址中就必须带有这篇文章的一些信息, 比如文章的 ID . 当你想分享一个带有搜索条件的页面时, 那么页面的地址中也必须包含又相应的搜索信息, 不然对方打开的是一个不带任何参数的url, 那对方怎么知道你在当时选中的文章或搜索条件是什么呢? 所以这种场景下, 用 GET 就比 POST 更加符合我们实际的应用场景. 而如果你发表了一片文章, 那么 GET 提交就不是太合适了, 因为 url 是有长度限制的, 虽然各家浏览器对 url 对长度的限制各不相同, 但是开发者又如何知道用户用什么浏览器来访问呢. 所以这种情况下, POST 明显比 GET 更加适合. </p>
-<p>所以我觉得下面这些最最表面的区别从使用场景的角度来说并没有错, 因为这些的的确确是在实际的使用场景中能直观感受到的区别</p>
-<blockquote>
-<p>1.GET后退按钮/刷新无害，POST数据会被重新提交（浏览器应该告知用户数据会被重新提交）。</p>
-<p>2.GET书签可收藏，POST为书签不可收藏。GET能被缓存，POST不能缓存 。</p>
-<p>3.GET历史参数保留在浏览器历史中。POST参数不会保存在浏览器历史中。GET对数据长度有限制，当发送数据时，GET 方法向 URL 添加数据；URL 的长度是受限制的（URL 的最大长度是 2048 个字符）。POST无限制。</p>
-<p>4.GET只允许 ASCII 字符。POST没有限制。也允许二进制数据。与 POST 相比，GET 的安全性较差，因为所发送的数据是 URL 的一部分。在发送密码或其他敏感信息时绝不要使用 GET ！POST 比 GET 更安全，因为参数不会被保存在浏览器历史或 web 服务器日志中。</p>
-<p>5.GET的数据在 URL 中对所有人都是可见的。POST的数据不会显示在 URL 中。</p>
-</blockquote>
-<p>而要往深了说的话,这些答案就给人一种答非所问的感觉了. </p>
-<p>所以,在问这个问题的时候最好也带上一些” GET 参数”, 比如: “ GET 和 POST 在使用场景下有什么区别?”; 再如: “ GET 和 POST 本质上有什么区别?”</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;网上涉及到 GET 和 POST 的讨论大多都是对比他们的区别, 而这些对比区别的文章之间又不断地打脸, 总之就是我说你是错的,他又说我是错的, 另一个跑过来又说他是错的. 看着真的是心累. 像我这种半路出家, 又是初涉前端的新人, 暂且不去讨论这两者之间原理如何如何, 总之现在能达成一致的观点是: &lt;strong&gt;这两者的本质是一样的.&lt;/strong&gt; &lt;/p&gt;
     
     </summary>
     
