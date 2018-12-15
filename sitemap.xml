@@ -2,6 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/02/02/18.js_mouse_drag/</loc>
+    
+    <lastmod>2018-12-15T02:39:56.574Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/10/06/13.ubuntu16.04%20-software/</loc>
+    
+    <lastmod>2018-12-15T02:38:48.467Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/10/05/12.Github-pages/</loc>
+    
+    <lastmod>2018-12-15T02:37:24.106Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/09/29/10.elementaryOS-Loki/</loc>
+    
+    <lastmod>2018-12-15T02:36:00.094Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/06/5.stay-with-me/</loc>
+    
+    <lastmod>2018-12-15T02:34:40.420Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/03/4.arrive-home/</loc>
+    
+    <lastmod>2018-12-15T02:34:05.782Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/03/14/3.Ubuntu-install-Visual-Studio-Code/</loc>
+    
+    <lastmod>2018-12-15T02:33:36.492Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/03/13/2.use-elementaryos/</loc>
+    
+    <lastmod>2018-12-15T02:32:22.610Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/12/14/51.ubuntu-node/</loc>
     
     <lastmod>2018-12-15T02:19:43.470Z</lastmod>
@@ -37,30 +93,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/10/05/12.Github-pages/</loc>
-    
-    <lastmod>2018-05-12T05:40:18.122Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/09/29/10.elementaryOS-Loki/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.326Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2017/03/07/26.jsNote3/</loc>
     
     <lastmod>2018-05-10T14:50:16.325Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/03/14/3.Ubuntu-install-Visual-Studio-Code/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.324Z</lastmod>
     
   </url>
   
@@ -93,23 +128,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/03/13/2.use-elementaryos/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.319Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2017/12/17/38.v-charts-bar/</loc>
     
     <lastmod>2018-05-10T14:50:16.318Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/03/4.arrive-home/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.317Z</lastmod>
     
   </url>
   
@@ -142,14 +163,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/03/03/22.code_majorization/</loc>
+    <loc>http://yoursite.com/2016/11/08/15.js-this/</loc>
     
     <lastmod>2018-05-10T14:50:16.312Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/11/08/15.js-this/</loc>
+    <loc>http://yoursite.com/2017/03/03/22.code_majorization/</loc>
     
     <lastmod>2018-05-10T14:50:16.312Z</lastmod>
     
@@ -222,13 +243,6 @@
     <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/10/06/13.ubuntu16.04%20-software/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.302Z</lastmod>
     
   </url>
   
@@ -317,23 +331,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/02/02/18.js_mouse_drag/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.289Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2017/12/21/41.webpack-dev-server/</loc>
     
     <lastmod>2018-05-10T14:50:16.289Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/06/5.stay-with-me/</loc>
-    
-    <lastmod>2018-05-10T14:50:16.288Z</lastmod>
     
   </url>
   
@@ -373,14 +373,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>http://yoursite.com/tools/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/tools/index.html</loc>
+    <loc>http://yoursite.com/tags/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
