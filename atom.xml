@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-15T02:19:43.470Z</updated>
+  <updated>2018-12-31T15:52:06.194Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>你好呀，2019</title>
+    <link href="http://yoursite.com/2018/12/31/52.hello-2019/"/>
+    <id>http://yoursite.com/2018/12/31/52.hello-2019/</id>
+    <published>2018-12-31T15:15:58.000Z</published>
+    <updated>2018-12-31T15:52:06.194Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="2018-计划"><a href="#2018-计划" class="headerlink" title="2018 计划"></a>2018 计划</h3><ol>
+<li>前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓</li>
+<li>增重到130斤（是增肌，不是增脂！） ❎</li>
+<li>一定要买个 switch（塞尔达天下第一！） ✅</li>
+<li>薪水上涨 30% ✅</li>
+<li>攒钱 ✅</li>
+<li>希望认识更多的人？（这个太难了） ✅</li>
+</ol>
+<p>回顾 2018 年的计划，我不知道怎么衡量自己的提升，提升是肯定有的，但是这算不算提升大我就不知道了。</p>
+<p>增重的话很明显的失败了，18 年几乎没去健身房吧，放弃一件事实在是太容易了，开年的时候就开始忙，连着加了好几个月的班，后面又不确定性的日常加班，到后来已经完全没了去健身房的兴致，当然我不是把锅摔在加班头上，毕竟后面不忙了，周末我也没去健身房了。</p>
+<p>switch 的话已经买了，也有大半年了吧，玩倒也断断续续一直在玩，玩得最疯的就是当初肝《异度之刃2》的时候了，很久没有游戏能这样吸引我了，确实是个好游戏。</p>
+<p>涨薪也达到了。</p>
+<p>攒钱的话多多少少总有点攒下来。</p>
+<p>认识的话，新认识了个旧人吧。是个初中认识的同校同学，与她重新认识是缘于她在我朋友圈留下了一个评论，以及第二天她主动的一次聊天，推动后面发展的是第二次聊天，但如果没有朋友圈的评论，也不会有第二天的聊天了吧。重新认识也有半年多了，现在关系倒也挺好，还不是很了解她，也正在慢慢了解她。</p>
+<p>18 年也认识了两个可爱的同事，他们是我晋公司以来最处得来的同事，大概是因为都是逗比吧。</p>
+<p>2019 年会是怎会的一年呢？如果工作上不出什么问题的话，应该依旧会平平淡淡。</p>
+<p>明年就不立计划了，只希望家人，我在意的以及在意我的人能快乐，身体能健康吧。与家人的关系也能更近一步，小时候不怎么跟家人交流，现在大了，事情多了，爸妈也会跟我来说一些事情了，与爸妈之间的话说的也就多了，但我希望还能更近一步吧。已经能明显感觉到爸妈在变老了，时间不等人呀。以前觉得“祝你身体健康”只是客套话，但是随着年龄变大，经历的事情怎多，我越来越觉得这不是客套话。</p>
+<p>希望 2019 年能越来越好。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;2018-计划&quot;&gt;&lt;a href=&quot;#2018-计划&quot; class=&quot;headerlink&quot; title=&quot;2018 计划&quot;&gt;&lt;/a&gt;2018 计划&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓&lt;/li&gt;
+&lt;li&gt;增重到130斤
+    
+    </summary>
+    
+    
+      <category term="新年计划" scheme="http://yoursite.com/tags/%E6%96%B0%E5%B9%B4%E8%AE%A1%E5%88%92/"/>
+    
+  </entry>
   
   <entry>
     <title>从零开始：Ubuntu 部署 Node 环境</title>
@@ -651,51 +691,6 @@
     <summary type="html">
     
       &lt;p&gt;一个块级元素靠右的实现方式有那些呢? 今天从别人哪里刚刚又学到了点东西, 整理了一下:&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- 基本结构 --&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;parent&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;block&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>div 包裹 img 底部出现空隙问题</title>
-    <link href="http://yoursite.com/2017/10/12/32.div-img/"/>
-    <id>http://yoursite.com/2017/10/12/32.div-img/</id>
-    <published>2017-10-12T11:33:53.000Z</published>
-    <updated>2018-05-10T14:50:16.296Z</updated>
-    
-    <content type="html"><![CDATA[<p>工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: </p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144347.png" alt=""></p>
-<a id="more"></a>
-<p>页面代码如下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">style</span>=<span class="string">"background-color:blueviolet"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color:#000;color:#fff;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./2.png"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>这是什么造成的呢? 这样看也许你看不出来, 但是像下面这样也许你就大概知道是为什么了:</p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144403.png" alt=""></p>
-<p>没错, 就是因为 <code>&lt;img&gt;</code> 不是块级元素,所以在一个 DIV 中它相当于一个文字, 而文字是有 baseline 的, 英文四线格中, baseline 处于倒数第二条而不是最后一条, 所以在图像底部才会出现一段空隙. 所以可以推测出: 在文字变大的时候, 空隙也会相应变大:</p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144416.png" alt=""></p>
-<p>在<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img" target="_blank" rel="external"> MDN </a>中有这样一段文字来描述 <code>&lt;img&gt;</code> 标签: </p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144435.png" alt=""></p>
-<p>那么什么是替换元素呢? </p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144447.png" alt=""></p>
-<p>也就是说 <code>&lt;img&gt;</code> 是一个可以设置款高的行内元素, 是不是和 css 属性中的 <code>display: inline-block</code> 有点像呢? 不过 <code>&lt;img&gt;</code> 可是一个实打实的 <strong>行内元素</strong> (第 3 排第 4 个):</p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144508.png" alt=""></p>
-<p>到这里已经完全了解了问题产生的原因, 那么相应解决问题的方法也就比较好找了:</p>
-<ol>
-<li>设置图片的 <code>vertical-align</code> 属性为 <code>bottom / top / middle</code> , 这样 <code>&lt;img&gt;</code> 的 baseline 就是最下面的线了,  也就不会产生空隙了. </li>
-<li>既然因为它是替换元素的缘故, 那把它转为块级元素不就好了吗? 所以设置<code>display: block</code> 也可以解决这个问题.</li>
-<li>把父元素的高度直接设置为图片想要的高度, 如果这个高度不是图片默认的高度, 再把图片的高度设为<code>height: 100%</code> 也可以解决这个问题. </li>
-</ol>
-<p>效果如图: </p>
-<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144519.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: &lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144347.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     

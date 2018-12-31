@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/12/31/52.hello-2019/</loc>
+    
+    <lastmod>2018-12-31T15:52:06.194Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/02/02/18.js_mouse_drag/</loc>
     
     <lastmod>2018-12-15T02:39:56.574Z</lastmod>
@@ -163,14 +170,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/11/08/15.js-this/</loc>
+    <loc>http://yoursite.com/2017/03/03/22.code_majorization/</loc>
     
     <lastmod>2018-05-10T14:50:16.312Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/03/03/22.code_majorization/</loc>
+    <loc>http://yoursite.com/2016/11/08/15.js-this/</loc>
     
     <lastmod>2018-05-10T14:50:16.312Z</lastmod>
     
@@ -233,14 +240,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/08/30/8.page-layout/</loc>
+    <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
+    <loc>http://yoursite.com/2016/08/30/8.page-layout/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
     
@@ -373,14 +380,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tools/index.html</loc>
+    <loc>http://yoursite.com/tags/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>http://yoursite.com/tools/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
