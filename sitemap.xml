@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2019-01-26T02:15:50.314Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/12/31/52.hello-2019/</loc>
     
     <lastmod>2018-12-31T16:01:54.915Z</lastmod>
@@ -240,14 +247,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/08/30/8.page-layout/</loc>
+    <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
+    <loc>http://yoursite.com/2016/08/30/8.page-layout/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
     
@@ -367,13 +374,6 @@
   
   <url>
     <loc>http://yoursite.com/google5956b53dfce76868.html</loc>
-    
-    <lastmod>2017-03-08T04:57:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
