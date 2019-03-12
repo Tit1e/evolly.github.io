@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-31T16:01:54.915Z</updated>
+  <updated>2019-03-12T06:45:13.611Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在 Vue CLI 3 中配置 svg-sprite-loader</title>
+    <link href="http://yoursite.com/2019/03/12/53.vue-cli3-use-svg-sprite-loader/"/>
+    <id>http://yoursite.com/2019/03/12/53.vue-cli3-use-svg-sprite-loader/</id>
+    <published>2019-03-12T06:25:46.000Z</published>
+    <updated>2019-03-12T06:45:13.611Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install svg-sprite-loader --save-dev</div></pre></td></tr></table></figure>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>在 Vue.config.js 中加入如下配置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">dir</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> path.join(__dirname, <span class="string">'.'</span>, dir)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">chainWebpack</span>: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</div><div class="line">        <span class="comment">// 重点:删除默认配置中处理svg</span></div><div class="line">        config.module.rules.delete(<span class="string">'svg'</span>)</div><div class="line">        config.module</div><div class="line">            .rule(<span class="string">'svg-sprite-loader'</span>)</div><div class="line">            .test(<span class="regexp">/\.svg$/</span>)</div><div class="line">            .include</div><div class="line">            .add(resolve(<span class="string">'src/icons'</span>)) <span class="comment">// 处理svg目录,根据实际情况修改</span></div><div class="line">            .end()</div><div class="line">            .use(<span class="string">'svg-sprite-loader'</span>)</div><div class="line">            .loader(<span class="string">'svg-sprite-loader'</span>)</div><div class="line">            .options(&#123;</div><div class="line">            <span class="attr">symbolId</span>: <span class="string">'icon-[name]'</span></div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然其他的 webpack 配置也可以在 Vue.config.js 中配置，包括反向代理等等。具体可查看<a href="https://cli.vuejs.org/zh/guide/webpack.html" target="_blank" rel="external">这里</a>。</p>
+<p><a href="https://juejin.im/post/5bc93881f265da0aea69ae2e" target="_blank" rel="external">参考文章</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div cl
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
+    
+      <category term="vue-cli" scheme="http://yoursite.com/tags/vue-cli/"/>
+    
+  </entry>
+  
+  <entry>
     <title>你好呀，2019</title>
     <link href="http://yoursite.com/2018/12/31/52.hello-2019/"/>
     <id>http://yoursite.com/2018/12/31/52.hello-2019/</id>
     <published>2018-12-31T15:15:58.000Z</published>
-    <updated>2018-12-31T16:01:54.915Z</updated>
+    <updated>2019-03-12T06:20:18.812Z</updated>
     
     <content type="html"><![CDATA[<h4 id="2018-计划"><a href="#2018-计划" class="headerlink" title="2018 计划"></a>2018 计划</h4><ol>
 <li>前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓</li>
@@ -30,17 +59,11 @@
 <li>攒钱 ✅</li>
 <li>希望认识更多的人？（这个太难了） ✅</li>
 </ol>
-<p>回顾 2018 年的计划，我不知道怎么衡量自己的提升，提升是肯定有的，但是这算不算提升大我就不知道了。</p>
 <a id="more"></a>
-<p>增重的话很明显的失败了，18 年几乎没去健身房吧，放弃一件事实在是太容易了，开年的时候就开始忙，连着加了好几个月的班，后面又不确定性的日常加班，到后来已经完全没了去健身房的兴致，当然我不是把锅摔在加班头上，毕竟后面不忙了，周末我也没去健身房了。</p>
+<p>增重很明显失败了，18 年几乎没去健身房吧，放弃一件事实在是太容易了。开年的时候就开始忙，连着加了好几个月的班，之后后面又不确定性的日常加班，导致后来已经完全没了去健身房的兴致，当然我不是把锅甩在加班头上，毕竟后面不忙了，周末我也没去健身房了。</p>
 <p>switch 的话已经买了，也有大半年了吧，玩倒也断断续续一直在玩，玩得最疯的就是当初肝《异度之刃2》的时候了，很久没有游戏能这样吸引我了，确实是个好游戏。</p>
-<p>涨薪也达到了。</p>
-<p>攒钱的话多多少少总有点攒下来。</p>
-<p>认识的话，新认识了个旧人吧。是个初中认识的同校同学，与她重新认识是缘于她在我朋友圈留下了一个评论，以及第二天她主动的一次聊天，推动后面发展的是第二次聊天，但如果没有朋友圈的评论，也不会有第二天的聊天了吧。重新认识也有半年多了，现在关系倒也挺好，还不是很了解她，也正在慢慢了解她。</p>
 <p>18 年也认识了两个可爱的同事，他们是我晋公司以来最处得来的同事，大概是因为都是逗比吧。</p>
-<p>2019 年会是怎会的一年呢？如果工作上不出什么问题的话，应该依旧会平平淡淡。</p>
-<p>明年就不立计划了，只希望家人，我在意的以及在意我的人能快乐，身体能健康吧。与家人的关系也能更近一步，小时候不怎么跟家人交流，现在大了，事情多了，爸妈也会跟我来说一些事情了，与爸妈之间的话说的也就多了，但我希望还能更近一步吧。已经能明显感觉到爸妈在变老了，时间不等人呀。以前觉得“祝你身体健康”只是客套话，但是随着年龄变大，经历的事情怎多，我越来越觉得这不是客套话。</p>
-<p>希望 2019 年能越来越好。</p>
+<p>明年就不立计划了，只希望家人，我在意的以及在意我的人能快乐，身体能健康吧。与家人的关系也能更近一步，小时候不怎么跟家人交流，现在大了，事情多了，爸妈也会跟我来说一些事情了，与爸妈之间的话说的也就多了，但我希望还能更近一步吧。已经能明显感觉到爸妈在变老了，时间不等人呀。以前觉得“祝你身体健康”只是客套话，但是随着年龄变大，经历的事情增多，我越来越觉得这不是客套话。随着年龄的增大，这句话也将变得弥足珍贵。</p>
 ]]></content>
     
     <summary type="html">
@@ -53,7 +76,6 @@
 &lt;li&gt;攒钱 ✅&lt;/li&gt;
 &lt;li&gt;希望认识更多的人？（这个太难了） ✅&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;回顾 2018 年的计划，我不知道怎么衡量自己的提升，提升是肯定有的，但是这算不算提升大我就不知道了。&lt;/p&gt;
     
     </summary>
     
@@ -319,12 +341,12 @@
     <link href="http://yoursite.com/2018/04/26/44.sessionStorage-localStorage/"/>
     <id>http://yoursite.com/2018/04/26/44.sessionStorage-localStorage/</id>
     <published>2018-04-26T12:52:47.000Z</published>
-    <updated>2018-05-10T14:50:16.309Z</updated>
+    <updated>2019-03-12T06:31:45.245Z</updated>
     
     <content type="html"><![CDATA[<p>说到前端的本地存储，一般人都会想到 localStorage、sessionStorage 和 Cookie。但这里我暂且不谈 cookie，来说说这两个长得比较像的。<br><a id="more"></a><br><code>localStorage</code> 是 HTML5 的新特性，用于数据的存储，但是不同于 <code>sessionStorage</code>，它的存储期限可以是无期限，只要用户不手动去清除它。而 <code>sessionStorage</code> 则在页面被关闭时就会被清除。它们可以存储的大小都为 5M。而 <code>Cookie</code> 则如它的名字，存储空间也只有小小的 4kb。</p>
 <p>我们先来看下 <code>localStroage</code> 是个什么东西，在 chrome 的控制台直接打印，我门可以看到这些东西：</p>
 <p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144749.png" alt=""></p>
-<p>我们可以直观地看到 <code>localStroage</code> 是一个对象，并且在有一个 length 属性，先猜测它是用来表示键值对数量的，并且我们可以看到 <code>localStroage</code> 的一些 API ：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最常用的为上面三个</span></div><div class="line">localStorage.setItem() <span class="comment">//设置 localStorage</span></div><div class="line">localStorage.getItem() <span class="comment">//读取 localStorage</span></div><div class="line">localStorage.removeItem() <span class="comment">//移除 localStorage</span></div><div class="line"></div><div class="line">localStorage.clear() <span class="comment">//清空 localStorage</span></div><div class="line">localStorage.key() <span class="comment">//获取某个位置的键名</span></div></pre></td></tr></table></figure></p>
+<p>我们可以直观地看到 <code>localStroage</code> 是一个对象，并且在有一个 length 属性，先猜测它是用来表示键值对数量的，并且我们可以看到 <code>localStroage</code> 的一些 API ：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最常用的为上面三个</span></div><div class="line">localStorage.setItem() <span class="comment">//设置 localStorage</span></div><div class="line">localStorage.getItem() <span class="comment">//读取 localStorage</span></div><div class="line">localStorage.removeItem() <span class="comment">//移除 localStorage</span></div><div class="line"></div><div class="line">localStorage.clear() <span class="comment">//清空 localStorage</span></div><div class="line">localStorage.key() <span class="comment">//获取某个位置的键名</span></div></pre></td></tr></table></figure></p>
 <p>不过需要注意的是，<code>localStorage</code> 不能直接存储对象，需要先将对象转成 json 才能存储。否则你将看到这样的结果：</p>
 <p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144803.png" alt=""></p>
 <p>接下来我们来实际操作一下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>设置<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"key"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    值：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"input"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"setValue()"</span>&gt;</span>写入<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>读取<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"getKey"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"getValue()"</span>&gt;</span>读取<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">    读取内容：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"value"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h4</span>&gt;</span>清除<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    键：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"removeKey"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"removeValue()"</span>&gt;</span>清除<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -670,41 +692,6 @@
       <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
       <category term="前端总结" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>块级元素靠右的实现方式</title>
-    <link href="http://yoursite.com/2017/10/12/33.div_to_right/"/>
-    <id>http://yoursite.com/2017/10/12/33.div_to_right/</id>
-    <published>2017-10-12T13:07:56.000Z</published>
-    <updated>2018-05-10T14:50:16.316Z</updated>
-    
-    <content type="html"><![CDATA[<p>一个块级元素靠右的实现方式有那些呢? 今天从别人哪里刚刚又学到了点东西, 整理了一下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 基本结构 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"block"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h4 id="使用-margin-属性"><a href="#使用-margin-属性" class="headerlink" title="使用 margin 属性"></a>使用 margin 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">margin-left</span>: auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>将 <code>margin-left</code> 设为 <code>auto</code> 后, 元素左边的 <code>margin</code> 会被尽可能的撑大, 所以自然就把元素挤到右边去了. </p>
-<h4 id="使用-position-属性"><a href="#使用-position-属性" class="headerlink" title="使用 position 属性"></a>使用 position 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#parent</span>&#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>使用定位, 绝对能把元素放到右边去. </p>
-<h4 id="使用-float-属性"><a href="#使用-float-属性" class="headerlink" title="使用 float 属性"></a>使用 float 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">float</span>: right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>使用浮动将元素浮动到右边. </p>
-<h4 id="使用-text-align-属性"><a href="#使用-text-align-属性" class="headerlink" title="使用 text-align 属性"></a>使用 text-align 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#parent</span>&#123;</div><div class="line">  <span class="attribute">text-align</span>: right;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#block</span>&#123;</div><div class="line">  <span class="attribute">display</span>: inline-block;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>将块设为行内元素,然后父元素使用 <code>text-align: right;</code> 是块到右边. </p>
-<h4 id="使用-flex-属性"><a href="#使用-flex-属性" class="headerlink" title="使用 flex 属性"></a>使用 flex 属性</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#parent</span>&#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">  <span class="attribute">justify-content</span>: flex-end;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>将父元素变为弹性容器, 然后将 <code>justify-content</code> 设为 <code>flex-end</code>, 那么容器中的弹性元素会从右开始排列. </p>
-<p>以上就是我整理块级元素靠右排列的几种方式, 如有遗漏, 欢迎补充. </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一个块级元素靠右的实现方式有那些呢? 今天从别人哪里刚刚又学到了点东西, 整理了一下:&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- 基本结构 --&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;parent&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;block&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
