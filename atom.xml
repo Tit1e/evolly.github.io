@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-26T14:33:06.211Z</updated>
+  <updated>2019-03-27T01:09:40.218Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2019/03/26/55.web-print/"/>
     <id>http://yoursite.com/2019/03/26/55.web-print/</id>
     <published>2019-03-26T14:26:32.000Z</published>
-    <updated>2019-03-26T14:33:06.211Z</updated>
+    <updated>2019-03-27T01:09:40.218Z</updated>
     
-    <content type="html"><![CDATA[<p>公司业务上有打印需求，但打印内容在一个弹窗中，在网上找了一圈，找到了解决办法。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dom = <span class="built_in">document</span>.getElementById(<span class="string">'content'</span>)</span><br><span class="line"><span class="keyword">let</span> win = <span class="built_in">window</span>.open(<span class="string">''</span>)</span><br><span class="line">win.document.write(dom.outerHTML)</span><br><span class="line">win.print()</span><br></pre></td></tr></table></figure><p>以上代码就实现了指定区域的打印功能。</p><p><a href="https://www.zhihu.com/question/20108278/answer/14136964" target="_blank" rel="noopener">参考文章</a></p>]]></content>
+    <content type="html"><![CDATA[<p>公司业务上有打印需求，但打印内容在一个弹窗中，在网上找了一圈，找到了解决办法。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dom = <span class="built_in">document</span>.getElementById(<span class="string">'content'</span>)</span><br><span class="line"><span class="keyword">let</span> win = <span class="built_in">window</span>.open(<span class="string">''</span>)</span><br><span class="line">win.document.write(dom.outerHTML)</span><br><span class="line">win.print()</span><br></pre></td></tr></table></figure><p>以上代码就实现了指定区域的打印功能。</p><p><a href="https://www.zhihu.com/question/20108278/answer/14142503" target="_blank" rel="noopener">参考文章</a></p>]]></content>
     
     <summary type="html">
     
