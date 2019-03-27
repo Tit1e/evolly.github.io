@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-27T01:09:40.218Z</updated>
+  <updated>2019-03-27T05:31:48.676Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>编写一个全局 SVG 图标组件</title>
+    <link href="http://yoursite.com/2019/03/27/56.global-icon-component/"/>
+    <id>http://yoursite.com/2019/03/27/56.global-icon-component/</id>
+    <published>2019-03-27T04:30:06.000Z</published>
+    <updated>2019-03-27T05:31:48.676Z</updated>
+    
+    <content type="html"><![CDATA[<p>在现在网站开发中， icon 是必不可少的元素，它可以使页面更加美观，内容更加丰富，某些场景也能更加直观地表达含义。icon 也分好多种类型，以前是使用图片，后来有了字体图标，SVG 等等，由于占用大小以及使用方便程度问题，用图片做图标的方式已经渐渐被淘汰了，取而代之的是字体图标以及 SVG，这两种都是矢量图形，光放大不失真这个特点就很让人心动，并且体积还比图片小。</p><p>字体图标顾名思义就是这个图标就是一个字体，只是它长相是个图标。因此 CSS 能对字体设置的属性，对字体图标也同样适用。</p><p>缺点的话可能你只是想使用这个图标库的某几个图标，但是你却必须把整个图标库引入，造成了资源浪费。不过现在这个问题在 <a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里妈妈</a> 图标管理平台得到了很好的解决，可以自己定义需要用到的图标，然后系统会帮你生成一个图标库，可以在线引入，也可以下载到本地，可以说是造福了广大前端工程师和设计师。</p><p>虽然阿里的这个平台已经做得很好了，但是我在实际项目开发中还是遇到了不方便的问题：</p><ul><li>之前没考虑周全，或者后来来了新的需求，需要增加新图标，而要更新图标库是需要账号的，更新一个图标可能会涉及到根很多人沟通。</li><li>更新完图标库后还需去更新在线引用地址或更新本地文件。</li></ul><p>而 SVG，一下是 <a href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E7%B8%AE%E6%94%BE%E5%90%91%E9%87%8F%E5%9C%96%E5%BD%A2" target="_blank" rel="noopener">维基百科</a> 对它的描述：</p><blockquote><p><strong>可缩放矢量图形</strong>（英语：<strong>Scalable Vector Graphics</strong>，<strong>SVG</strong>）是一种基于 <a href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E6%89%A9%E5%B1%95%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">可扩展标记语言</a> （<a href="https://zh.wikipedia.org/wiki/XML" target="_blank" rel="noopener">XML</a>），用于描述二维 <a href="https://zh.wikipedia.org/wiki/%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%BD%A2" target="_blank" rel="noopener">矢量图形</a> 的图形格式。SVG由 <a href="https://zh.wikipedia.org/wiki/W3C" target="_blank" rel="noopener">W3C</a> 制定，是一个 <a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%A0%87%E5%87%86" target="_blank" rel="noopener">开放标准</a>。</p></blockquote><p>SVG 其实是 XML，因此你可以直接使用编辑器打开 .svg 文件，并且可对它进行编辑。它的优点在于：</p><ul><li>一个图标就是一个文件，灵活性高。</li><li>不同区域可以使用不同颜色，也就是说可以用它绘制彩色图标。</li><li>矢量图形，放大不失真。</li></ul><p>SVG 文件的使用可以分为很多种，你可以把它当作图片直接在 <code>img</code> 标签或 CSS 的 <code>background-image</code> 属性中使用，也可使用 <code>svg</code> 标签中使用。但是这样使用会很麻烦，避免不了一串很长的地址，如果只要写一个标签，并传入一个图标名字就可直接使用，那就完美了。</p><p>我在  <a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank" rel="noopener">vue-element-admin</a> 项目中发现了这种使用方式，因此把它提取了出来。</p><p>首先参考 <a href="https://evolly.one/2019/03/12/53.vue-cli3-use-svg-sprite-loader/" target="_blank" rel="noopener">在 Vue CLI 3 中配置 svg-sprite-loader</a> 在 webpack 添加 SVG 的 loader。并建好相应的目录，文章中我的目录建在 <code>src/icons</code>。</p><p>在 <code>icons</code> 文件夹下新建 <code>svg</code> 文件夹用来存放图标，在同级目录下新建 <code>index.js</code>。</p><p>然后我们去编写组件，名字就命名为 <code>SvgIcon</code>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// SvgIcon.vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;svg :class=&quot;svgClass&quot; aria-hidden=&quot;true&quot; v-on=&quot;$listeners&quot;&gt;</span><br><span class="line">    &lt;use :xlink:href=&quot;iconName&quot; /&gt;</span><br><span class="line">  &lt;/svg&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;SvgIcon&apos;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    iconClass: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">      required: true</span><br><span class="line">    &#125;,</span><br><span class="line">    className: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">      default: &apos;&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    iconName() &#123;</span><br><span class="line">      return `#icon-$&#123;this.iconClass&#125;`</span><br><span class="line">    &#125;,</span><br><span class="line">    svgClass() &#123;</span><br><span class="line">      if (this.className) &#123;</span><br><span class="line">        return &apos;svg-icon &apos; + this.className</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        return &apos;svg-icon&apos;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.svg-icon &#123;</span><br><span class="line">  width: 1em;</span><br><span class="line">  height: 1em;</span><br><span class="line">  vertical-align: -0.15em;</span><br><span class="line">  fill: currentColor;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure><p>然后继续编写 <code>src/icons/index.js</code></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/icons/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> SvgIcon <span class="keyword">from</span> <span class="string">'@/components/SvgIcon'</span><span class="comment">// svg组件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册为全局组件</span></span><br><span class="line">Vue.component(<span class="string">'svg-icon'</span>, SvgIcon)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> req = <span class="built_in">require</span>.context(<span class="string">'./svg'</span>, <span class="literal">false</span>, /\.svg$/)</span><br><span class="line"><span class="keyword">const</span> requireAll = <span class="function"><span class="params">requireContext</span> =&gt;</span> requireContext.keys().map(requireContext)</span><br><span class="line">requireAll(req)</span><br></pre></td></tr></table></figure><p>最后，在 <code>main.js</code> 中引入</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'@/icons'</span></span><br></pre></td></tr></table></figure><p>这样你就可以在系统任何地方使用 <code>&lt;svg-icon icon-name=&quot;svg名称&quot; /&gt;</code> 引入图标了，当你想增加图标时，只要往 <code>src/icons/svg</code> 中添加图标就可以了。</p><p>结合 <a href="https://evolly.one/2019/03/26/54.vuecl3-npm-publish/" target="_blank" rel="noopener">使用 Vue CLI3 编写组件库并发布至 npm</a>，你就可以拥有一个属于自己的图标库。你只要维护这个图标库，然后在其他项目中安装与更新它就可以了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在现在网站开发中， icon 是必不可少的元素，它可以使页面更加美观，内容更加丰富，某些场景也能更加直观地表达含义。icon 也分好多种类型，以前是使用图片，后来有了字体图标，SVG 等等，由于占用大小以及使用方便程度问题，用图片做图标的方式已经渐渐被淘汰了，取而代之的是字
+      
+    
+    </summary>
+    
+    
+      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
+    
+      <category term="vue-cli" scheme="http://yoursite.com/tags/vue-cli/"/>
+    
+  </entry>
   
   <entry>
     <title>网页打印指定区域内容</title>
@@ -449,28 +476,6 @@
     <summary type="html">
     
       &lt;p&gt;公司有个平台有改版的打算，UI 出了首页的设计稿，我看了下，大致构思了一下，打算用 vue 和 Element-UI 来写。前阵子刚忙完，这几天比较空，我就看着 UI 稿在想实现方式，其中一个是水球图。这篇先记录一下 vue-cli 中生成水球图的方法。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="前端学习" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>vue-cli 引入全局 scss 文件</title>
-    <link href="http://yoursite.com/2017/12/14/36.vue-import-sass-global/"/>
-    <id>http://yoursite.com/2017/12/14/36.vue-import-sass-global/</id>
-    <published>2017-12-14T14:11:52.000Z</published>
-    <updated>2018-05-10T14:50:16.315Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>我们平时在使用 vue-cli 开发项目的时候，写 css 会用到预处理器来提高 css 的编写效率。我们在使用 sass 的时候一般会先在一个全局的<code>.scss</code>文件中定义好一些颜色变量或其他变量，然后在需要用的这些变量的组件内把这个文件通过<code>@import</code>的方式引入，然后就可以使用文件中定义的变量了。但是这也出现一个问题，因为这个文件中定义的都是比较通用的变量，所以几乎每个<code>.vue</code>文件几乎都会将它引入，当组件多了之后，没次要引入这个文件就显得累赘，而且如果这个文件换了路径，那维护起来就比较麻烦，还容易出错。所以最好就是一个地方配置后，全局都可以直接使用，这样是最高效，也是最容易维护的。于是我在网上找了一圈，试了网上的 N 多方法，终于在 <a href="https://segmentfault.com/q/1010000008731809" target="_blank" rel="noopener">这里</a> 找到了我能用的方法，而且配置简单。<br><a id="more"></a></p><h4 id="使用sass，这两个包是前提"><a href="#使用sass，这两个包是前提" class="headerlink" title="使用sass，这两个包是前提:"></a>使用<code>sass</code>，这两个包是前提:</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="keyword">node</span><span class="title">-sass</span> --save-dev</span><br><span class="line">npm install sass-loader --save-dev</span><br></pre></td></tr></table></figure><h4 id="要全局引用-scss还需要安装sass-resources-loader"><a href="#要全局引用-scss还需要安装sass-resources-loader" class="headerlink" title="要全局引用.scss还需要安装sass-resources-loader"></a>要全局引用<code>.scss</code>还需要安装<code>sass-resources-loader</code></h4><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install sass-resources-loader --<span class="built_in">save</span>-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure><h4 id="修改-build-utils-js，在return中新增如下代码"><a href="#修改-build-utils-js，在return中新增如下代码" class="headerlink" title="修改/build/utils.js，在return中新增如下代码"></a>修改<code>/build/utils.js</code>，在<code>return</code>中新增如下代码</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scss: generateLoaders(<span class="string">'sass'</span>).concat(</span><br><span class="line">  &#123;</span><br><span class="line">    loader: <span class="string">'sass-resources-loader'</span>,</span><br><span class="line">    options: &#123;</span><br><span class="line">      <span class="comment">//你要引入的 .scss 文件的路径</span></span><br><span class="line">      resources: path.resolve(__dirname, <span class="string">'../src/assets/your.scss'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>完成以上步骤后，你就可以在<code>&lt;style lang=&quot;scss&quot;&gt;</code>标签中直接使用先前定义好的变量了。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;p&gt;我们平时在使用 vue-cli 开发项目的时候，写 css 会用到预处理器来提高 css 的编写效率。我们在使用 sass 的时候一般会先在一个全局的&lt;code&gt;.scss&lt;/code&gt;文件中定义好一些颜色变量或其他变量，然后在需要用的这些变量的组件内把这个文件通过&lt;code&gt;@import&lt;/code&gt;的方式引入，然后就可以使用文件中定义的变量了。但是这也出现一个问题，因为这个文件中定义的都是比较通用的变量，所以几乎每个&lt;code&gt;.vue&lt;/code&gt;文件几乎都会将它引入，当组件多了之后，没次要引入这个文件就显得累赘，而且如果这个文件换了路径，那维护起来就比较麻烦，还容易出错。所以最好就是一个地方配置后，全局都可以直接使用，这样是最高效，也是最容易维护的。于是我在网上找了一圈，试了网上的 N 多方法，终于在 &lt;a href=&quot;https://segmentfault.com/q/1010000008731809&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt; 找到了我能用的方法，而且配置简单。&lt;br&gt;
     
     </summary>
     

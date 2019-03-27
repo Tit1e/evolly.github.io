@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/03/27/56.global-icon-component/</loc>
+    
+    <lastmod>2019-03-27T05:31:48.676Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/03/12/53.vue-cli3-use-svg-sprite-loader/</loc>
     
     <lastmod>2019-03-27T04:25:47.110Z</lastmod>
@@ -268,14 +275,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/08/30/8.page-layout/</loc>
+    <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/12/17/39.radio-rhomboid/</loc>
+    <loc>http://yoursite.com/2016/08/30/8.page-layout/</loc>
     
     <lastmod>2018-05-10T14:50:16.303Z</lastmod>
     
@@ -401,14 +408,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>http://yoursite.com/tools/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/tools/index.html</loc>
+    <loc>http://yoursite.com/tags/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
