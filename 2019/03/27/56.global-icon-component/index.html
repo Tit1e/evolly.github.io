@@ -1,17 +1,17 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 编写一个全局 SVG 图标组件 · I'm Tit1e</title><meta name="description" content="编写一个全局 SVG 图标组件 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="I'm Tit1e"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">编写一个全局 SVG 图标组件</h1><div class="post-info">2019年3月27日</div><div class="post-content"><p>在现在网站开发中， icon 是必不可少的元素，它可以使页面更加美观，内容更加丰富，某些场景也能更加直观地表达含义。icon 也分好多种类型，以前是使用图片，后来有了字体图标，SVG 等等，由于占用大小以及使用方便程度问题，用图片做图标的方式已经渐渐被淘汰了，取而代之的是字体图标以及 SVG，这两种都是矢量图形，光放大不失真这个特点就很让人心动，并且体积还比图片小。</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 编写一个全局 SVG 图标组件 · I'm Tit1e</title><meta name="description" content="编写一个全局 SVG 图标组件 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="I'm Tit1e"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">编写一个全局 SVG 图标组件</h1><div class="post-info">2019年3月27日</div><div class="post-content"><p>在现在网站开发中， icon 是必不可少的元素，它可以使页面更加美观，内容更加丰富，某些场景也能更加直观地表达含义。icon 也分好多种类型，以前是使用图片，后来有了字体图标，SVG。由于占用空间大以及使用不方便（比如不同终端需要不同尺寸的图片），用图片做图标的方式已经渐渐被淘汰了，取而代之的是字体图标以及 SVG，这两种都是矢量图形，光放大不失真这个特点就很让人心动，并且体积还比图片小。</p>
 <a id="more"></a>
-<p>字体图标顾名思义就是这个图标就是一个字体，只是它长相是个图标。因此 CSS 能对字体设置的属性，对字体图标也同样适用。</p>
-<p>缺点的话可能你只是想使用这个图标库的某几个图标，但是你却必须把整个图标库引入，造成了资源浪费。不过现在这个问题在 <a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里妈妈</a> 图标管理平台得到了很好的解决，可以自己定义需要用到的图标，然后系统会帮你生成一个图标库，可以在线引入，也可以下载到本地，可以说是造福了广大前端工程师和设计师。</p>
-<p>虽然阿里的这个平台已经做得很好了，但是我在实际项目开发中还是遇到了不方便的问题：</p>
+<p>字体图标顾名思义就是这个图标就是一个字体，只是它显示的是个图标。因此 CSS 能对字体设置的属性，对字体图标也同样适用。</p>
+<p>缺点的话可能只是想使用这个图标库的某几个图标，但是却必须把整个图标库引入，造成了资源浪费。不过现在这个问题在 <a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里妈妈</a> 图标管理平台得到了很好的解决，可以自己定义需要用到的图标，然后系统会帮你生成一个图标库，可以在线引入，也可以下载到本地，可以说是造福了广大前端工程师和设计师。</p>
+<p>虽然阿里的这个平台已经做得很好了，但是就我而言，在实际项目开发中还是遇到了不方便的问题：</p>
 <ul>
 <li>之前没考虑周全，或者后来来了新的需求，需要增加新图标，而要更新图标库是需要账号的，更新一个图标可能会涉及到根很多人沟通。</li>
 <li>更新完图标库后还需去更新在线引用地址或更新本地文件。</li>
 </ul>
-<p>而 SVG，一下是 <a href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E7%B8%AE%E6%94%BE%E5%90%91%E9%87%8F%E5%9C%96%E5%BD%A2" target="_blank" rel="noopener">维基百科</a> 对它的描述：</p>
+<p>SVG，以下是 <a href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E7%B8%AE%E6%94%BE%E5%90%91%E9%87%8F%E5%9C%96%E5%BD%A2" target="_blank" rel="noopener">维基百科</a> 对它的描述：</p>
 <blockquote>
 <p><strong>可缩放矢量图形</strong>（英语：<strong>Scalable Vector Graphics</strong>，<strong>SVG</strong>）是一种基于 <a href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E6%89%A9%E5%B1%95%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">可扩展标记语言</a> （<a href="https://zh.wikipedia.org/wiki/XML" target="_blank" rel="noopener">XML</a>），用于描述二维 <a href="https://zh.wikipedia.org/wiki/%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%BD%A2" target="_blank" rel="noopener">矢量图形</a> 的图形格式。SVG由 <a href="https://zh.wikipedia.org/wiki/W3C" target="_blank" rel="noopener">W3C</a> 制定，是一个 <a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%A0%87%E5%87%86" target="_blank" rel="noopener">开放标准</a>。</p>
 </blockquote>
-<p>SVG 其实是 XML，因此你可以直接使用编辑器打开 .svg 文件，并且可对它进行编辑。它的优点在于：</p>
+<p>SVG 其实是 XML格式的文件，因此你可以直接使用编辑器打开 .svg 文件，并且可对它进行编辑。它的优点在于：</p>
 <ul>
 <li>一个图标就是一个文件，灵活性高。</li>
 <li>不同区域可以使用不同颜色，也就是说可以用它绘制彩色图标。</li>
