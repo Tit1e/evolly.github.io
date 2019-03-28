@@ -127,7 +127,7 @@
     <link href="https://github.com/Tit1e/2018/12/31/52.hello-2019/"/>
     <id>https://github.com/Tit1e/2018/12/31/52.hello-2019/</id>
     <published>2018-12-31T15:15:58.000Z</published>
-    <updated>2019-03-12T06:20:18.812Z</updated>
+    <updated>2019-03-28T15:46:00.862Z</updated>
     
     <content type="html"><![CDATA[<h4 id="2018-计划"><a href="#2018-计划" class="headerlink" title="2018 计划"></a>2018 计划</h4><ol><li>前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓</li><li>增重到130斤（是增肌，不是增脂！） ❎</li><li>一定要买个 switch（塞尔达天下第一！） ✅</li><li>薪水上涨 30% ✅</li><li>攒钱 ✅</li><li>希望认识更多的人？（这个太难了） ✅</li></ol><a id="more"></a><p>增重很明显失败了，18 年几乎没去健身房吧，放弃一件事实在是太容易了。开年的时候就开始忙，连着加了好几个月的班，之后后面又不确定性的日常加班，导致后来已经完全没了去健身房的兴致，当然我不是把锅甩在加班头上，毕竟后面不忙了，周末我也没去健身房了。</p><p>switch 的话已经买了，也有大半年了吧，玩倒也断断续续一直在玩，玩得最疯的就是当初肝《异度之刃2》的时候了，很久没有游戏能这样吸引我了，确实是个好游戏。</p><p>18 年也认识了两个可爱的同事，他们是我晋公司以来最处得来的同事，大概是因为都是逗比吧。</p><p>明年就不立计划了，只希望家人，我在意的以及在意我的人能快乐，身体能健康吧。与家人的关系也能更近一步，小时候不怎么跟家人交流，现在大了，事情多了，爸妈也会跟我来说一些事情了，与爸妈之间的话说的也就多了，但我希望还能更近一步吧。已经能明显感觉到爸妈在变老了，时间不等人呀。以前觉得“祝你身体健康”只是客套话，但是随着年龄变大，经历的事情增多，我越来越觉得这不是客套话。随着年龄的增大，这句话也将变得弥足珍贵。</p>]]></content>
     
@@ -135,7 +135,7 @@
     
       &lt;h4 id=&quot;2018-计划&quot;&gt;&lt;a href=&quot;#2018-计划&quot; class=&quot;headerlink&quot; title=&quot;2018 计划&quot;&gt;&lt;/a&gt;2018 计划&lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓&lt;/li&gt;
-&lt;li&gt;增重到130斤（是增肌，不是增脂！） ❎&lt;/li&gt;
+&lt;li&gt;增重到130斤（是增肌，不是增脂！） ❎&lt;/li&gt;
 &lt;li&gt;一定要买个 switch（塞尔达天下第一！） ✅&lt;/li&gt;
 &lt;li&gt;薪水上涨 30% ✅&lt;/li&gt;
 &lt;li&gt;攒钱 ✅&lt;/li&gt;
@@ -242,13 +242,13 @@
     <link href="https://github.com/Tit1e/2018/05/12/47.mac-mamp-redis/"/>
     <id>https://github.com/Tit1e/2018/05/12/47.mac-mamp-redis/</id>
     <published>2018-05-12T07:04:42.000Z</published>
-    <updated>2018-07-15T14:02:06.686Z</updated>
+    <updated>2019-03-28T15:49:17.816Z</updated>
     
     <content type="html"><![CDATA[<p>Mac 用户一般开本地服务器环境的时候用得比较多的就是 <a href="https://www.mamp.info/en/" target="_blank" rel="noopener">MAMP</a> 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 <a href="https://redis.io/" target="_blank" rel="noopener">redis</a> ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。<br><a id="more"></a></p><h3 id="下载-amp-解压-amp-amp-编译-PHP-源码"><a href="#下载-amp-解压-amp-amp-编译-PHP-源码" class="headerlink" title="下载 &amp; 解压 &amp;&amp; 编译 PHP 源码"></a>下载 &amp; 解压 &amp;&amp; 编译 PHP 源码</h3><p><strong>教程中将以 php 5.5.30 版本作为例子，实际操作中请将版本号做相应替换</strong></p><p>为方便下载，我在这放上下载地址，我这里的地址是 5.5.30 的 php 版本，如果需要其他版本，只需将地址中的版本号进行相应替换。<br>下载地址： <a href="http://us3.php.net/get/php-5.5.30.tar.gz/from/a/mirror" target="_blank" rel="noopener">http://us3.php.net/get/php-5.5.30.tar.gz/from/a/mirror</a></p><p>下载完成后，将源码解压至 <code>/applications/MAMP/bin/php/php5.5.30/include/php</code></p><p>cd 至源码目录，并执行：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="meta-keyword">/applications/</span>MAMP<span class="meta-keyword">/bin/</span>php/php5<span class="number">.5</span><span class="number">.30</span><span class="meta-keyword">/include/</span>php</span><br><span class="line"></span><br><span class="line">./configure</span><br></pre></td></tr></table></figure></p><p>当前目录下继续操作：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/nicolasff/phpredis.git</span><br><span class="line"></span><br><span class="line">cd phpredis</span><br></pre></td></tr></table></figure></p><p>接下来就是进行编译，但为了确保期间，建议在执行下列操作前先执行，除非你很确定你已经安装 <code>autoconf</code><br>通过 <a href="https://brew.sh/index_zh-cn" target="_blank" rel="noopener">Homebrew</a> 安装</p><p><code>brew install autoconf</code></p><p>下面进行编译<br>注：此时的目录应该为<code>/applications/MAMP/bin/php/php5.5.30/include/php/phpredis</code></p><p>执行下列命令：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/Applications/</span>MAMP<span class="regexp">/bin/</span>php<span class="regexp">/php5.5.30/</span>bin/phpize</span><br><span class="line"></span><br><span class="line">.<span class="regexp">/configure --with-php-config=/</span>Applications<span class="regexp">/MAMP/</span>bin<span class="regexp">/php/</span>php5<span class="number">.5</span><span class="number">.30</span><span class="regexp">/bin/</span>php-config</span><br><span class="line"></span><br><span class="line">make</span><br></pre></td></tr></table></figure></p><p>所有命令执行完成之后，会在当前目录下生成一个 <code>modules</code> 文件夹，里面有 <code>redis.so</code>，将这个文件复制至 <code>/Applications/MAMP/bin/php/php5.5.30/lib/php/extensions/no-debug-non-zts-XXXXXXXX</code>（最后的文件夹名每个用户有所差别）。</p><p>最后，修改 <code>/Applications/MAMP/bin/php/php5.3.30/conf/php.ini</code>,在文件的 545 行加上 <code>extension=redis.so</code>，保存关闭，重启服务器。</p><p>到此，redis 扩展安装完毕。</p><h3 id="安装-redis"><a href="#安装-redis" class="headerlink" title="安装 redis"></a>安装 redis</h3><p>安装 redis 就很简单了，一句命令行搞定：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span><span class="keyword">install </span>redis</span><br></pre></td></tr></table></figure></p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Mac 用户一般开本地服务器环境的时候用得比较多的就是 &lt;a href=&quot;https://www.mamp.info/en/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MAMP&lt;/a&gt; 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 &lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;redis&lt;/a&gt; ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。&lt;br&gt;
+      &lt;p&gt;Mac 用户一般开本地服务器环境的时候用得比较多的就是 &lt;a href=&quot;https://www.mamp.info/en/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MAMP&lt;/a&gt; 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 &lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;redis&lt;/a&gt; ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。&lt;br&gt;
     
     </summary>
     
