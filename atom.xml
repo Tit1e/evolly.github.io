@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-03-30T01:45:43.730Z</updated>
+  <updated>2019-03-31T15:38:06.096Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -17,9 +17,29 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>0331 一周总结</title>
+    <link href="https://github.com/Tit1e/2019/03/31/59.week-summary/"/>
+    <id>https://github.com/Tit1e/2019/03/31/59.week-summary/</id>
+    <published>2019-03-31T15:06:37.000Z</published>
+    <updated>2019-03-31T15:38:06.096Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h3><p>最近的开发任务很重，前端我一个人得负责系统的视觉、交互和前端的开发。<br><a id="more"></a><br>由于是后台管理平台，对视觉的要求相对来说会低一点，但是如何将系统布局得合理，能让用户以最快的方式获取到想要的信息还是得下一番功夫。</p><p>交互这块比较重要，旧的平台其实也是我开发的，但是由于当初缺少项目经验，系统中存在大量的不合理的地方，给运维人员带来了许多不方便。趁着这次系统的重新开发，将功补过。</p><p>系统开发的话，最近在写一个为公司系统定制，基于 <a href="http://element-cn.eleme.io/#/zh-CN" target="_blank" rel="noopener">element-ui</a> 二次封装的库 <a href="https://www.npmjs.com/package/hzsj-components" target="_blank" rel="noopener">hzsj-component</a>。因为公司内部有多个系统，但是系统之间又多多少少有相似的业务模块，因此为了提高开发的效率，就决定封装一个库。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最近都比较忙，所以时间一直都不够用，忙着忙着一周就过去了。这周将手头上零碎的事情处理得差不多了，下周应该可以将大部分经历放在新版系统的开发上。希望不要出什么岔子。</p><p>这周与一位同事一同开发一个功能模块，闹的我心里有点不愉快，一个东西经常改来改去，让我很暴躁，因为我这周事情本来就比较多，而这个同事喜欢扣细节，时不时提出点建议来，当然有些也是客户那的要求，但对我来说没什么区别。不过回过头想想，自己也是有责任的，一个需求给我，我就真的只做了那个需求描述的功能，但其实这样做出来的功能完全经不起推敲，根本就是在写 bug。所以在开发方面，还是得静下心来，将需求分析得透彻之后再进行开发，切记不可毛躁。</p><p>还有就是将手头上的事情排个轻重缓急，公司目前只有我一个前端，事情杂是免不了的，但事情又只能一件一件来，因此，合理安排开发顺序非常重要，不然只会在思维切换过程中浪费大量时间。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;碎碎念&quot;&gt;&lt;a href=&quot;#碎碎念&quot; class=&quot;headerlink&quot; title=&quot;碎碎念&quot;&gt;&lt;/a&gt;碎碎念&lt;/h3&gt;&lt;p&gt;最近的开发任务很重，前端我一个人得负责系统的视觉、交互和前端的开发。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="一周总结" scheme="https://github.com/Tit1e/tags/%E4%B8%80%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
+  
+  <entry>
     <title>hexo rss 报错解决方案</title>
-    <link href="https://github.com/Tit1e/2019/03/30/58-hexo-rss-error/"/>
-    <id>https://github.com/Tit1e/2019/03/30/58-hexo-rss-error/</id>
+    <link href="https://github.com/Tit1e/2019/03/30/58.hexo-rss-error/"/>
+    <id>https://github.com/Tit1e/2019/03/30/58.hexo-rss-error/</id>
     <published>2019-03-30T01:24:37.000Z</published>
     <updated>2019-03-30T01:45:43.730Z</updated>
     
@@ -466,28 +486,6 @@
       <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
     
       <category term="element-ui" scheme="https://github.com/Tit1e/tags/element-ui/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>css 实现圆角平行四边形</title>
-    <link href="https://github.com/Tit1e/2017/12/17/39.radio-rhomboid/"/>
-    <id>https://github.com/Tit1e/2017/12/17/39.radio-rhomboid/</id>
-    <published>2017-12-17T13:31:07.000Z</published>
-    <updated>2019-03-28T16:12:54.369Z</updated>
-    
-    <content type="html"><![CDATA[<p>公司管理平台首页改版中有个圆角平行四边形的标签页。由于以前没接触到过这个，没什么经验，所以我只好求助万能的 google ，但是我用关键字“css 圆角平行四边形”并没有搜出答案来，于是我退而求其次，那就搜“css 平行四边形”，这个我有把握 100% 能用 强大的css 实现，果然一搜就出现了：<a href="https://www.w3cplus.com/css3/css-secrets/parallelograms.html" target="_blank" rel="noopener">CSS秘密花园：平行四边形</a>。<br><a id="more"></a><br>实现代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.button</span>&#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">skewX</span>(-30deg);</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(to right, #7BBBB2, #46AEAA); </span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">8px</span> <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">margin-left</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0px</span> <span class="number">5px</span> <span class="number">10px</span> -<span class="number">3px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.5);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.button</span> &gt; <span class="selector-tag">div</span>&#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">skewX</span>(30deg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    首页</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    采集管理</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    数据管理</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><p>简单来说就是利用css的<code>transform: skewX(deg)</code>属性来实现元素的扭曲，但是元素扭曲的同时，会使元素内的内容也随之扭曲，所以就需要用另一个元素把不想扭曲的元素包裹起来，然后对外层使用扭曲，内层元素再使用反向扭曲来抵消，一次来实现效果。然后我又给外层元素添加了<code>border-radios</code>，于是圆角平行四边形就诞生啦！</p><p>效果图：<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144722.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;公司管理平台首页改版中有个圆角平行四边形的标签页。由于以前没接触到过这个，没什么经验，所以我只好求助万能的 google ，但是我用关键字“css 圆角平行四边形”并没有搜出答案来，于是我退而求其次，那就搜“css 平行四边形”，这个我有把握 100% 能用 强大的css 实现，果然一搜就出现了：&lt;a href=&quot;https://www.w3cplus.com/css3/css-secrets/parallelograms.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;CSS秘密花园：平行四边形&lt;/a&gt;。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="前端学习" scheme="https://github.com/Tit1e/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="css" scheme="https://github.com/Tit1e/tags/css/"/>
     
   </entry>
   
