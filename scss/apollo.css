@@ -393,9 +393,10 @@ hr {
 code {
   margin: 0 2px;
   padding: 3px 5px;
-  color: #e96900;
+  color: #24292e;
   border-radius: 2px;
-  white-space: inherit; }
+  white-space: inherit;
+  word-wrap: break-word; }
 
 iframe, video {
   max-width: 100%;
@@ -571,7 +572,7 @@ header {
 code,
 pre {
   font-size: 0.8em;
-  background-color: #f8f8f8;
+  background-color: rgba(27, 31, 35, 0.04);
   font-family: 'Roboto Mono', Monaco, courier, monospace; }
 
 .highlight {
