@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-03-31T15:38:06.096Z</updated>
+  <updated>2019-04-01T13:47:31.916Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>斐讯 k2p 在已刷 Breed 情况下刷入其他固件</title>
+    <link href="https://github.com/Tit1e/2019/04/01/60.k2p-breed/"/>
+    <id>https://github.com/Tit1e/2019/04/01/60.k2p-breed/</id>
+    <published>2019-04-01T13:19:17.000Z</published>
+    <updated>2019-04-01T13:47:31.916Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>网线连接电脑与 k2p 任一 <strong>LAN</strong> 口，网卡设置为自动获取 ip。</li><li>拔掉 k2p 电源，按住 k2p 背后 reset 键不放，然后插入 k2p 电源通电，保持按住 reset 键几秒直至 k2p 前面板 灯颜色交替闪烁后放开。</li><li>浏览器访问 192.168.1.1，如成功则出现 Breed 不死控制台。</li><li>备份：在「固件备份」标签，选择备份「EEEPROM」和「编程器固件」。</li><li>在刷之前需执行：「恢复出厂设置」-&gt;「Config 区 (公版)」-&gt;「执行」。</li><li>刷入：点击「固件更新」标签，选中「固件」选项，选择固件，点击「上传」。</li></ol><p>然后等待刷入完毕并重启就可通过浏览器访问控制台。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;网线连接电脑与 k2p 任一 &lt;strong&gt;LAN&lt;/strong&gt; 口，网卡设置为自动获取 ip。&lt;/li&gt;
+&lt;li&gt;拔掉 k2p 电源，按住 k2p 背后 reset 键不放，然后插入 k2p 电源通电，保持按住 reset 键几秒直至 k2p 前面板 灯
+      
+    
+    </summary>
+    
+    
+      <category term="折腾笔记" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>0331 一周总结</title>
@@ -461,31 +486,6 @@
       <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
     
       <category term="webpack" scheme="https://github.com/Tit1e/tags/webpack/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>element-theme 配合 vue-cli 进行二次开发</title>
-    <link href="https://github.com/Tit1e/2017/12/20/40.element-theme-develop-twice/"/>
-    <id>https://github.com/Tit1e/2017/12/20/40.element-theme-develop-twice/</id>
-    <published>2017-12-20T07:38:03.000Z</published>
-    <updated>2019-03-28T16:11:40.902Z</updated>
-    
-    <content type="html"><![CDATA[<p>公司新平台我打算使用<code>element-ui</code>和<code>vue-cli</code>来开发，既然用的是现成的ui，那么就涉及到ui的定制问题，虽然是一个后台项目，并且让设计参照<code>element-ui</code>的文档去作图，但是设计不可能照搬默认主题，不在组件功能上修改，但在主题配色上肯定会进行调整。虽然官方有 <a href="https://elementui.github.io/theme-chalk-preview/#/zh-CN" target="_blank" rel="noopener">在线主题生成工具</a> ，但这个工具只能修改一个整体的主题色，连按钮的颜色都无法定制，更不用说定制圆角阴影这些效果了，所以还是要自己改文件编译才能实现最大化定制。折腾过程中遇到了点问题，在此记录一下。</p><p>官方也提供了定制的 <a href="https://github.com/ElementUI/element-theme">文档</a> ，那当然是相信官方，照着官方的教程来！<br><a id="more"></a></p><h4 id="安装element-theme"><a href="#安装element-theme" class="headerlink" title="安装element-theme"></a>安装<code>element-theme</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#只在当前项目安装</span></span><br><span class="line">npm i element-theme -D</span><br><span class="line"></span><br><span class="line"><span class="comment">#全局安装</span></span><br><span class="line">sudo npm i element-theme -g</span><br></pre></td></tr></table></figure><p>然而我第一步就报错了……ORZ。</p><p>我使用的是<code>npm</code>命令，但源用的是淘宝的源。但安装的时候报错：<code>not found python2</code>。于是我去找安装<code>python2</code>的方法，结果发现 Mac 是默认集成了<code>python</code>的，那我就郁闷了，试了半天，一直报错，最后突发奇想想用<code>cnpm</code>试试，结果竟然成功了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#终于装上了</span></span><br><span class="line">sudo cnpm i element-theme -g</span><br></pre></td></tr></table></figure></p><p>好，继续。</p><h4 id="安装-theme-chalk"><a href="#安装-theme-chalk" class="headerlink" title="安装 theme-chalk"></a>安装 <code>theme-chalk</code></h4><p>因为我一开始构思的定制流程是在其他目录下把样式写好编译后到现有项目中替换，所以我就建了一个空文件夹，然后执行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i element-theme-chalk -D</span><br></pre></td></tr></table></figure></p><p>结果当然是提醒我找不到<code>package.json</code>文件。后来我望着命令中的<code>-D</code>若有所思……，终于反应过来了，这是装在项目中的。</p><p>好，顺利安装，继续。</p><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#初始化</span></span><br><span class="line">et -i</span><br></pre></td></tr></table></figure><p>执行完后会在根目录下生成一个<code>element-variables.scss</code>的文件。然后你就可以在这个文件中修改主题色，按钮颜色，圆角，阴影等这些样式，修改好了之后，就可以编译了。</p><h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 监听并编译</span></span><br><span class="line">et --watch [--config variable file path] [--out theme path]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">et [--config variable file path] [--out theme path] [--minimize]</span><br></pre></td></tr></table></figure><p><code>et --watch</code>可以监听<code>element-variables.scss</code>文件。如果文件被修改了，那么就会自动进行编译。</p><p><code>et --config 文件路径/element-variables.scss</code>这个命令是可以指定<code>element-variables.scss</code>的路径，因为这个文件不一定放在项目根目录下。</p><p><code>et --out 目录</code>这个命令是指定编译后的文件输出目录，默认是输出在根目录下的<code>theme</code>文件夹中。</p><p>但这就会产生一个文件替换问题，每次编译后都需要手动替换文件，之后才能看效果。所以我直接把输出路径改成了项目引用的<code>element-ui</code>的路径：<code>node_modules/element-ui/lib/theme-chalk/</code>，这样配合<code>-w</code>就可以实现实时编译，再配合<code>npm run dev</code>就可以实时编译实时预览了。</p><p>如果还需要更深度的定制，则修改 <code>node_modules/element-theme-chalk/src/</code> 目录下的的<code>.scss</code>文件，然后执行编译后就能生效。注意直接修改<code>.scss</code>文件不会触发自动编译。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;公司新平台我打算使用&lt;code&gt;element-ui&lt;/code&gt;和&lt;code&gt;vue-cli&lt;/code&gt;来开发，既然用的是现成的ui，那么就涉及到ui的定制问题，虽然是一个后台项目，并且让设计参照&lt;code&gt;element-ui&lt;/code&gt;的文档去作图，但是设计不可能照搬默认主题，不在组件功能上修改，但在主题配色上肯定会进行调整。虽然官方有 &lt;a href=&quot;https://elementui.github.io/theme-chalk-preview/#/zh-CN&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;在线主题生成工具&lt;/a&gt; ，但这个工具只能修改一个整体的主题色，连按钮的颜色都无法定制，更不用说定制圆角阴影这些效果了，所以还是要自己改文件编译才能实现最大化定制。折腾过程中遇到了点问题，在此记录一下。&lt;/p&gt;
-&lt;p&gt;官方也提供了定制的 &lt;a href=&quot;https://github.com/ElementUI/element-theme&quot;&gt;文档&lt;/a&gt; ，那当然是相信官方，照着官方的教程来！&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="前端学习" scheme="https://github.com/Tit1e/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
-    
-      <category term="element-ui" scheme="https://github.com/Tit1e/tags/element-ui/"/>
     
   </entry>
   
