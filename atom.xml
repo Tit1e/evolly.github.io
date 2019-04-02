@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-01T13:47:31.916Z</updated>
+  <updated>2019-04-02T13:06:40.592Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>0402 碎碎念</title>
+    <link href="https://github.com/Tit1e/2019/04/02/61.2019-04-02/"/>
+    <id>https://github.com/Tit1e/2019/04/02/61.2019-04-02/</id>
+    <published>2019-04-02T12:44:27.000Z</published>
+    <updated>2019-04-02T13:06:40.592Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天依旧是不停接需求改需求的一天，但自从前几天调整心态后，今天接到需求心态平稳了许多。现在做需求前会好好想想，做的时候也会想什么地方可能会被提出修改建议，虽然进度慢了点，但是质量上升了不少。希望这种心态能一直保持下去，相信这种心态会让我更加喜欢这个世界。</p><p>最近生活好像又恢复了”正常”，每天被安排得满满当当，包括下班后的空闲时间。这种充实的感觉非常好，希望继续保持。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天依旧是不停接需求改需求的一天，但自从前几天调整心态后，今天接到需求心态平稳了许多。现在做需求前会好好想想，做的时候也会想什么地方可能会被提出修改建议，虽然进度慢了点，但是质量上升了不少。希望这种心态能一直保持下去，相信这种心态会让我更加喜欢这个世界。&lt;/p&gt;
+&lt;p&gt;最近
+      
+    
+    </summary>
+    
+    
+      <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
   
   <entry>
     <title>斐讯 k2p 在已刷 Breed 情况下刷入其他固件</title>
@@ -43,10 +67,10 @@
   
   <entry>
     <title>0331 一周总结</title>
-    <link href="https://github.com/Tit1e/2019/03/31/59.week-summary/"/>
-    <id>https://github.com/Tit1e/2019/03/31/59.week-summary/</id>
+    <link href="https://github.com/Tit1e/2019/03/31/59.2019-03-31-week-summary/"/>
+    <id>https://github.com/Tit1e/2019/03/31/59.2019-03-31-week-summary/</id>
     <published>2019-03-31T15:06:37.000Z</published>
-    <updated>2019-03-31T15:38:06.096Z</updated>
+    <updated>2019-04-02T13:07:22.435Z</updated>
     
     <content type="html"><![CDATA[<h3 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h3><p>最近的开发任务很重，前端我一个人得负责系统的视觉、交互和前端的开发。<br><a id="more"></a><br>由于是后台管理平台，对视觉的要求相对来说会低一点，但是如何将系统布局得合理，能让用户以最快的方式获取到想要的信息还是得下一番功夫。</p><p>交互这块比较重要，旧的平台其实也是我开发的，但是由于当初缺少项目经验，系统中存在大量的不合理的地方，给运维人员带来了许多不方便。趁着这次系统的重新开发，将功补过。</p><p>系统开发的话，最近在写一个为公司系统定制，基于 <a href="http://element-cn.eleme.io/#/zh-CN" target="_blank" rel="noopener">element-ui</a> 二次封装的库 <a href="https://www.npmjs.com/package/hzsj-components" target="_blank" rel="noopener">hzsj-component</a>。因为公司内部有多个系统，但是系统之间又多多少少有相似的业务模块，因此为了提高开发的效率，就决定封装一个库。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最近都比较忙，所以时间一直都不够用，忙着忙着一周就过去了。这周将手头上零碎的事情处理得差不多了，下周应该可以将大部分经历放在新版系统的开发上。希望不要出什么岔子。</p><p>这周与一位同事一同开发一个功能模块，闹的我心里有点不愉快，一个东西经常改来改去，让我很暴躁，因为我这周事情本来就比较多，而这个同事喜欢扣细节，时不时提出点建议来，当然有些也是客户那的要求，但对我来说没什么区别。不过回过头想想，自己也是有责任的，一个需求给我，我就真的只做了那个需求描述的功能，但其实这样做出来的功能完全经不起推敲，根本就是在写 bug。所以在开发方面，还是得静下心来，将需求分析得透彻之后再进行开发，切记不可毛躁。</p><p>还有就是将手头上的事情排个轻重缓急，公司目前只有我一个前端，事情杂是免不了的，但事情又只能一件一件来，因此，合理安排开发顺序非常重要，不然只会在思维切换过程中浪费大量时间。</p>]]></content>
     
@@ -462,30 +486,6 @@
       <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
     
       <category term="vuex" scheme="https://github.com/Tit1e/tags/vuex/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>局域网请求 webpack 反向代理</title>
-    <link href="https://github.com/Tit1e/2017/12/21/41.webpack-dev-server/"/>
-    <id>https://github.com/Tit1e/2017/12/21/41.webpack-dev-server/</id>
-    <published>2017-12-21T12:15:47.000Z</published>
-    <updated>2019-03-28T16:10:24.154Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天继续在公司思考关于前后端分离的问题，困扰我最大的问题其实就是我用 vue-cli 在本地开发的时候，怎么和后端进行接口的调试，总不可能每次都打包一下放到服务器上看运行正不正常，有没有报错吧？我知道有个反向代理的东西，可是知道它的大致作用，但是我没用过导致我无从下手，但前段时间折腾模拟数据的时候，有用到用<code>json-server</code>和<code>faker.js</code>本地开服务器，批量生成模拟数据，然后通过反向代理去请求本地另一个服务器的数据。于是我想，既然这样我可以请求到数据，那么局域网的话我也可以直接通过 ip 直接访问局域网内的服务器，那么我应该也可以通过代理去请求局域网上内其他同事开的本地服务器中的接口，于是就开始折腾了。<br><a id="more"></a><br>由于之前去请求模拟数据的时候，代理配置是写在<code>/config/index.js</code>中的，于是我依样画葫芦，把之前的配置的地址，路径全改了，但结果却发现请求一只 404 ，这就让我很难受了，于是我去 Google 了一圈，原来这个代理是用的<code>webpack-dev-server</code>，于是我找到了<code>/build/webpack.dev.conf.js</code>,按照网上说的，在<code>devServer</code>中添加了一个<code>proxy</code>属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">proxy: &#123;</span><br><span class="line">  <span class="string">'/Home'</span>: &#123;</span><br><span class="line">    target: <span class="string">'http://192.168.1.1/'</span>,</span><br><span class="line">    secure: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>这样，我就成功通过代理请求到了同事服务器上的数据。</p><p>突然想起来了，利用<code>json-server</code>和<code>faker.js</code>模拟数据的过程还没记录，下篇文章记录一下。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天继续在公司思考关于前后端分离的问题，困扰我最大的问题其实就是我用 vue-cli 在本地开发的时候，怎么和后端进行接口的调试，总不可能每次都打包一下放到服务器上看运行正不正常，有没有报错吧？我知道有个反向代理的东西，可是知道它的大致作用，但是我没用过导致我无从下手，但前段时间折腾模拟数据的时候，有用到用&lt;code&gt;json-server&lt;/code&gt;和&lt;code&gt;faker.js&lt;/code&gt;本地开服务器，批量生成模拟数据，然后通过反向代理去请求本地另一个服务器的数据。于是我想，既然这样我可以请求到数据，那么局域网的话我也可以直接通过 ip 直接访问局域网内的服务器，那么我应该也可以通过代理去请求局域网上内其他同事开的本地服务器中的接口，于是就开始折腾了。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="前端学习" scheme="https://github.com/Tit1e/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
-    
-      <category term="webpack" scheme="https://github.com/Tit1e/tags/webpack/"/>
     
   </entry>
   
