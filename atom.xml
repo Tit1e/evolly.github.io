@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-04T14:19:44.667Z</updated>
+  <updated>2019-04-06T13:44:24.801Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vue-mark-calendar</title>
+    <link href="https://github.com/Tit1e/2019/04/06/63.vue-mark-calendar/"/>
+    <id>https://github.com/Tit1e/2019/04/06/63.vue-mark-calendar/</id>
+    <published>2019-04-06T13:26:23.000Z</published>
+    <updated>2019-04-06T13:44:24.801Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/Tit1e/vue-mark-calendar">vue-mark-calendar</a> 是基于 <a href="https://github.com/zwhGithub/vue-calendar">vue-calendar</a> 改造的插件，出于公司业务需求，在原有基础上进行了功能的增加与样式的调整。样式是尽量根据 <a href="http://element-cn.eleme.io/#/zh-CN/component/installation" target="_blank" rel="noopener">element-ui</a> 的样式写的，因为公司用的是 element-iu + Vue 的技术栈，希望系统的界面上比较统一。</p><p>功能上新增了一下几个参数：</p><ol><li>borderRadius：调整日历组件的圆角大小</li><li>showToday：是否在日历中高亮今天的日期</li><li>canChoose：是否禁用日历选择，只作展示用。</li></ol><p>其他说明可看 <a href="https://github.com/Tit1e/vue-mark-calendar">Github</a></p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-05-084559.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://github.com/Tit1e/vue-mark-calendar&quot;&gt;vue-mark-calendar&lt;/a&gt; 是基于 &lt;a href=&quot;https://github.com/zwhGithub/vue-calendar&quot;&gt;vue-ca
+      
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Mac 使用 Alfred 执行终端命令</title>
@@ -468,28 +491,6 @@
     
     
       <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你好呀，2018</title>
-    <link href="https://github.com/Tit1e/2017/12/31/43.hello-2018/"/>
-    <id>https://github.com/Tit1e/2017/12/31/43.hello-2018/</id>
-    <published>2017-12-31T15:18:51.000Z</published>
-    <updated>2019-03-28T16:09:20.688Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="2017-回顾"><a href="#2017-回顾" class="headerlink" title="2017 回顾"></a>2017 回顾</h3><p>回顾了一下 <a href="https://tit1e.xyz/2017/01/28/hello-2017/" target="_blank" rel="noopener">2017 年的计划</a>，其实太多没有完成的，比如后端的 ThinkPHP 框架，可以说是毫无长进，不过精力倒是全放在前端上了。身体方面，开始去健身房了，不过是从 10 月份才刚开始的锻炼，到现在的话，体重略有上升，可能两三斤吧，练的部位肉的确是结实了不少。爱好方面我就不谈了，今年过的狗一样，快过年了情况才有所好转。哪来的闲钱买这个！积蓄没有，MacBook 的钱是换完了（爸妈帮我还的……）。</p><p>今年对我来说还是发生了挺多变化的一年。去年这个时候，我刚步入前端，入职 2 个月而已，然后到年后2月份的辞职，三月份的再入职，无论是哪方面，去年的这个时候和今年的这个时候都有了挺大的变化。</p><p>希望在迎接 2019 年的时候，我还是能像现在这样开心。<br><a id="more"></a></p><h3 id="2018-计划"><a href="#2018-计划" class="headerlink" title="2018 计划"></a>2018 计划</h3><ol><li>前端技能上能有大的提升（如何衡量大呢？我也不知道）</li><li>增重到130斤（是增肌，不是增脂！）</li><li>一定要买个 switch（塞尔达天下第一！）</li><li>薪水上涨 30%</li><li>攒钱</li><li>希望认识更多的人？（这个太难了）</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;2017-回顾&quot;&gt;&lt;a href=&quot;#2017-回顾&quot; class=&quot;headerlink&quot; title=&quot;2017 回顾&quot;&gt;&lt;/a&gt;2017 回顾&lt;/h3&gt;&lt;p&gt;回顾了一下 &lt;a href=&quot;https://tit1e.xyz/2017/01/28/hello-2017/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;2017 年的计划&lt;/a&gt;，其实太多没有完成的，比如后端的 ThinkPHP 框架，可以说是毫无长进，不过精力倒是全放在前端上了。身体方面，开始去健身房了，不过是从 10 月份才刚开始的锻炼，到现在的话，体重略有上升，可能两三斤吧，练的部位肉的确是结实了不少。爱好方面我就不谈了，今年过的狗一样，快过年了情况才有所好转。哪来的闲钱买这个！积蓄没有，MacBook 的钱是换完了（爸妈帮我还的……）。&lt;/p&gt;
-&lt;p&gt;今年对我来说还是发生了挺多变化的一年。去年这个时候，我刚步入前端，入职 2 个月而已，然后到年后2月份的辞职，三月份的再入职，无论是哪方面，去年的这个时候和今年的这个时候都有了挺大的变化。&lt;/p&gt;
-&lt;p&gt;希望在迎接 2019 年的时候，我还是能像现在这样开心。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="新年计划" scheme="https://github.com/Tit1e/tags/%E6%96%B0%E5%B9%B4%E8%AE%A1%E5%88%92/"/>
     
   </entry>
   
