@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-08T12:34:21.364Z</updated>
+  <updated>2019-04-08T12:34:26.423Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://github.com/Tit1e/2019/04/08/64.send-an-alert-to-notification-center-from-the-command/"/>
     <id>https://github.com/Tit1e/2019/04/08/64.send-an-alert-to-notification-center-from-the-command/</id>
     <published>2019-04-08T12:29:12.000Z</published>
-    <updated>2019-04-08T12:34:21.364Z</updated>
+    <updated>2019-04-08T12:34:26.423Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="安装-terminal-notifier"><a href="#安装-terminal-notifier" class="headerlink" title="安装 terminal-notifier"></a>安装 terminal-notifier</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">不能直接执行 sudo gem <span class="keyword">install</span> terminal-notifier，安装会报错，/usr/<span class="keyword">bin</span> 目录不允许写入，因此得安装至 /usr/<span class="keyword">local</span>/<span class="keyword">bin</span> 目录下</span><br><span class="line">sudo gem <span class="keyword">install</span> terminal-notifier -n /usr/<span class="keyword">local</span>/<span class="keyword">bin</span></span><br></pre></td></tr></table></figure><h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">terminal</span>-notifier -message <span class="string">"Hello, this is my message"</span> -<span class="built_in">title</span> <span class="string">"Message Title"</span></span><br></pre></td></tr></table></figure><p><a href="http://landcareweb.com/questions/3689/ru-he-zhi-zuo-maczhong-duan-dan-chu-jing-bao-applescriptde" target="_blank" rel="noopener">参考文章</a></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="安装-terminal-notifier"><a href="#安装-terminal-notifier" class="headerlink" title="安装 terminal-notifier"></a>安装 terminal-notifier</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 不能直接执行 sudo gem <span class="keyword">install</span> terminal-notifier，安装会报错，/usr/<span class="keyword">bin</span> 目录不允许写入，因此得安装至 /usr/<span class="keyword">local</span>/<span class="keyword">bin</span> 目录下</span><br><span class="line">sudo gem <span class="keyword">install</span> terminal-notifier -n /usr/<span class="keyword">local</span>/<span class="keyword">bin</span></span><br></pre></td></tr></table></figure><h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">terminal</span>-notifier -message <span class="string">"Hello, this is my message"</span> -<span class="built_in">title</span> <span class="string">"Message Title"</span></span><br></pre></td></tr></table></figure><p><a href="http://landcareweb.com/questions/3689/ru-he-zhi-zuo-maczhong-duan-dan-chu-jing-bao-applescriptde" target="_blank" rel="noopener">参考文章</a></p>]]></content>
     
     <summary type="html">
     
