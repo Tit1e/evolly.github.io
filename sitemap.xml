@@ -2,6 +2,76 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://github.com/Tit1e/2018/06/02/65.%E3%81%8A%E3%81%8F%E3%82%8A%E3%81%B2%E3%82%99%E3%81%A8/</loc>
+    
+    <lastmod>2019-04-09T09:11:14.216Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/06/28/67.The-Shawshank-Redemption/</loc>
+    
+    <lastmod>2019-04-09T09:11:01.782Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/06/23/66.The-Truman-Show/</loc>
+    
+    <lastmod>2019-04-09T09:10:57.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/07/08/68.Drug-Dealer/</loc>
+    
+    <lastmod>2019-04-09T09:10:24.458Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/08/20/69.Life-Is-Beautiful/</loc>
+    
+    <lastmod>2019-04-09T09:09:59.611Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/11/10/73.%E3%81%9D%E3%81%97%E3%81%A6%E7%88%B6%E3%81%AB%E3%81%AA%E3%82%8B/</loc>
+    
+    <lastmod>2019-04-09T09:09:43.138Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/11/10/72.Little-Miss-Sunshine/</loc>
+    
+    <lastmod>2019-04-09T09:09:39.421Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/08/21/70.Dunkirk/</loc>
+    
+    <lastmod>2019-04-09T09:09:34.266Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/</loc>
+    
+    <lastmod>2019-04-09T09:09:17.419Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2019/01/01/74.A-Dog's-Purpose/</loc>
+    
+    <lastmod>2019-04-09T09:08:26.694Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://github.com/Tit1e/2019/04/08/64.send-an-alert-to-notification-center-from-the-command/</loc>
     
     <lastmod>2019-04-08T12:34:26.423Z</lastmod>
@@ -44,20 +114,6 @@
   </url>
   
   <url>
-    <loc>https://github.com/Tit1e/2019/03/27/56.global-icon-component/</loc>
-    
-    <lastmod>2019-04-04T14:19:16.700Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://github.com/Tit1e/2019/03/26/55.web-print/</loc>
-    
-    <lastmod>2019-04-04T14:19:16.700Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://github.com/Tit1e/2019/03/26/54.vuecl3-npm-publish/</loc>
     
     <lastmod>2019-04-04T14:19:16.700Z</lastmod>
@@ -72,9 +128,16 @@
   </url>
   
   <url>
-    <loc>https://github.com/Tit1e/2018/07/23/50.jstree/</loc>
+    <loc>https://github.com/Tit1e/2019/03/27/56.global-icon-component/</loc>
     
-    <lastmod>2019-04-04T14:19:16.699Z</lastmod>
+    <lastmod>2019-04-04T14:19:16.700Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2019/03/26/55.web-print/</loc>
+    
+    <lastmod>2019-04-04T14:19:16.700Z</lastmod>
     
   </url>
   
@@ -87,6 +150,13 @@
   
   <url>
     <loc>https://github.com/Tit1e/2018/05/03/45.vue-webpack-static/</loc>
+    
+    <lastmod>2019-04-04T14:19:16.699Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://github.com/Tit1e/2018/07/23/50.jstree/</loc>
     
     <lastmod>2019-04-04T14:19:16.699Z</lastmod>
     
@@ -464,14 +534,14 @@
   </url>
   
   <url>
-    <loc>https://github.com/Tit1e/tags/index.html</loc>
+    <loc>https://github.com/Tit1e/tools/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://github.com/Tit1e/tools/index.html</loc>
+    <loc>https://github.com/Tit1e/tags/index.html</loc>
     
     <lastmod>2017-03-08T04:57:09.000Z</lastmod>
     

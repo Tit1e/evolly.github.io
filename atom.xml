@@ -317,6 +317,29 @@
   </entry>
   
   <entry>
+    <title>一条狗的使命 A Dog&#39;s Purpose (2017)</title>
+    <link href="https://github.com/Tit1e/2019/01/01/74.A-Dog&#39;s-Purpose/"/>
+    <id>https://github.com/Tit1e/2019/01/01/74.A-Dog&#39;s-Purpose/</id>
+    <published>2018-12-31T16:00:00.000Z</published>
+    <updated>2019-04-09T09:08:26.694Z</updated>
+    
+    <content type="html"><![CDATA[<p>电影讲述了一条狗的五世，第一世它是一条流浪狗，很快就被抓结束了一生。第二世它被电影的男主人公收养，度过了美好的一生。第三世它是一条警犬，在一次追捕中被凶手的枪击中，失血过多而死。第四世它成了一条柯基，与一名女子度过了一生。第五世，它被一个女生收养，但她男朋友并不喜欢狗，一直把它拴在树上，只给他吃饭，从来不陪它玩，最后把它丢弃了。它并没有回去，而是选择流浪。最终它找到了第二世的主人，帮他找回了爱情，也让他相信是第二世的自己回来了。 </p><p>电影是以狗为第一人称来讲述的，电影中有很多狗心理活动的独白，实际上狗狗是不是会这么想，我们并不知道。整部电影下来还是有两处引发了我的泪点，一处是第二世的它死去的时候，第二处是男主认出第五世的它的时候。其他几世我并没有太多的感触，可能第二世完整的讲述了它的一生，给了我先入为主的感觉吧。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;电影讲述了一条狗的五世，第一世它是一条流浪狗，很快就被抓结束了一生。第二世它被电影的男主人公收养，度过了美好的一生。第三世它是一条警犬，在一次追捕中被凶手的枪击中，失血过多而死。第四世它成了一条柯基，与一名女子度过了一生。第五世，它被一个女生收养，但她男朋友并不喜欢狗，一直
+      
+    
+    </summary>
+    
+    
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
     <title>你好呀，2019</title>
     <link href="https://github.com/Tit1e/2018/12/31/52.hello-2019/"/>
     <id>https://github.com/Tit1e/2018/12/31/52.hello-2019/</id>
@@ -367,133 +390,121 @@
   </entry>
   
   <entry>
-    <title>jsTree 不同节点不同右键菜单</title>
-    <link href="https://github.com/Tit1e/2018/07/23/50.jstree/"/>
-    <id>https://github.com/Tit1e/2018/07/23/50.jstree/</id>
-    <published>2018-07-23T12:36:59.000Z</published>
-    <updated>2019-04-04T14:19:16.699Z</updated>
+    <title>阳光小美女 Little Miss Sunshine (2006)</title>
+    <link href="https://github.com/Tit1e/2018/11/10/72.Little-Miss-Sunshine/"/>
+    <id>https://github.com/Tit1e/2018/11/10/72.Little-Miss-Sunshine/</id>
+    <published>2018-11-09T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:39.421Z</updated>
     
-    <content type="html"><![CDATA[<p>公司系统中有个菜单管理的模块，用到了 <a href="https://www.jstree.com/" target="_blank" rel="noopener">jsTree</a> 的右键菜单功能，但是有个问题，就是菜单只有两级，一级菜单允许添加子菜单，二级菜单不允许添加子菜单，这就需要根据选中的菜单渲染不同的右键菜单。网上找了一番，在 <a href="https://blog.csdn.net/m0_37355951/article/details/78320254" target="_blank" rel="noopener">这里</a> 找到了解决方法。我在自己博客再记录一次，为了加深印象，也为了日后方便查找。<br><a id="more"></a></p><h3 id="引入资源"><a href="#引入资源" class="headerlink" title="引入资源"></a>引入资源</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="用于初始化的-DOM-节点"><a href="#用于初始化的-DOM-节点" class="headerlink" title="用于初始化的 DOM 节点"></a>用于初始化的 DOM 节点</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"jstree_demo_div"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模拟数据</span></span><br><span class="line"><span class="keyword">var</span> DATA = [&#123;</span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"276"</span>,</span><br><span class="line">  <span class="string">"text"</span>: <span class="string">"分析"</span>,</span><br><span class="line">  <span class="string">"parent_id"</span>: <span class="string">"0"</span>,</span><br><span class="line">  <span class="string">"children"</span>: [&#123;</span><br><span class="line">    <span class="string">"parent_id"</span>: <span class="string">"276"</span>,</span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"281"</span>,</span><br><span class="line">    <span class="string">"text"</span>: <span class="string">"监测概况"</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;]</span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  $(<span class="string">'#jstree_demo_div'</span>).jstree(&#123;</span><br><span class="line">    core: &#123;</span><br><span class="line">      <span class="string">'data'</span>: DATA, <span class="comment">//数据</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'contextmenu'</span>: &#123;</span><br><span class="line">      <span class="string">'items'</span>: customMenu <span class="comment">//右键点击触发的函数，下面会讲到</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'plugins'</span>: [<span class="string">'contextmenu'</span>] <span class="comment">//右键菜单插件，必须加载这个插件才能使用右键菜单</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><h3 id="不同右键菜单的关键"><a href="#不同右键菜单的关键" class="headerlink" title="不同右键菜单的关键"></a>不同右键菜单的关键</h3><p>这个函数是让 jsTree 有不同右键菜单的关键，当右键点击的时候，会执行这个函数，我们只要根据某个参数来判断当前是什么菜单，然后根据这个菜单来 return 右键菜单的对象就行了。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">customMenu</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> items = &#123;</span><br><span class="line">    <span class="string">"new"</span>: &#123;</span><br><span class="line">      <span class="string">"label"</span>: <span class="string">"新建子菜单"</span>,</span><br><span class="line">      <span class="string">"action"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// code...</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"edit"</span>: &#123;</span><br><span class="line">      <span class="string">"label"</span>: <span class="string">"编辑菜单"</span>,</span><br><span class="line">      <span class="string">"action"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// code...</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"delete"</span>: &#123;</span><br><span class="line">      <span class="string">"label"</span>: <span class="string">"删除菜单"</span>,</span><br><span class="line">      <span class="string">"action"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// code...</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// parent_id 为 0 的是一级菜单</span></span><br><span class="line">  <span class="keyword">if</span>(node.original.parent_id !== <span class="string">'0'</span>)&#123;</span><br><span class="line">    <span class="keyword">delete</span> items.new</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> items</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p><a href="https://github.com/Tit1e/Demos/tree/master/50.jsTree">参考代码</a></p>]]></content>
+    <content type="html"><![CDATA[<p>一个全是问题的家庭，一次意外的比赛，一段奇妙的旅程。</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;公司系统中有个菜单管理的模块，用到了 &lt;a href=&quot;https://www.jstree.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;jsTree&lt;/a&gt; 的右键菜单功能，但是有个问题，就是菜单只有两级，一级菜单允许添加子菜单，二级菜单不允许添加子菜单，这就需要根据选中的菜单渲染不同的右键菜单。网上找了一番，在 &lt;a href=&quot;https://blog.csdn.net/m0_37355951/article/details/78320254&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt; 找到了解决方法。我在自己博客再记录一次，为了加深印象，也为了日后方便查找。&lt;br&gt;
+      
+      
+        &lt;p&gt;一个全是问题的家庭，一次意外的比赛，一段奇妙的旅程。&lt;/p&gt;
+
+      
     
     </summary>
     
     
-      <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
   <entry>
-    <title>MAMP 配置虚拟主机</title>
-    <link href="https://github.com/Tit1e/2018/07/22/49.mamp-virtual-host/"/>
-    <id>https://github.com/Tit1e/2018/07/22/49.mamp-virtual-host/</id>
-    <published>2018-07-22T14:16:31.000Z</published>
-    <updated>2019-04-04T14:19:16.700Z</updated>
+    <title>地球之夜 Night on Earth (1991)</title>
+    <link href="https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/"/>
+    <id>https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/</id>
+    <published>2018-11-09T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:17.419Z</updated>
     
-    <content type="html"><![CDATA[<p>公司由于项目调整，在跑本地项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。</p><p>MAMP 我用的是免费版的，MAMP Pro 好像可以直接在界面设置，但是免费版也是可以实现的，只是设置过程没那么简单明了，但也不是非常难。<br><a id="more"></a><br>第一步：打开 <code>/Applications/MAMP/conf/apache/httpd.conf</code></p><p>第二步：搜索 <code>httpd-vhosts</code>，定位至 <code>#Include /Applications/MAMP/conf/apache/extra/httpd-vhosts.conf</code>，删除前面的 <code>#</code>，保存。</p><p>第三步：打开 <code>/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf</code>。这个文件中你可以看到被 <code>&lt;VirtualHost *:80&gt;&lt;/VirtualHost&gt;</code> 标签包裹的代码，我的是这样的，可能略微有些不同，但没关系。</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">VirtualHost</span> *<span class="selector-pseudo">:80</span>&gt;</span><br><span class="line">    <span class="selector-tag">ServerAdmin</span> <span class="selector-tag">webmaster</span>@<span class="keyword">dummy</span>-<span class="keyword">host2</span>.<span class="keyword">example</span>.<span class="keyword">com</span></span><br><span class="line">    DocumentRoot <span class="string">"/Users/xxxx/Public/Program/dmp"</span></span><br><span class="line">    ServerName localhost</span><br><span class="line">    ServerAlias localhost</span><br><span class="line">    ErrorLog <span class="string">"logs/dummy-host2.example.com-error_log"</span></span><br><span class="line">    CustomLog <span class="string">"logs/dummy-host2.example.com-access_log"</span> common</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure><p>这就是我们需要修改的配置。默认应该有个 localhost 的配置（有点忘了）。</p><p>第四步：修改 <code>DocumentRoot</code> 为这是项目目录，修改 <code>ServerName</code> 为你想设定的域名，<code>ServerAlias</code> 可以为域名设定别别名，可以不设置。保存文件。</p><p>到此 MAMP 的配置结束了，我们还需要配置 hosts 文件，将 127.0.0.1 指向我们设定的域名，不然用域名还是无法访问到。<br>Mac 上推荐使用 <a href="https://itunes.apple.com/cn/app/ihosts-%E7%BC%96%E8%BE%91%E7%A5%9E%E5%99%A8/id1102004240?mt=12" target="_blank" rel="noopener">iHosts</a> 来设置 hosts，很实用的一个小工具，免费版的足够日常使用了。当然你也可以用其他方式，具体也可以搜索引擎搜索，网上教程一大堆。</p><p>在 hosts 文件中加入 <code>127.0.0.1  配置的域名</code>，保存。重启服务器，重连一下网络即可。</p><p>用 shadowsocks 的小伙伴要注意，要把代理模式设为 PAC自动模式，全局模式会导致域名无法访问，这个问题当初找了好久才发现。</p><p><a href="https://blog.csdn.net/it_r00t/article/details/75254933" target="_blank" rel="noopener">参考地址</a></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1817.jpg" alt> </p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;公司由于项目调整，在跑本地项目的时候需要指定域名，当然可以通过配置修改这个指定的域名，但是借此机会折腾一下也好。教程网上有很多，我重新整理一下一是加深记忆，二是日后如有需要方便查找，于是有了这篇文章。参考的文章链接在文末。&lt;/p&gt;
-&lt;p&gt;MAMP 我用的是免费版的，MAMP Pro 好像可以直接在界面设置，但是免费版也是可以实现的，只是设置过程没那么简单明了，但也不是非常难。&lt;br&gt;
+      
+      
+        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1817.jpg&quot; alt&gt; &lt;/p&gt;
+
+      
     
     </summary>
     
     
-      <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Mac" scheme="https://github.com/Tit1e/tags/Mac/"/>
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
   <entry>
-    <title>webpack 通过 NODE_ENV 判断当前环境</title>
-    <link href="https://github.com/Tit1e/2018/06/26/48.NODE_ENV/"/>
-    <id>https://github.com/Tit1e/2018/06/26/48.NODE_ENV/</id>
-    <published>2018-06-26T11:19:39.000Z</published>
-    <updated>2019-04-04T14:19:16.744Z</updated>
+    <title>如父如子 そして父になる (2013)</title>
+    <link href="https://github.com/Tit1e/2018/11/10/73.%E3%81%9D%E3%81%97%E3%81%A6%E7%88%B6%E3%81%AB%E3%81%AA%E3%82%8B/"/>
+    <id>https://github.com/Tit1e/2018/11/10/73.そして父になる/</id>
+    <published>2018-11-09T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:43.138Z</updated>
     
-    <content type="html"><![CDATA[<p>公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来，偶尔还会出现忘记清前缀的情况，这多多少少造成了不便。</p><a id="more"></a><p>后来从网上找到了判断环境的变量：<code>process.env.NODE_ENV</code>，这可以在 js 中直接获取到，如果它的值为 development 则说明是开发环境，否则就是生产环境，通过这个判断，我就可以用三元运算符给变量赋值，这样打包就不用每次去改吧，变量值了。</p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg" alt> </p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;公司开发系统过程中，因为使用了反向代理，所以在每个接口前都加了一个通用前缀，但这个前缀在生产环境下是不要加的，我之前的做法是，定义一个变量，然后在开发的时候将变量定义成通用前缀，打包的时候就将变量清空成空字符串，但是这个每次打包的时候都需要去改变，打包后继续开发又要再改回来，偶尔还会出现忘记清前缀的情况，这多多少少造成了不便。&lt;/p&gt;
+      
+      
+        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg&quot; alt&gt; &lt;/p&gt;
+
+      
     
     </summary>
     
     
-      <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
   <entry>
-    <title>Mac 下为 MAMP (Pro) 安装 redis 扩展</title>
-    <link href="https://github.com/Tit1e/2018/05/12/47.mac-mamp-redis/"/>
-    <id>https://github.com/Tit1e/2018/05/12/47.mac-mamp-redis/</id>
-    <published>2018-05-12T07:04:42.000Z</published>
-    <updated>2019-03-28T15:49:17.816Z</updated>
+    <title>敦刻尔克 Dunkirk (2017)</title>
+    <link href="https://github.com/Tit1e/2018/08/21/70.Dunkirk/"/>
+    <id>https://github.com/Tit1e/2018/08/21/70.Dunkirk/</id>
+    <published>2018-08-20T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:34.266Z</updated>
     
-    <content type="html"><![CDATA[<p>Mac 用户一般开本地服务器环境的时候用得比较多的就是 <a href="https://www.mamp.info/en/" target="_blank" rel="noopener">MAMP</a> 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 <a href="https://redis.io/" target="_blank" rel="noopener">redis</a> ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。<br><a id="more"></a></p><h3 id="下载-amp-解压-amp-amp-编译-PHP-源码"><a href="#下载-amp-解压-amp-amp-编译-PHP-源码" class="headerlink" title="下载 &amp; 解压 &amp;&amp; 编译 PHP 源码"></a>下载 &amp; 解压 &amp;&amp; 编译 PHP 源码</h3><p><strong>教程中将以 php 5.5.30 版本作为例子，实际操作中请将版本号做相应替换</strong></p><p>为方便下载，我在这放上下载地址，我这里的地址是 5.5.30 的 php 版本，如果需要其他版本，只需将地址中的版本号进行相应替换。<br>下载地址： <a href="http://us3.php.net/get/php-5.5.30.tar.gz/from/a/mirror" target="_blank" rel="noopener">http://us3.php.net/get/php-5.5.30.tar.gz/from/a/mirror</a></p><p>下载完成后，将源码解压至 <code>/applications/MAMP/bin/php/php5.5.30/include/php</code></p><p>cd 至源码目录，并执行：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="meta-keyword">/applications/</span>MAMP<span class="meta-keyword">/bin/</span>php/php5<span class="number">.5</span><span class="number">.30</span><span class="meta-keyword">/include/</span>php</span><br><span class="line"></span><br><span class="line">./configure</span><br></pre></td></tr></table></figure></p><p>当前目录下继续操作：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/nicolasff/phpredis.git</span><br><span class="line"></span><br><span class="line">cd phpredis</span><br></pre></td></tr></table></figure></p><p>接下来就是进行编译，但为了确保期间，建议在执行下列操作前先执行，除非你很确定你已经安装 <code>autoconf</code><br>通过 <a href="https://brew.sh/index_zh-cn" target="_blank" rel="noopener">Homebrew</a> 安装</p><p><code>brew install autoconf</code></p><p>下面进行编译<br>注：此时的目录应该为<code>/applications/MAMP/bin/php/php5.5.30/include/php/phpredis</code></p><p>执行下列命令：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/Applications/</span>MAMP<span class="regexp">/bin/</span>php<span class="regexp">/php5.5.30/</span>bin/phpize</span><br><span class="line"></span><br><span class="line">.<span class="regexp">/configure --with-php-config=/</span>Applications<span class="regexp">/MAMP/</span>bin<span class="regexp">/php/</span>php5<span class="number">.5</span><span class="number">.30</span><span class="regexp">/bin/</span>php-config</span><br><span class="line"></span><br><span class="line">make</span><br></pre></td></tr></table></figure></p><p>所有命令执行完成之后，会在当前目录下生成一个 <code>modules</code> 文件夹，里面有 <code>redis.so</code>，将这个文件复制至 <code>/Applications/MAMP/bin/php/php5.5.30/lib/php/extensions/no-debug-non-zts-XXXXXXXX</code>（最后的文件夹名每个用户有所差别）。</p><p>最后，修改 <code>/Applications/MAMP/bin/php/php5.3.30/conf/php.ini</code>,在文件的 545 行加上 <code>extension=redis.so</code>，保存关闭，重启服务器。</p><p>到此，redis 扩展安装完毕。</p><h3 id="安装-redis"><a href="#安装-redis" class="headerlink" title="安装 redis"></a>安装 redis</h3><p>安装 redis 就很简单了，一句命令行搞定：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span><span class="keyword">install </span>redis</span><br></pre></td></tr></table></figure></p>]]></content>
+    <content type="html"><![CDATA[<p>整部电影的画面以冷色调为主，充斥着一种压抑感。这部电影总是让我不自觉地想起「海边的曼彻斯特」，那也是一部压抑的电影，画面也是冷冷的，但相对来说「海边的曼彻斯特」画面比这部明朗多了，这部片子以战争为题材，压抑中充斥着紧张，这种压抑感来自片中孤身一人在海中间的那种绝望；来自船被击沉但又出不去，被海水包围的绝望；来自战机被击沉落到水面上，但舱门被卡住打不开，任由海水慢慢将自己浸没但又毫无办法的无力感。作为观众，我看到那些画面都会不自觉地呼吸急促。 </p><p>这部电影的战争中没有英雄，只有有血有肉的普通人，每个人都只想活着回家，但为了这个目的，又不得不拼了命。片中的士兵也是怕死的，也是想家的，他们也只是普通人，想过普通人的生活，可这对与那时候的他们来说，这是一种奢望。每次看完战争题材的电影或书之后，我都会庆幸自己处于和平年代，当然和平年代也有和平年代的烦恼。好坏另说吧。</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Mac 用户一般开本地服务器环境的时候用得比较多的就是 &lt;a href=&quot;https://www.mamp.info/en/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MAMP&lt;/a&gt; 这款软件吧，指定目录，一键开启，甚至可以什么都不用配置就可以将服务跑起来。不过前阵子开发的时候，由于公司项目用了 &lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;redis&lt;/a&gt; ，但 MAMP 本身的 php 是不带有 redis 插件的，为了装这个东西，我折腾了好几个小时，所以在这里记录一下。&lt;br&gt;
+      
+      
+        &lt;p&gt;整部电影的画面以冷色调为主，充斥着一种压抑感。这部电影总是让我不自觉地想起「海边的曼彻斯特」，那也是一部压抑的电影，画面也是冷冷的，但相对来说「海边的曼彻斯特」画面比这部明朗多了，这部片子以战争为题材，压抑中充斥着紧张，这种压抑感来自片中孤身一人在海中间的那种绝望；来自船被
+      
     
     </summary>
     
     
-      <category term="Mac" scheme="https://github.com/Tit1e/tags/Mac/"/>
-    
-      <category term="折腾笔记" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"/>
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
   <entry>
-    <title>Mac 创建 .htaccess 文件</title>
-    <link href="https://github.com/Tit1e/2018/05/07/46.mac-create-htaccess/"/>
-    <id>https://github.com/Tit1e/2018/05/07/46.mac-create-htaccess/</id>
-    <published>2018-05-07T12:41:53.000Z</published>
-    <updated>2019-04-04T14:19:16.699Z</updated>
+    <title>美丽人生 La vita è bella (1997)</title>
+    <link href="https://github.com/Tit1e/2018/08/20/69.Life-Is-Beautiful/"/>
+    <id>https://github.com/Tit1e/2018/08/20/69.Life-Is-Beautiful/</id>
+    <published>2018-08-19T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:59.611Z</updated>
     
-    <content type="html"><![CDATA[<p>在正常情况下，Mac 不允许用户创建以 <code>.</code> 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144331.png" alt><br><a id="more"></a><br>但是有时候我们又必须要创建，比如用 Apache 的服务器要重写路径，<code>.htaccess</code>文件必不可少。接下来就来说说如何创建以 <code>.</code> 开头的为文件或文件夹：<br>先打开终端，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">true</span> ; killall Finder</span><br></pre></td></tr></table></figure></p><p>然后你会发现 Finder 重启了，而且可能目录中多了很多半透明的文件夹，这些都是隐藏文件或文件夹，平时是受系统保护的。现在就可以创建以 <code>.</code> 开头的文件或文件夹了，修改完成后，只要运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder AppleShowAllFiles -boolean <span class="literal">false</span> ; killall Finder</span><br></pre></td></tr></table></figure></p><p>就可以恢复原状。</p>]]></content>
+    <content type="html"><![CDATA[<p>这部片子开头的时候，我有点讨厌男主，觉得男主好浮夸，又老是闯祸，我对这种人非常厌恶，因为我自己本身是个不想给别人带来麻烦的人，当我遇到这么个处处为别人带来麻烦的人的时候，这种感觉可想而知。好在潜意识里知道这只是电影了，稍稍消除了点对男主的厌恶感。</p><p>其实整部电影男主一直在“自以为是”地制造麻烦。一开始为了追求女主而不断地制造麻烦，后来他们有了孩子，为了孩子，他也不断地在“闯祸”，比如被抓到集中营后，把敌人的警告乱翻译成游戏规则，在集中营中用喇叭向公主问好，还用唱片机播放音乐给公主听。但在最后一晚，他没能躲过，被敌军杀害了，但他的孩子在集中营中度过了一段还算“快乐”的时光。因为他把这段日子包装成了一场游戏，最后，孩子也确实赢得了坦克，可惜他没亲眼见到。</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在正常情况下，Mac 不允许用户创建以 &lt;code&gt;.&lt;/code&gt; 开头的为文件或文件夹，如果创建，你将得到下图中的提示信息。&lt;br&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144331.png&quot; alt&gt;&lt;br&gt;
+      
+      
+        &lt;p&gt;这部片子开头的时候，我有点讨厌男主，觉得男主好浮夸，又老是闯祸，我对这种人非常厌恶，因为我自己本身是个不想给别人带来麻烦的人，当我遇到这么个处处为别人带来麻烦的人的时候，这种感觉可想而知。好在潜意识里知道这只是电影了，稍稍消除了点对男主的厌恶感。&lt;/p&gt;
+&lt;p&gt;其实整部电影
+      
     
     </summary>
     
     
-      <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>vue-cli 打包静态资源路径出错</title>
-    <link href="https://github.com/Tit1e/2018/05/03/45.vue-webpack-static/"/>
-    <id>https://github.com/Tit1e/2018/05/03/45.vue-webpack-static/</id>
-    <published>2018-05-03T11:53:26.000Z</published>
-    <updated>2019-04-04T14:19:16.699Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 <code>index.html</code> 和 <code>static</code> 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打包的绝对路径改成相对路径，结果是打包生成的 <code>js</code> 、 <code>css</code> 文件引用正常了，但是图片什么静态资源路径全部出错了，然后 Google 了好久，终于在 <a href="https://blog.csdn.net/a120120yyyy/article/details/78048838" target="_blank" rel="noopener">这里</a> 找到了解决办法，就是在 <code>build/utils.js</code> 文件中，找到<code>ExtractTextPlugin.extract</code>，加上 <code>publicPath: &#39;../../&#39;</code> 就能使静态资源正确引用。<br><a id="more"></a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天同事整理服务器的文件结构，把页面和资源文件移动了位置，由于我之前资源引用用的是绝对路径，所以我把 &lt;code&gt;index.html&lt;/code&gt; 和 &lt;code&gt;static&lt;/code&gt; 文件夹都放在根目录下，结果现在一移动就出现了问题，绝对路径不能用了，那只好把打包的绝对路径改成相对路径，结果是打包生成的 &lt;code&gt;js&lt;/code&gt; 、 &lt;code&gt;css&lt;/code&gt; 文件引用正常了，但是图片什么静态资源路径全部出错了，然后 Google 了好久，终于在 &lt;a href=&quot;https://blog.csdn.net/a120120yyyy/article/details/78048838&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt; 找到了解决办法，就是在 &lt;code&gt;build/utils.js&lt;/code&gt; 文件中，找到&lt;code&gt;ExtractTextPlugin.extract&lt;/code&gt;，加上 &lt;code&gt;publicPath: &amp;#39;../../&amp;#39;&lt;/code&gt; 就能使静态资源正确引用。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="学习笔记" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
-    
-      <category term="vue-cli" scheme="https://github.com/Tit1e/tags/vue-cli/"/>
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
