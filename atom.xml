@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-08T12:34:26.423Z</updated>
+  <updated>2019-04-10T14:39:02.855Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>小程序开发使用 iconfont</title>
+    <link href="https://github.com/Tit1e/2019/04/10/75.mini-program-use-iconfont/"/>
+    <id>https://github.com/Tit1e/2019/04/10/75.mini-program-use-iconfont/</id>
+    <published>2019-04-10T14:22:42.000Z</published>
+    <updated>2019-04-10T14:39:02.855Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>将选择好的图标生成在线链接</li></ol><p><img src="/Users/tit1e/Library/Application Support/typora-user-images/image-20190410223602633.png" alt="image-20190410223602633"></p><ol start="2"><li><p>在新标签页打开在线链接</p></li><li><p>复制页面中的所有 css 代码至 <code>app.wxss</code> 文件中，保存</p></li></ol><p>这样就可以在项目中使用 iconfont 了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;将选择好的图标生成在线链接&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;/Users/tit1e/Library/Application Support/typora-user-images/image-20190410223602633.png&quot; alt=
+      
+    
+    </summary>
+    
+    
+      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
+    
+  </entry>
   
   <entry>
     <title>Mac 使用终端执行弹出式消息通知</title>
@@ -414,30 +440,6 @@
   </entry>
   
   <entry>
-    <title>地球之夜 Night on Earth (1991)</title>
-    <link href="https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/"/>
-    <id>https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/</id>
-    <published>2018-11-09T16:00:00.000Z</published>
-    <updated>2019-04-09T09:09:17.419Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1817.jpg" alt> </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1817.jpg&quot; alt&gt; &lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
     <title>如父如子 そして父になる (2013)</title>
     <link href="https://github.com/Tit1e/2018/11/10/73.%E3%81%9D%E3%81%97%E3%81%A6%E7%88%B6%E3%81%AB%E3%81%AA%E3%82%8B/"/>
     <id>https://github.com/Tit1e/2018/11/10/73.そして父になる/</id>
@@ -462,6 +464,30 @@
   </entry>
   
   <entry>
+    <title>地球之夜 Night on Earth (1991)</title>
+    <link href="https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/"/>
+    <id>https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/</id>
+    <published>2018-11-09T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:17.419Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1817.jpg" alt> </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1817.jpg&quot; alt&gt; &lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
     <title>敦刻尔克 Dunkirk (2017)</title>
     <link href="https://github.com/Tit1e/2018/08/21/70.Dunkirk/"/>
     <id>https://github.com/Tit1e/2018/08/21/70.Dunkirk/</id>
@@ -475,30 +501,6 @@
       
       
         &lt;p&gt;整部电影的画面以冷色调为主，充斥着一种压抑感。这部电影总是让我不自觉地想起「海边的曼彻斯特」，那也是一部压抑的电影，画面也是冷冷的，但相对来说「海边的曼彻斯特」画面比这部明朗多了，这部片子以战争为题材，压抑中充斥着紧张，这种压抑感来自片中孤身一人在海中间的那种绝望；来自船被
-      
-    
-    </summary>
-    
-    
-      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>美丽人生 La vita è bella (1997)</title>
-    <link href="https://github.com/Tit1e/2018/08/20/69.Life-Is-Beautiful/"/>
-    <id>https://github.com/Tit1e/2018/08/20/69.Life-Is-Beautiful/</id>
-    <published>2018-08-19T16:00:00.000Z</published>
-    <updated>2019-04-09T09:09:59.611Z</updated>
-    
-    <content type="html"><![CDATA[<p>这部片子开头的时候，我有点讨厌男主，觉得男主好浮夸，又老是闯祸，我对这种人非常厌恶，因为我自己本身是个不想给别人带来麻烦的人，当我遇到这么个处处为别人带来麻烦的人的时候，这种感觉可想而知。好在潜意识里知道这只是电影了，稍稍消除了点对男主的厌恶感。</p><p>其实整部电影男主一直在“自以为是”地制造麻烦。一开始为了追求女主而不断地制造麻烦，后来他们有了孩子，为了孩子，他也不断地在“闯祸”，比如被抓到集中营后，把敌人的警告乱翻译成游戏规则，在集中营中用喇叭向公主问好，还用唱片机播放音乐给公主听。但在最后一晚，他没能躲过，被敌军杀害了，但他的孩子在集中营中度过了一段还算“快乐”的时光。因为他把这段日子包装成了一场游戏，最后，孩子也确实赢得了坦克，可惜他没亲眼见到。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这部片子开头的时候，我有点讨厌男主，觉得男主好浮夸，又老是闯祸，我对这种人非常厌恶，因为我自己本身是个不想给别人带来麻烦的人，当我遇到这么个处处为别人带来麻烦的人的时候，这种感觉可想而知。好在潜意识里知道这只是电影了，稍稍消除了点对男主的厌恶感。&lt;/p&gt;
-&lt;p&gt;其实整部电影
       
     
     </summary>
