@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-10T14:39:02.855Z</updated>
+  <updated>2019-04-11T14:36:25.852Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -17,13 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>0411 碎碎念</title>
+    <link href="https://github.com/Tit1e/2019/04/11/76.2019-04-11/"/>
+    <id>https://github.com/Tit1e/2019/04/11/76.2019-04-11/</id>
+    <published>2019-04-11T14:13:11.000Z</published>
+    <updated>2019-04-11T14:36:25.852Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天去交考核的时候碰到老大在研究小程序，我知道最近有个小程序要开发，可能这个活会落到我头上，但我不知道老大研究这个干什么。出于学习的目的我昨天试用了一下 <a href="https://github.com/Meituan-Dianping/mpvue">mpvue</a>，因为自身是使用 vue 进行开发的，也知道美团发布了个 vue 转制小程序的工具，于是趁此机会研究一下，万一到时候要我开发我也能兜住。结果今天老大就发我原型来让我评估工作量了。</p><p>到目前为止，我分析了下原型里的功能在开发过程中可能会遇到的坑：</p><ul><li>M3u8 的播放</li><li>图表展示</li><li>字体图标</li><li>用户登录状态管理</li><li>Vuex 的使用</li></ul><ol><li>m3u8 的播放今天测试了，在小程序中十分方便，<code>&lt;video&gt;</code> 标签就支持播放，比 网页上方便许多。</li><li>图表主要是柱状图跟饼图，我打算使用 <a href="https://github.com/F-loat/mpvue-echarts">mpvue-echarts</a>，这里还有个问题就是 echarts 需要去官网<a href="https://echarts.baidu.com/builder.html" target="_blank" rel="noopener">定制</a>。因为整个 echarts 引入会超出小程序限制的代码大小 2M，因此需要根据项目中用到的图表及组件进行定制。</li><li>字体图标 我在 <a href="https://evolly.one/2019/04/10/75.mini-program-use-iconfont/" target="_blank" rel="noopener">上一篇博客</a> 中已经说过了，其实这个在很早以前我也尝试过，已经是可以实现了的，这次为了保险起见再次确认下。</li><li>因为没有写过小程序，而这个项目又需要使用其他账户登录，因此这一块我需要找找成熟的方案。</li><li>Vuex 的话是因为我在查 mpvue 的时候看到有人说使用 Vuex 的时候有点怪，不知道是不是他的使用有问题，我需要亲自验证一下。</li></ol><p>目前想到的只有以上几点，其他的坑可能会在开发过程中陆续出现，到时候再做记录。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;昨天去交考核的时候碰到老大在研究小程序，我知道最近有个小程序要开发，可能这个活会落到我头上，但我不知道老大研究这个干什么。出于学习的目的我昨天试用了一下 &lt;a href=&quot;https://github.com/Meituan-Dianping/mpvue&quot;&gt;mpvue&lt;/a
+      
+    
+    </summary>
+    
+    
+      <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
     <title>小程序开发使用 iconfont</title>
     <link href="https://github.com/Tit1e/2019/04/10/75.mini-program-use-iconfont/"/>
     <id>https://github.com/Tit1e/2019/04/10/75.mini-program-use-iconfont/</id>
     <published>2019-04-10T14:22:42.000Z</published>
-    <updated>2019-04-10T14:39:02.855Z</updated>
+    <updated>2019-04-11T14:14:14.120Z</updated>
     
-    <content type="html"><![CDATA[<ol><li>将选择好的图标生成在线链接</li></ol><p><img src="/Users/tit1e/Library/Application Support/typora-user-images/image-20190410223602633.png" alt="image-20190410223602633"></p><ol start="2"><li><p>在新标签页打开在线链接</p></li><li><p>复制页面中的所有 css 代码至 <code>app.wxss</code> 文件中，保存</p></li></ol><p>这样就可以在项目中使用 iconfont 了。</p>]]></content>
+    <content type="html"><![CDATA[<ol><li>将选择好的图标生成在线链接</li></ol><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-11-image-20190410223602633.png" alt></p><ol start="2"><li><p>在新标签页打开在线链接</p></li><li><p>复制页面中的所有 css 代码至 <code>app.wxss</code> 文件中，保存</p></li></ol><p>这样就可以在项目中使用 iconfont 了。</p>]]></content>
     
     <summary type="html">
     
@@ -32,7 +55,7 @@
         &lt;ol&gt;
 &lt;li&gt;将选择好的图标生成在线链接&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&quot;/Users/tit1e/Library/Application Support/typora-user-images/image-20190410223602633.png&quot; alt=
+&lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-11-image-20190410223602633.pn
       
     
     </summary>
@@ -440,30 +463,6 @@
   </entry>
   
   <entry>
-    <title>如父如子 そして父になる (2013)</title>
-    <link href="https://github.com/Tit1e/2018/11/10/73.%E3%81%9D%E3%81%97%E3%81%A6%E7%88%B6%E3%81%AB%E3%81%AA%E3%82%8B/"/>
-    <id>https://github.com/Tit1e/2018/11/10/73.そして父になる/</id>
-    <published>2018-11-09T16:00:00.000Z</published>
-    <updated>2019-04-09T09:09:43.138Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg" alt> </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg&quot; alt&gt; &lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
     <title>地球之夜 Night on Earth (1991)</title>
     <link href="https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/"/>
     <id>https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/</id>
@@ -488,19 +487,20 @@
   </entry>
   
   <entry>
-    <title>敦刻尔克 Dunkirk (2017)</title>
-    <link href="https://github.com/Tit1e/2018/08/21/70.Dunkirk/"/>
-    <id>https://github.com/Tit1e/2018/08/21/70.Dunkirk/</id>
-    <published>2018-08-20T16:00:00.000Z</published>
-    <updated>2019-04-09T09:09:34.266Z</updated>
+    <title>如父如子 そして父になる (2013)</title>
+    <link href="https://github.com/Tit1e/2018/11/10/73.%E3%81%9D%E3%81%97%E3%81%A6%E7%88%B6%E3%81%AB%E3%81%AA%E3%82%8B/"/>
+    <id>https://github.com/Tit1e/2018/11/10/73.そして父になる/</id>
+    <published>2018-11-09T16:00:00.000Z</published>
+    <updated>2019-04-09T09:09:43.138Z</updated>
     
-    <content type="html"><![CDATA[<p>整部电影的画面以冷色调为主，充斥着一种压抑感。这部电影总是让我不自觉地想起「海边的曼彻斯特」，那也是一部压抑的电影，画面也是冷冷的，但相对来说「海边的曼彻斯特」画面比这部明朗多了，这部片子以战争为题材，压抑中充斥着紧张，这种压抑感来自片中孤身一人在海中间的那种绝望；来自船被击沉但又出不去，被海水包围的绝望；来自战机被击沉落到水面上，但舱门被卡住打不开，任由海水慢慢将自己浸没但又毫无办法的无力感。作为观众，我看到那些画面都会不自觉地呼吸急促。 </p><p>这部电影的战争中没有英雄，只有有血有肉的普通人，每个人都只想活着回家，但为了这个目的，又不得不拼了命。片中的士兵也是怕死的，也是想家的，他们也只是普通人，想过普通人的生活，可这对与那时候的他们来说，这是一种奢望。每次看完战争题材的电影或书之后，我都会庆幸自己处于和平年代，当然和平年代也有和平年代的烦恼。好坏另说吧。</p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg" alt> </p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;整部电影的画面以冷色调为主，充斥着一种压抑感。这部电影总是让我不自觉地想起「海边的曼彻斯特」，那也是一部压抑的电影，画面也是冷冷的，但相对来说「海边的曼彻斯特」画面比这部明朗多了，这部片子以战争为题材，压抑中充斥着紧张，这种压抑感来自片中孤身一人在海中间的那种绝望；来自船被
+        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg&quot; alt&gt; &lt;/p&gt;
+
       
     
     </summary>
