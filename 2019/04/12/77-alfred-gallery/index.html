@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>alfred 使用 workflows 快速进行图片压缩 · Tit1e</title><meta name="description" content="alfred 使用 workflows 快速进行图片压缩 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/Tit1e/atom.xml" title="Tit1e"></head><body><div class="wrap"><header><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">主页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">过往</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">订阅</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">alfred 使用 workflows 快速进行图片压缩</h1><div class="post-info">Apr 12, 2019</div><div class="post-content"><p>图片压缩是我平时经常用到的操作，一开始是去 <a href="https://tinypng.com/" target="_blank" rel="noopener">tinypng</a> 使用网页版压缩，后来在逛 Github 时发现了 <a href="https://github.com/kyleduo/TinyPNG4Mac">TinyPNG4Mac</a> 这个小工具，相比之前的网页操作已经方便了不少，今天在逛 Twitter 时又发现了一个 alfred 的 workflows 工作流，可以在本地快速进行图片压缩。下载地址在 <a href="https://github.com/BlackwinMin/alfred-gallery/tree/master/image%20Compressor">image Compressor</a>。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用这个工具的时候需要先安装以下三个项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 压缩 png</span></span><br><span class="line">brew install pngquant</span><br><span class="line"><span class="comment"># 压缩 jpg</span></span><br><span class="line">brew install jpegoptim</span><br><span class="line"><span class="comment"># 压缩 gif</span></span><br><span class="line">brew install gifsicle</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/BlackwinMin/alfred-gallery/blob/master/image%20Compressor/image%20Compressor.alfredworkflow">文件下载地址</a></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-24-26.png" alt></p>
+<p>下载完成后打开下载好的文件，点击 import 将工作流导入就安装完成。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-41-31.png" alt></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>我由于之前没使用 workflows 处理过文件，都是使用热键类型的 workflows，因此我不知道怎么选择文件进行操作，在一通瞎按外加 一通 Google 后终于了解了。一开始我连如何执行这个压缩命令都不知道。</p>
+<ul>
+<li><p>对单个文件进行操作</p>
+<ul>
+<li>选择一个文件后按 <code>control</code> 出现操作选项，执行 <code>image Compressor</code></li>
+</ul>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-51-34.png" alt></p>
+</li>
+<li><p>在 Alfred 中选择多个文件后进行操作</p>
+<ul>
+<li>选择一个文件后按 <code>option</code> + <code>↑</code> 可以将文件加入缓冲区，可以将多个文件加入缓冲区， <code>option</code> + <code>←</code>可以删除最近添加的文件， <code>option</code> + <code>→</code> 可以对这些选中的文件进行批量操作。</li>
+</ul>
+</li>
+<li><p>在 Finder 中选好文件直接使用 Alfred 操作文件</p>
+<ul>
+<li><p>对于压缩图片来说这应该是最好的操作方式：在 Finder 中批量选中图片后，按 <code>option</code> + <code>commend</code> + <code>\</code> 调出操作列表进行操作。如果无法调出可能是快捷键被修改了，可以从下图出查看具体快捷键。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-46-08.png" alt></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>在找的过程中我还发现一个使用 TinyPNG 压缩的 workflows <a href="http://www.packal.org/workflow/tinypng" target="_blank" rel="noopener">Compress with TinyPNG</a>，应该与 TinyPNGMac 用的是同一个接口吧。使用方式同 image Compressor。</p>
+<p> 注：使用的时候需要去 <a href="https://tinypng.com/developers" target="_blank" rel="noopener">这里</a> 注册一个 API Key，然后在 Alfred 执行 <code>tinypng_config</code> ，输入 API Key 后回车。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-17-07.png" alt></p>
+<p>压缩效果有点差异，但相差不多，但是压缩速度差非常多。TinyPNG 还会出现丢图现象，下图右侧其实应该有三张图片，但是压缩只为了我两种张，而且速度非常慢，从修改日期可以看出两张图的创建时间相差了一分钟。image Compressor 由于使用的是本地的工具库，因此几张图压缩只要几秒就可完成。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-21-59.png" alt></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/04/11/76-2019-04-11/" class="next">下一篇</a></div><div class="copyright"><p>© 2016 - 2019 <a href="https://github.com/Tit1e" target="_blank">Tit1e</a>, powered by <a href="https://github.com/Tit1e/hexo-theme-simple" target="_blank">hexo-theme-simple</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

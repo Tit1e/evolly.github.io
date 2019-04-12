@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-11T14:36:25.852Z</updated>
+  <updated>2019-04-12T14:33:43.013Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -17,9 +17,32 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>alfred 使用 workflows 快速进行图片压缩</title>
+    <link href="https://github.com/Tit1e/2019/04/12/77-alfred-gallery/"/>
+    <id>https://github.com/Tit1e/2019/04/12/77-alfred-gallery/</id>
+    <published>2019-04-12T13:29:00.000Z</published>
+    <updated>2019-04-12T14:33:43.013Z</updated>
+    
+    <content type="html"><![CDATA[<p>图片压缩是我平时经常用到的操作，一开始是去 <a href="https://tinypng.com/" target="_blank" rel="noopener">tinypng</a> 使用网页版压缩，后来在逛 Github 时发现了 <a href="https://github.com/kyleduo/TinyPNG4Mac">TinyPNG4Mac</a> 这个小工具，相比之前的网页操作已经方便了不少，今天在逛 Twitter 时又发现了一个 alfred 的 workflows 工作流，可以在本地快速进行图片压缩。下载地址在 <a href="https://github.com/BlackwinMin/alfred-gallery/tree/master/image%20Compressor">image Compressor</a>。</p><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用这个工具的时候需要先安装以下三个项目：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 压缩 png</span></span><br><span class="line">brew install pngquant</span><br><span class="line"><span class="comment"># 压缩 jpg</span></span><br><span class="line">brew install jpegoptim</span><br><span class="line"><span class="comment"># 压缩 gif</span></span><br><span class="line">brew install gifsicle</span><br></pre></td></tr></table></figure><p><a href="https://github.com/BlackwinMin/alfred-gallery/blob/master/image%20Compressor/image%20Compressor.alfredworkflow">文件下载地址</a></p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-24-26.png" alt></p><p>下载完成后打开下载好的文件，点击 import 将工作流导入就安装完成。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-41-31.png" alt></p><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>我由于之前没使用 workflows 处理过文件，都是使用热键类型的 workflows，因此我不知道怎么选择文件进行操作，在一通瞎按外加 一通 Google 后终于了解了。一开始我连如何执行这个压缩命令都不知道。</p><ul><li><p>对单个文件进行操作</p><ul><li>选择一个文件后按 <code>control</code> 出现操作选项，执行 <code>image Compressor</code></li></ul><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-51-34.png" alt></p></li><li><p>在 Alfred 中选择多个文件后进行操作</p><ul><li>选择一个文件后按 <code>option</code> + <code>↑</code> 可以将文件加入缓冲区，可以将多个文件加入缓冲区， <code>option</code> + <code>←</code>可以删除最近添加的文件， <code>option</code> + <code>→</code> 可以对这些选中的文件进行批量操作。</li></ul></li><li><p>在 Finder 中选好文件直接使用 Alfred 操作文件</p><ul><li><p>对于压缩图片来说这应该是最好的操作方式：在 Finder 中批量选中图片后，按 <code>option</code> + <code>commend</code> + <code>\</code> 调出操作列表进行操作。如果无法调出可能是快捷键被修改了，可以从下图出查看具体快捷键。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-46-08.png" alt></p></li></ul></li></ul><p>在找的过程中我还发现一个使用 TinyPNG 压缩的 workflows <a href="http://www.packal.org/workflow/tinypng" target="_blank" rel="noopener">Compress with TinyPNG</a>，应该与 TinyPNGMac 用的是同一个接口吧。使用方式同 image Compressor。</p><p> 注：使用的时候需要去 <a href="https://tinypng.com/developers" target="_blank" rel="noopener">这里</a> 注册一个 API Key，然后在 Alfred 执行 <code>tinypng_config</code> ，输入 API Key 后回车。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-17-07.png" alt></p><p>压缩效果有点差异，但相差不多，但是压缩速度差非常多。TinyPNG 还会出现丢图现象，下图右侧其实应该有三张图片，但是压缩只为了我两种张，而且速度非常慢，从修改日期可以看出两张图的创建时间相差了一分钟。image Compressor 由于使用的是本地的工具库，因此几张图压缩只要几秒就可完成。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-21-59.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;图片压缩是我平时经常用到的操作，一开始是去 &lt;a href=&quot;https://tinypng.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;tinypng&lt;/a&gt; 使用网页版压缩，后来在逛 Github 时发现了 &lt;a href=&quot;https:/
+      
+    
+    </summary>
+    
+    
+      <category term="mac 技巧" scheme="https://github.com/Tit1e/tags/mac-%E6%8A%80%E5%B7%A7/"/>
+    
+  </entry>
+  
+  <entry>
     <title>0411 碎碎念</title>
-    <link href="https://github.com/Tit1e/2019/04/11/76.2019-04-11/"/>
-    <id>https://github.com/Tit1e/2019/04/11/76.2019-04-11/</id>
+    <link href="https://github.com/Tit1e/2019/04/11/76-2019-04-11/"/>
+    <id>https://github.com/Tit1e/2019/04/11/76-2019-04-11/</id>
     <published>2019-04-11T14:13:11.000Z</published>
     <updated>2019-04-11T14:36:25.852Z</updated>
     
@@ -41,8 +64,8 @@
   
   <entry>
     <title>小程序开发使用 iconfont</title>
-    <link href="https://github.com/Tit1e/2019/04/10/75.mini-program-use-iconfont/"/>
-    <id>https://github.com/Tit1e/2019/04/10/75.mini-program-use-iconfont/</id>
+    <link href="https://github.com/Tit1e/2019/04/10/75-mini-program-use-iconfont/"/>
+    <id>https://github.com/Tit1e/2019/04/10/75-mini-program-use-iconfont/</id>
     <published>2019-04-10T14:22:42.000Z</published>
     <updated>2019-04-11T14:14:14.120Z</updated>
     
@@ -67,8 +90,8 @@
   
   <entry>
     <title>Mac 使用终端执行弹出式消息通知</title>
-    <link href="https://github.com/Tit1e/2019/04/08/64.send-an-alert-to-notification-center-from-the-command/"/>
-    <id>https://github.com/Tit1e/2019/04/08/64.send-an-alert-to-notification-center-from-the-command/</id>
+    <link href="https://github.com/Tit1e/2019/04/08/64-send-an-alert-to-notification-center-from-the-command/"/>
+    <id>https://github.com/Tit1e/2019/04/08/64-send-an-alert-to-notification-center-from-the-command/</id>
     <published>2019-04-08T12:29:12.000Z</published>
     <updated>2019-04-08T12:34:26.423Z</updated>
     
@@ -90,8 +113,8 @@
   
   <entry>
     <title>vue-mark-calendar</title>
-    <link href="https://github.com/Tit1e/2019/04/06/63.vue-mark-calendar/"/>
-    <id>https://github.com/Tit1e/2019/04/06/63.vue-mark-calendar/</id>
+    <link href="https://github.com/Tit1e/2019/04/06/63-vue-mark-calendar/"/>
+    <id>https://github.com/Tit1e/2019/04/06/63-vue-mark-calendar/</id>
     <published>2019-04-06T13:26:23.000Z</published>
     <updated>2019-04-06T13:44:24.801Z</updated>
     
@@ -113,8 +136,8 @@
   
   <entry>
     <title>Mac 使用 Alfred 执行终端命令</title>
-    <link href="https://github.com/Tit1e/2019/04/04/62.alfred-workflow/"/>
-    <id>https://github.com/Tit1e/2019/04/04/62.alfred-workflow/</id>
+    <link href="https://github.com/Tit1e/2019/04/04/62-alfred-workflow/"/>
+    <id>https://github.com/Tit1e/2019/04/04/62-alfred-workflow/</id>
     <published>2019-04-04T13:05:45.000Z</published>
     <updated>2019-04-04T14:19:44.667Z</updated>
     
@@ -141,8 +164,8 @@
   
   <entry>
     <title>0402 碎碎念</title>
-    <link href="https://github.com/Tit1e/2019/04/02/61.2019-04-02/"/>
-    <id>https://github.com/Tit1e/2019/04/02/61.2019-04-02/</id>
+    <link href="https://github.com/Tit1e/2019/04/02/61-2019-04-02/"/>
+    <id>https://github.com/Tit1e/2019/04/02/61-2019-04-02/</id>
     <published>2019-04-02T12:44:27.000Z</published>
     <updated>2019-04-02T13:06:40.592Z</updated>
     
@@ -165,8 +188,8 @@
   
   <entry>
     <title>斐讯 k2p 在已刷 Breed 情况下刷入其他固件</title>
-    <link href="https://github.com/Tit1e/2019/04/01/60.k2p-breed/"/>
-    <id>https://github.com/Tit1e/2019/04/01/60.k2p-breed/</id>
+    <link href="https://github.com/Tit1e/2019/04/01/60-k2p-breed/"/>
+    <id>https://github.com/Tit1e/2019/04/01/60-k2p-breed/</id>
     <published>2019-04-01T13:19:17.000Z</published>
     <updated>2019-04-01T13:47:31.916Z</updated>
     
@@ -190,8 +213,8 @@
   
   <entry>
     <title>0331 一周总结</title>
-    <link href="https://github.com/Tit1e/2019/03/31/59.2019-03-31-week-summary/"/>
-    <id>https://github.com/Tit1e/2019/03/31/59.2019-03-31-week-summary/</id>
+    <link href="https://github.com/Tit1e/2019/03/31/59-2019-03-31-week-summary/"/>
+    <id>https://github.com/Tit1e/2019/03/31/59-2019-03-31-week-summary/</id>
     <published>2019-03-31T15:06:37.000Z</published>
     <updated>2019-04-02T13:07:22.435Z</updated>
     
@@ -210,8 +233,8 @@
   
   <entry>
     <title>hexo rss 报错解决方案</title>
-    <link href="https://github.com/Tit1e/2019/03/30/58.hexo-rss-error/"/>
-    <id>https://github.com/Tit1e/2019/03/30/58.hexo-rss-error/</id>
+    <link href="https://github.com/Tit1e/2019/03/30/58-hexo-rss-error/"/>
+    <id>https://github.com/Tit1e/2019/03/30/58-hexo-rss-error/</id>
     <published>2019-03-30T01:24:37.000Z</published>
     <updated>2019-03-30T01:45:43.730Z</updated>
     
@@ -235,8 +258,8 @@
   
   <entry>
     <title>element-ui 树形控件使用右键菜单</title>
-    <link href="https://github.com/Tit1e/2019/03/29/57.el-tree-contextmenu/"/>
-    <id>https://github.com/Tit1e/2019/03/29/57.el-tree-contextmenu/</id>
+    <link href="https://github.com/Tit1e/2019/03/29/57-el-tree-contextmenu/"/>
+    <id>https://github.com/Tit1e/2019/03/29/57-el-tree-contextmenu/</id>
     <published>2019-03-29T13:16:20.000Z</published>
     <updated>2019-04-04T14:19:16.714Z</updated>
     
@@ -261,8 +284,8 @@
   
   <entry>
     <title>编写一个全局 SVG 图标组件</title>
-    <link href="https://github.com/Tit1e/2019/03/27/56.global-icon-component/"/>
-    <id>https://github.com/Tit1e/2019/03/27/56.global-icon-component/</id>
+    <link href="https://github.com/Tit1e/2019/03/27/56-global-icon-component/"/>
+    <id>https://github.com/Tit1e/2019/03/27/56-global-icon-component/</id>
     <published>2019-03-27T04:30:06.000Z</published>
     <updated>2019-04-04T14:19:16.700Z</updated>
     
@@ -288,8 +311,8 @@
   
   <entry>
     <title>网页打印指定区域内容</title>
-    <link href="https://github.com/Tit1e/2019/03/26/55.web-print/"/>
-    <id>https://github.com/Tit1e/2019/03/26/55.web-print/</id>
+    <link href="https://github.com/Tit1e/2019/03/26/55-web-print/"/>
+    <id>https://github.com/Tit1e/2019/03/26/55-web-print/</id>
     <published>2019-03-26T14:26:32.000Z</published>
     <updated>2019-04-04T14:19:16.700Z</updated>
     
@@ -314,8 +337,8 @@
   
   <entry>
     <title>使用 Vue CLI3 编写组件库并发布至 npm</title>
-    <link href="https://github.com/Tit1e/2019/03/26/54.vuecl3-npm-publish/"/>
-    <id>https://github.com/Tit1e/2019/03/26/54.vuecl3-npm-publish/</id>
+    <link href="https://github.com/Tit1e/2019/03/26/54-vuecl3-npm-publish/"/>
+    <id>https://github.com/Tit1e/2019/03/26/54-vuecl3-npm-publish/</id>
     <published>2019-03-25T16:05:29.000Z</published>
     <updated>2019-04-04T14:19:16.700Z</updated>
     
@@ -340,8 +363,8 @@
   
   <entry>
     <title>在 Vue CLI 3 中配置 svg-sprite-loader</title>
-    <link href="https://github.com/Tit1e/2019/03/12/53.vue-cli3-use-svg-sprite-loader/"/>
-    <id>https://github.com/Tit1e/2019/03/12/53.vue-cli3-use-svg-sprite-loader/</id>
+    <link href="https://github.com/Tit1e/2019/03/12/53-vue-cli3-use-svg-sprite-loader/"/>
+    <id>https://github.com/Tit1e/2019/03/12/53-vue-cli3-use-svg-sprite-loader/</id>
     <published>2019-03-12T06:25:46.000Z</published>
     <updated>2019-04-04T14:19:16.730Z</updated>
     
@@ -367,8 +390,8 @@
   
   <entry>
     <title>一条狗的使命 A Dog&#39;s Purpose (2017)</title>
-    <link href="https://github.com/Tit1e/2019/01/01/74.A-Dog&#39;s-Purpose/"/>
-    <id>https://github.com/Tit1e/2019/01/01/74.A-Dog&#39;s-Purpose/</id>
+    <link href="https://github.com/Tit1e/2019/01/01/74-A-Dog&#39;s-Purpose/"/>
+    <id>https://github.com/Tit1e/2019/01/01/74-A-Dog&#39;s-Purpose/</id>
     <published>2018-12-31T16:00:00.000Z</published>
     <updated>2019-04-09T09:08:26.694Z</updated>
     
@@ -390,8 +413,8 @@
   
   <entry>
     <title>你好呀，2019</title>
-    <link href="https://github.com/Tit1e/2018/12/31/52.hello-2019/"/>
-    <id>https://github.com/Tit1e/2018/12/31/52.hello-2019/</id>
+    <link href="https://github.com/Tit1e/2018/12/31/52-hello-2019/"/>
+    <id>https://github.com/Tit1e/2018/12/31/52-hello-2019/</id>
     <published>2018-12-31T15:15:58.000Z</published>
     <updated>2019-03-28T15:46:00.862Z</updated>
     
@@ -417,8 +440,8 @@
   
   <entry>
     <title>从零开始：Ubuntu 部署 Node 环境</title>
-    <link href="https://github.com/Tit1e/2018/12/14/51.ubuntu-node/"/>
-    <id>https://github.com/Tit1e/2018/12/14/51.ubuntu-node/</id>
+    <link href="https://github.com/Tit1e/2018/12/14/51-ubuntu-node/"/>
+    <id>https://github.com/Tit1e/2018/12/14/51-ubuntu-node/</id>
     <published>2018-12-14T12:29:48.000Z</published>
     <updated>2018-12-15T02:19:43.470Z</updated>
     
@@ -439,33 +462,9 @@
   </entry>
   
   <entry>
-    <title>阳光小美女 Little Miss Sunshine (2006)</title>
-    <link href="https://github.com/Tit1e/2018/11/10/72.Little-Miss-Sunshine/"/>
-    <id>https://github.com/Tit1e/2018/11/10/72.Little-Miss-Sunshine/</id>
-    <published>2018-11-09T16:00:00.000Z</published>
-    <updated>2019-04-09T09:09:39.421Z</updated>
-    
-    <content type="html"><![CDATA[<p>一个全是问题的家庭，一次意外的比赛，一段奇妙的旅程。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;一个全是问题的家庭，一次意外的比赛，一段奇妙的旅程。&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-      <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
     <title>地球之夜 Night on Earth (1991)</title>
-    <link href="https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/"/>
-    <id>https://github.com/Tit1e/2018/11/10/71.Night-on-Earth/</id>
+    <link href="https://github.com/Tit1e/2018/11/10/71-Night-on-Earth/"/>
+    <id>https://github.com/Tit1e/2018/11/10/71-Night-on-Earth/</id>
     <published>2018-11-09T16:00:00.000Z</published>
     <updated>2019-04-09T09:09:17.419Z</updated>
     
@@ -487,19 +486,19 @@
   </entry>
   
   <entry>
-    <title>如父如子 そして父になる (2013)</title>
-    <link href="https://github.com/Tit1e/2018/11/10/73.%E3%81%9D%E3%81%97%E3%81%A6%E7%88%B6%E3%81%AB%E3%81%AA%E3%82%8B/"/>
-    <id>https://github.com/Tit1e/2018/11/10/73.そして父になる/</id>
+    <title>阳光小美女 Little Miss Sunshine (2006)</title>
+    <link href="https://github.com/Tit1e/2018/11/10/72-Little-Miss-Sunshine/"/>
+    <id>https://github.com/Tit1e/2018/11/10/72-Little-Miss-Sunshine/</id>
     <published>2018-11-09T16:00:00.000Z</published>
-    <updated>2019-04-09T09:09:43.138Z</updated>
+    <updated>2019-04-09T09:09:39.421Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg" alt> </p>]]></content>
+    <content type="html"><![CDATA[<p>一个全是问题的家庭，一次意外的比赛，一段奇妙的旅程。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-11-13-IMG_1832.jpg&quot; alt&gt; &lt;/p&gt;
+        &lt;p&gt;一个全是问题的家庭，一次意外的比赛，一段奇妙的旅程。&lt;/p&gt;
 
       
     
