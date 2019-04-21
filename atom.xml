@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-04-18T15:45:18.654Z</updated>
+  <updated>2019-04-21T09:41:41.142Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>0421 一周总结</title>
+    <link href="https://github.com/Tit1e/2019/04/21/111-2019-04-21-week-summary/"/>
+    <id>https://github.com/Tit1e/2019/04/21/111-2019-04-21-week-summary/</id>
+    <published>2019-04-21T09:19:08.000Z</published>
+    <updated>2019-04-21T09:41:41.142Z</updated>
+    
+    <content type="html"><![CDATA[<p>这周来了个小程序的开发任务，之前没怎么接触过小程序，听闻之前美团开源了一个 vue 转小程序的工具，于是打算一用。到目前为止静态页面基本开发完成，还剩下接口对接。接下来还有多少坑我也不知道，但硬着头皮也得上呀。期限是下周五。</p><p>在小公司特别是岗位只有自己一人的时候，就更加需要广泛涉猎多种技术，前端的话得适应多端的开发，最好也了解后端的一些东西，会一门后台语言，了解后台的一些运行机制，对于前端的开发也是有帮助的。至少对我来说，开始的时候被后端逼着学了一点后端的东西，目前看来对我还是挺有帮助的。其实如果在不断提升自己，大部分人最后都基本上会接触到一大堆东西，当然专精的方向可能仍有区别。</p><p>无论怎样，最后提升自己才是关键，在提升自己的同时，也要将这种提升正向输出到公司业务中。这样才是有成果的提升。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这周来了个小程序的开发任务，之前没怎么接触过小程序，听闻之前美团开源了一个 vue 转小程序的工具，于是打算一用。到目前为止静态页面基本开发完成，还剩下接口对接。接下来还有多少坑我也不知道，但硬着头皮也得上呀。期限是下周五。&lt;/p&gt;
+&lt;p&gt;在小公司特别是岗位只有自己一人的时
+      
+    
+    </summary>
+    
+    
+      <category term="一周总结" scheme="https://github.com/Tit1e/tags/%E4%B8%80%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
   
   <entry>
     <title>正确地偷懒</title>
@@ -470,33 +494,6 @@
     
     
       <category term="观影感想" scheme="https://github.com/Tit1e/tags/%E8%A7%82%E5%BD%B1%E6%84%9F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你好呀，2019</title>
-    <link href="https://github.com/Tit1e/2018/12/31/52-hello-2019/"/>
-    <id>https://github.com/Tit1e/2018/12/31/52-hello-2019/</id>
-    <published>2018-12-31T15:15:58.000Z</published>
-    <updated>2019-04-13T13:37:59.467Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="2018-计划"><a href="#2018-计划" class="headerlink" title="2018 计划"></a>2018 计划</h4><ol><li>前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓</li><li>增重到130斤（是增肌，不是增脂！） ❎</li><li>一定要买个 switch（塞尔达天下第一！） ✅</li><li>薪水上涨 30% ✅</li><li>攒钱 ✅</li><li>希望认识更多的人？（这个太难了） ✅</li></ol><a id="more"></a><p>增重很明显失败了，18 年几乎没去健身房吧，放弃一件事实在是太容易了。开年的时候就开始忙，连着加了好几个月的班，之后后面又不确定性的日常加班，导致后来已经完全没了去健身房的兴致，当然我不是把锅甩在加班头上，毕竟后面不忙了，周末我也没去健身房了。</p><p>switch 的话已经买了，也有大半年了吧，玩倒也断断续续一直在玩，玩得最疯的就是当初肝《异度之刃2》的时候了，很久没有游戏能这样吸引我了，确实是个好游戏。</p><p>18 年也认识了两个可爱的同事，他们是我晋公司以来最处得来的同事，大概是因为都是逗比吧。</p><p>明年就不立计划了，只希望家人，我在意的以及在意我的人能快乐，身体能健康吧。与家人的关系也能更近一步，小时候不怎么跟家人交流，现在大了，事情多了，爸妈也会跟我来说一些事情了，与爸妈之间的话说的也就多了，但我希望还能更近一步吧。已经能明显感觉到爸妈在变老了，时间不等人呀。以前觉得“祝你身体健康”只是客套话，但是随着年龄变大，经历的事情增多，我越来越觉得这不是客套话。随着年龄的增大，这句话也将变得弥足珍贵。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;2018-计划&quot;&gt;&lt;a href=&quot;#2018-计划&quot; class=&quot;headerlink&quot; title=&quot;2018 计划&quot;&gt;&lt;/a&gt;2018 计划&lt;/h4&gt;&lt;ol&gt;
-&lt;li&gt;前端技能上能有大的提升（如何衡量大呢？我也不知道） ❓&lt;/li&gt;
-&lt;li&gt;增重到130斤（是增肌，不是增脂！） ❎&lt;/li&gt;
-&lt;li&gt;一定要买个 switch（塞尔达天下第一！） ✅&lt;/li&gt;
-&lt;li&gt;薪水上涨 30% ✅&lt;/li&gt;
-&lt;li&gt;攒钱 ✅&lt;/li&gt;
-&lt;li&gt;希望认识更多的人？（这个太难了） ✅&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="https://github.com/Tit1e/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
