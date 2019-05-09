@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>使用 mpvue 开发小程序过程中遇到的问题及总结 · Tit1e</title><meta name="description" content="使用 mpvue 开发小程序过程中遇到的问题及总结 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/Tit1e/atom.xml" title="Tit1e"></head><body><div class="wrap"><header><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">主页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">过往</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">订阅</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">使用 mpvue 开发小程序过程中遇到的问题及总结</h1><div class="post-info">May 1, 2019</div><div class="post-content"><p>最近在使用 <a href="https://github.com/Meituan-Dianping/mpvue">mpvue</a> 开发一个小程序，在这过程中遇到了不少问题，因为是第一次开发，遇到的问题可能比较基础，在这里做一个记录。</p>
+<ul>
+<li><p>如果你底部导航栏有三个页面，在这三个页面中的 created 中的代码会在进入小程序的时候就被执行，如果你想切到对应页面后才执行相应的方法，需要把代码写在 mounted 钩子中。</p>
+</li>
+<li><p>虽然官方是说 mpvue 支持 slot，但是我在实际使用的过程中，会出现奇奇怪怪的问题，不建议使用。</p>
+</li>
+<li><p>Vuex 可以使用，并且支持程度比较好，但是默认你无法在代码中使用 <code>this.$store</code> 来获取 store，每次你要使用 store 的时候都需要在页面中引入 store，<code>import store from &#39;/path/to/sotre.js&#39;</code>，然后就可以正常使用了，但是我们可以通过将 store 绑定至 Vue 的原型上，不是就可以使用 <code>this.$store</code> 了吗？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">main.js</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'/path/to/store.js'</span></span><br><span class="line">Vue.prototype.$store = store</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对应页面的 <code>main.json</code> 中加入 <code>&quot;enablePullDownRefresh&quot;: true</code> 配置项可开启下拉刷新，然后在 <code>onPullDownRefresh</code> 钩子中可加入刷新的操作代码，不过你需要使用  <code>wx.stopPullDownRefresh()</code> 来解除下拉后的 loading 动画。</p>
+</li>
+<li><p><code>onReachBottom</code> 钩子在页面滚动到底部时出发，可用于实现到达底部时自动加载列表。</p>
+</li>
+<li><p><code>vidoe</code> 、<code>canvas</code> 、<code>map</code>、<code>textarea</code> 这些由客户端创建的原生组件在小程序中层级永远的最高的，所以在正常情况下这些元素永远是置顶的，<code>cover-view</code>、<code>cover-image</code> 这些标签可以解决这个问题，但是它们有很大的局限性，<code>cover-view</code> 只能嵌套 <code>cover-view</code> 标签或 <code>button</code> 标签，并且并不是所有 css 样式对这些标签有效，所以这些标签还是无法满足比较复杂的组件。项目中由于这个问题的存在，我将筛选条件进行的调整，最后采用点击筛选侧滑出筛选项，并在显示筛选项的时候隐藏 echarts 图表，点击搜索后再重新展示图表来解决了这个问题。</p>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/04/27/112-mini-program-qiniu-upload/" class="next">下一篇</a></div><div class="copyright"><p>© 2016 - 2019 <a href="https://github.com/Tit1e" target="_blank">Tit1e</a>, powered by <a href="https://github.com/Tit1e/hexo-theme-simple" target="_blank">hexo-theme-simple</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
