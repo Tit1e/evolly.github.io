@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-08-16T16:13:43.903Z</updated>
+  <updated>2019-07-05T07:21:18.505Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>2019/08/16 惰性</title>
-    <link href="https://github.com/Tit1e/2019/08/16/120-2019-08-16/"/>
-    <id>https://github.com/Tit1e/2019/08/16/120-2019-08-16/</id>
-    <published>2019-08-16T15:49:11.000Z</published>
-    <updated>2019-08-16T16:13:43.903Z</updated>
-    
-    <content type="html"><![CDATA[<p>距上次更新博客已经过去很久，这段时间内倒也不是没有收获，只是都把它攒在角落，等着下一次的心血来潮把它总结掉。估计就在明后两天。</p><p>十分佩服执行力强的人，有计划要做的事，就马上会将它完成。而拖延的人总会将事情放在截止期前一天或前几天，而匆匆忙忙赶出来的东西，质量难免下降。</p><p>这种习惯如果在公司内部员工中体现，它还会影响整个公司的执行效率，无论是工作，还是制度规章的落地。就拿公司的周考核来说，本来周考核应该是每周都要按时上交，这样上级就能及时评分继而交由行政财务进行计算结算工资。而我们往往因为工作忙，没时间写，推到下周再写，慢慢地，周考核就变成了一个月交一次，有时候甚至迟交很多天，严重影响后面行政财务的工作进度。这个规矩也就自然而然的成了摆设。当然这与公司没提出晚交考核的应对措施或后果也有关系，但这种事情终归是惩罚性质，员工能主动上交自然是最好的结果。</p><p>是真没时间写吗？其实不然，写一周的考核，顶多十几分钟，但人总是会有惰性，包括我写技术博客。往后还是得及时将积攒的内容总结更新，希望这次能保持得久一些。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;距上次更新博客已经过去很久，这段时间内倒也不是没有收获，只是都把它攒在角落，等着下一次的心血来潮把它总结掉。估计就在明后两天。&lt;/p&gt;
-&lt;p&gt;十分佩服执行力强的人，有计划要做的事，就马上会将它完成。而拖延的人总会将事情放在截止期前一天或前几天，而匆匆忙忙赶出来的东西，质量难
-      
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="https://github.com/Tit1e/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
   
   <entry>
     <title>Mysql 报错：Data too long for column</title>
@@ -505,6 +481,31 @@
     
     
       <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>斐讯 k2p 在已刷 Breed 情况下刷入其他固件</title>
+    <link href="https://github.com/Tit1e/2019/04/01/60-k2p-breed/"/>
+    <id>https://github.com/Tit1e/2019/04/01/60-k2p-breed/</id>
+    <published>2019-04-01T13:19:17.000Z</published>
+    <updated>2019-04-13T13:38:48.375Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>网线连接电脑与 k2p 任一 <strong>LAN</strong> 口，网卡设置为自动获取 ip。</li><li>拔掉 k2p 电源，按住 k2p 背后 reset 键不放，然后插入 k2p 电源通电，保持按住 reset 键几秒直至 k2p 前面板 灯颜色交替闪烁后放开。</li><li>浏览器访问 192.168.1.1，如成功则出现 Breed 不死控制台。</li><li>备份：在「固件备份」标签，选择备份「EEEPROM」和「编程器固件」。</li><li>在刷之前需执行：「恢复出厂设置」-&gt;「Config 区 (公版)」-&gt;「执行」。</li><li>刷入：点击「固件更新」标签，选中「固件」选项，选择固件，点击「上传」。</li></ol><p>然后等待刷入完毕并重启就可通过浏览器访问控制台。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;网线连接电脑与 k2p 任一 &lt;strong&gt;LAN&lt;/strong&gt; 口，网卡设置为自动获取 ip。&lt;/li&gt;
+&lt;li&gt;拔掉 k2p 电源，按住 k2p 背后 reset 键不放，然后插入 k2p 电源通电，保持按住 reset 键几秒直至 k2p 前面板 灯
+      
+    
+    </summary>
+    
+    
+      <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
