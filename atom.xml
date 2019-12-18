@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-07-05T07:21:18.505Z</updated>
+  <updated>2019-12-18T15:03:41.524Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>js 模拟鼠标拖拽 mouseup 与 click 事件冲突解决方案</title>
+    <link href="https://github.com/Tit1e/2019/12/11/120-drag-and-click/"/>
+    <id>https://github.com/Tit1e/2019/12/11/120-drag-and-click/</id>
+    <published>2019-12-11T13:48:47.000Z</published>
+    <updated>2019-12-18T15:03:41.524Z</updated>
+    
+    <content type="html"><![CDATA[<p>公司项目中最近有个需要需要拖拽框选日期，也能单击选择，类似桌面选择文件这种，于是我 google + 自己改造终于实现了这个需求，但是在使用过程中有个问题一直存在，就是有时候单击无法选中日期。后来我打印 events 发现无法选择的时候，events 是拖拽时候显示的虚线框，而不是真正想点击的点击的元素。之后我就一直在网上找寻解决方法，无意中发现了一个冷门 CSS 属性：pointer-events: none。MDN对它的定义是：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-12-18-142800.png" alt></p><p>说简单点就是不会触发元素的 <code>onclick</code> 事件了。</p><p>我使用了这个属性后，的确不会再打印出虚线框了，但是问题还是没解决，于是继续排查，最后发现是有的点击只是看起来是点击，其实是触发了拖动事件，而问题就出在拖动结束时的鼠标抬起 <code>mouseup</code> 事件与<code>click</code> 事件一起触发，从而导致出现了新的问题。</p><p>最后的解决方案是定义了一个变量，平时为 <code>false</code>，一但触发了 <code>mousemove</code> 事件，就把它设置为 <code>true</code> ，然后在 <code>mouseup</code> 事件结束时设置一个定时器，延时 200 毫秒，200毫秒后把这个变量设为 <code>false</code> ，因为 <code>mouseup</code> 之后马上会触发 <code>click</code> 事件，这个时间肯定是小于 200 毫秒的，所以在 点击事件的函数中再判断下这个变量是否为 <code>true</code> 就可以了，如果为 <code>true</code> 则直接 <code>return</code> 。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;公司项目中最近有个需要需要拖拽框选日期，也能单击选择，类似桌面选择文件这种，于是我 google + 自己改造终于实现了这个需求，但是在使用过程中有个问题一直存在，就是有时候单击无法选中日期。后来我打印 events 发现无法选择的时候，events 是拖拽时候显示的虚线框
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>Mysql 报错：Data too long for column</title>
@@ -454,9 +477,9 @@
     </summary>
     
     
-      <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
-    
       <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
+    
+      <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
@@ -481,31 +504,6 @@
     
     
       <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>斐讯 k2p 在已刷 Breed 情况下刷入其他固件</title>
-    <link href="https://github.com/Tit1e/2019/04/01/60-k2p-breed/"/>
-    <id>https://github.com/Tit1e/2019/04/01/60-k2p-breed/</id>
-    <published>2019-04-01T13:19:17.000Z</published>
-    <updated>2019-04-13T13:38:48.375Z</updated>
-    
-    <content type="html"><![CDATA[<ol><li>网线连接电脑与 k2p 任一 <strong>LAN</strong> 口，网卡设置为自动获取 ip。</li><li>拔掉 k2p 电源，按住 k2p 背后 reset 键不放，然后插入 k2p 电源通电，保持按住 reset 键几秒直至 k2p 前面板 灯颜色交替闪烁后放开。</li><li>浏览器访问 192.168.1.1，如成功则出现 Breed 不死控制台。</li><li>备份：在「固件备份」标签，选择备份「EEEPROM」和「编程器固件」。</li><li>在刷之前需执行：「恢复出厂设置」-&gt;「Config 区 (公版)」-&gt;「执行」。</li><li>刷入：点击「固件更新」标签，选中「固件」选项，选择固件，点击「上传」。</li></ol><p>然后等待刷入完毕并重启就可通过浏览器访问控制台。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ol&gt;
-&lt;li&gt;网线连接电脑与 k2p 任一 &lt;strong&gt;LAN&lt;/strong&gt; 口，网卡设置为自动获取 ip。&lt;/li&gt;
-&lt;li&gt;拔掉 k2p 电源，按住 k2p 背后 reset 键不放，然后插入 k2p 电源通电，保持按住 reset 键几秒直至 k2p 前面板 灯
-      
-    
-    </summary>
-    
-    
-      <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
