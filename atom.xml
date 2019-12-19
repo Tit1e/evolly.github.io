@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2019-12-18T15:03:41.524Z</updated>
+  <updated>2019-12-19T01:26:32.182Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://github.com/Tit1e/2019/12/11/120-drag-and-click/"/>
     <id>https://github.com/Tit1e/2019/12/11/120-drag-and-click/</id>
     <published>2019-12-11T13:48:47.000Z</published>
-    <updated>2019-12-18T15:03:41.524Z</updated>
+    <updated>2019-12-19T01:26:32.182Z</updated>
     
-    <content type="html"><![CDATA[<p>公司项目中最近有个需要需要拖拽框选日期，也能单击选择，类似桌面选择文件这种，于是我 google + 自己改造终于实现了这个需求，但是在使用过程中有个问题一直存在，就是有时候单击无法选中日期。后来我打印 events 发现无法选择的时候，events 是拖拽时候显示的虚线框，而不是真正想点击的点击的元素。之后我就一直在网上找寻解决方法，无意中发现了一个冷门 CSS 属性：pointer-events: none。MDN对它的定义是：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-12-18-142800.png" alt></p><p>说简单点就是不会触发元素的 <code>onclick</code> 事件了。</p><p>我使用了这个属性后，的确不会再打印出虚线框了，但是问题还是没解决，于是继续排查，最后发现是有的点击只是看起来是点击，其实是触发了拖动事件，而问题就出在拖动结束时的鼠标抬起 <code>mouseup</code> 事件与<code>click</code> 事件一起触发，从而导致出现了新的问题。</p><p>最后的解决方案是定义了一个变量，平时为 <code>false</code>，一但触发了 <code>mousemove</code> 事件，就把它设置为 <code>true</code> ，然后在 <code>mouseup</code> 事件结束时设置一个定时器，延时 200 毫秒，200毫秒后把这个变量设为 <code>false</code> ，因为 <code>mouseup</code> 之后马上会触发 <code>click</code> 事件，这个时间肯定是小于 200 毫秒的，所以在 点击事件的函数中再判断下这个变量是否为 <code>true</code> 就可以了，如果为 <code>true</code> 则直接 <code>return</code> 。</p>]]></content>
+    <content type="html"><![CDATA[<p>公司项目中最近有个需要需要拖拽框选日期，也能单击选择，类似桌面选择文件这种，于是我 google + 自己改造终于实现了这个需求，但是在使用过程中有个问题一直存在，就是有时候单击无法选中日期。后来我打印 events 发现无法选择的时候，events 是拖拽时候显示的虚线框，而不是真正想点击的点击的元素。之后我就一直在网上找寻解决方法，无意中发现了一个冷门 CSS 属性：pointer-events: none。MDN对它的定义是：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-12-18-142800.png" alt></p><p>说简单点就是不会触发元素的 <code>onclick</code> 事件了。</p><p>我使用了这个属性后，的确不会再打印出虚线框了，但是问题还是没解决，于是继续排查，最后发现是有的点击只是看起来是点击，其实是触发了拖动事件，而问题就出在拖动结束时的鼠标抬起 <code>mouseup</code> 事件与<code>click</code> 事件一起触发，从而导致出现了新的问题。</p><p>最后的解决方案是定义了一个变量，平时为 <code>false</code>，一但触发了 <code>mousemove</code> 事件，就把它设置为 <code>true</code> ，然后在 <code>mouseup</code> 事件结束时设置一个定时器，延时 200 毫秒，200毫秒后把这个变量设为 <code>false</code> ，因为 <code>mouseup</code> 之后马上会触发 <code>click</code> 事件，这个时间肯定是小于 200 毫秒的，所以在 点击事件的函数中再判断下这个变量是否为 <code>true</code> 就可以了，如果为 <code>true</code> 则直接 <code>return</code> 。</p><p><a href="https://evolly.one/demos/drag-and-click/" target="_blank" rel="noopener">Demo</a></p>]]></content>
     
     <summary type="html">
     
@@ -477,9 +477,9 @@
     </summary>
     
     
-      <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
-    
       <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
+    
+      <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
     
   </entry>
   
