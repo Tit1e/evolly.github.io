@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-02-25T01:35:54.896Z</updated>
+  <updated>2020-02-27T13:53:08.571Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TypeError: CleanWebpackPlugin is not a constructor</title>
+    <link href="https://github.com/Tit1e/2020/02/27/123-webpack4-clean-webpack-plugin/"/>
+    <id>https://github.com/Tit1e/2020/02/27/123-webpack4-clean-webpack-plugin/</id>
+    <published>2020-02-27T13:23:27.000Z</published>
+    <updated>2020-02-27T13:53:08.571Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天在用 webpack 4.0 搭服务的时候，使用 clean-webpack-plugin 插件时遇上了一个报错：</p><p><code>TypeError: CleanWebpackPlugin is not a constructor</code></p><p>使用方法：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>)</span><br><span class="line"><span class="comment">// 在 plugins 中</span></span><br><span class="line"><span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>])</span><br></pre></td></tr></table></figure><p>这个插件是用于打包时清空输出目录下上一次的打包文件，dist 是要清空的目标文件夹名称，之前就是这么使用的，现在却不行了，初步猜测应该是版本问题导致的。</p><p>既然报 <code>CleanWebpackPlugin is not a constructor</code> ，那我就打印一下这默认导出的是个什么：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-02-27-134644.png" alt></p><p>从打印中可以看出 <code>CleanWebpackPlugin</code> 是个对象，对象内部还有个 <code>CleanWebpackPlugin</code> 是个 class 类，那解决方法显而易见了：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>)</span><br><span class="line"><span class="comment">// 后来在网上了解到在这个插件的 3.0.0 版本中，可以不传路径，默认就是 output 中设置的文件夹</span></span><br><span class="line"><span class="keyword">new</span> CleanWebpackPlugin()</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;昨天在用 webpack 4.0 搭服务的时候，使用 clean-webpack-plugin 插件时遇上了一个报错：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;TypeError: CleanWebpackPlugin is not a constructor&lt;/code&gt;&lt;/p&gt;
+&lt;p
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="webpack" scheme="https://github.com/Tit1e/tags/webpack/"/>
+    
+  </entry>
   
   <entry>
     <title>js 多文件下载</title>
@@ -474,31 +501,6 @@
     
     
       <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>vue-mark-calendar</title>
-    <link href="https://github.com/Tit1e/2019/04/06/63-vue-mark-calendar/"/>
-    <id>https://github.com/Tit1e/2019/04/06/63-vue-mark-calendar/</id>
-    <published>2019-04-06T13:26:23.000Z</published>
-    <updated>2019-04-13T13:39:12.210Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://github.com/Tit1e/vue-mark-calendar">vue-mark-calendar</a> 是基于 <a href="https://github.com/zwhGithub/vue-calendar">vue-calendar</a> 改造的插件，出于公司业务需求，在原有基础上进行了功能的增加与样式的调整。样式是尽量根据 <a href="http://element-cn.eleme.io/#/zh-CN/component/installation" target="_blank" rel="noopener">element-ui</a> 的样式写的，因为公司用的是 element-iu + Vue 的技术栈，希望系统的界面上比较统一。</p><p>功能上新增了一下几个参数：</p><ol><li>borderRadius：调整日历组件的圆角大小</li><li>showToday：是否在日历中高亮今天的日期</li><li>canChoose：是否禁用日历选择，只作展示用。</li></ol><p>其他说明可看 <a href="https://github.com/Tit1e/vue-mark-calendar">Github</a></p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-05-084559.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;a href=&quot;https://github.com/Tit1e/vue-mark-calendar&quot;&gt;vue-mark-calendar&lt;/a&gt; 是基于 &lt;a href=&quot;https://github.com/zwhGithub/vue-calendar&quot;&gt;vue-ca
-      
-    
-    </summary>
-    
-    
-      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
     
   </entry>
   
