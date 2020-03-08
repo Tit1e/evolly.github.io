@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-02-27T13:53:08.571Z</updated>
+  <updated>2020-03-08T03:58:14.997Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>axios 直传七牛问题</title>
+    <link href="https://github.com/Tit1e/2020/03/08/124-qiniu-axios/"/>
+    <id>https://github.com/Tit1e/2020/03/08/124-qiniu-axios/</id>
+    <published>2020-03-08T03:33:26.000Z</published>
+    <updated>2020-03-08T03:58:14.997Z</updated>
+    
+    <content type="html"><![CDATA[<p>前几天遇到了这样一个需求：监听粘贴事件，将粘贴板中的文件上传至七牛。</p><p>这个需求的实现过程我会另开一片文章，这篇文章主要用来记录我在使用 axios 直传七牛的过程中遇到的问题。</p><p>我本想这不是很简单：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> formData = <span class="keyword">new</span> FormData()</span><br><span class="line">  formData.append(<span class="string">'file'</span>, file)</span><br><span class="line">  formData.append(<span class="string">'token'</span>, <span class="keyword">this</span>.token)</span><br><span class="line">  formData.append(<span class="string">'key'</span>, <span class="keyword">this</span>.key)</span><br><span class="line">  axios.post(<span class="string">'url'</span>, formData).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// code......</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果返回的却是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;error: "invalid multipart format: no multipart boundary param in Content-Type"&#125;</span><br></pre></td></tr></table></figure><p>然后我就开始在网上搜，试着改了 <code>Content-Type</code>，但还是没用，最后我在<a href="https://blog.qiatia.cn/2019/05/18/Axios/" target="_blank" rel="noopener">这里</a>找到了与我遇到相同问题的人，于是我用他的方法试了一下：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> $axios = axios.create(&#123; <span class="attr">withCredentials</span>: <span class="literal">false</span> &#125;)</span><br><span class="line">  <span class="keyword">const</span> formData = <span class="keyword">new</span> FormData()</span><br><span class="line">  formData.append(<span class="string">'file'</span>, file)</span><br><span class="line">  formData.append(<span class="string">'token'</span>, <span class="keyword">this</span>.token)</span><br><span class="line">  formData.append(<span class="string">'key'</span>, <span class="keyword">this</span>.key)</span><br><span class="line">  $axios(&#123;</span><br><span class="line">    url: <span class="string">'url'</span>,</span><br><span class="line">    data: formData,</span><br><span class="line">    method: <span class="string">'post'</span></span><br><span class="line">  &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// code......</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果果然成功了！</p><p>不过发生了个诡异的事情，在我写这篇文章的时候，我想重新复现一下问题，结果发现我上面直接使用 <code>axios.post</code> 也可以正常上传了，但前几天在试的时候的确是返回错误信息的！所以我现在有点怀疑人生。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;前几天遇到了这样一个需求：监听粘贴事件，将粘贴板中的文件上传至七牛。&lt;/p&gt;
+&lt;p&gt;这个需求的实现过程我会另开一片文章，这篇文章主要用来记录我在使用 axios 直传七牛的过程中遇到的问题。&lt;/p&gt;
+&lt;p&gt;我本想这不是很简单：&lt;/p&gt;
+&lt;figure class=&quot;high
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>TypeError: CleanWebpackPlugin is not a constructor</title>
@@ -478,29 +504,6 @@
     
     
       <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mac 使用终端执行弹出式消息通知</title>
-    <link href="https://github.com/Tit1e/2019/04/08/64-send-an-alert-to-notification-center-from-the-command/"/>
-    <id>https://github.com/Tit1e/2019/04/08/64-send-an-alert-to-notification-center-from-the-command/</id>
-    <published>2019-04-08T12:29:12.000Z</published>
-    <updated>2019-04-08T12:34:26.423Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="安装-terminal-notifier"><a href="#安装-terminal-notifier" class="headerlink" title="安装 terminal-notifier"></a>安装 terminal-notifier</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 不能直接执行 sudo gem <span class="keyword">install</span> terminal-notifier，安装会报错，/usr/<span class="keyword">bin</span> 目录不允许写入，因此得安装至 /usr/<span class="keyword">local</span>/<span class="keyword">bin</span> 目录下</span><br><span class="line">sudo gem <span class="keyword">install</span> terminal-notifier -n /usr/<span class="keyword">local</span>/<span class="keyword">bin</span></span><br></pre></td></tr></table></figure><h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">terminal</span>-notifier -message <span class="string">"Hello, this is my message"</span> -<span class="built_in">title</span> <span class="string">"Message Title"</span></span><br></pre></td></tr></table></figure><p><a href="http://landcareweb.com/questions/3689/ru-he-zhi-zuo-maczhong-duan-dan-chu-jing-bao-applescriptde" target="_blank" rel="noopener">参考文章</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;安装-terminal-notifier&quot;&gt;&lt;a href=&quot;#安装-terminal-notifier&quot; class=&quot;headerlink&quot; title=&quot;安装 terminal-notifier&quot;&gt;&lt;/a&gt;安装 terminal-notifier&lt;/h3&gt;&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
     
   </entry>
   
