@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-03-08T06:35:08.837Z</updated>
+  <updated>2020-03-08T07:35:45.921Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>阻止表单只有一个 input 时回车自动提交</title>
+    <link href="https://github.com/Tit1e/2020/03/08/126-form-single-input/"/>
+    <id>https://github.com/Tit1e/2020/03/08/126-form-single-input/</id>
+    <published>2020-03-08T07:13:44.000Z</published>
+    <updated>2020-03-08T07:35:45.921Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前在开发过程中遇到过这个问题，就是当一个表单中只有一个 input 时，enter 会直接提交表单。当初我用的是 Element-UI  的表单组件，本来我以为是 Element-UI的问题，后来查了后发现是原生表单就有这个特性。我当时是使用异步请求的数据，因此并不需要原生的提交，所以只有一个 input 时得想办法阻止原生的提交功能。</p><p>Element-UI 因为是封装过的，可以用它自己的方法来解决：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 只要在表单元素上加入 @submit.native.prevent --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-form</span> @<span class="attr">submit.native.prevent</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure><p>原生表单的组织方式我也查了一下，在这总结一下：</p><p>方法一：</p><p>在表单中再加入一个隐藏的 input</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">value</span>=<span class="string">""</span> <span class="attr">style</span>=<span class="string">"display: none;"</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure><p>方法二：</p><p>表单提交时阻止提交</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">onsubmit</span>=<span class="string">"return false;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure><p>方法三：</p><p>监听 input  <code>keydown</code> 事件</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">onkeydown</span>=<span class="string">"if(event.keyCode === 13) &#123; return false &#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前在开发过程中遇到过这个问题，就是当一个表单中只有一个 input 时，enter 会直接提交表单。当初我用的是 Element-UI  的表单组件，本来我以为是 Element-UI的问题，后来查了后发现是原生表单就有这个特性。我当时是使用异步请求的数据，因此并不需要原
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>快捷键粘贴上传至七牛</title>
     <link href="https://github.com/Tit1e/2020/03/08/125-paste-upload-qiniu/"/>
     <id>https://github.com/Tit1e/2020/03/08/125-paste-upload-qiniu/</id>
     <published>2020-03-08T06:00:24.000Z</published>
-    <updated>2020-03-08T06:35:08.837Z</updated>
+    <updated>2020-03-08T07:13:41.309Z</updated>
     
     <content type="html"><![CDATA[<p>之前<a href="/2020/03/08/124-qiniu-axios/">这篇博客</a>解决了 axios 直传七牛的问题，这篇来讲一下从粘贴板直接上传到七牛云的实现方式。</p><p>首先需要了解的是出于安全问题，js 是没权限主动读取用户粘贴板中的内存的，当用户主动触发粘贴事件时，js 是可以通过 <code>paste</code> 事件来获取到其中内容的。如何触发这个粘贴事件这里就不做讨论，单说事件触发后怎么获取到文件，其实很简单：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 我的处理方式是给用户一个 input 用于粘贴</span></span><br><span class="line">  <span class="comment">// 因此这个判断是用于判断用户的粘贴事件是否是在指定元素上触发的</span></span><br><span class="line">  <span class="comment">// 这个判断并不是必须的</span></span><br><span class="line">  <span class="keyword">if</span> (event.srcElement.id === <span class="string">'up_snapshot_img_paste'</span>) &#123;</span><br><span class="line">    <span class="comment">// 获取粘贴板中的内容</span></span><br><span class="line">    <span class="keyword">const</span> items = event.clipboardData &amp;&amp; event.clipboardData.items</span><br><span class="line">    <span class="keyword">let</span> file = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">if</span> (items &amp;&amp; items.length) &#123;</span><br><span class="line">      <span class="comment">// 检索粘贴板items</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; items.length; i++) &#123;</span><br><span class="line">        <span class="comment">// 获取图片</span></span><br><span class="line">        <span class="keyword">if</span> (items[i].type.indexOf(<span class="string">'image'</span>) !== <span class="number">-1</span>) &#123;</span><br><span class="line">          file = items[i].getAsFile()</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 触发上传</span></span><br><span class="line">    <span class="keyword">if</span> (file) &#123;</span><br><span class="line">      <span class="comment">// 此时file就是剪切板中的图片文件</span></span><br><span class="line">      <span class="keyword">const</span> formData = <span class="keyword">new</span> FormData()</span><br><span class="line">      formData.append(<span class="string">'file'</span>, file)</span><br><span class="line">      formData.append(<span class="string">'token'</span>, <span class="string">'token'</span>)</span><br><span class="line">      formData.append(<span class="string">'key'</span>, <span class="string">'key'</span>)</span><br><span class="line">      <span class="keyword">const</span> $axios = axios.create(&#123; <span class="attr">withCredentials</span>: <span class="literal">false</span> &#125;)</span><br><span class="line">      $axios(&#123;</span><br><span class="line">        url: <span class="string">'url'</span>,</span><br><span class="line">        data: formData,</span><br><span class="line">        method: <span class="string">'POST'</span></span><br><span class="line">      &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 上传成功处理逻辑</span></span><br><span class="line">      &#125;).catch(<span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 上传失败处理逻辑</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 没有获取到图片时的处理逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 绑定监听</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'paste'</span>, uploadFile)</span><br></pre></td></tr></table></figure><p>以上就是实现的代码了。</p>]]></content>
     
@@ -479,29 +502,6 @@
     
     
       <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>0411 碎碎念</title>
-    <link href="https://github.com/Tit1e/2019/04/11/76-2019-04-11/"/>
-    <id>https://github.com/Tit1e/2019/04/11/76-2019-04-11/</id>
-    <published>2019-04-11T14:13:11.000Z</published>
-    <updated>2019-04-11T14:36:25.852Z</updated>
-    
-    <content type="html"><![CDATA[<p>昨天去交考核的时候碰到老大在研究小程序，我知道最近有个小程序要开发，可能这个活会落到我头上，但我不知道老大研究这个干什么。出于学习的目的我昨天试用了一下 <a href="https://github.com/Meituan-Dianping/mpvue">mpvue</a>，因为自身是使用 vue 进行开发的，也知道美团发布了个 vue 转制小程序的工具，于是趁此机会研究一下，万一到时候要我开发我也能兜住。结果今天老大就发我原型来让我评估工作量了。</p><p>到目前为止，我分析了下原型里的功能在开发过程中可能会遇到的坑：</p><ul><li>M3u8 的播放</li><li>图表展示</li><li>字体图标</li><li>用户登录状态管理</li><li>Vuex 的使用</li></ul><ol><li>m3u8 的播放今天测试了，在小程序中十分方便，<code>&lt;video&gt;</code> 标签就支持播放，比 网页上方便许多。</li><li>图表主要是柱状图跟饼图，我打算使用 <a href="https://github.com/F-loat/mpvue-echarts">mpvue-echarts</a>，这里还有个问题就是 echarts 需要去官网<a href="https://echarts.baidu.com/builder.html" target="_blank" rel="noopener">定制</a>。因为整个 echarts 引入会超出小程序限制的代码大小 2M，因此需要根据项目中用到的图表及组件进行定制。</li><li>字体图标 我在 <a href="https://evolly.one/2019/04/10/75.mini-program-use-iconfont/" target="_blank" rel="noopener">上一篇博客</a> 中已经说过了，其实这个在很早以前我也尝试过，已经是可以实现了的，这次为了保险起见再次确认下。</li><li>因为没有写过小程序，而这个项目又需要使用其他账户登录，因此这一块我需要找找成熟的方案。</li><li>Vuex 的话是因为我在查 mpvue 的时候看到有人说使用 Vuex 的时候有点怪，不知道是不是他的使用有问题，我需要亲自验证一下。</li></ol><p>目前想到的只有以上几点，其他的坑可能会在开发过程中陆续出现，到时候再做记录。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;昨天去交考核的时候碰到老大在研究小程序，我知道最近有个小程序要开发，可能这个活会落到我头上，但我不知道老大研究这个干什么。出于学习的目的我昨天试用了一下 &lt;a href=&quot;https://github.com/Meituan-Dianping/mpvue&quot;&gt;mpvue&lt;/a
-      
-    
-    </summary>
-    
-    
-      <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
     
   </entry>
   
