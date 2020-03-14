@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-03-08T07:35:45.921Z</updated>
+  <updated>2020-03-14T02:59:04.987Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AppleScript 初尝试</title>
+    <link href="https://github.com/Tit1e/2020/03/14/127-appleScript-Thunder/"/>
+    <id>https://github.com/Tit1e/2020/03/14/127-appleScript-Thunder/</id>
+    <published>2020-03-14T02:15:48.000Z</published>
+    <updated>2020-03-14T02:59:04.987Z</updated>
+    
+    <content type="html"><![CDATA[<p>迅雷有时候会出现刚开始下载的时候速度很快，但是过几十秒，速度就只有几十 kb 的情况。正常下载太慢，循环暂停启动方法倒是可以，但是我总不能什么都不做就光坐电脑前不停点开始任务，暂停任务吧？况且我一般都是睡觉的时候挂着迅雷。</p><p>想起以前在用 windows 的时候接触过按键精灵这类模拟键鼠操作的软件，我觉得 Mac OS 平台应该也有类似的软件，但是一圈搜下来并没有找到，倒是找到了官方的脚本语言 AppleScript。它倒是可以模拟键鼠操作，只是得自己折腾。</p><p>那我能怕折腾么？于是直接开干，边在<a href="applescript://" target="_blank" rel="noopener">脚本编辑器</a>测试边 Google，没多久折腾出来了个能将就用的。后来我又</p><p>优化了一下，并且集成到了 Alfred 中。</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 如果直接用脚本编辑器执行，不需要第一行与最后行，这是要在 Alfred 中执行才需要的。</span><br><span class="line">on alfred_script(q)</span><br><span class="line">  tell application "System Events"</span><br><span class="line">tell application "Thunder"</span><br><span class="line"><span class="comment">--激活主窗口</span></span><br><span class="line">activate</span><br><span class="line"><span class="keyword">end</span> tell</span><br><span class="line"><span class="comment">--暂停一秒</span></span><br><span class="line">delay <span class="number">1</span></span><br><span class="line"><span class="comment">--全选任务，因只有选中才能暂停开始任务</span></span><br><span class="line"><span class="keyword">key</span> code <span class="number">0</span> <span class="keyword">using</span> &#123;command down&#125;</span><br><span class="line">tell process <span class="string">"Thunder"</span></span><br><span class="line">tell <span class="keyword">window</span> <span class="string">"迅雷"</span></span><br><span class="line">entire <span class="keyword">contents</span></span><br><span class="line"><span class="comment">--q 是传进来的参数，表示循环次数</span></span><br><span class="line"><span class="comment">--本代码中一次循环用时 20 + 2 秒，可根据实际情况调整</span></span><br><span class="line"><span class="comment">--q 的次数根据每次循环的时长来计算</span></span><br><span class="line"><span class="keyword">repeat</span> q times</span><br><span class="line"><span class="comment">--等待20秒后暂停任务</span></span><br><span class="line">delay <span class="number">20</span></span><br><span class="line">click button <span class="number">7</span></span><br><span class="line"><span class="comment">--暂停2秒后重新开始任务</span></span><br><span class="line">delay <span class="number">2</span></span><br><span class="line">click button <span class="number">6</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">repeat</span></span><br><span class="line"><span class="keyword">end</span> tell</span><br><span class="line"><span class="keyword">end</span> tell</span><br><span class="line"><span class="keyword">end</span> tell</span><br><span class="line"><span class="keyword">end</span> alfred_script</span><br></pre></td></tr></table></figure><p>在集成到 Alfred 的过程中踩了个坑，就是传参问题，我之前一直用 <code>{query}</code> 来获取传过来的参数，但是一直不成功，查了后原来这要直接用 <code>q</code> 就行了。其实在脚本第一行已经说明，但我一直以为是固定格式。</p><p>之后我发现使用 AppleScript 还有个好处就是脚本执行的时候可以不保持窗口最前：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-03-14-%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B6%202020-03-14%2010.47.37.gif" alt></p><p>由于 AppleScript 的资料太少了，官方文档也很简单，没有实现我想要的效果。其实我本来的逻辑是每次循环前先判断下载列表中有没有任务，有的话就执行，没有就退出循环。但是目前还没找到获取的方法，所以只能先将就一下。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;迅雷有时候会出现刚开始下载的时候速度很快，但是过几十秒，速度就只有几十 kb 的情况。正常下载太慢，循环暂停启动方法倒是可以，但是我总不能什么都不做就光坐电脑前不停点开始任务，暂停任务吧？况且我一般都是睡觉的时候挂着迅雷。&lt;/p&gt;
+&lt;p&gt;想起以前在用 windows 的时候
+      
+    
+    </summary>
+    
+    
+      <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>阻止表单只有一个 input 时回车自动提交</title>
@@ -479,29 +503,6 @@
     
     
       <category term="读书笔记" scheme="https://github.com/Tit1e/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>alfred 使用 workflows 快速进行图片压缩</title>
-    <link href="https://github.com/Tit1e/2019/04/12/77-alfred-gallery/"/>
-    <id>https://github.com/Tit1e/2019/04/12/77-alfred-gallery/</id>
-    <published>2019-04-12T13:29:00.000Z</published>
-    <updated>2019-04-13T13:39:34.948Z</updated>
-    
-    <content type="html"><![CDATA[<p>图片压缩是我平时经常用到的操作，一开始是去 <a href="https://tinypng.com/" target="_blank" rel="noopener">tinypng</a> 使用网页版压缩，后来在逛 Github 时发现了 <a href="https://github.com/kyleduo/TinyPNG4Mac">TinyPNG4Mac</a> 这个小工具，相比之前的网页操作已经方便了不少，今天在逛 Twitter 时又发现了一个 alfred 的 workflows 工作流，可以在本地快速进行图片压缩。下载地址在 <a href="https://github.com/BlackwinMin/alfred-gallery/tree/master/image%20Compressor">image Compressor</a>。</p><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用这个工具的时候需要先安装以下三个项目：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 压缩 png</span></span><br><span class="line">brew install pngquant</span><br><span class="line"><span class="comment"># 压缩 jpg</span></span><br><span class="line">brew install jpegoptim</span><br><span class="line"><span class="comment"># 压缩 gif</span></span><br><span class="line">brew install gifsicle</span><br></pre></td></tr></table></figure><p><a href="https://github.com/BlackwinMin/alfred-gallery/blob/master/image%20Compressor/image%20Compressor.alfredworkflow">文件下载地址</a></p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-24-26.png" alt></p><p>下载完成后打开下载好的文件，点击 import 将工作流导入就安装完成。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-41-31.png" alt></p><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>我由于之前没使用 workflows 处理过文件，都是使用热键类型的 workflows，因此我不知道怎么选择文件进行操作，在一通瞎按外加 一通 Google 后终于了解了。一开始我连如何执行这个压缩命令都不知道。</p><ul><li><p>对单个文件进行操作</p><ul><li>选择一个文件后按 <code>control</code> 出现操作选项，执行 <code>image Compressor</code></li></ul><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-51-34.png" alt></p></li><li><p>在 Alfred 中选择多个文件后进行操作</p><ul><li>选择一个文件后按 <code>option</code> + <code>↑</code> 可以将文件加入缓冲区，可以将多个文件加入缓冲区， <code>option</code> + <code>←</code>可以删除最近添加的文件， <code>option</code> + <code>→</code> 可以对这些选中的文件进行批量操作。</li></ul></li><li><p>在 Finder 中选好文件直接使用 Alfred 操作文件</p><ul><li><p>对于压缩图片来说这应该是最好的操作方式：在 Finder 中批量选中图片后，按 <code>option</code> + <code>commend</code> + <code>\</code> 调出操作列表进行操作。如果无法调出可能是快捷键被修改了，可以从下图出查看具体快捷键。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-46-08.png" alt></p></li></ul></li></ul><p>在找的过程中我还发现一个使用 TinyPNG 压缩的 workflows <a href="http://www.packal.org/workflow/tinypng" target="_blank" rel="noopener">Compress with TinyPNG</a>，应该与 TinyPNGMac 用的是同一个接口吧。使用方式同 image Compressor。</p><p> 注：使用的时候需要去 <a href="https://tinypng.com/developers" target="_blank" rel="noopener">这里</a> 注册一个 API Key，然后在 Alfred 执行 <code>tinypng_config</code> ，输入 API Key 后回车。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-17-07.png" alt></p><p>压缩效果有点差异，相差不多，但是压缩速度差非常多。TinyPNG 还会出现丢图现象，下图右侧其实应该有三张图片，但是压缩只为了我两种张，而且速度非常慢，从修改日期可以看出两张图的创建时间相差了一分钟。image Compressor 由于使用的是本地的工具库，因此几张图压缩只要几秒就可完成。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-21-59.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;图片压缩是我平时经常用到的操作，一开始是去 &lt;a href=&quot;https://tinypng.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;tinypng&lt;/a&gt; 使用网页版压缩，后来在逛 Github 时发现了 &lt;a href=&quot;https:/
-      
-    
-    </summary>
-    
-    
-      <category term="mac" scheme="https://github.com/Tit1e/tags/mac/"/>
     
   </entry>
   
