@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-03-14T02:59:04.000Z</updated>
+  <updated>2020-04-14T14:35:52.221Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>element-ui el-table 表格高度自适应问题解决方案</title>
+    <link href="https://github.com/Tit1e/2020/04/14/128-element-ui-table-auto-height/"/>
+    <id>https://github.com/Tit1e/2020/04/14/128-element-ui-table-auto-height/</id>
+    <published>2020-04-14T13:14:40.000Z</published>
+    <updated>2020-04-14T14:35:52.221Z</updated>
+    
+    <content type="html"><![CDATA[<p>工作中由于公司业务需要，要求 table 做到整个 table 始终能在页面上完全显示， head 固定，body 超出滚动，由于公司使用的是 element-ui，el-table 组件提供了 height 属性，但是这个属性的值必须是具体的像素，因此，当页面的窗口大小发生变化时，想要表格高度自适应，一般的做法就是监听窗口大小是否改变，如果改变了就重新计算 table 的高度，然后重新设置。我之前的做法是这样的：</p><p>我们公司基本都是后台应用，结构差不多就是这个样子，菜单与顶栏的宽度与高度是固定的，而且菜单部分与表格高度的计算其实没有关系。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-14-134209.png" alt></p><p>因此我计算表格高度的时候，一般都是：</p><p>整个网页的高度 - 顶栏的高度 - 各种 margin，padding 的高度 = 表格高度</p><p>然后监听窗口的变化：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, () =&gt; &#123;</span><br><span class="line"><span class="comment">//重新计算高度</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p>直到后来我遇到了这个需求：</p><p>页面分为左右两部分，可拖动改变左侧部分的宽度，右侧还是自适应。乍一看这个左侧改变宽度跟右侧好像没什么关系，原来那套也适用啊，但是再仔细一想，左侧改变了有可能导致右侧筛选条件宽度不够而换行，一换行筛选条件的高度就改变了，这时候是需要重新计算高度的，但是上面监听的代码只监听窗口大小改变，而现在的情况窗口的大小并没有被改变，只是 div 的宽度发生了变化，后来我 google 了一圈，发现了 <a href="https://github.com/marcj/css-element-queries">css-element-queries</a> 这个库中的 <code>ResizeSensor</code>  这个类可以实现对元素大小改变的监听，使用方法也很简单：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * element 需要监听的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">new</span> ResizeSensor(element, () =&gt; &#123;</span><br><span class="line"><span class="comment">//callback</span></span><br><span class="line">  <span class="comment">//重新计算高度</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p>并且在这次调整的过程中，我想到了用 flex 属性来让右侧的筛选条件跟 table 自行分配空间，因为这类表格的页面结构基本是固定的，上面是筛选条件，下面是表格，于是我封装了一个  <code>&lt;form-page&gt;</code> 组件，结构就是大概 是这样：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-14-141421.png" alt></p><p>这个结构下，我就不用再去关心除了筛选条件的高度外我还需要减去多少的额外高度，我只要关心我的 table slot 区域有多少高度，我就把 table 设为多少高度就可以了。</p><p>当然内容展示区域的高度是需要计算过的，但是这个只要在全局样式中用 <code>calc</code> 计算一次高度就可以了。</p><p>下面是 demo 的演示效果：</p><video src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-14-element-ui-table-auto-height.mp4" style="width: 100%" controls><p><a href="https://github.com/Tit1e/element-ui-table-auto-height">demo 源码</a></p></video>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;工作中由于公司业务需要，要求 table 做到整个 table 始终能在页面上完全显示， head 固定，body 超出滚动，由于公司使用的是 element-ui，el-table 组件提供了 height 属性，但是这个属性的值必须是具体的像素，因此，当页面的窗口大小发
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>AppleScript 初尝试</title>
@@ -480,29 +503,6 @@
     
     
       <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>埃隆·马斯克的冒险人生 [美] 阿什利·万斯</title>
-    <link href="https://github.com/Tit1e/2019/04/15/78-Elon-Musk/"/>
-    <id>https://github.com/Tit1e/2019/04/15/78-Elon-Musk/</id>
-    <published>2019-04-15T14:15:23.000Z</published>
-    <updated>2019-04-15T15:35:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>昨天白天我姐与外甥女来了杭州，跟她们一起去玩了一天，去了动物园。其实我不喜欢去这种地方，包括马戏团，与杂技团。因为我一想到动物门被关在这些狭小的地方，每天要面对成千上万的人，我把自己代入进去（我经常这么做，而且不光是代入动物，也会代入他人，或一个物体），光想想就觉得呼吸困难。我讨厌这种束缚。</p><p>上面是题外话，下午 5 点多到家后，觉得在外面玩了一天有点”虚度”这一天，所以想做点”有意义”的事情。于是我拿出 kindle，在网上下了一本 「埃隆·马斯克的冒险人生」，至于为什么偏偏是这本，大概是因为今天看的新闻里有好几条特斯拉的新闻，加上这本书本来就在我的待看书单里。昨天从傍晚直接看到了晚上 1 点多（6点多的时候由于太累中途睡着了几十分钟），由于第二天上班，而且实在太困才放下睡了。今天把剩下的看完了。</p><p>这本书相比「乔布斯传」，我更喜欢后者。可能是乔布斯给我的感觉更加亲近，毕竟乔布斯留下来的东西与我们的生活密切相关，而马斯克的目标却是带着人类移民火星。这对我来说太过遥远，但他的目标的确是伟大的，是造福全人类的，这一点不容置疑。</p><p>看完其实并没有过多的感想，毕竟这是他们的经历，而对于现在的我来说，通过学习他们来改变自己人生是不切实际的，况且人的经历是不可复制的，人与人也是不同的，接纳自己非常重要，我们必须承认自己是个普通人，我这辈子基本连马斯克第一次创业时的高度都达不到，但这又怎样。相对来说我有更重要的目标在等着我去实现。那才是能让我觉得没白过此生的事。</p><p>但不想达到这些巨人的高度并不意味着就可以放纵自己。对我来说，提升自己是不能停止的事情，只是可能我再怎么提升自己都看不到这些巨人的影子罢了。</p><p><strong>注：书下的是盗版。由于某些原因，目前手上的 Kindle 并不是我自己的，所以先下本盗版看完，等我的 Kindle 回来了再补票。支持正版人人有责。</strong></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;昨天白天我姐与外甥女来了杭州，跟她们一起去玩了一天，去了动物园。其实我不喜欢去这种地方，包括马戏团，与杂技团。因为我一想到动物门被关在这些狭小的地方，每天要面对成千上万的人，我把自己代入进去（我经常这么做，而且不光是代入动物，也会代入他人，或一个物体），光想想就觉得呼吸困难
-      
-    
-    </summary>
-    
-    
-      <category term="读书笔记" scheme="https://github.com/Tit1e/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
