@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-04-14T14:39:38.405Z</updated>
+  <updated>2020-04-27T15:09:41.314Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>uni-app 小程序设置自定义字体</title>
+    <link href="https://github.com/Tit1e/2020/04/27/129-mini-program-font/"/>
+    <id>https://github.com/Tit1e/2020/04/27/129-mini-program-font/</id>
+    <published>2020-04-27T14:21:56.000Z</published>
+    <updated>2020-04-27T15:09:41.314Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在开发动森的一款小程序，到目前为止踩了不少坑，今天记录一下小程序引入自定义字体的方式。后续会陆续更新其他踩坑记录。</p><p>首先，小程序是支持使用自定义字体的，使用 <a href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html" target="_blank" rel="noopener">wx.loadFontFace()</a> 就可以引入字体，但是使用这个 api 有一些限制：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-143333.png" alt></p><p>需要特别注意的点有：</p><p>第一点：字体格式，保险起见使用 ttf 格式，如果不是 ttf 格式，可以在 <a href="https://transfonter.org/" target="_blank" rel="noopener">https://transfonter.org/</a> 在线转一下。</p><p>第二点：字体链接必须是 <strong>https</strong>，意味着不支持引入本地字体。</p><p>第三点：链接必须<strong>同源</strong>或者开启了 <strong>cors</strong> 支持。</p><p>其他几点注意点对使用有影响，但没以上三点重要。</p><p>我将字体上传到了腾讯的对象存储上，因此我要在存储桶的设置中对 servicewechat.com 开启 cors 支持：</p><p>1、登录腾讯云，进入对象存储控制台</p><p>2、点击<strong>【存储桶列表】</strong>菜单</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144352.png" alt></p><p>3、点击上传了字体的存储桶，进入存储桶详情</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144625.png" alt></p><p>4、点击左侧<strong>【基础配置】</strong>菜单</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144749.png" alt></p><p>5、找到<strong>【跨域访问CORS设置】</strong>卡片，点击添加规则，照下图填写表单并保存，过一会儿就会生效。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144838.png" alt></p><p>官方文档上说如果需要全局支持字体的话 <code>wx.loadFontFace</code> 需要在 <code>app.js</code> 中调用并且设置 <code>global</code> 为 <code>true</code>。</p><p>并且使用 <code>global</code> 属性对调试基础库版本有要求，需要 2.10.0 以上，否则字体只会在调用这个 api 的页面生效。<img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-150114.png" alt></p><p>还有注意中提到的第四点也注意一下，可能会有个报错，但是字体实际已经生效，这个报错可以忽略。</p><p>但是我使用的是 <code>uni-app</code>，我尝试写在 <code>main.js</code> 入口文件中，但是并没有生效，不过 <code>uni-app</code> 支持 vue 的 mixins，创建一个font.js：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @/mixins/font.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">onLoad() &#123;</span><br><span class="line">uni.loadFontFace(&#123;</span><br><span class="line">family: <span class="string">'DFYuanW9'</span>,</span><br><span class="line">source: <span class="string">'url("https://xxxxxxx.ttf")'</span>,</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>main.js</code> 中：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">'@/mixins/share.js'</span></span><br><span class="line"></span><br><span class="line">Vue.mixin(mixin)</span><br></pre></td></tr></table></figure><p>并在全局 css 中使用字体：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">page</span>&#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'DFYuanW9'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样每个页面就都会生效了。</p><p>下面是字体使用效果：</p><p>不使用字体：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-IMG_2437.PNG" alt></p><p>使用字体：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-IMG_2436.PNG" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近在开发动森的一款小程序，到目前为止踩了不少坑，今天记录一下小程序引入自定义字体的方式。后续会陆续更新其他踩坑记录。&lt;/p&gt;
+&lt;p&gt;首先，小程序是支持使用自定义字体的，使用 &lt;a href=&quot;https://developers.weixin.qq.com/minipro
+      
+    
+    </summary>
+    
+    
+      <category term="小程序" scheme="https://github.com/Tit1e/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>element-ui el-table 表格高度自适应问题解决方案</title>
@@ -474,29 +498,6 @@
       
         &lt;p&gt;昨天跟同事聊天聊到 Mac OS 上的一些实用工具，到时候我会专门写一篇文章来介绍我在平时使用 Macbook 过程中积累下来的使用软件。这里不详细展开。&lt;/p&gt;
 &lt;p&gt;Mac OS 向来以使用流畅，界面美观，工具丰富出名。这三点同样也吸引着我。我入 Macbook 的主要
-      
-    
-    </summary>
-    
-    
-      <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>巴黎圣母院起火</title>
-    <link href="https://github.com/Tit1e/2019/04/16/109-Notre-Dame-de-Paris/"/>
-    <id>https://github.com/Tit1e/2019/04/16/109-Notre-Dame-de-Paris/</id>
-    <published>2019-04-16T14:33:50.000Z</published>
-    <updated>2019-04-16T15:00:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天在上班路上刷新闻，突然刷到巴黎圣母院起火，一愣，因为前阵子 <a href="https://zh.wikipedia.org/zh-hans/%E5%B7%B4%E8%A5%BF%E5%9B%BD%E5%AE%B6%E5%8D%9A%E7%89%A9%E9%A6%86%E7%81%AB%E7%81%BE" target="_blank" rel="noopener">巴西国家博物馆</a> 也发生过火灾，损失了2000 多万件藏品。</p><p>自从看完了「人类简史」，我感叹人类的伟大，也唏嘘人类的渺小。在地球历史前面，人类太不值得一提了。</p><p>地球形成时间</p><blockquote><p>根据<a href="https://zh.wikipedia.org/wiki/%E6%94%BE%E5%B0%84%E6%80%A7%E5%AE%9A%E5%B9%B4%E6%B3%95" target="_blank" rel="noopener">放射性定年法</a>的测量结果，<a href="https://zh.wikipedia.org/wiki/%E5%A4%AA%E9%98%B3%E7%B3%BB" target="_blank" rel="noopener">太阳系</a>大约在45.6±0.08亿年前形成<a href="https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83#cite_note-bowring_housch1995-65" target="_blank" rel="noopener">[59]</a>，而原生地球大约形成于45.4±0.04亿年前<a href="https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83#cite_note-age_earth1-34" target="_blank" rel="noopener">[29]</a>。—维基百科</p></blockquote><p>地球上出现生物的时间</p><blockquote><p>地球提供了目前已知唯一能够维持<a href="https://zh.wikipedia.org/wiki/%E7%94%9F%E7%89%A9%E6%BC%94%E5%8C%96" target="_blank" rel="noopener">生命进化</a>的环境<a href="https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83#cite_note-87" target="_blank" rel="noopener">[81]</a>。人们认为约40亿年前的高能<a href="https://zh.wikipedia.org/wiki/%E5%8C%96%E5%AD%A6%E5%8F%8D%E5%BA%94" target="_blank" rel="noopener">化学反应</a>产生了能够自我复制的分子，又过了5亿年则出现了所有生命的<a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E5%BE%8C%E5%85%B1%E5%90%8C%E7%A5%96%E5%85%88" target="_blank" rel="noopener">共同祖先</a>，而后分化出<a href="https://zh.wikipedia.org/wiki/%E7%B4%B0%E8%8F%8C" target="_blank" rel="noopener">细菌</a>与<a href="https://zh.wikipedia.org/wiki/%E5%8F%A4%E8%8F%8C" target="_blank" rel="noopener">古菌</a><a href="https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83#cite_note-sa282_6_90-88" target="_blank" rel="noopener">[82]</a>。早期生命形态发展出<a href="https://zh.wikipedia.org/wiki/%E5%85%89%E5%90%88%E4%BD%9C%E7%94%A8" target="_blank" rel="noopener">光合作用</a>的能力，可直接利用太阳能，并向大气中释放<a href="https://zh.wikipedia.org/wiki/%E6%B0%A7%E6%B0%94" target="_blank" rel="noopener">氧气</a><a href="https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83#cite_note-%E4%B8%AD%E5%9B%BD%E5%A4%A9%E6%B0%94%E6%8A%A5-73" target="_blank" rel="noopener">[67]</a>。—维基百科</p></blockquote><p>人类文明出现时间</p><blockquote><p>对于文明出现的判定标准，主要是城市的出现、文字的产生、国家制度的建立。其中最重要的前提是城市的出现，也就是人群聚集，城市是文明的标志。现在一般认为，最早的文明大概是在公元前3500年左右<a href="https://zh.wikipedia.org/wiki/%E7%BE%8E%E7%B4%A2%E4%B8%8D%E8%BE%BE%E7%B1%B3%E4%BA%9A" target="_blank" rel="noopener">美索不达米亚</a>的<a href="https://zh.wikipedia.org/wiki/%E8%8B%8F%E7%BE%8E%E5%B0%94%E4%BA%BA" target="_blank" rel="noopener">苏美尔人</a>那里出现的<a href="https://zh.wikipedia.org/wiki/Wikipedia:%E5%88%97%E6%98%8E%E6%9D%A5%E6%BA%90" target="_blank" rel="noopener">[来源请求]</a>。—维基百科</p></blockquote><p>从时间跨度来看，人类文明诞生至今的短短几千年真的不值一提，但是着短短几千年，人类文明的发展速度也是不可思议的。因此人类文明经常以”高速发展”来形容。</p><p>越是有这样的对比，才越能感受到那些保存至今的文物的珍贵。因此听到这样的新闻才会愈发感到心痛可惜。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;今天在上班路上刷新闻，突然刷到巴黎圣母院起火，一愣，因为前阵子 &lt;a href=&quot;https://zh.wikipedia.org/zh-hans/%E5%B7%B4%E8%A5%BF%E5%9B%BD%E5%AE%B6%E5%8D%9A%E7%89%A9%E9%A6%86
       
     
     </summary>
