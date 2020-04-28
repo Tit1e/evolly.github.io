@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-04-27T15:09:41.314Z</updated>
+  <updated>2020-04-28T15:21:35.304Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>uni-app 小程序给所有页面添加分享</title>
+    <link href="https://github.com/Tit1e/2020/04/28/130-mini-program-share/"/>
+    <id>https://github.com/Tit1e/2020/04/28/130-mini-program-share/</id>
+    <published>2020-04-28T14:59:39.000Z</published>
+    <updated>2020-04-28T15:21:35.304Z</updated>
+    
+    <content type="html"><![CDATA[<p>小程序的转发按钮默认是关闭的，需要人为打开，为小程序更方便地传播，所以我需要给小程序加上这个功能。</p><p>我的目的只是方便传播小程序，需求跟其他小程序相比没那么复杂，分享后我只需固定进入小程序首页。</p><p>小程序在 Page 注册小程序页面时，有一个 <a href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object" target="_blank" rel="noopener">onShareAppMessage</a> 函数，这个函数需要 <code>return</code> 一个<code>Object</code> ，这个对象中是聊天界面显示的小程序卡片的一些信息，标题，默认图片，页面路径。</p><p>原生小程序使用就是这样：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Page(&#123;</span><br><span class="line">  onShareAppMessage: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (res.from === <span class="string">'button'</span>) &#123;</span><br><span class="line">      <span class="comment">// 来自页面内转发按钮</span></span><br><span class="line">      <span class="built_in">console</span>.log(res.target)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      title: <span class="string">'自定义转发标题'</span>,</span><br><span class="line">      path: <span class="string">'/page/user?id=123'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p>但是这个函数需要在每个页面都写一遍，就很麻烦。我用的是 uni-app，所以 mixins 又派上用场了：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @/mixins/share.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">onShareAppMessage(res) &#123;</span><br><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">path: <span class="string">'pages/tabBar/tools/tools'</span>,</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>main.js</code> 中：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">'@/mixins/share.js'</span></span><br><span class="line"></span><br><span class="line">Vue.mixin(mixin)</span><br></pre></td></tr></table></figure><p>这样，小程序中的所有页面都可以发起转发了，不过我转发的路径固定都是小程序首页，你也可以使用 <a href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/getCurrentPages.html" target="_blank" rel="noopener">getCurrentPages()</a>  来获取当前页面栈，从而获取当前页面路径，这样就可以实现动态转发路径，转发当前页面。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;小程序的转发按钮默认是关闭的，需要人为打开，为小程序更方便地传播，所以我需要给小程序加上这个功能。&lt;/p&gt;
+&lt;p&gt;我的目的只是方便传播小程序，需求跟其他小程序相比没那么复杂，分享后我只需固定进入小程序首页。&lt;/p&gt;
+&lt;p&gt;小程序在 Page 注册小程序页面时，有一个 &lt;a 
+      
+    
+    </summary>
+    
+    
+      <category term="小程序" scheme="https://github.com/Tit1e/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>uni-app 小程序设置自定义字体</title>
     <link href="https://github.com/Tit1e/2020/04/27/129-mini-program-font/"/>
     <id>https://github.com/Tit1e/2020/04/27/129-mini-program-font/</id>
     <published>2020-04-27T14:21:56.000Z</published>
-    <updated>2020-04-27T15:09:41.314Z</updated>
+    <updated>2020-04-28T15:21:37.954Z</updated>
     
-    <content type="html"><![CDATA[<p>最近在开发动森的一款小程序，到目前为止踩了不少坑，今天记录一下小程序引入自定义字体的方式。后续会陆续更新其他踩坑记录。</p><p>首先，小程序是支持使用自定义字体的，使用 <a href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html" target="_blank" rel="noopener">wx.loadFontFace()</a> 就可以引入字体，但是使用这个 api 有一些限制：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-143333.png" alt></p><p>需要特别注意的点有：</p><p>第一点：字体格式，保险起见使用 ttf 格式，如果不是 ttf 格式，可以在 <a href="https://transfonter.org/" target="_blank" rel="noopener">https://transfonter.org/</a> 在线转一下。</p><p>第二点：字体链接必须是 <strong>https</strong>，意味着不支持引入本地字体。</p><p>第三点：链接必须<strong>同源</strong>或者开启了 <strong>cors</strong> 支持。</p><p>其他几点注意点对使用有影响，但没以上三点重要。</p><p>我将字体上传到了腾讯的对象存储上，因此我要在存储桶的设置中对 servicewechat.com 开启 cors 支持：</p><p>1、登录腾讯云，进入对象存储控制台</p><p>2、点击<strong>【存储桶列表】</strong>菜单</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144352.png" alt></p><p>3、点击上传了字体的存储桶，进入存储桶详情</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144625.png" alt></p><p>4、点击左侧<strong>【基础配置】</strong>菜单</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144749.png" alt></p><p>5、找到<strong>【跨域访问CORS设置】</strong>卡片，点击添加规则，照下图填写表单并保存，过一会儿就会生效。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144838.png" alt></p><p>官方文档上说如果需要全局支持字体的话 <code>wx.loadFontFace</code> 需要在 <code>app.js</code> 中调用并且设置 <code>global</code> 为 <code>true</code>。</p><p>并且使用 <code>global</code> 属性对调试基础库版本有要求，需要 2.10.0 以上，否则字体只会在调用这个 api 的页面生效。<img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-150114.png" alt></p><p>还有注意中提到的第四点也注意一下，可能会有个报错，但是字体实际已经生效，这个报错可以忽略。</p><p>但是我使用的是 <code>uni-app</code>，我尝试写在 <code>main.js</code> 入口文件中，但是并没有生效，不过 <code>uni-app</code> 支持 vue 的 mixins，创建一个font.js：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @/mixins/font.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">onLoad() &#123;</span><br><span class="line">uni.loadFontFace(&#123;</span><br><span class="line">family: <span class="string">'DFYuanW9'</span>,</span><br><span class="line">source: <span class="string">'url("https://xxxxxxx.ttf")'</span>,</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>main.js</code> 中：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">'@/mixins/share.js'</span></span><br><span class="line"></span><br><span class="line">Vue.mixin(mixin)</span><br></pre></td></tr></table></figure><p>并在全局 css 中使用字体：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">page</span>&#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'DFYuanW9'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样每个页面就都会生效了。</p><p>下面是字体使用效果：</p><p>不使用字体：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-IMG_2437.PNG" alt></p><p>使用字体：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-IMG_2436.PNG" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>最近在开发动森的一款小程序，到目前为止踩了不少坑，今天记录一下小程序引入自定义字体的方式。后续会陆续更新其他踩坑记录。</p><p>首先，小程序是支持使用自定义字体的，使用 <a href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html" target="_blank" rel="noopener">wx.loadFontFace()</a> 就可以引入字体，但是使用这个 api 有一些限制：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-143333.png" alt></p><p>需要特别注意的点有：</p><p>第一点：字体格式，保险起见使用 ttf 格式，如果不是 ttf 格式，可以在 <a href="https://transfonter.org/" target="_blank" rel="noopener">https://transfonter.org/</a> 在线转一下。</p><p>第二点：字体链接必须是 <strong>https</strong>，意味着不支持引入本地字体。</p><p>第三点：链接必须<strong>同源</strong>或者开启了 <strong>cors</strong> 支持。</p><p>其他几点注意点对使用有影响，但没以上三点重要。</p><p>我将字体上传到了腾讯的对象存储上，因此我要在存储桶的设置中对 servicewechat.com 开启 cors 支持：</p><p>1、登录腾讯云，进入对象存储控制台</p><p>2、点击<strong>【存储桶列表】</strong>菜单</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144352.png" alt></p><p>3、点击上传了字体的存储桶，进入存储桶详情</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144625.png" alt></p><p>4、点击左侧<strong>【基础配置】</strong>菜单</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144749.png" alt></p><p>5、找到<strong>【跨域访问CORS设置】</strong>卡片，点击添加规则，照下图填写表单并保存，过一会儿就会生效。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-144838.png" alt></p><p>官方文档上说如果需要全局支持字体的话 <code>wx.loadFontFace</code> 需要在 <code>app.js</code> 中调用并且设置 <code>global</code> 为 <code>true</code>。</p><p>并且使用 <code>global</code> 属性对调试基础库版本有要求，需要 2.10.0 以上，否则字体只会在调用这个 api 的页面生效。<img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-150114.png" alt></p><p>还有注意中提到的第四点也注意一下，可能会有个报错，但是字体实际已经生效，这个报错可以忽略。</p><p>但是我使用的是 <code>uni-app</code>，我尝试写在 <code>main.js</code> 入口文件中，但是并没有生效，不过 <code>uni-app</code> 支持 vue 的 mixins，创建一个font.js：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @/mixins/font.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">onLoad() &#123;</span><br><span class="line">uni.loadFontFace(&#123;</span><br><span class="line">family: <span class="string">'DFYuanW9'</span>,</span><br><span class="line">source: <span class="string">'url("https://xxxxxxx.ttf")'</span>,</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>main.js</code> 中：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">'@/mixins/font.js'</span></span><br><span class="line"></span><br><span class="line">Vue.mixin(mixin)</span><br></pre></td></tr></table></figure><p>并在全局 css 中使用字体：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">page</span>&#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'DFYuanW9'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样每个页面就都会生效了。</p><p>下面是字体使用效果：</p><p>不使用字体：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-IMG_2437.PNG" alt></p><p>使用字体：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-04-27-IMG_2436.PNG" alt></p>]]></content>
     
     <summary type="html">
     
@@ -480,30 +505,6 @@
     
     
       <category term="一周总结" scheme="https://github.com/Tit1e/tags/%E4%B8%80%E5%91%A8%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>正确地偷懒</title>
-    <link href="https://github.com/Tit1e/2019/04/18/110-use-mac-efficiently/"/>
-    <id>https://github.com/Tit1e/2019/04/18/110-use-mac-efficiently/</id>
-    <published>2019-04-18T15:25:14.000Z</published>
-    <updated>2019-04-18T15:45:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>昨天跟同事聊天聊到 Mac OS 上的一些实用工具，到时候我会专门写一篇文章来介绍我在平时使用 Macbook 过程中积累下来的使用软件。这里不详细展开。</p><p>Mac OS 向来以使用流畅，界面美观，工具丰富出名。这三点同样也吸引着我。我入 Macbook 的主要原因还是因为 Windows 对命令行的支持不行，而 Linux 对日用软件的支持又不好，因此 Mac OS 成了我仅有的选择。但是不得不说买得很值，无论是续航，显示效果，系统运行流畅性都跟我之前的 Windows 好一大截，当然价格也比我原来的 笔记本高出一大截。</p><p>在入了 Macbook 之后，我每次在使用过程中遇到不顺畅的时候总是会去 google 有没有好用的工具能让这类操作变得简便。说白了就是懒，不想做一些无意义的机械式的重复操作，于是慢慢地我就沉淀下来了一些好用的软件，无论是日常使用的还是开发中使用的。这些工具为我节省了不少时间。</p><p>我所认为的偷懒是在不影响工作成果的前提下，使用一些”奇技淫巧”加快工作的完成速度，从而省出时间来”偷懒”。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;昨天跟同事聊天聊到 Mac OS 上的一些实用工具，到时候我会专门写一篇文章来介绍我在平时使用 Macbook 过程中积累下来的使用软件。这里不详细展开。&lt;/p&gt;
-&lt;p&gt;Mac OS 向来以使用流畅，界面美观，工具丰富出名。这三点同样也吸引着我。我入 Macbook 的主要
-      
-    
-    </summary>
-    
-    
-      <category term="碎碎念" scheme="https://github.com/Tit1e/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
     
   </entry>
   
