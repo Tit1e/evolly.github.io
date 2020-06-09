@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-05-23T08:33:51.718Z</updated>
+  <updated>2020-06-09T13:58:48.043Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vue 监听子组件生命周期</title>
+    <link href="https://github.com/Tit1e/2020/06/09/132-vue-listen-child-component/"/>
+    <id>https://github.com/Tit1e/2020/06/09/132-vue-listen-child-component/</id>
+    <published>2020-06-09T13:42:13.000Z</published>
+    <updated>2020-06-09T13:58:48.043Z</updated>
+    
+    <content type="html"><![CDATA[<p>前阵子做业务的时候遇到一个需求，需要在用户进入系统时加一个全局的 loading 遮罩层，在页面渲染完成后关闭遮罩，在正常的用户登录，进入系统这个流程下，实现这个并没有难度：</p><p>进入登录页-用户登录-显示 loading - 进入首页 - 在首页的 mounted 钩子中关闭 loading</p><p>但主要是用户不按这套来，用户直接在一个其他页面刷新的时候，这套就不适用了，除非你去每个页面的 mounted 钩子中都写一个关闭loading 的方法，但这样做明显不现实，页面少还好说，但我们的系统已经有几十个页面，每个都加一遍，实在过于麻烦。</p><p>后来我 Google 了一番，查到了 <code>@hook:mounted</code> 这个事件可以监听子组件的生命周期，这样我把它加 <code>&lt;router-view /&gt;</code> 上，就实现了监听每个页面的 mounted 生命周期，然后在回调中写入关闭 loading 的方法，就实现了效果。</p><p><a href="https://www.cnblogs.com/mengfangui/p/12546866.html" target="_blank" rel="noopener">参考链接</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;前阵子做业务的时候遇到一个需求，需要在用户进入系统时加一个全局的 loading 遮罩层，在页面渲染完成后关闭遮罩，在正常的用户登录，进入系统这个流程下，实现这个并没有难度：&lt;/p&gt;
+&lt;p&gt;进入登录页-用户登录-显示 loading - 进入首页 - 在首页的 mounte
+      
+    
+    </summary>
+    
+    
+      <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
+    
+  </entry>
   
   <entry>
     <title>批量删除微博，可自定义删除内容</title>
@@ -470,33 +494,6 @@
         &lt;p&gt;最近在使用 &lt;a href=&quot;https://github.com/Meituan-Dianping/mpvue&quot;&gt;mpvue&lt;/a&gt; 开发一个小程序，在这过程中遇到了不少问题，因为是第一次开发，遇到的问题可能比较基础，在这里做一个记录。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;如
-      
-    
-    </summary>
-    
-    
-      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="小程序" scheme="https://github.com/Tit1e/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小程序上传图片至七牛</title>
-    <link href="https://github.com/Tit1e/2019/04/27/112-mini-program-qiniu-upload/"/>
-    <id>https://github.com/Tit1e/2019/04/27/112-mini-program-qiniu-upload/</id>
-    <published>2019-04-26T16:13:20.000Z</published>
-    <updated>2019-08-16T16:13:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近天天赶着写小程序，没什么空余时间，所以没怎么写博客，但开发小程序过程中踩了不少坑，到时候可以总结一下。</p><p>今天先写下在小程序中如何上传文件至七牛云。</p><p>首先去<a href="https://github.com/gpake/qiniu-wxapp-sdk">这里</a>下载小程序上传的 SDK，文件在 <code>sdk</code> 目录下。然后在代码中引入就行了。先放上我完整的上传函数</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">uploadImage()&#123;</span><br><span class="line">  <span class="comment">// 引入七牛的上传sdk</span></span><br><span class="line">      <span class="keyword">const</span> qiniuUploader = <span class="built_in">require</span>(<span class="string">"../../../../../static/lib/qiniuUploader.js"</span>)</span><br><span class="line">      <span class="comment">// 调用微信的选择图片 API</span></span><br><span class="line">      wx.chooseImage(&#123;</span><br><span class="line">        success: <span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 图片的路径数组</span></span><br><span class="line">          <span class="keyword">let</span> &#123;tempFilePaths&#125; = data</span><br><span class="line">          <span class="comment">// 选择成功后显示正在上传的 loading</span></span><br><span class="line">          wx.showLoading(&#123;</span><br><span class="line">            title: <span class="string">'正在上传'</span>,</span><br><span class="line">            mask: <span class="literal">true</span></span><br><span class="line">          &#125;)</span><br><span class="line">          <span class="comment">// 由于是数组，所欲需要循环将每张图片依次上传</span></span><br><span class="line">          tempFilePaths.map(<span class="function">(<span class="params">r,i</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// getQiniu 函数用于获取一些上传的参数，比如 token，服务器地址，绑定的域名等</span></span><br><span class="line">            getQiniu().then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="comment">// token</span></span><br><span class="line">              <span class="keyword">let</span> uptoken = res.data.val.token</span><br><span class="line">              <span class="comment">// 绑定的域名</span></span><br><span class="line">              <span class="keyword">let</span> domain = res.data.bucket_url</span><br><span class="line">              <span class="comment">// 服务器地址</span></span><br><span class="line">              <span class="keyword">let</span> uploadURL = res.data.up_server</span><br><span class="line">              <span class="comment">// 开始上传</span></span><br><span class="line">              qiniuUploader.upload(</span><br><span class="line">                r, <span class="comment">//上传的图片</span></span><br><span class="line">                (req) =&gt; &#123;  <span class="comment">//回调 success</span></span><br><span class="line">                  <span class="comment">// code...</span></span><br><span class="line">                &#125;, (error) =&gt; &#123; <span class="comment">//回调 fail</span></span><br><span class="line">                  <span class="built_in">console</span>.log(<span class="string">'error: '</span> + error);</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                  <span class="comment">// region 要根据你获取到或已知的的上传服务器地址去对应相应的地区，对应表可见下文或 Github 的 README.md</span></span><br><span class="line">                  region: <span class="string">'ECN'</span>,</span><br><span class="line">                  uptoken: uptoken,</span><br><span class="line">                  uploadURL: uploadURL,</span><br><span class="line">                  domain: domain,</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment">// 最后一张上传完成后关闭 loading</span></span><br><span class="line">            <span class="keyword">if</span>(i === tempFilePaths.length)&#123;</span><br><span class="line">              wx.hideLoading()</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure><table><thead><tr><th>存储区域</th><th>区域代码</th><th>HTTPS 地址</th></tr></thead><tbody><tr><td>华东</td><td>ECN</td><td><a href="https://up.qiniup.com" target="_blank" rel="noopener">https://up.qiniup.com</a></td></tr><tr><td>华北</td><td>NCN</td><td><a href="https://up-z1.qiniup.com" target="_blank" rel="noopener">https://up-z1.qiniup.com</a></td></tr><tr><td>华南</td><td>SCN</td><td><a href="https://up-z2.qiniup.com" target="_blank" rel="noopener">https://up-z2.qiniup.com</a></td></tr><tr><td>北美</td><td>NA</td><td><a href="https://up-na0.qiniup.com" target="_blank" rel="noopener">https://up-na0.qiniup.com</a></td></tr><tr><td>新加坡</td><td>ASG</td><td><a href="https://up-as0.qiniup.com" target="_blank" rel="noopener">https://up-as0.qiniup.com</a></td></tr></tbody></table>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近天天赶着写小程序，没什么空余时间，所以没怎么写博客，但开发小程序过程中踩了不少坑，到时候可以总结一下。&lt;/p&gt;
-&lt;p&gt;今天先写下在小程序中如何上传文件至七牛云。&lt;/p&gt;
-&lt;p&gt;首先去&lt;a href=&quot;https://github.com/gpake/qiniu-wxap
       
     
     </summary>
