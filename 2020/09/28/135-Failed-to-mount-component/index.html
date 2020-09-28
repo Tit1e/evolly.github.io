@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Vue 报 Failed to mount component 错误 · Tit1e</title><meta name="description" content="Vue 报 Failed to mount component 错误 - Tit1e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/Tit1e/atom.xml" title="Tit1e"></head><body><div class="wrap"><header><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">主页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">过往</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">订阅</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Vue 报 Failed to mount component 错误</h1><div class="post-info">Sep 28, 2020</div><div class="post-content"><p>开发过程中遇到了个奇怪的报错</p>
+<blockquote>
+<p>Failed to mount component: template or render function not defined.</p>
+</blockquote>
+<p>看内容应该是模板引用出了问题，但是这个报错不会显示具体是哪行报错了。我 debug 了好久最终才发现问题。</p>
+<p>在用 vue-cli 开发项目时，我会图省事在引用组件时经常省略<code>index.vue</code>，比如正常的路径是：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@/<span class="keyword">views</span>/<span class="keyword">home</span>/<span class="keyword">index</span>.<span class="keyword">vue</span></span><br></pre></td></tr></table></figure>
+<p>而我经常写成</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@/<span class="keyword">views</span>/<span class="keyword">home</span></span><br></pre></td></tr></table></figure>
+<p>正常情况下这样写并没有问题，本来也支持这种写法，</p>
+<p>当时当你的 home 目录下存在<code>index.js</code>时，它默认引用的是 js 文件而不是.vue文件，因此就会产生上面的报错，解决方法就是写上完整的文件路径。</p>
+<p>这其实就是个很简单的问题，就是 debug 比较难。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/09/01/134-webpack-experimental-syntax/" class="next">下一篇</a></div><div class="copyright"><p>© 2016 - 2020 <a href="https://github.com/Tit1e" target="_blank">Tit1e</a>, powered by <a href="https://github.com/Tit1e/hexo-theme-simple" target="_blank">hexo-theme-simple</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
