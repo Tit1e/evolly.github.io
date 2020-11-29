@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/Tit1e/"/>
-  <updated>2020-09-28T14:17:14.139Z</updated>
+  <updated>2020-11-29T12:21:04.971Z</updated>
   <id>https://github.com/Tit1e/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>flex-grow 属性无效，宽度被撑开问题解决方法</title>
+    <link href="https://github.com/Tit1e/2020/11/29/137-flex-grow-invalid/"/>
+    <id>https://github.com/Tit1e/2020/11/29/137-flex-grow-invalid/</id>
+    <published>2020-11-29T12:02:18.000Z</published>
+    <updated>2020-11-29T12:21:04.971Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用 flex 布局的时候，有时会遇到 flex-grow 属性无效的情况，期望是两个子元素宽度平均分，但是实际情况就是无法平均分布，设置 <code>flex-shrink: 0;</code> 也无效，我用文字超出不换行来复现这种情况。</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#flex-box</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">8px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#flex-box</span> <span class="selector-tag">div</span>&#123;</span><br><span class="line">  <span class="attribute">flex-grow</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#flex-box</span> <span class="selector-tag">div</span> <span class="selector-tag">p</span>&#123;</span><br><span class="line">  <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"flex-box"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>超出不换行<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>超出不换行，超出不换行，超出不换行，超出不换行，超出不换行，超出不换行，超出不换行<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><p>上述代码渲染出的 dom 是这个样子的：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-11-29-120940.png" alt></p><p>明明对 div 元素设置了 <code>flex-grow: 1;</code> 属性，但是，实际上两个 div 的宽度并没有被平均分。</p><p>解决办法很简单，只要把 div 的 width 属性设置为 0px，这样 div 的宽度就是由 <code>flex-grow: 1;</code> 来决定的了。</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#flex-box</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">8px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#flex-box</span> <span class="selector-tag">div</span>&#123;</span><br><span class="line">  <span class="comment">/* 加上这一行 css */</span></span><br><span class="line">  <span class="attribute">width</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">flex-grow</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#flex-box</span> <span class="selector-tag">div</span> <span class="selector-tag">p</span>&#123;</span><br><span class="line">  <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>把宽度设置为 0 后，浏览器中渲染出的效果就是我们想要的效果了。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-11-29-121707.png" alt></p><p>同理，如果设置了 <code>flex-direction: column;</code> ，那就需要把 height 属性设置为0px。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在使用 flex 布局的时候，有时会遇到 flex-grow 属性无效的情况，期望是两个子元素宽度平均分，但是实际情况就是无法平均分布，设置 &lt;code&gt;flex-shrink: 0;&lt;/code&gt; 也无效，我用文字超出不换行来复现这种情况。&lt;/p&gt;
+&lt;figure cla
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七牛上传域名</title>
+    <link href="https://github.com/Tit1e/2020/11/03/136-qiniu-upload-url/"/>
+    <id>https://github.com/Tit1e/2020/11/03/136-qiniu-upload-url/</id>
+    <published>2020-11-03T14:36:10.000Z</published>
+    <updated>2020-11-03T15:08:43.883Z</updated>
+    
+    <content type="html"><![CDATA[<p>前阵子在上传文件过程中，发现传不上去的</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;前阵子在上传文件过程中，发现传不上去的&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue 报 Failed to mount component 错误</title>
@@ -50,7 +98,7 @@
     <link href="https://github.com/Tit1e/2020/09/01/134-webpack-experimental-syntax/"/>
     <id>https://github.com/Tit1e/2020/09/01/134-webpack-experimental-syntax/</id>
     <published>2020-09-01T01:29:52.000Z</published>
-    <updated>2020-09-01T01:41:02.139Z</updated>
+    <updated>2020-11-03T15:05:19.056Z</updated>
     
     <content type="html"><![CDATA[<p>前阵子封装完波形插件在用 webpack 打包的时候，出现了异常：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error：Support <span class="keyword">for</span> the experimental syntax <span class="string">'classProperties'</span> isn<span class="string">'t currently enable</span></span><br></pre></td></tr></table></figure><p>从这个报错中可以知道出现这个异常的原因是我封装的类中用了 Class 的实验性语法，虽然我已经装了 Babel，但我安装的 Babel 并不支持试验性语法的转译，所以需要单独安装转译试验性语法的插件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D @babel/plugin-proposal-class-properties</span><br></pre></td></tr></table></figure><p>另外还需要在 .babelrc 中配置：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"plugins"</span>: [</span><br><span class="line">    [<span class="string">"@babel/plugin-proposal-class-properties"</span>]</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>之后再进行编译就不会出现上面的报错。</p>]]></content>
     
@@ -455,59 +503,6 @@
       <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="vue" scheme="https://github.com/Tit1e/tags/vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小程序报错：Page is not constructed because it is not found</title>
-    <link href="https://github.com/Tit1e/2019/06/24/117-mini-program-page-is-not-constructed/"/>
-    <id>https://github.com/Tit1e/2019/06/24/117-mini-program-page-is-not-constructed/</id>
-    <published>2019-06-24T13:07:52.000Z</published>
-    <updated>2020-02-22T13:46:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近之前写的小程序进行了修改，目录结构进行了调整，导致程序报了错，找了很久才解决问题。</p><p>控制台报错如下：</p><blockquote><p>Page is not constructed because it is not found</p></blockquote><p>网上搜了很多的答案，但是都没解决我的问题。问题发生的前提是这样的：小程序是我用 mp-vue 开发的，这次底部加了个导航，于是多了个目录，原来的目录命名有点问题，我就把原来的一个目录名字改了，然后把引用的一些资源路径什么的都改完之后，这个问题就存在了。我重启了微信开发者工具，重跑了 mp-vue 的服务器，网上搜了一大圈，都没解决问题。</p><p>最后，解决方法是：把 mp-vue 的服务器停止，然后把输出目录整个删除，在重新启动服务器生成一下目录就好了。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近之前写的小程序进行了修改，目录结构进行了调整，导致程序报了错，找了很久才解决问题。&lt;/p&gt;
-&lt;p&gt;控制台报错如下：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Page is not constructed because it is not found&lt;/p&gt;
-&lt;/blo
-      
-    
-    </summary>
-    
-    
-      <category term="学习" scheme="https://github.com/Tit1e/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="小程序" scheme="https://github.com/Tit1e/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>群晖上手体验</title>
-    <link href="https://github.com/Tit1e/2019/06/15/116-synology/"/>
-    <id>https://github.com/Tit1e/2019/06/15/116-synology/</id>
-    <published>2019-06-15T09:15:21.000Z</published>
-    <updated>2020-02-22T13:46:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>心心念的 群晖 Nas 终于在昨天到了，已经使用了差不多一天，原来硬盘上的资料已经全部转移到群晖上了，今天又研究了一下网盘同步。</p><p>我使用 Nas 主要用来下载电影与保存一些其他资料，另外还有是 Mac 的备份，主要之前一直挂着移动硬盘，插拔频繁，感觉 USB 口已经有点接触问题，所以心里还是觉得没底，这也是我上 Nas 的一个很重要的原因。</p><p>就目前使用体验来说，还是挺满意，就是从电脑到 Nas Wi-Fi 传输速度最高只有 40Mb/s， 不知道是什么原因，路由器是千兆路由，用的 5G 的 Wi-Fi，网线也没问题，应该是哪里有问题，不过这个速度平时无所谓，也就转移资料的时候会觉得 40Mb/s 的速度不够用。</p><p>之前下载的电影已全部转移至 Nas，Video Station 自己能搜索封面与电影信息这一点挺好的，对我这种没封面就浑身难受的人来说体验上非常舒服。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-06-15-092813.png" alt></p><p>今天尝试了 Download Station 下电影电视剧，种子、RSS、百度云同步都试了。百度云速度感人，每个文件稳定 80 Kb/s，其他两种速度比较不稳定，经常没速度或速度明显过慢，但具体原因我也不清楚。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-06-15-091953.png" alt></p><p>有些不急的电影或电视剧我就把它放在百度云的同步目录下让它自己慢慢同步，用 RSS 下载电视剧我觉得还是挺方便的，特别是配合 <a href="https://github.com/DIYgod/RSSHub">RSSHub</a>，下载字幕组上的剧很方便。就是速度有点不稳定。但是不是急着刷，一天也能下载完，所以问题也不是太大。</p><p>移动端我用的 iOS，没有使用群晖官方的 App，用的是 nplayer，因为官方的不支持有些 MKV 的在线播放，而转码工具不支持 DTS 的转码，而 nplayer 可以直接播放，所以我就买了 nplayer， Lite 版本 也是无法播放的，必须使用付费版。</p><p>QuickConnect 的速度非常慢，后面可能会买一个 Nas 伴侣来做内网穿透，QC 的速度我在买之前在网上也看到很多人在吐槽了，不过对我来说问题不算大。</p><p>对我来说它已经满足了我最主要的需求：至少我在家的时候不会有放电影必须插着移动硬盘，电影时电脑也不用连着移动硬盘，也不用等下载完成才能合上电脑，时间机器备份的时候也不用连着移动硬盘。</p><p>总之没有连接线真是爽爆了。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;心心念的 群晖 Nas 终于在昨天到了，已经使用了差不多一天，原来硬盘上的资料已经全部转移到群晖上了，今天又研究了一下网盘同步。&lt;/p&gt;
-&lt;p&gt;我使用 Nas 主要用来下载电影与保存一些其他资料，另外还有是 Mac 的备份，主要之前一直挂着移动硬盘，插拔频繁，感觉 USB 
-      
-    
-    </summary>
-    
-    
-      <category term="折腾" scheme="https://github.com/Tit1e/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
