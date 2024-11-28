@@ -1,0 +1,25 @@
+@media screen and (max-width: 1024px) {
+  body {
+    padding: 0 2rem;
+  }
+  body .container {
+    max-width: 800px;
+  }
+  body .header {
+    width: 100%;
+    height: 16rem;
+  }
+  body .header .title {
+    position: static;
+    padding: 0;
+  }
+  body .post {
+    width: 100%;
+  }
+  body .archive {
+    width: 100%;
+  }
+  body .page-nav {
+    width: 100%;
+  }
+}
