@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">6 / 15, 2019</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">群晖上手体验</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>心心念的 群晖 Nas 终于在昨天到了，已经使用了差不多一天，原来硬盘上的资料已经全部转移到群晖上了，今天又研究了一下网盘同步。</p>
+<p>我使用 Nas 主要用来下载电影与保存一些其他资料，另外还有是 Mac 的备份，主要之前一直挂着移动硬盘，插拔频繁，感觉 USB 口已经有点接触问题，所以心里还是觉得没底，这也是我上 Nas 的一个很重要的原因。</p>
+<p>就目前使用体验来说，还是挺满意，就是从电脑到 Nas Wi-Fi 传输速度最高只有 40Mb&#x2F;s， 不知道是什么原因，路由器是千兆路由，用的 5G 的 Wi-Fi，网线也没问题，应该是哪里有问题，不过这个速度平时无所谓，也就转移资料的时候会觉得 40Mb&#x2F;s 的速度不够用。</p>
+<p>之前下载的电影已全部转移至 Nas，Video Station 自己能搜索封面与电影信息这一点挺好的，对我这种没封面就浑身难受的人来说体验上非常舒服。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-06-15-092813.png"></p>
+<p>今天尝试了 Download Station 下电影电视剧，种子、RSS、百度云同步都试了。百度云速度感人，每个文件稳定 80 Kb&#x2F;s，其他两种速度比较不稳定，经常没速度或速度明显过慢，但具体原因我也不清楚。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-06-15-091953.png"></p>
+<p>有些不急的电影或电视剧我就把它放在百度云的同步目录下让它自己慢慢同步，用 RSS 下载电视剧我觉得还是挺方便的，特别是配合 <a target="_blank" rel="noopener" href="https://github.com/DIYgod/RSSHub">RSSHub</a>，下载字幕组上的剧很方便。就是速度有点不稳定。但是不是急着刷，一天也能下载完，所以问题也不是太大。</p>
+<p>移动端我用的 iOS，没有使用群晖官方的 App，用的是 nplayer，因为官方的不支持有些 MKV 的在线播放，而转码工具不支持 DTS 的转码，而 nplayer 可以直接播放，所以我就买了 nplayer， Lite 版本 也是无法播放的，必须使用付费版。</p>
+<p>QuickConnect 的速度非常慢，后面可能会买一个 Nas 伴侣来做内网穿透，QC 的速度我在买之前在网上也看到很多人在吐槽了，不过对我来说问题不算大。</p>
+<p>对我来说它已经满足了我最主要的需求：至少我在家的时候不会有放电影必须插着移动硬盘，电影时电脑也不用连着移动硬盘，也不用等下载完成才能合上电脑，时间机器备份的时候也不用连着移动硬盘。</p>
+<p>总之没有连接线真是爽爆了。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/cb047f17.html"
+      title="小程序报错：Page is not constructed because it is not found"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        小程序报错：Page is not constructed because it is not found
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/c8c4026a.html"
+      title="Mac 应用推荐"
+    >
+      <span class="post-near-title">
+        Mac 应用推荐
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

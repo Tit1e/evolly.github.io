@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">7 / 16, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">移动端网页底部导航被虚拟键盘顶起解决方法</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>在写移动端的网页应用的时候经常会遇到底部导航，或者说是底部菜单。而当触发虚拟键盘的时候，底部的导航会被顶起来，遮挡住网页内容。定位方法对此也并不管用。我这有两种解决方式（都基于jQuery）。</p>
+<span id="more"></span>
+<p>第一种：</p>
+<pre><code class="javascript">    //  这种方法的思路是，当输入框获得焦点的时候，就隐藏，失去焦点就显示
+    $(&#39;input[type=text],textarea&#39;).focus(function()&#123;
+        $(&#39;footer&#39;).hide();
+    &#125;)
+    $(&#39;input[type=text],textarea&#39;).blur(function()&#123;
+        $(&#39;footer&#39;).show();
+    &#125;)
+</code></pre>
+<p>但第一种方法有个缺点，就是当用户输入完成后可能只是收起了键盘，而此时输入框并没有失去焦点，但底部的导航还是隐藏状态，这样容易给用户造成困惑，所以第二种方法能很好地解决这个问题。</p>
+<p>第二种：</p>
+<pre><code class="javascript">    //这种方法的思路是监听窗口高度的变化来判断是否有触发虚拟键盘，以此来控制底部导航的显示与隐藏
+    var height = $(window),height();
+    window.onresize = function()&#123;
+        var n_height = $(window).height();
+        if( height != n_height )&#123;
+            $(&#39;footer&#39;).hide();
+        &#125;else&#123;
+            $(&#39;footer&#39;).show();
+        &#125;
+    &#125;
+</code></pre>
+<p>第二种方法也间接解释了为什么会定位失效，因为因为虚拟键盘是把整个浏览器窗口顶起来了，而不是覆盖在浏览器上，所以定位在底部还是会在输入法上方。</p>
+<p>上述第一种方法来自网络，由于时间太久，来源已无从考察；第二种方法是同事的思路，至于来源我并不清楚是来自网络还是自己远程，我只是在此做一个总结。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/b94eede0.html"
+      title="一些工作中常用到的代码(二)"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        一些工作中常用到的代码(二)
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/a420b84d.html"
+      title="你快看那片星空"
+    >
+      <span class="post-near-title">
+        你快看那片星空
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

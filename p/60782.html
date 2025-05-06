@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">9 / 27, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">backdrop-filter 导致动画卡顿问题</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #CSS
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前几天同事遇到个问题没有头绪找我帮忙：他有两个类似的页面，两个页面中都点击了一个按钮调用了 Element-UI 的 <code>$alert</code> 来显示一个弹窗，展示弹窗的代码相同的情况下，其中一个页面的弹窗正常，另一个弹窗的动画比正常的慢很多。我通过一步步的排查，最终定位到了一段 html 代码上，这段代码中加上了很多的毛玻璃效果，而这个毛玻璃效果也正好是我之前告诉这位同事的。我将 CSS 中的 <code>backdrop-filter</code> 注释掉之后，弹窗动画就正常了。然后我顺便对 <code>backdrop-filter</code> 进行了一些试验，想看看哪些因素会影响会对动画效果有影响。</p>
+<p>最终得出非常主观的结论是：</p>
+<ul>
+<li>使用 <code>backdrop-filter</code> 元素的数量</li>
+<li><code>blur()</code> 中的像素值</li>
+<li><code>backdrop-filter</code> 所作用元素的大小</li>
+</ul>
+<p>你可以在<a target="_blank" rel="noopener" href="https://tit1e.github.io/Demos/165-backdrop-filter-problem/">这个 Demo 中</a>试验各个因素对动画的影响。</p>
+<p>最后我的猜测是因为使用 <code>backdrop-filter</code> 渲染非常耗性能，导致动画出现掉帧等问题。我是在 Chrome 开启硬件加速的情况下测试的，如果关闭硬件加速，<code>backdrop-filter</code> 的渲染效果就会大打折扣，动画掉帧也会更加严重。</p>
+<p><strong>以上结论仅仅是凭我在自己电脑上测试后的结果得出，不具有任何权威。不知道更高配置的电脑上是否还会有这个问题。</strong></p>
+<p>在 <code>backdrop-filter</code> 之前有一个 <code>filter:blur(10px)</code> 可以实现类似高斯模糊的效果，其实这两个 CSS 语法完全相同，只是效果有所不同。</p>
+<p><code>backdrop-filter</code> 实现的是类似 iOS 毛玻璃的效果，模糊效果会随着背景的改变而改变，类似透过一块毛玻璃看物体，看什么什么就模糊，而 <code>filter</code> 的高斯模糊作用于固定的背景图片上，所以 <code>filter</code> 只需一个元素就可以实现，而 <code>backdrop-filter</code> 需要两个元素才能实现：背景 + <code>backdrop-filter</code> 作用的元素，当然这个元素可以是伪元素。</p>
+<p>兼容情况的话 <code>backdrop-filter</code> 大部分主流浏览器都已经兼容，不过 <code>filter</code> 的兼容性更好</p>
+<p><code>backdrop-filter</code> 兼容情况</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-09-27-030716.png"></p>
+<p><code>filter</code> 兼容情况</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-09-27-132944.png"></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/21002.html"
+      title="Send2Flomo"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Send2Flomo
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/31461.html"
+      title="uni-app 安卓聊天输入框被输入法覆盖"
+    >
+      <span class="post-near-title">
+        uni-app 安卓聊天输入框被输入法覆盖
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

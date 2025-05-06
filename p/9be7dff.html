@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">12 / 14, 2018</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">从零开始：Ubuntu 部署 Node 环境</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>最近注册了一个亚马逊的 AWS 账号，有一年的免费体验时间，于是打算这次机会来折腾折腾服务器方面的东西，顺便学学 Node。折腾过程中遇到了挺多问题，我都会一一记录下来。</p>
+<p>这次记录的是我在 Ubuntu 下安装了 mysql 时，没提醒我输入密码，Google 了一圈解决，在这里做个记录。</p>
+<span id="more"></span>
+
+<p>……</p>
+<p>……</p>
+<p>……</p>
+<p>本来这篇文章叫做“Ubuntu 安装 mysql 未提示输入密码”，但在我想去服务器上执行命令验证下命令是否正确的时候，发现 AWS 连不上了……然后我折腾了一个多小时，放弃了原来的服务器，重新新建了一个实例，又从头到尾折腾了一遍，所以这篇文章也正式更名为“从零开始：Ubuntu 部署 Node 环境”。</p>
+<h3 id="基本说明"><a href="#基本说明" class="headerlink" title="基本说明"></a>基本说明</h3><ul>
+<li>服务器：<a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/">Amazon Web Services</a> EC2（新用户免费体验 1 年）</li>
+<li>服务器系统：Ubuntu 16.04.5 LTS</li>
+<li>操作环境：mac OS Mojave 10.14.2</li>
+<li>终端：iterm2</li>
+</ul>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><h4 id="一、创建实例"><a href="#一、创建实例" class="headerlink" title="一、创建实例"></a>一、创建实例</h4><p>1、登录控制台，开始创建<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-35-09.png"><br>2、选择系统（免费用户只能选择带有“符合条件的免费套餐”字样的项）<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-37-31.png"><br>3、选择实例类型<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-37-57.png"><br>4、启动<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-38-26.png"><br>5、创建密钥<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-14_23-41-35.png"></p>
+<p>密钥需要保管好，因为通过 SSH 连接服务器的时候需要用到。我将密钥存在 <code>~/.ssh/</code> 路径下。</p>
+<p>注：新建的实例默认情况下是 ping 不通的，因为它默认只允许 SSH 流量，需要设置一下<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_01-36-33.png"></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_01-39-26.png"></p>
+<h4 id="二、SSH-连接服务器"><a href="#二、SSH-连接服务器" class="headerlink" title="二、SSH 连接服务器"></a>二、SSH 连接服务器</h4><p>打开终端，输入命令：</p>
+<pre><code class="shell"># ip 或 公有 DNS 可在创建实例的第一步图中的列表中找到
+sudo ssh -i ~/.ssh/zyd.pem ubuntu@[ip 或 公有 DNS]
+</code></pre>
+<h4 id="三、安装-node-js"><a href="#三、安装-node-js" class="headerlink" title="三、安装 node.js"></a>三、安装 node.js</h4><p>Ubuntu 下直接执行 <code>sudo apt install nodejs</code> 安装的 node 版本回会非常低，所以不推荐直接用这个命令安装。</p>
+<pre><code class="shell">#更新软件
+sudo apt update
+sudo apt upgrade
+#添加 node 源
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+#安装
+sudo apt install -y nodejs
+</code></pre>
+<p>安装完后安装 node 版本管理工具，我用的是 n ：</p>
+<pre><code>sudo npm install n -g
+</code></pre>
+<p>n 的使用方法可参考 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/n">这里</a>。</p>
+<h4 id="四、Nginx-服务器代理设置"><a href="#四、Nginx-服务器代理设置" class="headerlink" title="四、Nginx 服务器代理设置"></a>四、Nginx 服务器代理设置</h4><p>1、安装 Nginx，安装完通过 <code>nginx -v</code> 查看版本号来看是否安装成功</p>
+<pre><code>sudo apt install nginx
+nginx -v
+</code></pre>
+<p>2、配置代理</p>
+<pre><code class="shell">cd /etc/nginx/conf.d/
+#文件名自定义
+sudo vi test-3000.conf
+</code></pre>
+<p>按 <code>i</code> 进入 vim 的编辑模式，粘贴如下内容：</p>
+<p>粘贴前把注释内容删除</p>
+<pre><code class="shell">#这里需要对应域名
+upstream test &#123;
+    #端口需要根据之后 node 服务运行后的实际端口来配置，Express 的默认端口为 3000
+    server 127.0.0.1:3000;
+&#125;
+server &#123;
+    listen 80;
+    #绑定的完整域名
+    server_name test.evolly.one;
+
+    location / &#123;
+        proxy_set_header Host  $http_host;
+        proxy_set_header X-Real-IP  $remote_addr;  
+        proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header X-Nginx-proxy true;
+        #这里需要对应域名
+        proxy_pass http://test;
+        proxy_redirect off;
+    &#125;
+&#125;
+</code></pre>
+<p>按 <code>esc</code> 并直接在用键盘输出 <code>:wq</code> ，回车，保存并关闭文件。终端输入 <code>ls</code> 可查看当前目录下的文件列表。</p>
+<p>将域名解析至服务器，我的域名是在 GoDaddy 上买的，域名解析都差不多，添加一条 A 类型的解析。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_00-30-50.png"></p>
+<p>然后输入运行 <code>sudo nginx -t</code> 查看是否配置成功<br>成功终端会打印如下信息：</p>
+<pre><code>nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+</code></pre>
+<p>重启 nginx</p>
+<pre><code class="shell">sudo nginx -s reload
+</code></pre>
+<h4 id="五、创建和部署-hello-world"><a href="#五、创建和部署-hello-world" class="headerlink" title="五、创建和部署 hello world"></a>五、创建和部署 hello world</h4><p>到根目录创建 <code>www</code> 目录并进入目录</p>
+<pre><code class="shell">cd /
+sudo mkdir www
+cd www
+</code></pre>
+<p>创建 hello.js</p>
+<pre><code class="shell">sudo vi hello.js
+</code></pre>
+<p>写入以下内容：</p>
+<pre><code class="js">const http = require(&#39;http&#39;)
+http.createServer(function(req,res) &#123;
+res.writeHead(200,&#123;&#39;Content-Type&#39;:&#39;text/plain&#39;&#125;)
+res.end(&#39;hello world&#39;)
+&#125;).listen(3000) //端口对应之前 nginx 配置中配置的端口
+
+console.log(&#39;server test&#39;)
+</code></pre>
+<p>运行</p>
+<pre><code class="shell">node hello.js
+</code></pre>
+<p>现在访问之前解析的域名，就能在页面上看到 <code>hello world</code> 字样。<br>那么有个问题，现在 node 服务是启动了，但是终端被占用了，无法执行其他操作了。这时候我们就需要 pm2，pm2 是 node 进程管理工具，有了它，node 就不会占用你的终端了，当然它的功能不止只一个，还有如性能监控、自动重启、负载均衡等功能。</p>
+<p>安装</p>
+<pre><code class="shell">sudo npm install -g pm2
+</code></pre>
+<p>运行 node 服务</p>
+<pre><code class="shell">pm2 start hello.js
+</code></pre>
+<p>如果你使用了框架，如 Express，那你可以 cd 至项目跟目录，运行 <code>pm2 start &#39;./bin/WWW&#39;</code>。或者你可以看 <code>package.json</code> 中运行项目的实际命令是什么。</p>
+<p>运行后可以看到终端打印出了所有进程状态，并且终端没有被占用。pm2 的其他用法可以 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/pm2">参考这里</a></p>
+<h4 id="六、安装-mysql"><a href="#六、安装-mysql" class="headerlink" title="六、安装 mysql"></a>六、安装 mysql</h4><p>1、执行安装命令：</p>
+<pre><code class="shell">sudo apt-get install mysql-server
+sudo apt install mysql-client
+sudo apt install libmysqlclient-dev
+</code></pre>
+<p>正常情况下安装过程中会让你输入两次初始密码</p>
+<p>通过 <code>sudo netstat -tap | grep mysql</code> 测试是否安装成功，如果成功则显示如下：<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-14-Xnip2018-12-15_01-05-52.png"></p>
+<p>2、设置 mysql 允许远程访问，否则数据库工具无法远程连接<br>编辑文件</p>
+<pre><code class="shell">sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+</code></pre>
+<p>注释掉 bind-address &#x3D; 127.0.0.1 行（最前面加<code>#</code>）</p>
+<p>保存退出</p>
+<p>连接 mysql,执行以下命令后，输入密码</p>
+<pre><code class="shell">mysql -uroot -p
+</code></pre>
+<p>执行授权命令并退出（命令中的 <code>；</code> 也要复制）：</p>
+<pre><code class="sql">grant all on *.* to root@&#39;%&#39; identified by &#39;你的密码&#39; with grant option;
+flush privileges;
+quit
+</code></pre>
+<p>重启 mysql</p>
+<pre><code class="shell">sudo service mysql restart
+</code></pre>
+<p>现在你就可以通过 Navicat 工具连接 mysql 了。</p>
+<h4 id="mysql-安装过程中没有提示输入初始密码"><a href="#mysql-安装过程中没有提示输入初始密码" class="headerlink" title="mysql 安装过程中没有提示输入初始密码"></a>mysql 安装过程中没有提示输入初始密码</h4><p>如果遇到这种情况，可以打开该文件查看默认密码</p>
+<pre><code class="shell">sudo vim /etc/mysql/debian.cnf
+</code></pre>
+<p>在这个文件里面有着 MySQL 默认的用户名和用户密码<br>正常情况下该文件中的 <code>user</code> 为 <code>debian-sys-maint</code>，而密码是由比较复杂的大小写数字构成，我们先通过这个账户连接 mysql,然后执行修改密码命令给 root 用户修改密码：</p>
+<pre><code class="shell">mysql -u debian-sys-maint -p 
+</code></pre>
+<p>输入密码后连接 mysql ,执行：</p>
+<pre><code class="sql">update mysql.user set authentication_string=password(&#39;重置的密码&#39;) where user=&#39;root&#39;and Host = &#39;localhost&#39;;
+</code></pre>
+<p>如果显示以下内容则说明修改成功：</p>
+<pre><code>Query OK, 1 row affected, 1 warning (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+</code></pre>
+<p>重启 mysql</p>
+<pre><code class="shell">sudo service mysql restart
+</code></pre>
+<p>这样 root 用户的密码就被重置了。</p>
+<p>教程到此结束，最后感谢下面这几位作者提供的参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010098126">nodejs 服务器部署教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiangwanpeng/article/details/54562362">在 Ubuntu16.04 下安装 mysql</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_21302587/article/details/76870457">ubuntu 安装 mysql 时未提示输入密码</a></li>
+</ul>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/fe0a78da.html"
+      title="你好呀，2019"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        你好呀，2019
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/bdaa78ac.html"
+      title="jsTree 不同节点不同右键菜单"
+    >
+      <span class="post-near-title">
+        jsTree 不同节点不同右键菜单
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

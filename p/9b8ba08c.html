@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 19, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">vue-cli 使用记录以及使用过程中遇到的问题总结</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前段时间抽空重写了陋网,还没开发完成, 还有很多细节需要完善. 所以这篇博客随着开发还会更新.</p>
+<span id="more"></span>
+<h3 id="配置记录"><a href="#配置记录" class="headerlink" title="配置记录"></a>配置记录</h3><h4 id="注-下面的文件都是以实际项目中的-program-目录为根目录来写路径的"><a href="#注-下面的文件都是以实际项目中的-program-目录为根目录来写路径的" class="headerlink" title="注: 下面的文件都是以实际项目中的 program 目录为根目录来写路径的"></a>注: 下面的文件都是以实际项目中的 <code>program</code> 目录为根目录来写路径的</h4><h4 id="package-json"><a href="#package-json" class="headerlink" title="/package.json"></a><code>/package.json</code></h4><p>用过 <code>node.js</code> 的基本都知道, 主要用来管理包依赖,当然里面还会有些项目作者, 项目描述等配置,不过这都不是主要的.<br>说到依赖, 在 <code>/package.json</code> 中有两种依赖,分别是 <code>dependencies</code> 和 <code>devDependencies</code>, 从字面上大致可以看出两者的区别在于一个是生产环境用到的依赖, 一个是开发环境用到的依赖, 比如 <code>axios</code> 要在线上用于 <code>http</code> 请求, 所以这个依赖肯定得配置在 <code>dependencies</code> 下, 在安装的时候只要在命令后面加上 <code>--save</code> 就能自动写进 <code>dependencies</code>. 而像 <code>eslint</code> 这种依赖是在开发阶段用于代码检查的, 生产环境中不需要的,那么就配置在 <code>devDependencies</code> 下, 安装的时候在命令后面加上 <code>--save-dev</code>就自动写进 <code>devDependencies</code> 中.</p>
+<h4 id="config-index-js"><a href="#config-index-js" class="headerlink" title="/config/index.js"></a><code>/config/index.js</code></h4><p>可配置 <code>index.html</code> 和 <code>static</code> 文件夹的打包输出路径.</p>
+<h4 id="build-webpack-base-conf"><a href="#build-webpack-base-conf" class="headerlink" title="/build/webpack.base.conf"></a><code>/build/webpack.base.conf</code></h4><p>可在这个文件下的 ‘resolve’ 下的 <code>alias</code> 对象中配置资源引用路径的缩写. 	<code>vue-cli</code> 在构建的时候默认会有 <code>&#39;@&#39;: resolve(&#39;src&#39;)</code> 这条配置, 意思是引用文件的时候, <code>src</code> 这个路径可以用 <code>@</code> 表示, 当路径长了这个配置的优势就会提现出来. </p>
+<h3 id="项目记录"><a href="#项目记录" class="headerlink" title="项目记录"></a>项目记录</h3><h4 id="index-html"><a href="#index-html" class="headerlink" title="/index.html"></a><code>/index.html</code></h4><p>入口文件, 项目最后打包的时候, 所有代码都会压缩到这个 <code>html</code> 文件中.<br>需要注意的是, 由于vue作了限制, 在文件中引用静态资源时, 静态资源不可放于src目录下, 要放于与这个文件同级的 <code>static</code> 目录下.</p>
+<h4 id="sass"><a href="#sass" class="headerlink" title="sass"></a><code>sass</code></h4><p>要使用 <code>sass</code> 需要安装 <code>node-sass</code> 和 <code>sass-loader</code> 两个包</p>
+<pre><code>npm install node-sass --save-dev
+npm install sass-loader --save-dev
+</code></pre>
+<p>然后在 <code>style</code> 标签中声明 <code>&lt;style lang=&quot;scss&quot;&gt;&lt;/style&gt;</code> 就可以使用了.</p>
+<h4 id="fastclick"><a href="#fastclick" class="headerlink" title="fastclick"></a><code>fastclick</code></h4><p>移动端用 <code>fastclick</code> 来解决300毫秒点击延迟问题.<br><code>npm install fastclick --save</code><br>在 <code>main.js</code> 中 import: <code>import fastclick from &#39;fastclick&#39;</code> .<br>并且在绑定在 <code>body</code> 上: <code>fastclick.attach(document.body)</code> .</p>
+<h4 id="better-scroll"><a href="#better-scroll" class="headerlink" title="better-scroll"></a><code>better-scroll</code></h4><p>使用 <code>better-scroll</code> 来获得更好的移动端体验<br><code>npm install better-scroll --save</code><br>由于项目中需要滚动的地方都需要用到 <code>better-scroll</code>, 所以将它封装成一个通用的基础组件,需要使用的时候直接引用就可以了.<br>很多刚使用 <code>better-scroll</code> 的人会遇到使用了插件,并且初始化也成功了,但是却滚动不了. 网上一查有很多的相关问题,我在使用的时候也遇到了这个问题,其实在 <code>better-scroll</code> 的 github 上已经说得比较清楚了:<br><img src="https://camo.githubusercontent.com/fd2fd41d5bc70502acb590d53f2084248587cb85/687474703a2f2f7374617469632e67616c696c656f2e7869616f6a756b656a692e636f6d2f7374617469632f746d732f736869656c642f7363726f6c6c2d342e706e67"><br>包裹的元素需要设置一个固定高度,当子元素的高度大于父元素的高度的时候就好出现滚动条. <code>better-scroll</code> 的核心原理就是禁用默认滚动条, 父元素设固定高度, 内容超出部分隐藏, 然后用 <code>css</code> 动画来做滚动效果.<br>所以只需要给父元素加个固定高度就可以解决页面不滚动问题.</p>
+<h4 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a><code>vue-router</code></h4><ul>
+<li>添加路由<br>在 <code>/src/router/index.js</code> 中可配置路由. 先将组件 import 进来, 然后在 <code>routes</code> 数组中添加路由配置. 一般路由格式如下:</li>
+</ul>
+<pre><code>&#123;
+  path: &#39;/home&#39;,
+  component: Home
+&#125;
+</code></pre>
+<ul>
+<li>默认路由<br><code>redirect</code> 可配置项目的默认路由:</li>
+</ul>
+<pre><code>&#123;
+  path: &#39;/&#39;,
+  redirect: &#39;/index&#39;
+&#125;
+</code></pre>
+<ul>
+<li>嵌套路由</li>
+</ul>
+<pre><code>&#123;
+  path: &#39;/home&#39;,
+  children: [
+    &#123;
+      path: &#39;/home/index&#39;,
+      component: Index
+    &#125;
+  ]
+&#125;
+</code></pre>
+<ul>
+<li>动态路由</li>
+</ul>
+<pre><code>&#123;
+  path: &#39;/people/id/:id&#39;,
+  component: People
+&#125;
+</code></pre>
+<p>例子中的配置在地址中的渲染效果会是 <code>/people/id/1</code>.</p>
+<p>未完待续…</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/377b4f9d.html"
+      title="vue-cli 引入全局 scss 文件"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        vue-cli 引入全局 scss 文件
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/2df7e08e.html"
+      title="陋 网"
+    >
+      <span class="post-near-title">
+        陋 网
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">4 / 15, 2023</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">OpenWrt 新建磁盘分区、删除磁盘分区和挂载磁盘分区</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>去年买了个 R2S 来当软路由，为了省心，开箱即用，自带了定制化的 OpenWrt 系统，运行还算稳定，没有出现死机、重启等现象，其实我也只是用了它的 OpenClash 功能，其他不用的功能一律被我关闭，所以整个机子的负载一直都处在一个比较低的状态：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-031824.png"></p>
+<p>这几天在折腾 Emby ，装插件，昨天折腾了半天群晖的 SFTP 权限，死活装不上，所以我打算将 Emby 装到 R2S 上来（不过最后还是没装在这里），反正闲着也是闲着，就在拉 Docker 镜像这一步的时候，就出问题了，提示我磁盘空间不足，于是就有了我后续一系列的折腾，下面开始正题。</p>
+<p>###1. 通过终端连接至 OpenWrt 并获取管理员权限</p>
+<pre><code class="shell"># 每人根据实际情况调整
+ssh root@192.168.2.1
+# 输入密码登录后，先获取管理员权限
+sudo -i
+</code></pre>
+<h3 id="2-查看磁盘使用情况"><a href="#2-查看磁盘使用情况" class="headerlink" title="2. 查看磁盘使用情况"></a>2. 查看磁盘使用情况</h3><pre><code class="shell">df -h
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-082222.png"></p>
+<p>可以看到目前以挂载的分区的使用情况，上面挂载在 <code>/data</code> 下的 <code>/dev/mmcblk0p3</code> 就是我昨天新添加的分区。</p>
+<p>###3. 查看所有磁盘信息（包括未挂载磁盘）</p>
+<pre><code class="shell">fdisk -l
+</code></pre>
+<p>可以看到有两个磁盘，上面的不用管，很明显。下面的 <code>/dev/mmcblk0</code> 就是我插的 32G 内存卡。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-082744.png"></p>
+<p>可以看到现在内存卡有三个分区，从第 2 步的信息来看，<code>mmcblk02</code> 分区被创建了，但并没有被挂载。</p>
+<h3 id="4-创建新的磁盘分区"><a href="#4-创建新的磁盘分区" class="headerlink" title="4. 创建新的磁盘分区"></a>4. 创建新的磁盘分区</h3><h4 id="4-1-进入磁盘"><a href="#4-1-进入磁盘" class="headerlink" title="4.1 进入磁盘"></a>4.1 进入磁盘</h4><pre><code class="shell">fdisk /dev/sda
+</code></pre>
+<p>输入 <code>m</code> 可以获取帮助。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-083324.png"></p>
+<h4 id="4-2-添加新分区"><a href="#4-2-添加新分区" class="headerlink" title="4.2 添加新分区"></a>4.2 添加新分区</h4><p>输入 <code>n</code> 并回车。</p>
+<h4 id="4-3-选择分区类型"><a href="#4-3-选择分区类型" class="headerlink" title="4.3 选择分区类型"></a>4.3 选择分区类型</h4><p>输入 <code>p</code> 选择分区类型，也可以直接回车，默认为 <code>p</code>。</p>
+<h4 id="4-4-选择分区号"><a href="#4-4-选择分区号" class="headerlink" title="4.4 选择分区号"></a>4.4 选择分区号</h4><p>可选1-4，我已经创建了三个，所以只能选 4，一般默认就好。</p>
+<h4 id="4-5-选择起始扇区"><a href="#4-5-选择起始扇区" class="headerlink" title="4.5 选择起始扇区"></a>4.5 选择起始扇区</h4><p>这里有个坑，导致我昨天明明有很多的剩余空间，但只能创建出 31M的分区，从第 3 步的磁盘信息中可以看到，我的扇区不是从最开始（2048）进行分配的，而是从 65536 开始的，如果你的的磁盘最前面的扇区没有被分配，那么分区的时候，默认是从 2048 开始的，所以这时候，就需要我手动填写。<code>mmcblk02</code> 的结束扇区是 1703935，所以我昨天创建 <code>mmcblk03</code> 的时候，开始扇区填写的是 1703936。</p>
+<h4 id="4-6-选择结束扇区"><a href="#4-6-选择结束扇区" class="headerlink" title="4.6 选择结束扇区"></a>4.6 选择结束扇区</h4><p>结束扇区的话，默认会到最后（或者下个分区开始扇区的前一位），如果你不想分配完，那也可以手动指定。</p>
+<h4 id="4-7退出磁盘操作"><a href="#4-7退出磁盘操作" class="headerlink" title="4.7退出磁盘操作"></a>4.7退出磁盘操作</h4><p>按 <code>w</code> 保存并退出。</p>
+<pre><code class="shell">fdisk -l
+</code></pre>
+<p>查新查看磁盘信息，会发现刚才创建的分区 <code>mmcblk0p4</code> 已经显示，31M，因为我只剩这么点未分配的空间了。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-085156.png"></p>
+<p>这是操作的所有步骤</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-085344.png"></p>
+<h3 id="5-格式化分区"><a href="#5-格式化分区" class="headerlink" title="5. 格式化分区"></a>5. 格式化分区</h3><p>此时刚建好的分区还不能挂载，因为还不知道文件系统的类型，因此需要格式化一下，我将它格式化成了 ext4 格式。</p>
+<pre><code class="shell">mkfs.ext4 /dev/mmcblk0p4
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-090132.png"></p>
+<h3 id="6-挂载分区"><a href="#6-挂载分区" class="headerlink" title="6. 挂载分区"></a>6. 挂载分区</h3><p>先在根目录创建一个目录，用于挂载分区</p>
+<pre><code class="shell">cd /
+mkdir data2
+</code></pre>
+<p>然后进行挂载</p>
+<pre><code class="shell">mount /dev/mmcblk0p4 /data2
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-090245.png"></p>
+<p>可以看到已经被成功挂载了，已经可以正常使用 data2 目录了。权限可以根据用途自行设置。</p>
+<h3 id="7-卸载分区"><a href="#7-卸载分区" class="headerlink" title="7. 卸载分区"></a>7. 卸载分区</h3><pre><code class="shell">umount /data2
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-090749.png"></p>
+<h3 id="8-删除分区"><a href="#8-删除分区" class="headerlink" title="8. 删除分区"></a>8. 删除分区</h3><h4 id="8-1-进入磁盘操作"><a href="#8-1-进入磁盘操作" class="headerlink" title="8.1 进入磁盘操作"></a>8.1 进入磁盘操作</h4><pre><code class="shell">fdisk /dev/mmcblk0
+</code></pre>
+<h4 id="8-2-查看分区信息"><a href="#8-2-查看分区信息" class="headerlink" title="8.2 查看分区信息"></a>8.2 查看分区信息</h4><p>输入 <code>p</code> 回车，查看分区的信息</p>
+<h4 id="8-3-删除分区"><a href="#8-3-删除分区" class="headerlink" title="8.3 删除分区"></a>8.3 删除分区</h4><p>按 <code>d	</code> 删除分区，然后输入要删除的分区编号，回车。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-091255.png"></p>
+<p>磁盘分区相关的基本操作就这些，结果是，我分好了区，最终还是没顺利把 Emby 跑起来，最后还是在群晖上顺利安装上了插件，只是过程依旧艰辛，下篇文章再讲。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/38944.html"
+      title="群晖 Emby 套件安装 MeiamSubtitles 插件"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        群晖 Emby 套件安装 MeiamSubtitles 插件
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/60289.html"
+      title="微信键盘 Mac 版试用以及删除方式"
+    >
+      <span class="post-near-title">
+        微信键盘 Mac 版试用以及删除方式
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

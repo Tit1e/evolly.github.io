@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">11 / 8, 2016</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">this指向与闭包原理</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>今天理解两个难点，闭包和<code>this</code>指向，闭包其实现在还是似懂非懂，需要有空运用一下闭包可能会更加理解。</p>
+<p>先说下<code>this</code>指向问题：</p>
+<pre><code class="javascript">var name = &quot;The Window&quot;;
+var object = &#123;
+    name : &quot;My Object&quot;,
+　　getNameFunc : function()&#123;
+　　　　return function()&#123;
+　　　　　　return this.name;
+　　　　&#125;;
+　　&#125;
+&#125;;
+console.log(object.getNameFunc()());//The Window
+console.log(object.getNameFunc();
+</code></pre>
+<p>学习闭包的时候这段代码看得我很懵，想不清楚为什么this是指向window的。那么我们先了解一下<code>this</code>指向问题。</p>
+<p><code>this</code>的指向在函数定义的时候是确定不了的，<strong>只有函数执行的时候才能确定</strong><code>this</code>到底指向谁，实际上<code>this</code>的最终指向的是<code>this</code>所在函数的<strong>上一级对象</strong>。</p>
+<span id="more"></span>
+<p>上面这句话非常重要，这是<code>this</code>非常重要的特点：</p>
+<pre><code class="javascript">function test()&#123;
+    this.x = 1;//给对象写入属性x=1,如果this指向全局，则表示创建全局对象x=1
+    console.log(this.x);
+&#125;
+test(); // 1
+x;  //1
+</code></pre>
+<p>如果这不够直观，那么换种更加直观的写法：</p>
+<pre><code class="javascript">var x = 1;
+function test()&#123;
+　　this.x = 0; //表示将this指向的对象中的x的值修改为0
+&#125;
+test();
+console.log(x); //0，证明全局中声明的x值被修改了，说明this指向window
+</code></pre>
+<p>上面是直接在全局调用函数，<code>this</code>指向<code>window</code>对象，函数还可以作为对象的方法调用，</p>
+<pre><code class="javascript">function test()&#123;
+    console.log(this.x);
+&#125;
+var o = &#123;&#125;;
+o.x = 1; //此时o = &#123;x:1&#125;
+o.m = test; // 此时o = &#123;x:1,m:test&#125;
+o.m(); // 1 说明test执行的时候this指向的是o这个对象，所以才能获取到x
+</code></pre>
+<p>再来看个例子</p>
+<pre><code class="javascript">var o = &#123;
+    a:10,
+    b:&#123;
+        a:12,
+        fn:function()&#123;
+            console.log(this.a); //12 这里可以看出this指向的b对象而不是o对象，所以this只指向它的上一级对象
+        &#125;
+    &#125;
+&#125;
+o.b.fn();
+</code></pre>
+<p>对上面函数进行下稍微的改造</p>
+<pre><code class="javascript">var o = &#123;
+    a:10,
+    b:&#123;
+        a:12,
+        fn:function()&#123;
+            console.log(this.a); //undefined
+            console.log(this); //window
+        &#125;
+    &#125;
+&#125;
+var j = o.b.fn;
+j(); //当将方法赋值给一个全局变量后再调用，此时就是window对象调用，由于全局没有a变量，所以this.a返回undefined,this返回window
+</code></pre>
+<p>这样看下来后应该对<code>this</code>的指向有一个基本的了解了。接下来说闭包：</p>
+<p>文章开头引用的代码其实就是一个闭包，是我在看阮一峰闭包博客的时候看到的代码，开始是想了解闭包的，接过被带偏跑去看<code>this</code>指向了。</p>
+<pre><code class="javascript">function f1()&#123;
+　　var n=999;
+　　function f2()&#123;
+　　　　alert(n);
+　　&#125;
+　　return f2;
+&#125;
+var result=f1();
+result(); // 999
+</code></pre>
+<p>将<code>f2</code>返回出来后，<code>f2</code>处于全局环境中，但是由于Js是静态作用域，变量的作用域在声明的时候就已经确定并且不会再改变，所以<code>f2</code>函数执行的时候作用域还是<code>f1</code>，因此<code>f2</code>在全局环境下执行的时候还是可以访问到<code>f1</code>中的变量，而<code>f2</code>执行后返回的值，由于<code>f2</code>处于全局变量，所以返回出来的值也在全局环境中，但是返回后这个值一直存在于全局环境中，而这个值的存在依赖于<code>f2</code>，<code>f2</code>又依赖于外部的<code>f1</code>，所以<code>f1</code>函数在调用完成后不会被内存回收机制回收，一直存在于内存中。</p>
+<pre><code class="javascript">function f1()&#123;
+　　var n=999;
+　　nAdd=function()&#123;n+=1&#125;
+　　function f2()&#123;
+　　　　alert(n);
+　　&#125;
+　　return f2;
+&#125;
+var result=f1();
+result(); // 999
+nAdd();
+result(); // 1000
+</code></pre>
+<p>上面代码中<code>f1</code>函数调用了两次，返回的结果都是正常的，说明<code>var n = 999;</code>一直在内存中，如果被回收了那么第二次调用的时候局部变量n就应该无法被访问到。</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="http://www.codeceo.com/article/javascript-this-pointer.html">码农社</a><br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html">Javascript的this用法</a><br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html">学习Javascript闭包（Closure）</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/dc192ed0.html"
+      title="这不是书评"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        这不是书评
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/92f2e64b.html"
+      title="Ajax发送请求"
+    >
+      <span class="post-near-title">
+        Ajax发送请求
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

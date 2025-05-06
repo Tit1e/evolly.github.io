@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 19, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">uniapp APP 端使用 canvas 绘制 IM 群聊头像</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #uniapp
+    </li>
+    
+    <li class="tag-item">
+      #canvas
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前阵子公司要我们用 uniapp 开发应用，经过不断折腾也算是上线了，最近有要求我们给 app 接入腾讯的 IM，IM 有个群聊功能，本来我以为群聊的头像是 IM 为我们生成好的，结果发现要我们自己处理。我发现微信群的头像在群创建后就固定了，不会随着群成员更换头像而改变，我猜测应该是创建的时候用 canvas 或其他方式生成了一张静态图片然后被存了起来。</p>
+<p>一开始我在网上找了很多插件，总之不太行，还有很多是后端处理的方案，但我这要前端处理也没有办法，最终试了一圈，还是自己画吧。</p>
+<p>先分析一下头像可能出现的情况：</p>
+<p><strong>最少的情况：</strong></p>
+<p>成群最少三个，三个时三个头像在图中间平铺。</p>
+<p><strong>四个时比较特殊：</strong></p>
+<p>头像呈现一个“田”字，而不是大多数的三等分。</p>
+<p><strong>5 至 6 个时：</strong></p>
+<p>一排三个 ，另一排两个或三个，少的那排头像永远居中，上下两排在垂直方式也是居中排列。</p>
+<p><strong>7 至 9 个时：</strong></p>
+<p>两排三个，剩下一排 1 至 3 个，此时行数已经撑满整个头像区域。</p>
+<p>到这里基本已经完成了大半，剩下的就是绘制了。</p>
+<p>绘制完成后我将 canvas 转成了 base64，并通过  <code>@loaded</code> 传递了出来，用户可以后续自行处理。</p>
+<p>最终效果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-20-IMG_0354.PNG"></p>
+<p>代码在这里贴一下：</p>
+<pre><code class="html">&lt;template&gt;
+    &lt;canvas
+        :style=&quot;&#123;height: canvasSize + &#39;px&#39;, width: canvasSize + &#39;px&#39;&#125;&quot;
+        :canvas-id=&quot;canvasId&quot;
+        :id=&quot;canvasId&quot;
+    &gt;
+    &lt;/canvas&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="js">&lt;script&gt;		
+        export default &#123;
+        props: &#123;
+            // 不满三个的行显示在上面还是在下面，默认在上面（同微信）
+            avatarReverse: &#123;
+                type: Boolean,
+                default: true
+            &#125;,
+            // 头像数组
+            images: &#123;
+                type: Array,
+                default: () =&gt; ([])
+            &#125;,
+            // 头像背景色
+            backgroundColor: &#123;
+                type: String,
+                default: &#39;#ffffff&#39;
+            &#125;,
+            // 边框宽度
+            borderWidth: &#123;
+                type: Number,
+                default: 2
+            &#125;,
+            // 每个头像的尺寸
+            avatarSize: &#123;
+                type: Number,
+                default: 30
+            &#125;
+        &#125;,
+        data() &#123;
+            // 如果同时渲染多个，会出现 id 重复问题，所以 加上时间戳跟随机数
+            const now = (+new Date() + Math.random().toFixed(4) * 10000)
+            return &#123;
+                canvasId: `__myCanvas$&#123;now&#125;`,
+                avatarArray: [],
+                colNumber: 3
+            &#125;
+        &#125;,
+        computed: &#123;
+            canvasSize() &#123;
+                return this.avatarSize * 3 + this.borderWidth * 4
+            &#125;,
+            avatarSize2() &#123;
+                return (this.canvasSize - this.borderWidth * 3) / 2
+            &#125;,
+            pointMap() &#123;
+                // 这里的 1，2，3 为每行 / 每列的数组长度
+                return &#123;
+                    1: (this.canvasSize - this.avatarSize) / 2,
+                    2: (this.canvasSize - (this.avatarSize * 2 + this.borderWidth)) / 2,
+                    3: this.borderWidth
+                &#125;
+            &#125;
+        &#125;,
+        created() &#123;
+            this.init()
+        &#125;,
+        mounted() &#123;
+            this.drawAvatar()
+        &#125;,
+        methods: &#123;
+            drawAvatar() &#123;
+                const ctx = uni.createCanvasContext(this.canvasId, this)
+                ctx.setFillStyle(this.backgroundColor)
+                ctx.fillRect(0, 0, this.canvasSize, this.canvasSize)
+
+                for (let i = 0; i &lt; this.avatarArray.length; i++) &#123;
+                    const item = this.avatarArray[i]
+                    // 按九宫格分的情况
+                    if (this.colNumber === 3) &#123;
+                        const colStart = this.pointMap[this.avatarArray.length]
+                        const rowStart = this.pointMap[item.length]
+                        for (let v = 0; v &lt; item.length; v++) &#123;
+                            ctx.drawImage(
+                                item[v],
+                                rowStart + (this.avatarSize + this.borderWidth) * v, colStart + (this.avatarSize + this
+                                    .borderWidth) * i, this.avatarSize, this.avatarSize)
+                        &#125;
+                    &#125;
+                    // 按4宫格分的情况
+                    if (this.colNumber === 2) &#123;
+                        for (let v = 0; v &lt; item.length; v++) &#123;
+                            ctx.drawImage(
+                                item[v],
+                                this.borderWidth + (this.borderWidth + this.avatarSize2) * i,
+                                this.borderWidth + (this.borderWidth + this.avatarSize2) * v,
+                                this.avatarSize2,
+                                this.avatarSize2)
+                        &#125;
+                    &#125;
+                &#125;
+                ctx.draw(true, ret =&gt; &#123;
+                    // #ifdef APP-PLUS
+                    uni.canvasToTempFilePath(&#123;
+                        x: 0, // 起点坐标
+                        y: 0,
+                        width: this.canvasSize, // canvas 宽
+                        height: this.canvasSize, // canvas 高
+                        canvasId: this.canvasId, // canvas id
+                        success: res =&gt; &#123;
+                            const savedFilePath = res.tempFilePath // 相对路径
+                            const path = plus.io.convertLocalFileSystemURL(savedFilePath) // 绝对路径
+                            const fileReader = new plus.io.FileReader()
+                            fileReader.readAsDataURL(path)
+                            fileReader.onloadend = (res) =&gt; &#123; // 读取文件成功完成的回调函数
+                                this.$emit(&#39;loaded&#39;, res.target.result)
+                            &#125;
+                        &#125;
+                    &#125;)
+                    // #endif
+                &#125;)
+            &#125;,
+            init() &#123;
+                const images = this.images.slice(0, 9)
+                this.avatarArray = this.splitArray(this.avatarReverse ? images.reverse() : images)
+            &#125;,
+            splitArray(data) &#123;
+                if (data.length === 4) &#123;
+                    this.colNumber = 2
+                &#125;
+                const result = []
+                for (let i = 0, len = data.length; i &lt; len; i += this.colNumber) &#123;
+                    result.push(data.slice(i, i + this.colNumber))
+                &#125;
+                return this.avatarReverse ? result.reverse() : result
+            &#125;
+        &#125;
+    &#125;
+&lt;/script&gt;
+</code></pre>
+<h3 id="GitHub-组件地址"><a href="#GitHub-组件地址" class="headerlink" title="GitHub 组件地址"></a><a target="_blank" rel="noopener" href="https://github.com/Tit1e/uni-components/tree/main/pages/groupAvatar/components/gAvatar">GitHub 组件地址</a></h3>
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/18863.html"
+      title="uniapp App 端实现应用锁（指纹或人脸解锁后才能使用）"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        uniapp App 端实现应用锁（指纹或人脸解锁后才能使用）
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/20107.html"
+      title="electron 应用打包后自动发布至 GitHub Releases"
+    >
+      <span class="post-near-title">
+        electron 应用打包后自动发布至 GitHub Releases
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

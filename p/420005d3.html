@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">2 / 2, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">原生Javascript实现鼠标拖拽div</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>鼠标拖拽是一种常见的js效果，下面贴一下原生js的实现方法。</p>
+<p>注：第一段段js代码来自网络，第二段是在第一段基础上改进实现的。由于时间太久找不到出处，侵删。</p>
+<p>先贴上一张对象和窗口之间距离的示意图方便理解，下文中也有注释。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-15-7f157632-e98c-11e6-9d76-79e0ffb08e6c.gif"></p>
+<span id="more"></span>
+<h3 id="HTML代码"><a href="#HTML代码" class="headerlink" title="HTML代码"></a>HTML代码</h3><pre><code class="html">&lt;div id=&quot;move&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="CSS代码"><a href="#CSS代码" class="headerlink" title="CSS代码"></a>CSS代码</h3><pre><code class="css">html,body &#123;
+    height: 100%;
+&#125;
+
+body &#123;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+&#125;
+
+#move &#123;
+    width: 200px;
+    height: 100px;
+    background-color: #ddd;
+    border: 1px solid #000;
+    position: absolute;
+    z-index: 1;
+&#125;
+</code></pre>
+<h3 id="Javascript代码"><a href="#Javascript代码" class="headerlink" title="Javascript代码"></a>Javascript代码</h3><h4 id="可以将元素拖拽出窗口外"><a href="#可以将元素拖拽出窗口外" class="headerlink" title="可以将元素拖拽出窗口外"></a>可以将元素拖拽出窗口外</h4><pre><code class="javascript">// clientX 设置或获取鼠标指针位置相对于当前窗口的 x 坐标，其中客户区域不包括窗口自身的控件和滚动条。 
+// clientY 设置或获取鼠标指针位置相对于当前窗口的 y 坐标，其中客户区域不包括窗口自身的控件和滚动条。 
+// offsetX 设置或获取鼠标指针位置相对于触发事件的对象的 x 坐标。 
+// offsetY 设置或获取鼠标指针位置相对于触发事件的对象的 y 坐标。 
+// screenX 设置或获取获取鼠标指针位置相对于用户屏幕的 x 坐标。 
+// screenY 设置或获取鼠标指针位置相对于用户屏幕的 y 坐标。 
+// x 设置或获取鼠标指针位置相对于父文档的 x 像素坐标(亦即相对于当前窗口)。 
+// y 设置或获取鼠标指针位置相对于父文档的 y 像素坐标(亦即相对于当前窗口)。
+window.onload = function() &#123;
+    var box = document.getElementById(&quot;move&quot;);
+    move.onmousedown = function(e) &#123;
+        var e = e || event;
+        console.log(e);
+        var target = e.target || e.srcElement;
+        var disX = e.clientX - target.offsetLeft;
+        var disY = e.clientY - target.offsetTop;
+        document.onmousemove = function(e) &#123;
+            target.style.left = e.clientX - disX + &quot;px&quot;;
+            target.style.top = e.clientY - disY + &quot;px&quot;;
+        &#125;
+        document.onmouseup = function(e) &#123;
+            document.onmousemove = null;
+            document.onmousedown = null;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="无法将元素拖拽出窗口"><a href="#无法将元素拖拽出窗口" class="headerlink" title="无法将元素拖拽出窗口"></a>无法将元素拖拽出窗口</h4><pre><code class="javascript">window.onload = function() &#123;
+    var box = document.getElementById(&quot;move&quot;);
+    move.onmousedown = function(e) &#123;
+        var e = e || event;
+        var target = e.target || e.srcElement;
+        var disX = e.clientX - target.offsetLeft;
+        var disY = e.clientY - target.offsetTop;
+        document.onmousemove = function(e) &#123;
+            target.style.left = e.clientX - disX + &quot;px&quot;;
+            target.style.top = e.clientY - disY + &quot;px&quot;;
+            if (target.offsetLeft + target.offsetWidth &gt;= document.body.clientWidth) &#123;
+                target.style.left = document.body.clientWidth - target.offsetWidth + &quot;px&quot;;
+            &#125;
+            if (target.offsetLeft &lt; 0) &#123;
+                target.style.left = 0 + &quot;px&quot;;
+            &#125;
+            if (target.offsetTop + target.offsetHeight &gt;= document.body.clientHeight) &#123;
+                target.style.top = document.body.clientHeight - target.offsetHeight + &quot;px&quot;;
+            &#125;
+            if (target.offsetTop &lt; 0) &#123;
+                target.style.top = 0 + &quot;px&quot;;
+            &#125;
+        &#125;;
+        document.onmouseup = function(e) &#123;
+            document.onmousemove = null;
+            document.onmousedown = null;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/db9f29d2.html"
+      title="Javascript循环添加"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Javascript循环添加
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/f03473fc.html"
+      title="2017年计划"
+    >
+      <span class="post-near-title">
+        2017年计划
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

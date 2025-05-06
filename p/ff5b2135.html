@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">4 / 27, 2019</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">小程序上传图片至七牛</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #小程序
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>最近天天赶着写小程序，没什么空余时间，所以没怎么写博客，但开发小程序过程中踩了不少坑，到时候可以总结一下。</p>
+<p>今天先写下在小程序中如何上传文件至七牛云。</p>
+<p>首先去<a target="_blank" rel="noopener" href="https://github.com/gpake/qiniu-wxapp-sdk">这里</a>下载小程序上传的 SDK，文件在 <code>sdk</code> 目录下。然后在代码中引入就行了。先放上我完整的上传函数</p>
+<pre><code class="javascript">uploadImage()&#123;
+          // 引入七牛的上传sdk
+      const qiniuUploader = require(&quot;../../../../../static/lib/qiniuUploader.js&quot;)
+      // 调用微信的选择图片 API
+      wx.chooseImage(&#123;
+        success: data =&gt; &#123;
+          // 图片的路径数组
+          let &#123;tempFilePaths&#125; = data
+          // 选择成功后显示正在上传的 loading
+          wx.showLoading(&#123;
+            title: &#39;正在上传&#39;,
+            mask: true
+          &#125;)
+          // 由于是数组，所欲需要循环将每张图片依次上传
+          tempFilePaths.map((r,i) =&gt; &#123;
+            // getQiniu 函数用于获取一些上传的参数，比如 token，服务器地址，绑定的域名等
+            getQiniu().then(res =&gt; &#123;
+              // token
+              let uptoken = res.data.val.token
+              // 绑定的域名
+              let domain = res.data.bucket_url
+              // 服务器地址
+              let uploadURL = res.data.up_server
+              // 开始上传
+              qiniuUploader.upload(
+                r, //上传的图片
+                (req) =&gt; &#123;  //回调 success
+                  // code...
+                &#125;, (error) =&gt; &#123; //回调 fail
+                  console.log(&#39;error: &#39; + error);
+                &#125;,
+                &#123;
+                  // region 要根据你获取到或已知的的上传服务器地址去对应相应的地区，对应表可见下文或 Github 的 README.md
+                  region: &#39;ECN&#39;,
+                  uptoken: uptoken,
+                  uploadURL: uploadURL,
+                  domain: domain,
+                &#125;)
+            &#125;)
+            // 最后一张上传完成后关闭 loading
+            if(i === tempFilePaths.length)&#123;
+              wx.hideLoading()
+            &#125;
+          &#125;)
+        &#125;
+      &#125;)
+    &#125;,
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>存储区域</th>
+<th>区域代码</th>
+<th>HTTPS 地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>华东</td>
+<td>ECN</td>
+<td><a target="_blank" rel="noopener" href="https://up.qiniup.com/">https://up.qiniup.com</a></td>
+</tr>
+<tr>
+<td>华北</td>
+<td>NCN</td>
+<td><a target="_blank" rel="noopener" href="https://up-z1.qiniup.com/">https://up-z1.qiniup.com</a></td>
+</tr>
+<tr>
+<td>华南</td>
+<td>SCN</td>
+<td><a target="_blank" rel="noopener" href="https://up-z2.qiniup.com/">https://up-z2.qiniup.com</a></td>
+</tr>
+<tr>
+<td>北美</td>
+<td>NA</td>
+<td><a target="_blank" rel="noopener" href="https://up-na0.qiniup.com/">https://up-na0.qiniup.com</a></td>
+</tr>
+<tr>
+<td>新加坡</td>
+<td>ASG</td>
+<td><a target="_blank" rel="noopener" href="https://up-as0.qiniup.com/">https://up-as0.qiniup.com</a></td>
+</tr>
+</tbody></table>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/5fbd75f8.html"
+      title="使用 mpvue 开发小程序过程中遇到的问题及总结"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        使用 mpvue 开发小程序过程中遇到的问题及总结
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/e2b11c85.html"
+      title="0421 一周总结"
+    >
+      <span class="post-near-title">
+        0421 一周总结
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">11 / 7, 2016</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Ajax发送请求</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>学前端以来Js一直是我的噩梦，Ajax更是然我头疼。今天在公司看了好久的Ajax，后来结合微专业的视频看下来思路总算是有点清晰了，也终于了解了那几个参数是怎么回事，其实应该早就该搞懂的东西。下面说说我如今对Ajax的理解情况（还是很菜）。</p>
+<p>首先要发起ajax先要创建一个 <code>XMLHttpRequest</code> 对象，老版本IE使用<code>ActiveX</code> 对象，但我现在没这个需求，也就不考虑这个情况。</p>
+<pre><code class="javascript">var xhr = new XMLHttpRequest;
+</code></pre>
+<p>发送请求</p>
+<pre><code class="javascript">//第一个参数为方法，GET或POST；第二个参数为url地址，第三个参数为是否异步加载，默认true为异步加载。
+xmlhttp.open(&quot;GET&quot;,&quot;index.json&quot;,true);
+//因为是get请求，所以不发送数据；
+xmlhttp.send(null);
+</code></pre>
+<span id="more"></span>
+<p><code>onreadystatechange</code>可以监视<code>readyState</code>的状态，当<code>readyState</code>的值为<code>4</code>，并且<code>status</code>的值为<code>200</code>时，说明请求成功，接下来执行回调函数。</p>
+<pre><code class="javascript">xhr.onreadystatechange=function()&#123;
+    if(xhr.readyState==4 &amp;&amp; xhr.status==200)&#123;
+            //请求的数据为json，所以用JSON.parse()转为对象再操作
+            var data = JSON.parse(xhr.responseText);
+            console.log(data);
+            //然后就可以将数据填充到html结构中去了
+            document.getElementById(&quot;p&quot;).innerHTML=&#39;我叫&#39; + data.name + &#39;,今年&#39; + data.age + &#39;岁，是个&#39; + data.sex + &#39;。&#39;
+    &#125;
+&#125;
+</code></pre>
+<p>下面是一个简单的demo代码</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;p&quot;&gt;&lt;/div&gt;
+    &lt;！-- 按钮绑定函数 --&gt;
+    &lt;button onclick=&quot;Ajax();&quot;&gt;提交&lt;/button&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        //将Ajax封装成一个函数
+        function Ajax()&#123;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function()&#123;
+                if(xhr.readyState==4 &amp;&amp; xhr.status==200)&#123;
+                    var data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                    document.getElementById(&quot;p&quot;).innerHTML=&#39;我叫&#39; + data.name + &#39;,今年&#39; + data.age + &#39;岁，是个&#39; + data.sex + &#39;。&#39;
+                &#125;
+            &#125;
+            xhr.open(&#39;get&#39;,&#39;index.json&#39;);
+            xhr.send(null);
+        &#125;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>今天我突然想通了，写技术日志的意义，一个是输出自己学到的东西，还有一个就是当做笔记，至少在下次遇到这方面问题的时候可以直接到自己博客上找而不用去google、百度，至少自己组织的语言解释看起来总比看别人的来的容易理解。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/baf37b94.html"
+      title="this指向与闭包原理"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        this指向与闭包原理
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/b18dad93.html"
+      title="ubuntu16.04网易云托盘图标显示出做及微信应用分享"
+    >
+      <span class="post-near-title">
+        ubuntu16.04网易云托盘图标显示出做及微信应用分享
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

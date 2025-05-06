@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">4 / 15, 2023</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">群晖 Emby 套件安装 MeiamSubtitles 插件</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>为了更好的观影体验，打算给群晖上 Emby 套件装个 <a target="_blank" rel="noopener" href="https://github.com/91270/MeiamSubtitles">MeiamSubtitles</a> 来自动下载中文字幕。起先在网上看了一下教程，基本上就是下载文件，然后上传到群晖中的某个目录中，重启 Emby 就结束了。但在昨晚实际操作中，没想到有大坑：</p>
+<ol>
+<li>SFTP 连上了，但无法访问根目录，只能看到共享文件夹。</li>
+<li>想通过链接直接下载 Zip，在根目录解压然后移动，但是解压命令无效。</li>
+<li>插件好不容易装上了，但是插列表不显示。</li>
+</ol>
+<p>下面来说我最终是怎么成功装上插件的：</p>
+<p>本想通过 SFTP 直接上传文件到对应目录，但是始终无法访问根目录，网上的方法都试了一遍，修改配置文件之类。最终我想到为什么不直接通过浏览器的 DSM 来传呢…传入之后，只要通过终端复制或移动一下文件就够了。</p>
+<h2 id="1-启动群晖-SSH-功能并登录"><a href="#1-启动群晖-SSH-功能并登录" class="headerlink" title="1. 启动群晖 SSH 功能并登录"></a>1. 启动群晖 SSH 功能并登录</h2><p>先在控制面板启动 SSH 功能</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-114950.png"></p>
+<p>终端登录</p>
+<pre><code class="bash">ssh admin@192.168.1.2 -p 22
+</code></pre>
+<p>我用的是 admin 账号，用其他有管理员权限账号也可以。如果用不了 admin 账号，可能是用户面板把 admin 禁用了，启用就好。</p>
+<p>取得 root 权限</p>
+<pre><code class="bash">suso -i
+</code></pre>
+<h2 id="2-上传插件至群晖"><a href="#2-上传插件至群晖" class="headerlink" title="2. 上传插件至群晖"></a>2. 上传插件至群晖</h2><p>在 <a target="_blank" rel="noopener" href="https://github.com/91270/MeiamSubtitles/releases">MeiamSubtitles Release</a> 下载最新的插件，解压，然后通过浏览器将文件上传至比较方便的目录。</p>
+<p>可通过【右键】-【属性】查看文件夹路径。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-120000.png"></p>
+<h2 id="3-复制文件至插件目录"><a href="#3-复制文件至插件目录" class="headerlink" title="3. 复制文件至插件目录"></a>3. 复制文件至插件目录</h2><p>保险起见，将插件复制到这三个目录中，可以使用 <code>cd</code> 先查看一下路径是否存在，不用用户路径可能会不一样，特别是第三个目录。</p>
+<pre><code class="bash">cp -r /volume1/Downloads/Emby/. /var/packages/EmbyServer/var/plugins
+cp -r /volume1/Downloads/Emby/. /var/packages/EmbyServer/target/system/plugins
+cp -r /volume1/Downloads/Emby/. /volume1/@appdata/EmbyServer/plugins
+</code></pre>
+<h2 id="4-修改文件权限"><a href="#4-修改文件权限" class="headerlink" title="4. 修改文件权限"></a>4. 修改文件权限</h2><p>此时重启 Emby，然后去插件列表查看，可能依旧没有发现安装的插件，因为 Emby 可能没有权限读取插件文件，所以需要重新设置一下文件的权限：</p>
+<pre><code class="bash">cd /var/packages/EmbyServer/var/plugins
+chown -R emby:emby Emby*.dll
+sudo chmod 777 Emby*.dll
+
+cd /var/packages/EmbyServer/target/system/plugins
+chown -R emby:emby Emby*.dll
+sudo chmod 777 Emby*.dll
+
+cd /volume1/@appdata/EmbyServer/plugins
+chown -R emby:emby Emby*.dll
+sudo chmod 777 Emby*.dll
+</code></pre>
+<p>此时再重启 Emby，就会发现插件已经成功装上。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-121008.png"></p>
+<p>最后别忘了关闭 SSH 跟禁用 admin 账户。</p>
+<p>网上看教程好像 10 分钟就能搞定，然而昨天我实际却摸索了三四个小时，实践果然是检验真理的唯一标准。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/65267.html"
+      title="你好呀，2024"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        你好呀，2024
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/6571.html"
+      title="OpenWrt 新建磁盘分区、删除磁盘分区和挂载磁盘分区"
+    >
+      <span class="post-near-title">
+        OpenWrt 新建磁盘分区、删除磁盘分区和挂载磁盘分区
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">2 / 2, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Javascript循环添加</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>工作中遇到的一种挺好的循环添加列表的方式，用模板，记录一下。</p>
+<p>以前遇到要循环添加相同的元素用的都是字符串拼接的方式，后来工作中遇到了这种方式，发现这个比字符串拼接好用很多，简洁明了。</p>
+<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><pre><code class="HTML">&lt;!--目标div--&gt;
+&lt;div id=&quot;div&quot;&gt;
+&lt;/div&gt;
+&lt;!--模板div,模板所在div不会被复制--&gt;
+&lt;div id=&quot;test&quot; style=&quot;display: none;&quot;&gt;
+    &lt;h1&gt;hello,my name is TITLE&lt;/h1&gt;
+    &lt;p&gt;I&#39;m CONTENT years old!&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<span id="more"></span>
+<h3 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h3><pre><code class="javascript">//模拟后端传过来的json数据
+var data = &#123;
+    datali: [&#123;
+        name: &quot;chkl1&quot;,
+        age: &quot;sad1&quot;
+    &#125;, &#123;
+        name: &quot;chkl2&quot;,
+        age: &quot;sad2&quot;
+    &#125;, &#123;
+        name: &quot;chkl3&quot;,
+        age: &quot;sad3&quot;
+    &#125;, &#123;
+        name: &quot;chkl4&quot;,
+        age: &quot;sad4&quot;
+    &#125;, &#123;
+        name: &quot;chkl5&quot;,
+        age: &quot;sad5&quot;
+    &#125;]
+&#125;
+var lilength = data.datali.length;
+var arr = data.datali;
+for (var i = 0; i &lt; arr.length; i++) &#123;
+    &lt;!--获取模板div中的html--&gt;
+    var tihuan = document.getElementById(&quot;test&quot;).innerHTML;
+    &lt;!--用replace替换模板中要替换的部分，替换顺序最好是先替换长的再替换短的--&gt;
+    tihuan = tihuan.replace(/TITLE/, arr[i].name)
+        .replace(/CONTENT/, arr[i].age);
+    &lt;!--创建一个div将修改完成后的代码放进去，再将这个div添加到目标位置--&gt;
+    div = document.createElement(&quot;div&quot;);
+    div.innerHTML = tihuan;
+    document.getElementById(&quot;div&quot;).appendChild(div);
+&#125;
+</code></pre>
+<p>注：模板中只能用class不能使用id。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/27a6e4df.html"
+      title="面试总结"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        面试总结
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/420005d3.html"
+      title="原生Javascript实现鼠标拖拽div"
+    >
+      <span class="post-near-title">
+        原生Javascript实现鼠标拖拽div
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">4 / 7, 2022</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Mac 升级到 Montenrey 后 Electron 打包报错 Error: Exit code: ENOENT. spawn /usr/bin/python ENOENT</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #Mac
+    </li>
+    
+    <li class="tag-item">
+      #electron
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前段时间把给我这台 2015 早期的 13 寸 MacBook Pro 换了电池，换了主板（升级内存），然后把系统也升级到了 Monterey。平时使用倒无所谓，然后昨天我 SendToflomo改了一些小问题，想重新发版的时候，发现打包报错：</p>
+<pre><code class="js">Error: Exit code: ENOENT. spawn /usr/bin/python ENOENT
+</code></pre>
+<p>查了一下，原来 Monterey 把系统内置的 python 2.7 移除了，对 python 开发者来说也许是一件好事，但对我来说却是给我造成了极大的困扰。我折腾了好久，网上找了一圈方法，其实在 vue-cli-plugin-electron-builder 的 <a target="_blank" rel="noopener" href="https://github.com/electron-userland/electron-builder/issues/6767">issue#6767</a> 中已经有人提了解决方法，就是把 electron-builder 升级至 <code>v23.0.3</code>。但是 vue-cli-plugin-electron-builder 的作者并没有更新，最后我在另一个 <a target="_blank" rel="noopener" href="https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/1691">issue#1691</a> 找到了解决方法，其实就是这位兄弟 fork 了 vue-cli-plugin-electron-builder，然后将依赖的 electron-builder 的版本进行了升级。而我们要做的就是将 vue-cli-plugin-electron-builder 的引用地址改一下，改为如下：</p>
+<pre><code class="json">&quot;devDependencies&quot;: &#123;
+  &quot;vue-cli-plugin-electron-builder&quot;: &quot;git://github.com/spuky/vue-cli-plugin-electron-builder#b6826fc&quot;
+&#125;
+</code></pre>
+<p>然后删除 node_modules 重新安装依赖，之后就能正常打包了。</p>
+<p>如果是直接用 electron-builder 进行打包的，那么直接升级版本应该就可以解决。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/60289.html"
+      title="微信键盘 Mac 版试用以及删除方式"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        微信键盘 Mac 版试用以及删除方式
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/47751.html"
+      title="ssh 使用 key 登录报“Permissions 0644 for xxxxxx are too open”"
+    >
+      <span class="post-near-title">
+        ssh 使用 key 登录报“Permissions 0644 for xxxxxx are too open”
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

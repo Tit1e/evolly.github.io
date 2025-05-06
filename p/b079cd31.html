@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 3, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">apply和call的区别</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>今天看原生js的时候看到了<code>call</code>和<code>apply</code>,对这两个方法印象不是很清楚，只记得这两个方法很相似，作用大概是让A通过<code>call</code>或<code>apply</code>能够调用B独有的方法，但是具体的使用方法已经模糊，所以网上查了资料重新理了一遍。</p>
+<p>先看代码：</p>
+<pre><code class="javascript">    function Createpeople(name, age) &#123;
+                this.name = name;
+                this.age = age;
+            &#125;
+    Createpeople.prototype.say = function() &#123;
+                console.log(&#39;Hello!My name is &#39; + this.name);
+            &#125;
+
+    var Amy = new Createpeople(&#39;Amy&#39;, 18);
+    Amy.say();  //Hello!My name is Amy
+
+    var john = &#123;
+        name: &#39;john&#39;,
+        age: 20
+            &#125;
+    john.say();  //john.say is not a function
+    Amy.say.call(john);  //Hello!My name is john
+    Amy.say.apply(john);  //Hello!My name is john
+</code></pre>
+<span id="more"></span>
+<p><code>Createpeople</code>是一个构造函数，并且在原型中写入了一个<code>say</code>方法。我们用<code>Createpeople</code>创造了<code>Amy</code>对象，所以<code>Amy</code>理所当然地可以调用<code>say</code>方法。而<code>john</code>是我们手动创建的一个对象，所以<code>john</code>调用<code>say</code>方法理所应当会报错。那么如何让<code>john</code>能够调用<code>say</code>方法呢？那就要通过<code>call</code>方法或<code>apply</code>方法了。通过<code>Amy.say.call(john)</code>，从输出结果来看<code>john</code>正确的调用了<code>say</code>方法,<code>apply</code>也同样。</p>
+<p>为什么呢？原因就在于<code>call</code>和<code>apply</code>在调用的时候会传入一个调用对象，即<code>this</code>，它们能将原来不指向传入对象的函数的<code>this</code>强行指向传入对象。可能这样说不是很明白，下面我来解释一下：</p>
+<p>在其他方法执行的时候会默认传入一个调用对象，比如在<code>Amy</code>调用<code>say</code>方法的时候，默认传入的调用对象为<code>Amy</code>，<code>say</code>方法作为<code>Amy</code>的一部分正常情况下因为正常情况下<code>this</code>只能指向<code>Amy</code>，但是通过<code>call</code>和<code>apply</code>方法能让<code>say</code>方法的<code>this</code>强行指向传入的<code>john</code>，<code>this</code>变成了<code>john</code>，理所当然，<code>say</code>方法就能正常执行了。</p>
+<h4 id="那么call和apply有什么区别呢？"><a href="#那么call和apply有什么区别呢？" class="headerlink" title="那么call和apply有什么区别呢？"></a><strong>那么<code>call</code>和<code>apply</code>有什么区别呢？</strong></h4><p>区别在于<strong>参数</strong>的传入方式不同。<br>举个例子：</p>
+<pre><code class="javascript">    function add(a, b) &#123;
+                return console.log(a + b);
+            &#125;
+
+    function sub(c, d) &#123;
+                return console.log(c - d);
+            &#125;
+
+    sub.apply(add, [2, 3]);  //-1
+    sub.call(add, 2, 3);  //-1
+    add.apply(sub, [1, 2]);  //3
+    add.call(sub, 1, 2);  //3
+</code></pre>
+<p><code>call</code>方法参数是一个一个传的，而<code>apply</code>方法，除了<code>this</code>，其他参数是用数组的方式传的。<br>由于<code>apply</code>传数组这个特点，我们可以很方便地对数组进行某些操作，比如拼接两个数组：</p>
+<pre><code class="javascript">        var list1 = [1, 2, 3];
+        var list2 = [4, 5, 6];
+        [].push.apply(list1, list2);  //6
+        console.log(list1);  //[1, 2, 3, 4, 5, 6]
+</code></pre>
+<p><code>push</code>方法可以传很多参数，但是不能传数组，正常情况下凭借数组只能够通过循环一个一个添加，但是<code>apply</code>正好需要把多个传入的参数打包成数组，所以正好满足了条件。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/6e5beedc.html"
+      title="JavaScript高级程序设计笔记（一）"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        JavaScript高级程序设计笔记（一）
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/a84ea84b.html"
+      title="一个前端面试题引发的思考"
+    >
+      <span class="post-near-title">
+        一个前端面试题引发的思考
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

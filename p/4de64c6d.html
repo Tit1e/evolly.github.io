@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">8 / 31, 2016</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">响应式页面的简单实现</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <h2 id="响应式网页设计"><a href="#响应式网页设计" class="headerlink" title="响应式网页设计"></a>响应式网页设计</h2><blockquote>
+<p>响应式网页设计（英语：Responsive web design，通常缩写为RWD），或称自适应网页设计、回应式网页设计、对应式网页设计。是一种网页设计的技术做法，该设计可使网站在多种浏览设备（从桌面电脑显示器到移动电话或其他移动产品设备）上阅读和导航，同时减少缩放、平移和滚动。——摘自维基百科</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="响应式网站的简单实现"><a href="#响应式网站的简单实现" class="headerlink" title="响应式网站的简单实现"></a>响应式网站的简单实现</h2><pre><code class="html">&lt;meta name=&quot;viewport&quot; content=&quot;
+    width=device-width, 
+    initial-scale=1.0,
+    user-scalable=no&quot;
+/&gt;
+</code></pre>
+<p>上述代码是对<code>viewport</code>的设置，<code>&lt;meta&gt;</code>标签嵌套在<code>&lt;head&gt;</code>标签中。</p>
+<p><code>width=device-width</code> 属性是设置页面宽度为设备宽度。</p>
+<p><code>initial-scale=1.0</code> 属性是设置页面缩放比例为1.0，即正常大小。</p>
+<p><code>user-scalable=no</code> 属性是设置禁止用户手动缩放页面大小，因为响应式网站一般在不同设备都能正常显示网站内容，所以一般不需要用户手动缩放。</p>
+<pre><code class="css">/*设备屏幕宽度大于所设的最小宽度时，使用该样式*/
+@media screen and (min-width:)&#123;
+    /*CSS样式*/
+&#125;
+/*设备屏幕宽度小于于所设的最大宽度时，使用该样式*/
+@media screen and (max-width:)&#123;
+    /*CSS样式*/
+&#125;
+/*设备屏幕宽度在所设宽度区间内时，使用该样式*/
+@media screen and (min-width:) and (max-width:)&#123;
+    /*CSS样式*/
+&#125;
+</code></pre>
+<p>注：<code>@media</code>需写在CSS样式中，并且要放在一般显示样式之后，只有当一般显示样式不适配的时候才会匹配<code>@media</code>中的样式。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/1fb5e5a9.html"
+      title="Elementary OS Loki 折腾笔记"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Elementary OS Loki 折腾笔记
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/39ce41c1.html"
+      title="用table、flex、float、position等实现一些元素、页面的布局"
+    >
+      <span class="post-near-title">
+        用table、flex、float、position等实现一些元素、页面的布局
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

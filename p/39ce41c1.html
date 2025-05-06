@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">8 / 30, 2016</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">用table、flex、float、position等实现一些元素、页面的布局</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>整理了一些布局的实现方案，算是笔记，发到博客上也希望能帮助到一些有需要的人。</p>
+<p>注：文中列出的只是核心代码，在实际应用中可能还需加入”width”&#x2F;“height”&#x2F;“bancground-color”等css样式。</p>
+<span id="more"></span>
+
+<h1 id="居中布局"><a href="#居中布局" class="headerlink" title="居中布局"></a>居中布局</h1><h2 id="元素水平居中"><a href="#元素水平居中" class="headerlink" title="元素水平居中"></a>元素水平居中</h2><p>之后的布局讲解将以下面的这段代码为模板</p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;child&quot;&gt;DEMO&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="inline-block-text-align"><a href="#inline-block-text-align" class="headerlink" title="inline-block + text-align"></a>inline-block + text-align</h3><pre><code class="css">.child&#123;
+    display: inline-block;
+    text-align: left;
+&#125;
+.parent&#123;
+    text-align: center;
+&#125;
+/*
+优点：兼容性较好，可以兼容到IE6、IE7，但IE6、IE7不支持inline-block，需要用其他方法实现IE6/7中的inline-block。
+缺点：如果不想文字水平居中需单独设置child的text-align，因此会产生额外的代码来修复text-align:center造成的一些问题。
+*/
+</code></pre>
+<h3 id="table-margin"><a href="#table-margin" class="headerlink" title="table + margin"></a>table + margin</h3><pre><code class="css">.child&#123;
+    display: table;
+    margin: 0 auto;
+&#125;
+/*
+优点：只对child设置样式，不影响parent，兼容到IE8级以上浏览器。
+缺点：IE6/7不支持display:table属性，但可以通过把&lt;div&gt;结构换成&lt;table&gt;结构来实现兼容。
+*/
+</code></pre>
+<h3 id="absolute-transform"><a href="#absolute-transform" class="headerlink" title="absolute + transform"></a>absolute + transform</h3><pre><code class="css">.parent&#123;
+    position:relative;
+&#125;
+.child&#123;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+&#125;
+/*
+优点：绝对定位脱离文档流，因此居中对象不会对其他元素产生影响
+缺点：transform不支持IE6/7/8，因此兼容性较差，在高版本浏览器中可能需要加私有前缀
+*/
+</code></pre>
+<h3 id="flex-justify-content"><a href="#flex-justify-content" class="headerlink" title="flex + justify-content"></a>flex + justify-content</h3><pre><code class="css">/*方法一*/
+.parent&#123;
+    display: flex;
+    justify-content: center;
+&#125;
+
+/*方法二*/
+.parent&#123;
+    display: flex;
+&#125;
+.child&#123;
+    margin: 0 auto;
+&#125;
+/*
+优点：只对parent元素修改，不影响child的样式
+缺点：flex不支持IE6/7/8，因此兼容性较差
+*/
+</code></pre>
+<h2 id="元素的垂直居中"><a href="#元素的垂直居中" class="headerlink" title="元素的垂直居中"></a>元素的垂直居中</h2><h3 id="table-cell-vertical-align"><a href="#table-cell-vertical-align" class="headerlink" title="table-cell + vertical-align"></a>table-cell + vertical-align</h3><pre><code class="css">.parent&#123;
+    display: table-cell;
+    vertical-align: middle;
+&#125;
+/*
+优点：支持IE8及以上版本浏览器
+缺点：如果需要支持IE6/7，要将&lt;div&gt;结构换成&lt;table&gt;结构
+*/
+</code></pre>
+<h3 id="absolute-transform-1"><a href="#absolute-transform-1" class="headerlink" title="absolute + transform"></a>absolute + transform</h3><pre><code class="css">.parent&#123;
+    position: relative;
+&#125;
+.child&#123;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+&#125;
+/*
+优点：绝对定位脱离文档流，因此居中对象不会对其他元素产生影响
+缺点：transform不支持IE6/7/8，因此兼容性较差，在高版本浏览器中可能需要加私有前缀
+*/
+</code></pre>
+<h3 id="flex-align-items"><a href="#flex-align-items" class="headerlink" title="flex + align-items"></a>flex + align-items</h3><pre><code class="css">.parent&#123;
+    display: flex;
+    align-items: center;
+&#125;
+/*
+优点：只对parent元素修改，不影响child的样式
+缺点：flex不支持IE6/7/8，因此兼容性较差
+*/
+</code></pre>
+<h2 id="元素的水平垂直居中（元素宽高都未知）"><a href="#元素的水平垂直居中（元素宽高都未知）" class="headerlink" title="元素的水平垂直居中（元素宽高都未知）"></a>元素的水平垂直居中（元素宽高都未知）</h2><h3 id="inline-block-text-align-table-cell-vertical-align"><a href="#inline-block-text-align-table-cell-vertical-align" class="headerlink" title="inline-block + text-align + table-cell + vertical-align"></a>inline-block + text-align + table-cell + vertical-align</h3><pre><code class="css">.parent&#123;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+&#125;
+.child&#123;
+    display: inline-block;
+&#125;
+/*
+优点：兼容性较高，支持IE8及以上浏览器
+缺点：如果需要支持IE6/7，要将&lt;div&gt;结构换成&lt;table&gt;结构
+*/
+</code></pre>
+<h3 id="absolute-transform-2"><a href="#absolute-transform-2" class="headerlink" title="absolute + transform"></a>absolute + transform</h3><pre><code class="css">.parent&#123;
+    position: relative;
+&#125;
+.child&#123;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%)
+&#125;
+/*
+优点：绝对定位脱离文档流，因此居中对象不会对其他元素产生影响
+缺点：transform不支持IE6/7/8，因此兼容性较差，在高版本浏览器中可能需要加私有前缀
+*/
+</code></pre>
+<h3 id="flex-justify-content-align-items"><a href="#flex-justify-content-align-items" class="headerlink" title="flex + justify-content + align-items"></a>flex + justify-content + align-items</h3><pre><code class="css">.parent&#123;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+&#125;
+/*
+优点：只设置parent，不影响child
+缺点：兼容性较差，可能只有高版本浏览器能实现
+*/
+</code></pre>
+<h1 id="多列布局"><a href="#多列布局" class="headerlink" title="多列布局"></a>多列布局</h1><h2 id="一列定宽一列自适应布局"><a href="#一列定宽一列自适应布局" class="headerlink" title="一列定宽一列自适应布局"></a>一列定宽一列自适应布局</h2><p>之后的布局讲解将以下面的这段代码为模板,如模版有变动将单独列出。</p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;
+        &lt;p&gt;left&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;right&quot;&gt;
+        &lt;p&gt;right&lt;/p&gt;
+        &lt;p&gt;right&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="float-margin"><a href="#float-margin" class="headerlink" title="float + margin"></a>float + margin</h3><pre><code class="css">.left&#123;
+    float: left;
+    width: 100px;
+&#125;
+.right&#123;
+    margin-left: 120px;/*多的20px为列之间的空隙*/
+&#125;
+/*
+优点：容易理解
+缺点：兼容性有一点小问题，IE6中，因为left浮动，right不浮动，右边的文字会往右缩进3像素，解决方法：在left的css中加入&quot;margin-right: -100px;&quot;。清除浮动会打乱布局
+*/
+</code></pre>
+<p>改进上述方法，解决兼容性问题</p>
+<p><strong>此结构只适用于float + margin + (fix)方法</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;
+        &lt;p&gt;left&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;right-fix&quot;&gt;
+        &lt;div class=&quot;right&quot;&gt;
+            &lt;p&gt;right&lt;/p&gt;
+            &lt;p&gt;right&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="float-margin-fix"><a href="#float-margin-fix" class="headerlink" title="float + margin + (fix)"></a>float + margin + (fix)</h3><pre><code class="css">.left&#123;
+    float: left;
+    width: 100px;
+    position: relative;
+&#125;
+.right-fix&#123;
+    float: right;
+    width: 100%;
+    margin-left:-100px;
+&#125;
+.right&#123;
+    margin-left: 120px;
+&#125;
+/*
+优点：兼容IE6及以上所有浏览器
+缺点：结构、样式会相对复杂
+*/
+</code></pre>
+<h3 id="float-overflow"><a href="#float-overflow" class="headerlink" title="float + overflow"></a>float + overflow</h3><pre><code class="css">.left&#123;
+    float: left;
+    width: 100px;
+    margin-right: 20px;/20px为列之间的空隙/
+&#125;
+.right&#123;
+    overflow: hidden;
+&#125;
+/*
+优点：样式简单
+缺点：IE6不支持
+*/
+</code></pre>
+<h3 id="table"><a href="#table" class="headerlink" title="table"></a>table</h3><pre><code class="css">.parent&#123;
+    display: table;
+    width: 100%;
+    table-layout:fixed;/提升渲染速度，布局优先/
+&#125;
+.left,.right&#123;
+    display: table-cell;
+&#125;
+.left&#123;
+    width: 100px;
+    padding-right: 20px;/20px为列之间的空隙,table-cell无法设置margin，所以设置padding/
+&#125;
+/*
+优点：兼容IE8及以上浏览器
+缺点：代码比较复杂
+*/
+</code></pre>
+<h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><pre><code class="css">.parent&#123;
+    display: flex;
+&#125;
+.left&#123;
+    width: 100px;
+    margin-right: 20px;/20px为列之间的空隙/
+&#125;
+.right&#123;
+    flex: 1;
+&#125;
+/*
+优点：实现比较容易
+缺点：低版本浏览器兼容性较差，flex只适合小范围布局，
+*/
+</code></pre>
+<h2 id="两列定宽一列自适应布局"><a href="#两列定宽一列自适应布局" class="headerlink" title="两列定宽一列自适应布局"></a>两列定宽一列自适应布局</h2><p><strong>此结构只适用于下面的例子</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;
+        &lt;p&gt;left&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;center&quot;&gt;
+    &lt;p&gt;center&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;right-fix&quot;&gt;
+        &lt;div class=&quot;right&quot;&gt;
+            &lt;p&gt;right&lt;/p&gt;
+            &lt;p&gt;right&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="float-overflow-1"><a href="#float-overflow-1" class="headerlink" title="float + overflow"></a>float + overflow</h3><pre><code class="css">.left,.center&#123;
+    float: left;
+    width: 100px;
+    margin-right: 20px;/20px为列之间的空隙/
+&#125;
+.right&#123;
+    overflow: hidden;
+&#125;
+</code></pre>
+<h2 id="一列不定宽一列自适应布局"><a href="#一列不定宽一列自适应布局" class="headerlink" title="一列不定宽一列自适应布局"></a>一列不定宽一列自适应布局</h2><p><strong>之后的布局讲解将以下面的这段代码为模板,如模板有变动将单独列出</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;
+        &lt;p&gt;left&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;right&quot;&gt;
+        &lt;p&gt;right&lt;/p&gt;
+        &lt;p&gt;right&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="float-overflow-2"><a href="#float-overflow-2" class="headerlink" title="float + overflow"></a>float + overflow</h3><pre><code class="css">.left,.center&#123;
+    float: left;
+    margin-right: 20px;/*20px为列之间的空隙*/
+&#125;
+.right&#123;
+    overflow: hidden;
+&#125;
+.left p&#123;
+    width:200px;/*这里的宽度可以随意更改,即由内容决定*/
+&#125;
+/*
+优点：代码量少，实现简单
+缺点：在IE6下兼容性有问题
+*/
+</code></pre>
+<h3 id="table-1"><a href="#table-1" class="headerlink" title="table"></a>table</h3><pre><code class="css">.parent&#123;
+    display: table;
+    width: 100%;
+&#125;
+.left,.right&#123;
+    display: table-cell;
+&#125;
+.left&#123;
+    width: 0.1%;/*写成0.1%是出于兼容性考虑，1px在IE8下会有问题*/
+    padding-right: 20px;/*20px为列之间的空隙,table-cell无法设置margin，所以设置padding*/
+&#125;
+.left p&#123;
+    width: 200px;/*这里的宽度可以随意更改,即由内容决定*/
+&#125;
+/*
+优点：兼容IE8及以上浏览器
+缺点：IE6/7不支持
+*/
+</code></pre>
+<h3 id="flex-1"><a href="#flex-1" class="headerlink" title="flex"></a>flex</h3><pre><code class="css">.parent&#123;
+    display: flex;
+&#125;
+.left&#123;
+    margin-right: 20px;/20px为列之间的空隙/
+&#125;
+.right&#123;
+    flex: 1;
+&#125;
+.left p&#123;
+    width: 100px;/根据内容决定/
+&#125;
+/*
+优点：实现比较容易
+缺点：低版本浏览器兼容性较差，flex只适合小范围布局
+*/
+</code></pre>
+<h2 id="两列不定宽加一列自适应"><a href="#两列不定宽加一列自适应" class="headerlink" title="两列不定宽加一列自适应"></a>两列不定宽加一列自适应</h2><p><strong>此结构只适用于下面的例子</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;
+        &lt;p&gt;left&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;center&quot;&gt;
+    &lt;p&gt;center&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;right-fix&quot;&gt;
+        &lt;div class=&quot;right&quot;&gt;
+            &lt;p&gt;right&lt;/p&gt;
+            &lt;p&gt;right&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="float-overflow-3"><a href="#float-overflow-3" class="headerlink" title="float + overflow"></a>float + overflow</h3><pre><code class="css">.left,.center&#123;
+    float: left;
+    width: 100px;
+    margin-right: 20px;/*20px为列之间的空隙*/
+&#125;
+.right&#123;
+    overflow: hidden;
+&#125;
+</code></pre>
+<h2 id="等分布局"><a href="#等分布局" class="headerlink" title="等分布局"></a>等分布局</h2><p><strong>之后的布局讲解将以下面的这段代码为模板,如模板有变动将单独列出</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="float"><a href="#float" class="headerlink" title="float"></a>float</h3><pre><code class="css">.parent&#123;
+    margin-left: -20px;
+&#125;
+.column&#123;
+    float: left;
+    width: 25%;
+    padding-left: 20px;
+    box-sizing: border-box;/*可以让设置的宽度包含padding*/
+&#125;
+/*
+优点：兼容IE8及以上浏览器
+缺点：当列数发生变化时需要修改css样式
+*/
+</code></pre>
+<h3 id="table-2"><a href="#table-2" class="headerlink" title="table"></a>table</h3><p><strong>此模板只适用于table布局</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent-fix&quot;&gt;
+    &lt;div class=&quot;parent&quot;&gt;
+        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="css">.parent-fix&#123;
+    margin-left: -20px;
+&#125;
+.parent&#123;
+    display: table;
+    width:100%;
+    table-layout:fixed;/*布局优先，单元格自动平分*/
+&#125;
+.column&#123;
+    display: table-cell;
+    padding-left: 20px;
+&#125;
+/*
+优点：列数改变自动平分
+缺点：结构更加复杂
+*/
+</code></pre>
+<h3 id="flex-2"><a href="#flex-2" class="headerlink" title="flex"></a>flex</h3><pre><code class="css">.parent&#123;
+    display: flex;
+&#125;
+.column&#123;
+    flex: 1;
+&#125;
+.column+.column&#123;
+/*这个选择器表示选择前一个class为&#39;column&#39;的下一个&#39;column&#39;*/
+    margin-left: 20px;
+&#125;
+/*
+优点：代码量少，自动平分
+缺点：兼容性较差
+*/
+</code></pre>
+<h2 id="等高布局"><a href="#等高布局" class="headerlink" title="等高布局"></a>等高布局</h2><p><strong>之后的布局讲解将以下面的这段代码为模板,如模板有变动将单独列出</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;
+        &lt;p&gt;left&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;right&quot;&gt;
+        &lt;p&gt;right&lt;/p&gt;
+        &lt;p&gt;right&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="table-3"><a href="#table-3" class="headerlink" title="table"></a>table</h3><pre><code class="css">.parent&#123;
+    display: table;
+    width: 100%;
+    table-layout:fixed;/*提升渲染速度，布局优先*/
+&#125;
+.left,.right&#123;
+    display: table-cell;
+&#125;
+.left&#123;
+    width: 100px;
+    padding-right: 20px;/*20px为列之间的空隙,table-cell无法设置margin，所以设置padding*/
+&#125;
+/*
+背景颜色默认会覆盖在padding区域内，使空隙无法看出，需设置background-clip:content-box;使背景颜色只显示在内容区域内
+*/
+</code></pre>
+<h3 id="flex-flex布局默认等高"><a href="#flex-flex布局默认等高" class="headerlink" title="flex(flex布局默认等高)"></a>flex(flex布局默认等高)</h3><pre><code class="css">.parent&#123;
+    display: flex;
+&#125;
+.left&#123;
+    margin-right: 20px;/*20px为列之间的空隙*/
+&#125;
+.right&#123;
+    flex: 1;
+&#125;
+.left p&#123;
+    width: 100px;/*根据内容决定*/
+&#125;
+</code></pre>
+<h3 id="float-1"><a href="#float-1" class="headerlink" title="float"></a>float</h3><pre><code class="css">.parent&#123;
+    overflow: hidden;
+&#125;
+.left,.right&#123;
+    padding-bottom: 9999px;
+    margin-bottom: -9999px;
+&#125;
+.left&#123;
+    float: left;
+    width: 100px;
+    margin-right;
+&#125;
+.right&#123;
+    overflow: hidden;
+&#125;
+/*
+优点：兼容性好
+缺点：伪等高，视觉上等高，实际不等高
+*/
+</code></pre>
+<h2 id="全屏布局"><a href="#全屏布局" class="headerlink" title="全屏布局"></a>全屏布局</h2><p><strong>之后的布局讲解将以下面的这段代码为模板,如模板有变动将单独列出</strong></p>
+<pre><code class="html">&lt;div id=&quot;parent&quot;&gt;
+    &lt;div id=&quot;top&quot;&gt;&lt;/div&gt;
+    &lt;div id=&quot;left&quot;&gt;&lt;/div&gt;
+    &lt;div id=&quot;right&quot;&gt;&lt;/div&gt;
+    &lt;div id=&quot;bottom&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="position-scroll"><a href="#position-scroll" class="headerlink" title="position(scroll)"></a>position(scroll)</h3><pre><code class="css">html,body,#parent&#123;
+    height:100%;
+    overflow:hidden;
+&#125;
+.top&#123;
+    position:absolute;top:0;left:0;right:0;height:100px;
+&#125;
+.bottom&#123;
+    position:absolute;left:0;right:0;bottom:0;height:50px;
+&#125;
+.left&#123;
+    position:absolute;left:0;top:100px;bottom:50px;width:200px;
+&#125;
+.right&#123;
+    position:absolute;overflow:auto;left:200px;top:100px;bottom:50px;
+&#125;
+/*
+IE6不支持position，如需百分比显示布局的大小，只需将代码中的具体像素改为百分比
+*/
+</code></pre>
+<h3 id="flex-3"><a href="#flex-3" class="headerlink" title="flex"></a>flex</h3><p><strong>此模板只适用于该案例</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;top&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;middle&quot;&gt;
+        &lt;div class=&quot;left&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;right&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;bottom&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="css">html,body,.parent&#123;
+    height:100%;
+    overflow:hidden;
+    margin:0;
+&#125;
+.parent&#123;
+    display:flex;
+    flex-direction:column;
+&#125;
+.top&#123;
+    height:100px;
+    background-color:black;
+&#125;
+.bottom&#123;
+    height:50px;
+&#125;
+.middle&#123;
+    flex-grow:1;
+    display:flex;
+&#125;
+.left&#123;
+    width:200px;
+&#125;
+.right&#123;
+    flex-grow:1;
+    overflow:auto;
+&#125;
+/*
+IE9及以下浏览器不兼容，如需百分比显示布局的大小，只需将代码中的具体像素改为百分比
+*/
+</code></pre>
+<h2 id="全适应布局"><a href="#全适应布局" class="headerlink" title="全适应布局"></a>全适应布局</h2><p>position无法实现全适应布局，只能用flex或grid实现，这里只介绍flex实现方法。</p>
+<p><strong>此模板只适用于该案例</strong></p>
+<pre><code class="html">&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;top&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;middle&quot;&gt;
+        &lt;div class=&quot;left&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;right&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;bottom&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="css">html,body,.parent&#123;
+    height:100%;
+    overflow:hidden;
+&#125;
+.parent&#123;
+    display:flex;
+    flex-direction:column;
+&#125;
+.middle&#123;
+    flex-grow:1;
+    display:flex;
+&#125;
+.right&#123;
+    flex-grow:1;
+    overflow:auto;
+&#125;
+/*
+IE9及以下浏览器不兼容
+*/
+</code></pre>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/4de64c6d.html"
+      title="响应式页面的简单实现"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        响应式页面的简单实现
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/acd347a0.html"
+      title="大鱼海棠"
+    >
+      <span class="post-near-title">
+        大鱼海棠
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

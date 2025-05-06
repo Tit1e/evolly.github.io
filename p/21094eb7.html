@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">12 / 28, 2020</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Node.js 爬虫初步实践</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #node
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>今年年初的时候动森因为本身的影响力加上疫情的原因，在全球大火，很多原本都不知道 Switch 是什么的人，都因为动森入了Switch，当时 Switch 价格一度被炒了上去，动森限定版更是翻了倍。可见其火热程度。</p>
+<p>而我那时候也加入的动森大部队，并且加了群，大家在群里聊得热火朝天，各种摸，各种报价格，卖大头菜。那时候我就想着做一个“菜市场”小程序，方便大家卖大头菜。但等我开发出第一版的时候，卖大头菜的热度已经下去了，我就失去了开发的动力。后来在查动森信息的时候，无意间发现了 B 站的<a target="_blank" rel="noopener" href="https://wiki.biligame.com/dongsen/%E9%A6%96%E9%A1%B5">动森 WIKI 页</a>。于是我又转念一想，不如爬它数据做个图鉴吧！不过此时的心态完全是为了写爬虫练手，因为当时已经有很多成熟的图鉴app、小程序出现，我就不凑这个热闹了。</p>
+<p>下面是小程序码，欢迎可以扫码体验。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-12-28-animalCrossingCode.jpg"></p>
+<p>言归正传，下面是以<a target="_blank" rel="noopener" href="https://wiki.biligame.com/dongsen/%E5%B0%8F%E5%8A%A8%E7%89%A9%E5%9B%BE%E9%89%B4">动森小动物图鉴</a>页面为目标，写一个简易爬虫。</p>
+<p>安装一些插件：</p>
+<pre><code class="bash"># npm 初始化
+npm init -y
+# 安装插件
+npm i superagent cheerio
+</code></pre>
+<ul>
+<li>superagent 是 node 环境下的 http 模块，可用来发器请求，稍后用来请求页面</li>
+<li>cheerio 模块可以解析页面，然后可以使用与 jQuery 相同的语法来操作 DOM</li>
+</ul>
+<p>新建入口文件 <code>index.js</code></p>
+<p>封装请求：</p>
+<pre><code class="js">// getContent.js
+const BASE_URL = &#39;https://wiki.biligame.com&#39;;
+const superagent = require(&quot;superagent&quot;);
+const cheerio = require(&quot;cheerio&quot;);
+
+/**
+ * 获取页面内容方法
+ * @param &#123;String&#125; query 爬取的页面后缀
+ */
+function getContent(query) &#123;
+  return new Promise((resolve, reject) =&gt; &#123;
+    superagent.get(`$&#123;BASE_URL&#125;/dongsen/$&#123;query&#125;`).end((err, sres) =&gt; &#123;
+      if (err) &#123;
+        return reject(err)
+      &#125;
+      resolve(cheerio.load(sres.text));
+    &#125;)
+  &#125;)
+&#125;
+
+module.exports = &#123;
+  getContent
+&#125;
+</code></pre>
+<p>在编写爬取代码前我们要对页面做一个分析：</p>
+<p>这是我们要爬取的目标页面</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.biligame.com/dongsen/%E5%B0%8F%E5%8A%A8%E7%89%A9%E5%9B%BE%E9%89%B4">https://wiki.biligame.com/dongsen/小动物图鉴</a></p>
+<p>这是我们要爬取的目标</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-12-28-141903.png"></p>
+<p>每个小动物点击名字可进入详情页：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-12-28-142155.png"></p>
+<p>可以看到详情页中信息比列表上的更为丰富，我们要想办法爬取详情页中的信息。所以需要去获取列表上 a 标签的地址，然后再去获取详情中的动物信息。</p>
+<p>所以思路如下：</p>
+<ol>
+<li>首先请求列表页</li>
+<li>获取列表中的所有小动物的项</li>
+<li>循环项取出每项名字，获取名字上的a链接地址，拼接出完整路径</li>
+<li>通过完整路径获取小动物的详细信息</li>
+<li>写入数据</li>
+</ol>
+<p>思路清晰后那么开始编写代码，编辑 <code>index.js</code>：</p>
+<p>首先我们要爬取所有小动物的数据：</p>
+<pre><code class="js">// index.js
+
+
+/**
+ * 爬取小动物页面
+ * @param &#123;Date&#125; update_time 爬虫执行时间，非必须
+ * @param &#123;*&#125; url 小动物页面的后缀
+ */
+async function getAnimals(update_time, url) &#123;
+  const $ = await getContent(url)
+  // 获取列表中的所有项
+  const nodes = $(&quot;#CardSelectTr tbody tr&quot;)
+  // 小动物详情页后缀，其实就是名字
+  const animals = []
+  const LENGTH = nodes.length
+     // 第 0 项是表头，所以索引从 1 开始
+  for (let i = 1; i &lt; LENGTH; i++)&#123;
+    let $element = $(nodes[i]);
+    // 列表中有一项错误项，需要排除
+    if ($element.find(&#39;td&#39;).eq(0).find(&#39;a&#39;).text() !== &#39;40pxString&#39;) &#123;
+      // 获取小动物链接后缀
+      const url = $element.find(&#39;td&#39;).eq(0).find(&#39;a&#39;).attr(&#39;href&#39;).substr(9)
+      animals.push(url)
+    &#125;
+  &#125;
+  
+  // 删除 animals.txt，开始获取数据前，清除旧数据
+  fs.unlink(&#39;animals.txt&#39;, function (error) &#123;
+    if (error) &#123;
+      console.log(error);
+      return false;
+    &#125;
+  &#125;)
+  
+  // 为了按列表顺序获取小动物信息，我使用了递归
+  let index = 0
+  getInfo(animals, index, animalInfo, update_time)
+&#125;
+</code></pre>
+<p>在 <code>getAnimals</code> 方法最后使用了 <code>getInfo</code> 递归函数，那么接下来编写 <code>getInfo</code>，依旧是在 <code>index.js</code>：</p>
+<pre><code class="js">// index.js
+
+const fs = require(&quot;fs&quot;);
+const os = require(&quot;os&quot;);
+
+async function getInfo(list, index, func, update_time) &#123;
+  let name = list[index];
+  let otherInfo = &#123;&#125;;
+  try &#123;
+    otherInfo = await func(name).catch(() =&gt; &#123;
+      if (index &lt; list.length - 1) &#123;
+        index += 1;
+        getInfo(list, index, func, update_time);
+      &#125;
+    &#125;);
+  &#125; catch (error) &#123;
+    // 出错跳过进入下一个小动物
+    if (index &lt; list.length - 1) &#123;
+      index += 1;
+      getInfo(list, index, func, update_time);
+      return;
+    &#125;
+  &#125;
+  // os.EOL 用于换行 http://nodejs.cn/api/os/os_eol.html
+  // 获取到数据后写入 animals.txt
+  fs.appendFile(&quot;animals.txt&quot;, JSON.stringify(otherInfo) + os.EOL, (err) =&gt; &#123;
+    if (err) &#123;
+      throw err;
+    &#125; else &#123;
+      if (index &lt; list.length - 1) &#123;
+        index += 1;
+        getInfo(list, index, func, update_time);
+      &#125;
+    &#125;
+  &#125;);
+&#125;
+</code></pre>
+<p>递归方法也写好了，接下来就是真正获取小动物数据的方法，还是在 <code>index.js</code>：</p>
+<pre><code class="js">// index.js
+
+const &#123; getContent &#125; = require(&#39;./getContent.js&#39;)
+
+/**
+ * 获取小动物信息
+ * @param &#123;String&#125; url 小动物页面后缀
+ */
+async function animalInfo(url) &#123;
+  return new Promise(async (resolve, reject) =&gt; &#123;
+    try &#123;
+      const $ = await getContent(url).catch(err =&gt; &#123;
+        reject()
+      &#125;)
+      // 定义小动物各项信息的字段
+      const list = [&#39;birthday&#39;, &#39;character&#39;, &#39;mantra&#39;, &#39;hobby&#39;, &#39;style&#39;, &#39;color&#39;, &#39;vioce&#39;, &#39;ethnicity&#39;, &#39;motto&#39;, &#39;foreign_name&#39;]
+      const nodes = $(&quot;.box-poke-left .box-poke&quot;)
+      const str = $(&quot;.box-poke-left .box-title-1&quot;).text()
+      const name = str.substr(0, str.length -1)
+      const sex = str.substr(-1) === &#39;♂&#39; ? &#39;男&#39; : &#39;女&#39;
+      const image = $(&quot;.box-poke-right&quot;).find(&#39;img&#39;).attr(&#39;src&#39;)
+      const info = &#123;
+        name,
+        sex,
+        image,
+      &#125;
+      for (let i = 0; i &lt; list.length; i++)&#123;
+        const attr = list[i]
+        const text = nodes.eq(i).find(&#39;.box-font&#39;).text()
+        if (attr === &#39;birthday&#39;) &#123;
+          // 处理小动物的信息，也可以不处理
+          info[attr] = text.replace(&#39;月&#39;, &#39;-&#39;).replace(&#39;日&#39;, &#39;&#39;)
+        &#125; else &#123;
+          info[attr] = text
+        &#125;
+      &#125;
+      info.birth_month = info.birthday.split(&#39;-&#39;).shift()
+      resolve(info)
+    &#125; catch (error) &#123;
+      reject(url + &#39;出错啦&#39;)
+    &#125;
+  &#125;)
+&#125;
+</code></pre>
+<p>最后，在 <code>index.js</code> 最后执行方法</p>
+<pre><code class="js">// index.js
+
+const now = new Date()
+const query = encodeURIComponent(&#39;小动物图鉴&#39;)
+getAnimals(now, query)
+</code></pre>
+<p>完整的 <code>index.js</code> ：</p>
+<pre><code class="js">const fs = require(&quot;fs&quot;);
+const os = require(&quot;os&quot;);
+const &#123; getContent &#125; = require(&#39;./getContent.js&#39;)
+
+
+
+async function getInfo(list, index, func, update_time) &#123;
+  let name = list[index];
+  let otherInfo = &#123;&#125;;
+  try &#123;
+    otherInfo = await func(name).catch(() =&gt; &#123;
+      if (index &lt; list.length - 1) &#123;
+        index += 1;
+        getInfo(list, index, func, update_time);
+      &#125;
+    &#125;);
+  &#125; catch (error) &#123;
+    // 出错跳过进入下一个小动物
+    if (index &lt; list.length - 1) &#123;
+      index += 1;
+      getInfo(list, index, func, update_time);
+      return;
+    &#125;
+  &#125;
+  // os.EOL 用于换行 http://nodejs.cn/api/os/os_eol.html
+  fs.appendFile(&quot;animals.txt&quot;, JSON.stringify(otherInfo) + os.EOL, (err) =&gt; &#123;
+    if (err) &#123;
+      throw err;
+    &#125; else &#123;
+      if (index &lt; list.length - 1) &#123;
+        index += 1;
+        getInfo(list, index, func, update_time);
+      &#125;
+    &#125;
+  &#125;);
+&#125;
+
+/**
+ * 获取小动物信息
+ * @param &#123;String&#125; url 小动物页面后缀
+ */
+async function animalInfo(url) &#123;
+  return new Promise(async (resolve, reject) =&gt; &#123;
+    try &#123;
+      const $ = await getContent(url).catch(err =&gt; &#123;
+        reject()
+      &#125;)
+      const list = [&#39;birthday&#39;, &#39;character&#39;, &#39;mantra&#39;, &#39;hobby&#39;, &#39;style&#39;, &#39;color&#39;, &#39;vioce&#39;, &#39;ethnicity&#39;, &#39;motto&#39;, &#39;foreign_name&#39;]
+      const nodes = $(&quot;.box-poke-left .box-poke&quot;)
+      const str = $(&quot;.box-poke-left .box-title-1&quot;).text()
+      const name = str.substr(0, str.length -1)
+      const sex = str.substr(-1) === &#39;♂&#39; ? &#39;男&#39; : &#39;女&#39;
+      const image = $(&quot;.box-poke-right&quot;).find(&#39;img&#39;).attr(&#39;src&#39;)
+      const info = &#123;
+        name,
+        sex,
+        image,
+      &#125;
+      for (let i = 0; i &lt; list.length; i++)&#123;
+        const attr = list[i]
+        const text = nodes.eq(i).find(&#39;.box-font&#39;).text()
+        if (attr === &#39;birthday&#39;) &#123;
+          info[attr] = text.replace(&#39;月&#39;, &#39;-&#39;).replace(&#39;日&#39;, &#39;&#39;)
+        &#125; else &#123;
+          info[attr] = text
+        &#125;
+      &#125;
+      info.birth_month = info.birthday.split(&#39;-&#39;).shift()
+      resolve(info)
+    &#125; catch (error) &#123;
+      reject(url + &#39;出错啦&#39;)
+    &#125;
+  &#125;)
+&#125;
+
+/**
+ * 爬取小动物页面
+ * @param &#123;Date&#125; update_time 爬虫执行时间，非必须
+ * @param &#123;*&#125; url 小动物页面的后缀
+ */
+async function getAnimals(update_time, url) &#123;
+  const $ = await getContent(url)
+  const nodes = $(&quot;#CardSelectTr tbody tr&quot;)
+  const animals = []
+  const LENGTH = nodes.length
+  for (let i = 1; i &lt; LENGTH; i++)&#123;
+    let $element = $(nodes[i]);
+    if ($element.find(&#39;td&#39;).eq(0).find(&#39;a&#39;).text() !== &#39;40pxString&#39;) &#123;
+      // 获取小动物链接后缀
+      const url = $element.find(&#39;td&#39;).eq(0).find(&#39;a&#39;).attr(&#39;href&#39;).substr(9)
+      animals.push(url)
+    &#125;
+  &#125;
+
+  // 删除 animals.txt，开始获取数据前，清除旧数据
+  fs.unlink(&#39;animals.txt&#39;, function (error) &#123;
+    if (error) &#123;
+      console.log(error);
+      return false;
+    &#125;
+  &#125;)
+  // 递归获取信息
+  let index = 0
+  getInfo(animals, index, animalInfo, update_time)
+&#125;
+
+// 我们爬取的页面是 https://wiki.biligame.com/dongsen/%E5%B0%8F%E5%8A%A8%E7%89%A9%E5%9B%BE%E9%89%B4
+const now = new Date()
+const query = encodeURIComponent(&#39;小动物图鉴&#39;)
+getAnimals(now, query)
+</code></pre>
+<p>运行爬虫：</p>
+<pre><code class="bash">node index.js
+</code></pre>
+<p>不出意外会在根目录下生成一个 animals.txt 文件。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-12-28-145321.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tit1e/Demos/tree/gh-pages/142-node-spider">源码查看</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/bd4443f5.html"
+      title="express 静态资源代理"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        express 静态资源代理
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/4f5c4b9e.html"
+      title="pm2 基础使用指南"
+    >
+      <span class="post-near-title">
+        pm2 基础使用指南
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

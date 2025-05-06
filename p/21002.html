@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 12, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Send2Flomo</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #独立开发
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>趁着国庆长假，将 <a href="https://evolly.one/2021/05/23/157-kindle-to-flomo/">Kindle2Flomo</a> 升级成了 <a target="_blank" rel="noopener" href="https://github.com/Tit1e/kindle2Flomo">Send2Flomo</a>。升级的事情很早就想做，只是平时双休时间较短，倒也不是不能做，多花几周总能做完，就是懒吧。</p>
+<p>调整主要针对客户端，主要为一下几点：</p>
+<h3 id="重写部分界面的-UI，隐藏窗口自带的状态栏"><a href="#重写部分界面的-UI，隐藏窗口自带的状态栏" class="headerlink" title="重写部分界面的 UI，隐藏窗口自带的状态栏"></a>重写部分界面的 UI，隐藏窗口自带的状态栏</h3><p>最开心的是将客户端的窗口的状态栏隐藏了，界面看着立马“高级”了许多。</p>
+<h3 id="添加自动检测更新并升级"><a href="#添加自动检测更新并升级" class="headerlink" title="添加自动检测更新并升级"></a>添加自动检测更新并升级</h3><p>不过从昨天的升级情况来看，还有点小问题，不过不影响功能。</p>
+<h3 id="添加国际化"><a href="#添加国际化" class="headerlink" title="添加国际化"></a>添加国际化</h3><p>使用 i18n 给应用添加了语言切换的功能，不过由于我自己的英语能力过弱，所以这个只好委托少楠去帮我做这个翻译。我将应用中的中文整理出来，写到 Notion 中，然后甩了个链接给他。</p>
+<h3 id="从-Vue-2-升级到了-Vue-3"><a href="#从-Vue-2-升级到了-Vue-3" class="headerlink" title="从 Vue 2 升级到了 Vue 3"></a>从 Vue 2 升级到了 Vue 3</h3><p>以上比较明显的升级，用户可以感知。技术层面就是 Vue 版本的升级。算是一个 Vue 3 的练手项目，公司主要以稳定为主，所以也不会使用比较新的东西。这个版本中用到了 TS，自我感觉写得一塌糊涂，后面再慢慢将变量的类型加上去。</p>
+<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3><p><strong><a target="_blank" rel="noopener" href="https://github.com/Tit1e/kindle2Flomo">https://github.com/Tit1e/kindle2Flomo</a></strong></p>
+<h3 id="界面预览"><a href="#界面预览" class="headerlink" title="界面预览"></a>界面预览</h3><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-12-Xnip2021-10-10_18-07-10.png"></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-12-150209.png"></p>
+<h3 id="之后的计划"><a href="#之后的计划" class="headerlink" title="之后的计划"></a>之后的计划</h3><p>一直想给自己写一个养成习惯（目前暂且这么定义）的 APP，通过完成事情来获取金币，享受事物则需要消耗金币。我觉得这个方式应该是有一个名称的，但是我并不知道，不过不影响我开发 App。本来我是想先学 swift，用原生来写，但是后来觉得我需要先把这个东西做出来，因为不一定成功，从头开始学一门语言的成本是比较大的，而我这个小项目成不成还是个未知数，所以先把东西写出来，用起来是最为重要的，至少现阶段我觉得是这样。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/20107.html"
+      title="electron 应用打包后自动发布至 GitHub Releases"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        electron 应用打包后自动发布至 GitHub Releases
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/60782.html"
+      title="backdrop-filter 导致动画卡顿问题"
+    >
+      <span class="post-near-title">
+        backdrop-filter 导致动画卡顿问题
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

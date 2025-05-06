@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 6, 2016</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">ubuntu16.04网易云托盘图标显示出做及微信应用分享</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>今天无意间打开贴吧发现之前在elementary OS吧发的关于网易云托盘图标的求助帖有了回复,试了一下发现问题解决了,顺便还发现了一个第三方微信应用,虽然是基于网页版的,但是这个版本是有托盘的，所以拿出来分享给大家。</p>
+<p>先说云音乐问题：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-15-badbf2f2-8c0a-11e6-8102-213021f310f1.jpeg"><br>这是我之前网易云的托盘图标，无法正常显示，贴吧也有不少吧友遇到和我一样的问题。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-15-b6aa1920-8c0a-11e6-9952-e7c47b3240e5.jpeg"><br>这是修复后的托盘，小问题还是有，但至少使用上是没问题了，这样直接看也看不出什么，点击的时候有点小问题。</p>
+<span id="more"></span>
+<p>下面贴上方法：</p>
+<pre><code class="bash">#编辑云音乐的.desktop文件（编辑工具根据实际情况而定）
+sudo vi /usr/share/applications/netease-cloud-music.desktop
+#在原来的Exec那行的前面加上
+env XDG_CURRENT_DESKTOP=Unity
+#比如：然后把原来的Exec那行：
+Exec=netease-cloud-music %U
+#修改为：
+Exec=env XDG_CURRENT_DESKTOP=Unity netease-cloud-music %U
+#保存关闭编辑器，再打开就会发现托盘能正常使用了。
+</code></pre>
+<p>下面说我分享的微信应用：<br><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/electronic-wechat">Electronic WeChat</a> 是基于<a target="_blank" rel="noopener" href="https://github.com/electron/electron">Electron</a> 开发的应用，Electron应用我一直在用，但不知道微信也有，今天看到回复我云音乐的吧友回复我才知道这么个应用。</p>
+<p>这是官方的图：<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144711.png"><br>安装很简单：</p>
+<pre><code class="bash">git clone https://github.com/geeeeeeeeek/electronic-wechat.git
+cd electronic-wechat
+npm install &amp;&amp; npm start(这一步如果出错就把clone下来的文件夹删除后从头执行一遍)
+#也可以下载压缩包解压然后运行里面的程序，不过我用这种方法微信无法在托盘显示
+</code></pre>
+<p>更多Electronic小应用可以去 <a target="_blank" rel="noopener" href="http://electron.atom.io/apps/">这里</a> 下载，还是有不少有意思的应用。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/92f2e64b.html"
+      title="Ajax发送请求"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Ajax发送请求
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/185dd1ce.html"
+      title="Github绑定自定义二级域名"
+    >
+      <span class="post-near-title">
+        Github绑定自定义二级域名
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

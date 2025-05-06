@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">4 / 12, 2019</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">alfred 使用 workflows 快速进行图片压缩</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #mac
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>图片压缩是我平时经常用到的操作，一开始是去 <a target="_blank" rel="noopener" href="https://tinypng.com/">tinypng</a> 使用网页版压缩，后来在逛 Github 时发现了 <a target="_blank" rel="noopener" href="https://github.com/kyleduo/TinyPNG4Mac">TinyPNG4Mac</a> 这个小工具，相比之前的网页操作已经方便了不少，今天在逛 Twitter 时又发现了一个 alfred 的 workflows 工作流，可以在本地快速进行图片压缩。下载地址在 <a target="_blank" rel="noopener" href="https://github.com/BlackwinMin/alfred-gallery/tree/master/image%20Compressor">image Compressor</a>。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用这个工具的时候需要先安装以下三个项目：</p>
+<pre><code class="bash"># 压缩 png
+brew install pngquant
+# 压缩 jpg
+brew install jpegoptim
+# 压缩 gif
+brew install gifsicle
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://github.com/BlackwinMin/alfred-gallery/blob/master/image%20Compressor/image%20Compressor.alfredworkflow">文件下载地址</a></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-24-26.png"></p>
+<p>下载完成后打开下载好的文件，点击 import 将工作流导入就安装完成。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-41-31.png"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>我由于之前没使用 workflows 处理过文件，都是使用热键类型的 workflows，因此我不知道怎么选择文件进行操作，在一通瞎按外加 一通 Google 后终于了解了。一开始我连如何执行这个压缩命令都不知道。</p>
+<ul>
+<li><p>对单个文件进行操作</p>
+<ul>
+<li>选择一个文件后按 <code>control</code> 出现操作选项，执行 <code>image Compressor</code></li>
+</ul>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-51-34.png"></p>
+</li>
+<li><p>在 Alfred 中选择多个文件后进行操作</p>
+<ul>
+<li>选择一个文件后按 <code>option</code> + <code>↑</code> 可以将文件加入缓冲区，可以将多个文件加入缓冲区， <code>option</code> + <code>←</code>可以删除最近添加的文件， <code>option</code> + <code>→</code> 可以对这些选中的文件进行批量操作。</li>
+</ul>
+</li>
+<li><p>在 Finder 中选好文件直接使用 Alfred 操作文件</p>
+<ul>
+<li><p>对于压缩图片来说这应该是最好的操作方式：在 Finder 中批量选中图片后，按 <code>option</code> + <code>commend</code> + <code>\</code> 调出操作列表进行操作。如果无法调出可能是快捷键被修改了，可以从下图出查看具体快捷键。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_21-46-08.png"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>在找的过程中我还发现一个使用 TinyPNG 压缩的 workflows <a target="_blank" rel="noopener" href="http://www.packal.org/workflow/tinypng">Compress with TinyPNG</a>，应该与 TinyPNGMac 用的是同一个接口吧。使用方式同 image Compressor。</p>
+<p> 注：使用的时候需要去 <a target="_blank" rel="noopener" href="https://tinypng.com/developers">这里</a> 注册一个 API Key，然后在 Alfred 执行 <code>tinypng_config</code> ，输入 API Key 后回车。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-17-07.png"></p>
+<p>压缩效果有点差异，相差不多，但是压缩速度差非常多。TinyPNG 还会出现丢图现象，下图右侧其实应该有三张图片，但是压缩只为了我两种张，而且速度非常慢，从修改日期可以看出两张图的创建时间相差了一分钟。image Compressor 由于使用的是本地的工具库，因此几张图压缩只要几秒就可完成。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2019-04-12-Xnip2019-04-12_22-21-59.png"></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/c36d6dae.html"
+      title="巴黎圣母院起火"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        巴黎圣母院起火
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/81d10b2a.html"
+      title="0411 碎碎念"
+    >
+      <span class="post-near-title">
+        0411 碎碎念
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

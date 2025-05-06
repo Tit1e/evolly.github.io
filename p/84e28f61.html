@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 8, 2020</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">快捷键粘贴上传至七牛</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>之前<a href="/2020/03/08/124-qiniu-axios/">这篇博客</a>解决了 axios 直传七牛的问题，这篇来讲一下从粘贴板直接上传到七牛云的实现方式。</p>
+<p>首先需要了解的是出于安全问题，js 是没权限主动读取用户粘贴板中的内存的，当用户主动触发粘贴事件时，js 是可以通过 <code>paste</code> 事件来获取到其中内容的。如何触发这个粘贴事件这里就不做讨论，单说事件触发后怎么获取到文件，其实很简单：</p>
+<pre><code class="js">function uploadFile(event) &#123;
+  // 我的处理方式是给用户一个 input 用于粘贴
+  // 因此这个判断是用于判断用户的粘贴事件是否是在指定元素上触发的
+  // 这个判断并不是必须的
+  if (event.srcElement.id === &#39;up_snapshot_img_paste&#39;) &#123;
+    // 获取粘贴板中的内容
+    const items = event.clipboardData &amp;&amp; event.clipboardData.items
+    let file = null
+    if (items &amp;&amp; items.length) &#123;
+      // 检索粘贴板items
+      for (let i = 0; i &lt; items.length; i++) &#123;
+        // 获取图片
+        if (items[i].type.indexOf(&#39;image&#39;) !== -1) &#123;
+          file = items[i].getAsFile()
+          break
+        &#125;
+      &#125;
+    &#125;
+    // 触发上传
+    if (file) &#123;
+      // 此时file就是剪切板中的图片文件
+      const formData = new FormData()
+      formData.append(&#39;file&#39;, file)
+      formData.append(&#39;token&#39;, &#39;token&#39;)
+      formData.append(&#39;key&#39;, &#39;key&#39;)
+      const $axios = axios.create(&#123; withCredentials: false &#125;)
+      $axios(&#123;
+        url: &#39;url&#39;,
+        data: formData,
+        method: &#39;POST&#39;
+      &#125;).then(res =&gt; &#123;
+        // 上传成功处理逻辑
+      &#125;).catch(e =&gt; &#123;
+        // 上传失败处理逻辑
+      &#125;)
+    &#125; else &#123;
+      // 没有获取到图片时的处理逻辑
+    &#125;
+  &#125;
+&#125;
+// 绑定监听
+document.addEventListener(&#39;paste&#39;, uploadFile)
+</code></pre>
+<p>以上就是实现的代码了。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/646b1550.html"
+      title="阻止表单只有一个 input 时回车自动提交"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        阻止表单只有一个 input 时回车自动提交
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/40e5b92f.html"
+      title="axios 直传七牛问题"
+    >
+      <span class="post-near-title">
+        axios 直传七牛问题
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

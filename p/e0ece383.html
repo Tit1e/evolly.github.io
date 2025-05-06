@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">12 / 17, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">v-charts 实现柱状图渐变效果</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>其实在考虑使用<code>echarts</code>之前我还考虑过使用饿了么的<code>v-charts</code>，但后来考虑到实际情况，还是使用了没有经过二次封装的<code>echarts</code>。虽然没有最终没有使用<code>v-charts</code>，但还是记录一下。</p>
+<p><code>v-charts</code>的使用方法<a target="_blank" rel="noopener" href="https://elemefe.github.io/v-charts/#/"> 官方文档 </a>讲得已经比较详细了，但我的需求有个柱状图使用渐变色的需求，这里没有详细讲，但其实运行报错已经说得很清楚了。<br>首先安装<code>v-charts</code></p>
+<pre><code>npm i v-charts -S
+</code></pre>
+<p>在<code>main.js</code>引入</p>
+<pre><code class="javascript">import VCharts from &#39;v-charts&#39;
+Vue.use(VCharts)
+</code></pre>
+<span id="more"></span>
+<p>如果这时候你去组件里写入以下代码并运行：</p>
+<pre><code class="html">&lt;template&gt;
+  &lt;ve-histogram :data=&quot;chartData&quot; :settings=&quot;chartSettings&quot;&gt;&lt;/ve-histogram&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="javascript">module.exports = &#123;
+  created: function() &#123;
+    this.chartData = &#123;
+      columns: [&quot;日期&quot;, &quot;成本&quot;, &quot;利润&quot;, &quot;占比&quot;, &quot;其他&quot;],
+      rows: [
+        &#123; 日期: &quot;1月1日&quot;, 成本: 1523, 利润: 1523, 占比: 0.12, 其他: 100 &#125;,
+        &#123; 日期: &quot;1月2日&quot;, 成本: 1223, 利润: 1921, 占比: 0.345, 其他: 100 &#125;,
+        &#123; 日期: &quot;1月3日&quot;, 成本: 2123, 利润: 5523, 占比: 0.7, 其他: 100 &#125;,
+        &#123; 日期: &quot;1月4日&quot;, 成本: 4123, 利润: 6523, 占比: 0.31, 其他: 100 &#125;
+      ]
+    &#125;;
+    this.chartSettings = &#123;
+      metrics: [&quot;成本&quot;],
+      itemStyle: &#123;
+        normal: &#123;
+          color: new echarts.graphic.LinearGradient(
+            0, 0, 0, 1,
+            [
+              &#123;offset: 0, color: &#39;#83bff6&#39;&#125;,
+              &#123;offset: 0.5, color: &#39;#188df0&#39;&#125;,
+              &#123;offset: 1, color: &#39;#188df0&#39;&#125;
+            ]
+          )
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>控制台会报错：”<strong>echarts is not defined</strong>“。所以解决方法很明显，只要引入<code>echarts</code>就行了。</p>
+<pre><code class="javascript">import echarts from &#39;echarts/lib/echarts&#39;
+</code></pre>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/c53d47f2.html"
+      title="css 实现圆角平行四边形"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        css 实现圆角平行四边形
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/54d25b67.html"
+      title="vue-cli 使用 ECharts 水球图"
+    >
+      <span class="post-near-title">
+        vue-cli 使用 ECharts 水球图
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

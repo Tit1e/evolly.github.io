@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">8 / 18, 2024</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Cursor 搭配 DeepSeek，给你丝滑的体验</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #软件
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>第一次知道 Cursor 的时候还是它刚出来的时候，那时候的它非常简陋，侧边栏只有一个目录树，另一个是搜索栏还是什么，我对它的第一印象是：Sublime + Github Copilot，功能非常地简单，甚至可以说是简陋，体验一番后就将它卸载了。</p>
+<p>最近，网上 Cursor 的声音又多起来了，在 X 上，订阅的 Newsletter 中有看到有不少人提起 Cursor，现在它已经与 VS Code 融为一体，可以做到无缝切换，这让我有了兴趣，毕竟 VS Code 是我的主力编辑器，如果它体验可以做到跟 VS Code 一样，再加上它 AI 上的加持，那么我很有可能将主力编辑器替换为 Cursor。</p>
+<p>一番试用之后，让我有些惊喜，我在 VS Code 上试用的是 Codeium 插件，但是这个插件对网络要求比较高，哪怕我挂着代理，还是会经常出现问题。而 Cursor 是直接在编辑器中集成了 AI，效率比插件高很多，体验也更为丝滑。</p>
+<p>Cursor 可以通过开通订阅使用它内置的各家的 AI 模型：</p>
+<p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-08-18-043514.png"></p>
+<p>但是 Cursor 的订阅价格比较贵，后来我怕发现它支持自定义 OpenAI API，而DeepSeek 兼容 OpenAI API，下面是设置教程：</p>
+<p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-08-18-044258.png"></p>
+<ol>
+<li>点击编辑器右上角齿轮，打开设置界面。</li>
+<li>点击设置界面左侧 Models。</li>
+<li>点击 Add models，DeepSeek 目前有两种模型：<code>deepseek-chat</code> 与 <code>deepseek-coder</code>，可以都加上，然后根据实际情况使用（使用过程中可以切换语言模型）。</li>
+<li>在下方 OpenAI API Key 处填入 DeepSeek 的 Key，DeepSeek 的 Key 可以在 <a target="_blank" rel="noopener" href="https://platform.deepseek.com/api_keys">Deepseek 开放平台</a>生成。</li>
+<li>点击 Override OpenAI Base URL，在下方输入框输入<code>https://api.deepseek.com/v1</code>。</li>
+<li>点击 Verify 按钮验证是否正常，验证后可能会出现一个提示，大致意思是你订阅了 Pro 就可以不使用自定义 API 了，忽略就行，然后就可以正常试用了。<br>使用效果：</li>
+</ol>
+<p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-08-18-045854.png"></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/32182.html"
+      title="关闭 Google 智能镜头"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        关闭 Google 智能镜头
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/61808.html"
+      title="国内银行现状"
+    >
+      <span class="post-near-title">
+        国内银行现状
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

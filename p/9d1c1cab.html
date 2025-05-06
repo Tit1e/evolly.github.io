@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 14, 2020</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">AppleScript 初尝试</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>迅雷有时候会出现刚开始下载的时候速度很快，但是过几十秒，速度就只有几十 kb 的情况。正常下载太慢，循环暂停启动方法倒是可以，但是我总不能什么都不做就光坐电脑前不停点开始任务，暂停任务吧？况且我一般都是睡觉的时候挂着迅雷。</p>
+<p>想起以前在用 windows 的时候接触过按键精灵这类模拟键鼠操作的软件，我觉得 Mac OS 平台应该也有类似的软件，但是一圈搜下来并没有找到，倒是找到了官方的脚本语言 AppleScript。它倒是可以模拟键鼠操作，只是得自己折腾。</p>
+<p>那我能怕折腾么？于是直接开干，边在<a href="applescript://">脚本编辑器</a>测试边 Google，没多久折腾出来了个能将就用的。后来我又</p>
+<p>优化了一下，并且集成到了 Alfred 中。</p>
+<pre><code>// 如果直接用脚本编辑器执行，不需要第一行与最后行，这是要在 Alfred 中执行才需要的。
+on alfred_script(q)
+      tell application &quot;System Events&quot;
+        tell application &quot;Thunder&quot;
+            --激活主窗口
+            activate
+        end tell
+        --暂停一秒
+        delay 1
+        --全选任务，因只有选中才能暂停开始任务
+        key code 0 using &#123;command down&#125;
+        tell process &quot;Thunder&quot;
+            tell window &quot;迅雷&quot;
+                entire contents
+                --q 是传进来的参数，表示循环次数
+                --本代码中一次循环用时 20 + 2 秒，可根据实际情况调整
+                --q 的次数根据每次循环的时长来计算
+                repeat q times
+                    --等待20秒后暂停任务
+                    delay 20
+                    click button 7
+                    --暂停2秒后重新开始任务
+                    delay 2
+                    click button 6
+                end repeat
+            end tell
+        end tell
+    end tell
+end alfred_script
+</code></pre>
+<p>在集成到 Alfred 的过程中踩了个坑，就是传参问题，我之前一直用 <code>&#123;query&#125;</code> 来获取传过来的参数，但是一直不成功，查了后原来这要直接用 <code>q</code> 就行了。其实在脚本第一行已经说明，但我一直以为是固定格式。</p>
+<p>之后我发现使用 AppleScript 还有个好处就是脚本执行的时候可以不保持窗口最前：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-03-14-%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B6%202020-03-14%2010.47.37.gif"></p>
+<p>由于 AppleScript 的资料太少了，官方文档也很简单，没有实现我想要的效果。其实我本来的逻辑是每次循环前先判断下载列表中有没有任务，有的话就执行，没有就退出循环。但是目前还没找到获取的方法，所以只能先将就一下。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/cac2df04.html"
+      title="element-ui el-table 表格高度自适应问题解决方案"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        element-ui el-table 表格高度自适应问题解决方案
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/646b1550.html"
+      title="阻止表单只有一个 input 时回车自动提交"
+    >
+      <span class="post-near-title">
+        阻止表单只有一个 input 时回车自动提交
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

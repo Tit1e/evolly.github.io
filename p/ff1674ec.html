@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">1 / 21, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Notion 分享页面使用自定义域名</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p><a target="_blank" rel="noopener" href="https://www.notion.so/">Notion</a> 近几年突然火了起来，我也试用了一下，的确非常厉害，但是对我来说好像过于笨重，all in one 是它的优点，也是它的缺点。它的特点我就不过多介绍了，网上一搜一大堆，因为它天生的模块化与自适应的特点，很多人直接使用它来作为博客，但是有个缺点，就是域名只能使用官方的 notion.so，官方说日后会支持自定义域名，不过现在不是还没出来么，所以先自己折腾一下，网上搜了一圈，终于搞定了，记录一下：</p>
+<p>用的方案是使用 <a target="_blank" rel="noopener" href="https://dash.cloudflare.com/">Cloudflare</a> 的 Web Workers 为 Notion 的 HTTP 请求进行手动改写。</p>
+<p>首先我们需要将域名的域名服务器设置为 Cloudflare 的域名服务器，这样就可以使用 Cloudflare 的 DNS 服务了。</p>
+<p>注册 Cloudflare ，然后在这里添加自己的域名：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-134634.png"></p>
+<p>添加后下方就会显示已添加的域名，点击已添加的域名进入设置页面。</p>
+<p>切换到 dns 页面，添加一条 CNAME 记录，如果你自己的二级域名为 blog.xxx.com，那么名称那就填 blog，目标填 Notion 的域名，保存。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-134938.png"></p>
+<p>在这个页面的下方有 <strong>Cloudflare 名称服务器</strong></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-135438.png"></p>
+<p>我们需要把原本的域名服务器替换为这个，我的域名服务商为 <a target="_blank" rel="noopener" href="https://sg.godaddy.com/zh">godaddy</a>，在 DNS 管理页面会有设置域名服务器的入口，设置好就可以了。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-135559.png"></p>
+<p>设置完后我们回到 Cloudflare，切换到 Workers。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-135710.png"></p>
+<p>点击管理 Workers。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-135820.png"></p>
+<p>创建 Worker。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-135920.png"></p>
+<p>然后打开 <a target="_blank" rel="noopener" href="https://fruitionsite.com/">https://fruitionsite.com</a>，按图片填上信息，然后一键复制代码。这位老哥的页面其实也是 Notion 的公开页。</p>
+<p>使用这个脚本是因为它生成的脚本访问自定义域名的时候不会有后缀，我一开始找的脚本在访问自己的域名时，后面还有一串后缀。用这个就不会有。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-140400.png"></p>
+<p>打个岔，Notion 地址获取方法：</p>
+<p>![image-20210121220539670](&#x2F;Users&#x2F;tit1e&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20210121220539670.png)</p>
+<p>然后将复制的脚本代码粘贴到创建的 Worker 中，部署并保存。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-140814.png"></p>
+<p>然后回到 Workers 页面，添加路由。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-140913.png"></p>
+<p>按下图填写，保存。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-21-141119.png"></p>
+<p>这时候你再去访问自己的域名，看到的就是你 Notion 的页面了。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/f0cf2f8c.html"
+      title="Mac 时间机器 Time Machine 备份提速"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Mac 时间机器 Time Machine 备份提速
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/c75af13e.html"
+      title="el-table 自定义 header 中 el-input 绑定失效问题"
+    >
+      <span class="post-near-title">
+        el-table 自定义 header 中 el-input 绑定失效问题
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>
