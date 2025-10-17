@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 14, 2016</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Ubuntu下安装 Visual Studio Code</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>昨天在写eOS的使用体验的时候，无意间发现VS Code在linux可以用，于是写完博客后就立马去安装VSC，但是照着网上的教程，安装过程中还是遇到了不少的问题。所以我总结了下，希望能帮到有需要的人。</p>
+<p><strong>我的系统是elementary OS，不过是基于Ubuntu的，所以安装方法相同</strong></p>
+<span id="more"></span>
+<p><strong>Ubuntu Make安装Visual Studio Code</strong><br>首先使用PPA方式安装ubuntu-make</p>
+<pre><code class="bash">sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make
+sudo apt-get update
+sudo apt-get install ubuntu-make
+umake web visual-studio-code
+</code></pre>
+<p>第四步安装过程中会让你确认两次，第一次是让你确认安装目录，你可以随意更改，第二次的时候输入a，回车就行，之后就等待下载安装完成。如果运气好的话，安装按成后啓动器里应该会出现VSC的图标。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-15-8984851a-e90e-11e5-8979-cc6a31b36e00.png"><br>但如果你的脸也和我一样黑，没出现的话，没关系，进入<code>/home/tit1e/.local/share/applications/</code>（系统有区别路径也可能不一样，找不到可以直接搜文件夹），你会发现这里是有图标的，你可以试着运行它，我发现我无法运行。用编辑器打开它，你会看到如下代码：</p>
+<pre><code>    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Visual Studio Code
+    Icon=/home/tit1e/visual-studio-code/resources/app/resources/linux/code.png
+    Exec=/home/tit1e/visual-studio-code/Code //把Code改成你安装目录下这个文件的名字，我目录下的名字是code，文件名是分大小写的哦
+    Comment=Visual Studio focused on modern web and cloud
+    Categories=Development;IDE;
+    Terminal=false
+</code></pre>
+<p>这时候你再试着运行试试，你会发现可以打开了。</p>
+<p>至于啓动器的图标无法显示，你把这个图标剪切到其他目录下，在剪切回来就会显示了。以上是我的安装方法。只是这样安装的VSC不出现在右键运行方式的列表里，所以打开文档只能通过VSC内部的open打开。</p>
+<p><strong>下载压缩包安装Visual Studio Code</strong></p>
+<p>首先去<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">官网</a>下载VSC的zip压缩包，下载下来后解压到你想安装的目录。</p>
+<p>然后在啓动器目录下创建visualstudiocode.desktop文件，名字可以随意，就是啓动其中显示的名字。</p>
+<p>用编辑器打开这个文件，添加如下代码</p>
+<pre><code>    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Visual Studio Code
+    Icon=/home/tit1e/visual-studio-code/resources/app/resources/linux/code.png  //图标路径，在解压的文件夹下的/resources/app/resources/linux/目录下
+    Exec=/home/tit1e/visual-studio-code/Code  //解压目录下code文件的路径
+    Comment=Visual Studio focused on modern web and cloud
+    Categories=Development;IDE;
+    Terminal=false
+</code></pre>
+<p>接下来保存退出文件，文件夹中就多了一个VSC图标了，如果图标不显示，同样剪切到其他目录再剪切回来就OK。</p>
+<p>请尽情使用吧：)</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-12-15-9a1c261c-e90e-11e5-8b88-e1ca351ca37c.png"></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/339ea31e.html"
+      title="到家了"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        到家了
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/66302f7b.html"
+      title="Elementary OS使用体验"
+    >
+      <span class="post-near-title">
+        Elementary OS使用体验
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

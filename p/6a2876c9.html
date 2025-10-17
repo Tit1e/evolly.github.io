@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">12 / 19, 2020</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">js 上传文件至腾讯云对象存储</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>今天终于把自己的摄影展示网站发布到了线上。<a target="_blank" rel="noopener" href="https://album.animalcrossing.life/">查看网站</a></p>
+<p>这个网站整体并不复杂，但是其中也有不少值得记录的难点，比如从前端上传文件至腾讯云的对象存储，公司业务中我使用过七牛的云存储，腾讯的还从未接触过。本以为应该跟七牛的差不多，但没想到我费了好大的力气各种看文档、看别人的博客才成功上传。</p>
+<p>吐槽一句腾讯的文档写的真的好差。</p>
+<p>下面分享一下我的上传配置及流程：</p>
+<p>整个流程需要前端和后端的配合，所以代码会分为前端代码与后端代码两个部分，下面我会注明。后端我用的是 Node.js。</p>
+<h2 id="上传流程说明"><a href="#上传流程说明" class="headerlink" title="上传流程说明"></a>上传流程说明</h2><p>上传的整体流程大概是这样：</p>
+<p>1、上传前，前端发起请求向服务器发起请求获取上传的临时密钥</p>
+<p>2、服务器端收到请求，通过腾讯官方的 sdk 计算出临时密钥并返回给前端</p>
+<p>3、前端获取到临时密钥，获取选择的文件，计算 md5 值作为文件名（这样相同文件就不会重复上传）</p>
+<p>4、通过官方的 sdk 进行上传，在回调中处理上传后的逻辑</p>
+<p>##后端代码 Node.js</p>
+<p>基础的服务运行环境我就不做展开了，只讲获取临时密钥的过程。</p>
+<p>首先需要安装 qcloud-cos-sts 依赖：</p>
+<pre><code class="bash">npm install qcloud-cos-sts --save
+</code></pre>
+<p>然后就是在你请求的方法文件中编写代码，个人视不同请求而定：</p>
+<pre><code class="js">// 这是我的文件 upload.js
+
+// 引入依赖
+const STS = require(&#39;qcloud-cos-sts&#39;);
+
+// 定义配置项
+// 密钥可从腾讯云控制台的【API密钥管理】中获取：https://console.cloud.tencent.com/cam/capi
+const config = &#123;
+  secretId: &#39;你的固定密钥&#39;, // 替换你的固定密钥
+  secretKey: &#39;你的固定密钥&#39;, // 替换你的固定密钥
+  proxy: &#39;&#39;,
+  durationSeconds: 6000, // 密钥有效期
+  // 放行判断相关参数
+  bucket: &#39;bucket名字&#39;, // 换成你的 bucket
+  region: &#39;bucket 地区&#39;, // 换成 bucket 所在地区
+  allowPrefix: &#39;*&#39;, // 这里改成允许的路径前缀，可以根据自己网站的用户登录态判断允许上传的具体路径，例子： a.jpg 或者 a/* 或者 * (使用通配符*存在重大安全风险, 请谨慎评估使用)
+  allowActions: [
+    // 所有 action 请看文档 https://cloud.tencent.com/document/product/436/31923
+    // 简单上传
+    &#39;name/cos:PutObject&#39;,
+    &#39;name/cos:PostObject&#39;,
+    // 分片上传
+    &#39;name/cos:sliceUploadFile&#39;,
+    &#39;name/cos:InitiateMultipartUpload&#39;,
+    &#39;name/cos:ListMultipartUploads&#39;,
+    &#39;name/cos:ListParts&#39;,
+    &#39;name/cos:UploadPart&#39;,
+    &#39;name/cos:CompleteMultipartUpload&#39;,
+  ],
+&#125;;
+
+// 我用的是express，所以接口方法这样写，最外层的方法无所谓，每个人都不一样，主要是里面的内容
+
+router.get(&#39;/upload/sts&#39;, (req, res) =&gt; &#123;
+  // 获取临时密钥
+  const shortBucketName = config.bucket.substr(0, config.bucket.lastIndexOf(&#39;-&#39;));
+  const appId = config.bucket.substr(1 + config.bucket.lastIndexOf(&#39;-&#39;));
+  const policy = &#123;
+    version: &#39;2.0&#39;,
+    statement: [&#123;
+      action: config.allowActions,
+      effect: &#39;allow&#39;,
+      principal: &#123; qcs: [&#39;*&#39;] &#125;,
+      resource: [
+        `qcs::cos:$&#123;config.region&#125;:uid/$&#123;appId&#125;:prefix//$&#123;appId&#125;/$&#123;shortBucketName&#125;/$&#123;config.allowPrefix&#125;`,
+      ],
+    &#125;],
+  &#125;;
+  STS.getCredential(&#123;
+    secretId: config.secretId,
+    secretKey: config.secretKey,
+    proxy: config.proxy,
+    durationSeconds: config.durationSeconds,
+    policy,
+  &#125;, (err, tempKeys) =&gt; &#123;
+    const result = err || tempKeys || &#39;&#39;;
+    res.json(new Result(&#123; data: result &#125;));
+  &#125;);
+&#125;);
+</code></pre>
+<p>存储桶的相关信息可以在控制台的存储桶的【概览】中查看。</p>
+<p>注意：<strong>存储桶所在地域只需括号中的内容，不需要中文</strong>。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-12-19-153605.png"></p>
+<p>后端计算临时密钥的方法就是以上这些了。</p>
+<h2 id="前端代码"><a href="#前端代码" class="headerlink" title="前端代码"></a>前端代码</h2><p>在配置文件中定义好基础信息</p>
+<pre><code class="js">// @/utils/cosConf.js
+
+export default &#123;
+  // ...
+  Bucket: &#39;&#39;, // Bucket 名称
+  Region: &#39;&#39;, // Bucket 地域
+  Domain: &#39;&#39;, // Bucket 访问域名
+&#125;;
+</code></pre>
+<p>然后安装以下依赖</p>
+<pre><code class="bash">npm install cos-js-sdk-v5 spark-md5 --save
+</code></pre>
+<p>具体上传代码：</p>
+<pre><code class="js">import COS from &#39;cos-js-sdk-v5&#39;;
+import SparkMD5 from &#39;spark-md5&#39;;
+// 这个方法是文章中上面写的获取临时密钥的请求方法
+import &#123; sts &#125; from &#39;@/api/upload&#39;;
+// 上面定义的基础信息
+import cosConfig from &#39;./cosConf&#39;;
+let key = &#39;&#39;;
+// 配置
+
+// 初始化实例
+const cos = new COS(&#123;
+  async getAuthorization(options, callback) &#123;
+    // 获取临时密钥
+    const res = await sts();
+    const authdata = res.data;
+    const auth = &#123;
+      TmpSecretId: authdata.credentials.tmpSecretId,
+      TmpSecretKey: authdata.credentials.tmpSecretKey,
+      XCosSecurityToken: authdata.credentials.sessionToken,
+      ExpiredTime: authdata.expiredTime, // 在ExpiredTime时间前，不会再次调用getAuthorization
+    &#125;;
+    callback(auth);
+  &#125;,
+  FileParallelLimit: 3, // 文件并发数
+  ChunkParallelLimit: 8, // 同一个上传文件的分块并发数
+  ChunkSize: 1024 * 1024 * 8, // 分块上传时，每块的字节数大小
+&#125;);
+
+// 获得文件md5
+function getFileMD5(file, callback) &#123;
+  // 声明必要的变量
+  const fileReader = new FileReader();
+  // 文件每块分割2M，计算分割详情
+  const chunkSize = 2 * 1024 * 1024;
+  const chunks = Math.ceil(file.size / chunkSize);
+  let currentChunk = 0;
+
+  // 创建md5对象（基于SparkMD5）
+  const spark = new SparkMD5();
+
+  // 每块文件读取完毕之后的处理
+  fileReader.onload = (e) =&gt; &#123;
+    // 每块交由sparkMD5进行计算
+    spark.appendBinary(e.target.result);
+    currentChunk += 1;
+
+    // 如果文件处理完成计算MD5，如果还有分片继续处理
+    if (currentChunk &lt; chunks) &#123;
+      // eslint-disable-next-line no-use-before-define
+      loadNext();
+    &#125; else &#123;
+      callback(spark.end());
+    &#125;
+  &#125;;
+
+  // 处理单片文件的上传
+  function loadNext() &#123;
+    const start = currentChunk * chunkSize;
+    const end = start + chunkSize &gt;= file.size ? file.size : start + chunkSize;
+
+    fileReader.readAsBinaryString(file.slice(start, end));
+  &#125;
+  loadNext();
+&#125;
+
+// 小文件直接上传-通过putObject上传
+export function uploadFile(file, callback, progressBc) &#123;
+  // 得到md5码
+  getFileMD5(file, (md5) =&gt; &#123;
+    // 存储文件的md5码
+    file.md5 = md5;
+    const subfix = file.name.substr(file.name.lastIndexOf(&#39;.&#39;));
+    key = process.env.VUE_APP_BUCKET_PATH + file.md5 + subfix;
+    cos.putObject(&#123;
+      Bucket: cosConfig.Bucket,
+      Region: cosConfig.Region,
+      Key: key,
+      Body: file,
+      onProgress(progressData) &#123;
+        // 上传进度
+        progressBc(progressData.percent);
+      &#125;,
+    &#125;, (err, data) =&gt; &#123;
+      // 成功或出错回调
+      callback(err, data);
+    &#125;);
+  &#125;);
+&#125;
+
+// 大文件分片上传-通过sliceUploadFile上传
+export function uploadFile2(file, callback, progressBc) &#123;
+  // 得到md5码
+  getFileMD5(file, (md5) =&gt; &#123;
+    // 存储文件的md5码
+    file.md5 = md5;
+    const subfix = file.name.substr(file.name.lastIndexOf(&#39;.&#39;));
+    key = process.env.VUE_APP_BUCKET_PATH + file.md5 + subfix;
+    cos.sliceUploadFile(&#123;
+      Bucket: cosConfig.Bucket,
+      Region: cosConfig.Region,
+      Key: key,
+      Body: file,
+      onProgress(progressData) &#123;
+        // 上传进度
+        progressBc(progressData.percent);
+      &#125;,
+    &#125;, (err, data) =&gt; &#123;
+      callback(err, data);
+    &#125;);
+  &#125;);
+&#125;
+</code></pre>
+<p>调用上传的话，只需这样：</p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type=&quot;file&quot; accept=&quot;image/*&quot; ref=&quot;upload&quot; id=&quot;upload&quot;&gt;
+    &lt;button @click=&quot;submit&quot;&gt;上 传&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    import &#123; uploadFile &#125; from &#39;@/utils/uploadfile&#39;;
+  export default &#123;
+    methods: &#123;
+      submit()&#123;
+        const file = this.$refs.upload.files[0]
+        uploadFile(file, (err, data) =&gt; &#123;
+            // 回调
+            if(!err)&#123;
+              // 上传成功处理
+            &#125;else&#123;
+              // 出错处理
+            &#125;
+          &#125;, progress =&gt; &#123;
+            // 这里可以设置上传进度
+          &#125;);
+      &#125;
+    &#125;
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="存储桶设置"><a href="#存储桶设置" class="headerlink" title="存储桶设置"></a>存储桶设置</h2><p>最后，存储桶还需要设置跨域访问，否则哪怕前面都正确，文件也无法上传。</p>
+<p>在存储桶的【安全管理】-【跨域访问CORS设置】中添加规则，设置域名白名单，保存生效后，不出意外就可以正常上传文件了。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2020-12-19-155231.png"></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/693b2eb0.html"
+      title="用快捷指令快速打开支付码、扫一扫或支付宝指定小程序"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        用快捷指令快速打开支付码、扫一扫或支付宝指定小程序
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/1908a4a9.html"
+      title="iOS14 桌面美化，自定义图标"
+    >
+      <span class="post-near-title">
+        iOS14 桌面美化，自定义图标
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

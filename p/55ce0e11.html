@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 29, 2019</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">element-ui 树形控件使用右键菜单</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>element-ui 的树形控件本身是不支持右键的，官方文档上推荐把操作按钮展示在对应的项上，但是如果操作项比较多，或者本身就有信息需要展示在项上，再加上这些操作按钮就会比较凌乱。正好公司业务上有这个需求，因此我在网上搜了一圈，找到比较好的解决方式。</p>
+<p>整体思路就是：当右键时，调用左键的 <code>node-click</code> 方法，通过 <code>node-click</code> 将获取到的数据储存起来，然后展示右键菜单，获取到数据后，怎么处理就可以自由发挥了。</p>
+<p>右键菜单我使用了 <a target="_blank" rel="noopener" href="https://github.com/xunleif2e/vue-context-menu">vue-context-menu</a> 插件，引入方式可看 <code>README</code>。</p>
+<p><a target="_blank" rel="noopener" href="https://tit1e.github.io/Demos/57-el-tree-contextmenu/">Demo</a></p>
+<p>下面是具体代码：</p>
+<pre><code class="html">&lt;div id=&quot;app&quot;&gt;
+  &lt;el-tree :data=&quot;data&quot; id=&quot;el-tree&quot; :props=&quot;defaultProps&quot; @node-click=&quot;handleNodeClick&quot;&gt;&lt;/el-tree&gt;
+  &lt;context-menu class=&quot;right-menu&quot;
+      :target=&quot;contextMenuTarget&quot;
+      :show=&quot;contextMenuVisible&quot;
+      @update:show=&quot;(show) =&gt; contextMenuVisible = show&quot;&gt;
+    &lt;a href=&quot;javascript:;&quot; @click=&quot;handleClick&quot;&gt;操作1&lt;/a&gt;
+    &lt;a href=&quot;javascript:;&quot; @click=&quot;handleClick&quot;&gt;操作2&lt;/a&gt;
+    &lt;a href=&quot;javascript:;&quot; @click=&quot;handleClick&quot;&gt;操作3&lt;/a&gt;
+  &lt;/context-menu&gt;
+  当前右键获取到的节点为：&#123;&#123;JSON.stringify(nodeData)&#125;&#125;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="javascript">export default &#123;
+  data() &#123;
+    return &#123;
+      contextMenuTarget: null,
+      contextMenuVisible: false,
+      nodeData: &#123;&#125;,
+      data: [&#123;
+        label: &#39;一级 1&#39;,
+        children: [&#123;
+          label: &#39;二级 1-1&#39;,
+          children: [&#123;
+            label: &#39;三级 1-1-1&#39;
+          &#125;]
+        &#125;]
+      &#125;, &#123;
+        label: &#39;一级 2&#39;,
+        children: [&#123;
+          label: &#39;二级 2-1&#39;,
+          children: [&#123;
+            label: &#39;三级 2-1-1&#39;
+          &#125;]
+        &#125;, &#123;
+          label: &#39;二级 2-2&#39;,
+          children: [&#123;
+            label: &#39;三级 2-2-1&#39;
+          &#125;]
+        &#125;]
+      &#125;, &#123;
+        label: &#39;一级 3&#39;,
+        children: [&#123;
+          label: &#39;二级 3-1&#39;,
+          children: [&#123;
+            label: &#39;三级 3-1-1&#39;
+          &#125;]
+        &#125;, &#123;
+          label: &#39;二级 3-2&#39;,
+          children: [&#123;
+            label: &#39;三级 3-2-1&#39;
+          &#125;]
+        &#125;]
+      &#125;],
+      defaultProps: &#123;
+        children: &#39;children&#39;,
+        label: &#39;label&#39;
+      &#125;
+    &#125;
+  &#125;,
+  mounted() &#123;
+    this.$nextTick(() =&gt; &#123;
+      // vue-context-menu 需要传入一个触发右键事件的元素，等页面 dom 渲染完毕后才可获取
+      this.contextMenuTarget = document.querySelector(&#39;#el-tree&#39;)
+      // 获取所有的 treeitem，循环监听右键事件
+      const tree = document.querySelectorAll(&#39;#el-tree [role=&quot;treeitem&quot;]&#39;)
+      tree.forEach(i =&gt; &#123;
+        i.addEventListener(&#39;contextmenu&#39;,event =&gt; &#123;
+          // 如果右键了，则模拟点击这个treeitem
+          event.target.click()
+        &#125;)
+      &#125;)
+    &#125;)
+  &#125;,
+  methods: &#123;
+    handleNodeClick(data) &#123;
+      console.log(data)
+      this.nodeData = data
+    &#125;,
+    handleClick()&#123;
+      this.contextMenuVisible = false
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="css">html,
+body &#123;
+  height: 100%;
+  font-size: 14px;
+&#125;
+#app &#123;
+  width: 800px;
+  margin: 0 auto;
+  font-family: &#39;Microsoft Yahei&#39;, &#39;Avenir&#39;, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+  height: 100%;
+&#125;
+// 右键会选中文字，为了美观将它禁用
+#el-tree&#123;
+  user-select:none;
+&#125;
+.right-menu &#123;
+  position: fixed;
+  background: #fff;
+  border: solid 1px rgba(0, 0, 0, .2);
+  border-radius: 3px;
+  z-index: 999;
+  display: none;
+&#125;
+.right-menu a &#123;
+  width: 75px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  display: block;
+  color: #1a1a1a;
+&#125;
+.right-menu a:hover &#123;
+  background: #eee;
+  color: #fff;
+&#125;
+.right-menu &#123;
+    border: 1px solid #eee;
+    box-shadow: 0 0.5em 1em 0 rgba(0,0,0,.1);
+    border-radius: 1px;
+&#125;
+a &#123;
+    text-decoration: none;
+&#125;
+.right-menu a &#123;
+    padding: 2px;
+&#125;
+.right-menu a:hover &#123;
+    background: #42b983;
+&#125;
+</code></pre>
+<p>以上就是完整代码。</p>
+<p>当然还有另外一种思路。el-tree 自带有 <code>node-contextmenu</code> 事件，如果使用了这个事件，原生的右键事件都会被阻止，因此上面方法不能与这个事件一起使用，会造成右键插件无法正常显示。但是 <code>node-contextmenu</code> 事件返回了非常详细的参数：依次为 event、传递给 <code>data</code> 属性的数组中该节点所对应的对象、节点对应的 Node、节点组件本身。由于可以获取到 event，里面带有鼠标右击的坐标，因此完全可以自己写一个右键菜单，而且这个事件的回调参数更为丰富。</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000012940760">参考文章</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/1acb9b9b.html"
+      title="hexo rss 报错解决方案"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        hexo rss 报错解决方案
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/8a2decf7.html"
+      title="编写一个全局 SVG 图标组件"
+    >
+      <span class="post-near-title">
+        编写一个全局 SVG 图标组件
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

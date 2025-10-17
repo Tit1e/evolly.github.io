@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 13, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">electron 应用打包后自动发布至 GitHub Releases</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #electron
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>之前重写的 <a href="https://evolly.one/2021/10/12/166-send-to-flomo/">Send2Flomo</a> 用到了 electron 更新相关的功能，既然更新是自动的了，那么发布能不能也自动化呢？我之前都是手动将包上传至 GitHub Releases，也是一件比较繁琐的事情。然后在网上一番查找，并且经过多次的试验之后，终于成功了。</p>
+<p>我一开始使用的是 CI，因为我的应用只运行在 Mac 环境下，所以我使用的是 AppVeyor，一开始我没仔细看，照着网上的教程配置了老半天 Travis-CI，最后在控制台看报错信息的时候发现 Windows 的目录，然后再一看教程，这个是专门针对 Windows 环境打包的，AppVeyor 才是 Linux 跟 Mac OS 的，于是又重新配置了一遍。发布也成功了，但是最后发现，其他环境下打包是没有签名的，因为签名在我自己开发的电脑上。<strong>为什么需要签名呢？因为只有签名了的应用才能自动安装更新。</strong></p>
+<p>网上搜了很多资料，还是没解决，最后打算使用 electron-builder 配置来自动上传。</p>
+<p>我的打包配置项写在 <code>vue.config.js</code> 中，有些可能写在 <code>package.json</code> 中，这都不是大问题，反正将配置都写在一个地方就行，我的配置如下：</p>
+<pre><code class="js">// vue.config.js
+module.exports = &#123;
+  // ...其他配置项
+  pluginOptions: &#123;
+    publish: &#123;
+      provider: &#39;github&#39;,
+      repo: &#39;kindle2Flomo&#39;, // git仓库
+      owner: &#39;Tit1e&#39;, // 拥有者
+      releaseType: &#39;release&#39;,
+      vPrefixedTagName: false,
+      publishAutoUpdate: true // 发布自动更新（需要配置GH_TOKEN）。 默认true
+    &#125;
+  &#125;
+  // ...其他配置项
+&#125;
+</code></pre>
+<p>发布的配置项配置完了之后，还需要配置 GH_TOKEN。这个 token 是用来授权一些权限的，因为要往你的私人仓库上传文件，所以必须有相应的权限。</p>
+<p>GH_TOKEN 可以在这里生成 <a target="_blank" rel="noopener" href="https://github.com/settings/tokens/new">https://github.com/settings/tokens/new</a></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-13-143252.png"></p>
+<p>输入 token 的备注，选择有效期，我选择的是永不过期，最后将 repo 选上，拉到最底下生成 token。</p>
+<p>⚠️ <strong>注意：token 只在生成完成时候显示一次，关闭网页之后就无法再查看，所以及时保存至其他地方。</strong>当然真的忘了，那就删了重新生成一个。</p>
+<p>生成完需要将 GH_TOKEN 添加到环境变量中去，当然你可以在你执行打包命令的终端中临时添加：</p>
+<pre><code class="bash">export GH_TOKEN=&quot;YOUR_TOKEN&quot;
+</code></pre>
+<p>先执行上面的命令，然后执行打包命令。而加到系统变量中就免去了这一步的麻烦。</p>
+<pre><code class="bash">sudo vim ~/.bash_profile
+</code></pre>
+<p>然后在文件中添加：</p>
+<pre><code class="bash">export GH_TOKEN=&quot;YOUR_TOKEN&quot;
+# 下面这个变量我是多加的
+export GITHUB_TOKEN=&quot;YOUR_TOKEN&quot;
+</code></pre>
+<p>添加完之后去执行打包命令，最后会发现还是找不到 GH_TOKEN，在网上查了之后，发现是终端加载的是 <strong><code>~/.zshrc</code></strong> 文件，而在 <strong><code>.zshrc</code></strong> 文件中没有定义任务环境变量，因此我们需要在这个文件中加入一句：</p>
+<pre><code class="bash">source ~/.bash_profile
+</code></pre>
+<p>网上说这句要加在最后一行，但是我加在最后不行，就加在了稍微前面一点，也可以正常运行。</p>
+<p>所以我在想<strong>是不是直接在 <code>~/.zshrc</code> 中定义变量，就不用执行 <code>source ~/.bash_profile</code> 了？</strong>不过最后我没有尝试。</p>
+<p>⚠️ <strong>除了这些别忘了还需要开发者的证书，证书的生成教程网上有很多，查一下就行。</strong></p>
+<p>最后，在 <code>package.json</code> 中加入一条新命令：</p>
+<pre><code class="json">&quot;electron:publish&quot;: &quot;vue-cli-service electron:build --publish always&quot;
+</code></pre>
+<p>执行上面这条命令，正常情况下会先执行打包流程，打包完成后可以在终端看到文件上传的进度。</p>
+<p>等终端执行完毕，去 GitHub 的 Releases 页面，就会看到一个新的 releases 草稿，之后你就可以编辑更新信息，或者直接发布了。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/10213.html"
+      title="uniapp APP 端使用 canvas 绘制 IM 群聊头像"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        uniapp APP 端使用 canvas 绘制 IM 群聊头像
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/21002.html"
+      title="Send2Flomo"
+    >
+      <span class="post-near-title">
+        Send2Flomo
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

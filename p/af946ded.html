@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">5 / 14, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">一些工作中常用到的代码</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>很久没有写博客了，回原来的公司后就基本上没有更新了，到现在也快两个月了。这个博客其实很早前久应该写了，然后一直拖拖拖拖到现在。之前我全部记在了bear中，现在搬到博客上来，后续有更新就在现在基础上接着更新。其实不光涉及到工作中经常用的，还有一些经常是平时折腾的时候记下来怕日后忘记的。</p>
+<p><strong>因为公司业务基本用的是jQuery，所以这里用到的代码基本上是基于jQuery。</strong></p>
+<h2 id="iframe动态改变高度"><a href="#iframe动态改变高度" class="headerlink" title="iframe动态改变高度"></a>iframe动态改变高度</h2><pre><code class="javascript">    //页面加载时获取iframe高度
+    $(&quot;#iframepage&quot;).on(&#39;load&#39;, function () &#123;
+        var mainheight = $(this).contents().find(&quot;body&quot;).height() + 30;
+        $(this).height(mainheight);
+    &#125;);
+    //动态改变iframe高度
+    setInterval(function () &#123;
+        var mainheight = $(&quot;#iframepage&quot;).contents().find(&quot;body&quot;).height() + 30;
+        $(&quot;#iframepage&quot;).height(mainheight);
+    &#125;, 200);
+</code></pre>
+<span id="more"></span>
+<h2 id="滚动条到底部自动加载数据"><a href="#滚动条到底部自动加载数据" class="headerlink" title="滚动条到底部自动加载数据"></a>滚动条到底部自动加载数据</h2><pre><code class="javascript">    //滚动条到底部加载
+    $(function () &#123;
+        ajaxFlag = true;
+        var page = 10;
+        var num = page;
+        $(window).scroll(function () &#123;
+            var scrollTop = $(this).scrollTop();                             // 滚动条距离顶部的高度
+            var scrollHeight = $(document).height();                          // 当前页面的总高度
+            var windowHeight = $(this).height();                              // 当前可视的页面高度
+            var expectHeight = 0;                                               // 预加载距离
+            if (scrollTop + windowHeight &gt;= scrollHeight - expectHeight) &#123;    // 距离顶部+当前高度 &gt;=文档总高度 即代表滑动到底部
+                //code....
+            &#125;
+        &#125;);
+    &#125;);
+</code></pre>
+<h2 id="获取url中的参数"><a href="#获取url中的参数" class="headerlink" title="获取url中的参数"></a>获取url中的参数</h2><p><em>公司后端用的thinkphp，所以获取参数直接用TP的I方法就可以，上次无意间搜到了，就顺便存了</em></p>
+<pre><code class="javascript">    function getQueryString(name) &#123;
+        var reg = new RegExp(&quot;(^|&amp;)&quot; + name + &quot;=([^&amp;]*)(&amp;|$)&quot;, &quot;i&quot;);
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    &#125;
+</code></pre>
+<h2 id="判断单选或复选框是否被选中以及改变选中状态"><a href="#判断单选或复选框是否被选中以及改变选中状态" class="headerlink" title="判断单选或复选框是否被选中以及改变选中状态"></a>判断单选或复选框是否被选中以及改变选中状态</h2><pre><code class="javascript">    if ($(this).find(&#39;input&#39;).prop(&quot;checked&quot;)) &#123;
+        $(this).find(&#39;input&#39;).removeAttr(&#39;checked&#39;);
+    &#125; else &#123;
+        $(this).find(&#39;input&#39;).attr(&quot;checked&quot;, &quot;checked&quot;);
+    &#125;
+</code></pre>
+<h2 id="用阴影实现遮罩"><a href="#用阴影实现遮罩" class="headerlink" title="用阴影实现遮罩"></a>用阴影实现遮罩</h2><pre><code class="css">    box-shadow: inset 0 0 20px 1px, 0 0 5px 2000px rgba(0, 0, 0, 0.8);
+</code></pre>
+<h2 id="实时监听输入框变化"><a href="#实时监听输入框变化" class="headerlink" title="实时监听输入框变化"></a>实时监听输入框变化</h2><pre><code class="javascript">    $(&#39;#media_name&#39;).on(&#39;input propertychange&#39;, function () &#123;
+       //code.....
+    &#125;);
+</code></pre>
+<h2 id="去除chrome表单黄色背景"><a href="#去除chrome表单黄色背景" class="headerlink" title="去除chrome表单黄色背景"></a>去除chrome表单黄色背景</h2><pre><code class="css">    input:-webkit-autofill, 
+    textarea:-webkit-autofill, 
+    select:-webkit-autofill &#123; 
+        -webkit-box-shadow: 0 0 0 1000px white inset; 
+    &#125;
+    input[type=text]:focus, input[type=password]:focus, textarea:focus &#123;
+        -webkit-box-shadow: 0 0 0 1000px white inset; 
+    &#125;
+</code></pre>
+<h2 id="ThinkPHP时间戳格式化"><a href="#ThinkPHP时间戳格式化" class="headerlink" title="ThinkPHP时间戳格式化"></a>ThinkPHP时间戳格式化</h2><pre><code class="php">    //如果在Action里 
+    $time = date(&quot;Y-m-d&quot;, $time);
+    //如果在模板里 
+    &#123;$time|date=&#39;Y-m-d&#39;,##&#125; 
+</code></pre>
+<h2 id="ThinkPHP去掉url中的index-php"><a href="#ThinkPHP去掉url中的index-php" class="headerlink" title="ThinkPHP去掉url中的index.php"></a>ThinkPHP去掉url中的index.php</h2><p>在应用的根目录下面新建一个 .htaccess 文件(linux环境下)。在文件里面加入如下代码：</p>
+<pre><code>    &lt;IfModule mod_rewrite.c&gt;
+    RewriteEngine on
+    RewriteCond %&#123;REQUEST_FILENAME&#125; !-d
+    RewriteCond %&#123;REQUEST_FILENAME&#125; !-f
+    RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+    &lt;/IfModule&gt;
+</code></pre>
+<p>其实以上就已经实现了去除 url 中的 index.php 字符直接访问应用了。但是仅仅以上两步操作还会出现的一个问题就是 thinkphp 的常量 <strong>URL</strong> 中还是会自动带上 index.php 这段字符串，彻底解决这个问题的办法是在项目的配置文件里加上如一条如下配置：<code>&#39;URL_MODEL&#39;=&gt;&#39;2&#39;</code></p>
+<h2 id="vue-for循环，把内容填充到-href，src中"><a href="#vue-for循环，把内容填充到-href，src中" class="headerlink" title="vue for循环，把内容填充到 href，src中"></a>vue for循环，把内容填充到 href，src中</h2><pre><code>:href=&#39;list.href&#39;
+:src=&#39;list.src&#39;
+</code></pre>
+<h2 id="首行缩进css"><a href="#首行缩进css" class="headerlink" title="首行缩进css"></a>首行缩进css</h2><pre><code class="css">    text-indent:2em;
+</code></pre>
+<h2 id="iphone动态加载元素单击无效问题"><a href="#iphone动态加载元素单击无效问题" class="headerlink" title="iphone动态加载元素单击无效问题"></a>iphone动态加载元素单击无效问题</h2><pre><code class="javascript">    $(&#39;#list&#39;).delegate(&#39;.tbody&#39;, &#39;click&#39;, function () &#123;
+        $(&#39;#loading&#39;).show();
+        location.href = $(this).attr(&#39;data&#39;);
+    &#125;)
+</code></pre>
+<h2 id="去除移动端点击半透明感遮罩"><a href="#去除移动端点击半透明感遮罩" class="headerlink" title="去除移动端点击半透明感遮罩"></a>去除移动端点击半透明感遮罩</h2><pre><code class="css">    -webkit-tap-highlight-color: rgba(0,0,0,0);
+</code></pre>
+<h2 id="图片和文字垂直水平居中"><a href="#图片和文字垂直水平居中" class="headerlink" title="图片和文字垂直水平居中"></a>图片和文字垂直水平居中</h2><pre><code class="css">    #add_supplier &#123;
+        line-height: 2rem;
+        font-size: 1.2rem!important;
+    &#125;
+
+    #add_supplier&gt;div &#123;
+        display: table;
+        margin: 0 auto;
+    &#125;
+
+    #add_supplier span &#123;
+        color: #00AC5A;
+    &#125;
+
+    #add_supplier img &#123;
+        height: 50%;
+        float: left;
+        margin-right: 0.2rem;
+    &#125;
+</code></pre>
+<pre><code class="html">    &lt;li id=&quot;add_supplier&quot;&gt;
+        &lt;div&gt;
+            &lt;div&gt;
+                &lt;img src=&quot;Public/img/company/add.png&quot;&gt;
+                &lt;span&gt;添加供应商信息&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/li&gt;
+</code></pre>
+<h2 id="ThinkPHP用法"><a href="#ThinkPHP用法" class="headerlink" title="ThinkPHP用法"></a>ThinkPHP<eq>用法</h2><pre><code class="php">//name中不用加$
+&lt;eq name=&quot;Think.get.pm&quot; value=&quot;1&quot;&gt;checked&lt;/eq&gt;
+</code></pre>
+<p>第一次大概就这么点，其他的之后会继续添加。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/a420b84d.html"
+      title="你快看那片星空"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        你快看那片星空
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/1353a156.html"
+      title="JavaScript高级程序设计笔记（三）"
+    >
+      <span class="post-near-title">
+        JavaScript高级程序设计笔记（三）
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">7 / 22, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">一些工作中常用到的代码(二)</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <h2 id="jQuery操作单选、复选框选中状态"><a href="#jQuery操作单选、复选框选中状态" class="headerlink" title="jQuery操作单选、复选框选中状态"></a>jQuery操作单选、复选框选中状态</h2><p>工作中时常会遇到使用 jQuery 操作选中、取消选中状态，之前是通过添加和移除 <code>checked</code> 属性来操作的，但是这种方法会在判断选中状态时会出现不一致的问题。使用如下方法就不会有什么问题(与第一次的内容有点重复)。</p>
+<pre><code class="javascript">    //修改选中状态
+    $(&#39;input[type=checkbox],input[type=radio]&#39;).prop(&#39;checked&#39;,true);//选中
+    $(&#39;input[type=checkbox],input[type=radio]&#39;).prop(&#39;checked&#39;,false);//取消选中
+    //判断是否选中
+    $(&#39;input[type=checkbox],input[type=radio]&#39;).prop(&#39;checked&#39;);
+</code></pre>
+<span id="more"></span>
+<h2 id="使用FormData对象异步传输-form-表单数据"><a href="#使用FormData对象异步传输-form-表单数据" class="headerlink" title="使用FormData对象异步传输 form 表单数据"></a>使用FormData对象异步传输 form 表单数据</h2><p>我们工作中有时候会遇到表单需要用 Ajax 的方式传输，但是如果遇到表单元素数量比较多的情况，获取表单的数据内容会占据大量的时间，而 <code>formData</code> 可以将表单中的数据像提交表单那样将表单中的数据“打包”，然后通过 Ajax 传输。</p>
+<pre><code class="html">    &lt;form id=&quot;uploadForm&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        &lt;!-- code... --&gt;
+    &lt;/form&gt;
+    &lt;script&gt;
+        $.ajax(&#123;
+            url: &#39;/upload&#39;,
+            type: &#39;POST&#39;,
+            cache: false,
+            data: new FormData($(&#39;#uploadForm&#39;)[0]),
+            processData: false,
+            contentType: false
+        &#125;).done(function(res) &#123;
+
+        &#125;).fail(function(res) &#123;
+
+        &#125;);
+    &lt;/script&gt;
+</code></pre>
+<p><strong>注意点</strong></p>
+<ul>
+<li><code>processData</code> 设置为 <code>false</code>。因为 <code>data</code> 值是 <code>FormData</code> 对象，不需要对数据做处理。</li>
+<li><code>form</code> 标签添加 <code>enctype=&quot;multipart/form-data&quot;</code> 属性。</li>
+<li><code>cache</code> 设置为 <code>false</code>，上传文件不需要缓存。</li>
+<li><code>contentType</code> 设置为<code>false</code>。因为是由 <code>form</code> 表单构造的 <code>FormData</code>对象，且已经声明了属性 <code>enctype=&quot;multipart/form-data&quot;</code>，所以这里设置为 <code>false</code>。</li>
+</ul>
+<h2 id="使网页文字无法被选中"><a href="#使网页文字无法被选中" class="headerlink" title="使网页文字无法被选中"></a>使网页文字无法被选中</h2><p>给 html 标签加上 <code>onselectstart=&quot;return false&quot;</code> 就可以实现</p>
+<pre><code class="html">    &lt;body onselectstart=&quot;return false&quot;&gt;
+
+    &lt;/body&gt;
+</code></pre>
+<h2 id="不让-input-输入框显示历史输入记录"><a href="#不让-input-输入框显示历史输入记录" class="headerlink" title="不让 input 输入框显示历史输入记录"></a>不让 input 输入框显示历史输入记录</h2><pre><code class="html">    &lt;input type=&quot;text&quot; autocomplete=&quot;off&quot; /&gt;
+</code></pre>
+<h2 id="layDate日期插件，样式发生错位"><a href="#layDate日期插件，样式发生错位" class="headerlink" title="layDate日期插件，样式发生错位"></a>layDate日期插件，样式发生错位</h2><p>layDate日期插件在与 bootstrap 一起使用的时候，layDate的日期选择框按钮会发生错位的现象，在layDate的 css 文件中加入一下几行样式可解决：</p>
+<pre><code class="css">    .laydate_box, .laydate_box * &#123;
+        box-sizing:content-box;
+    &#125;
+</code></pre>
+<h2 id="代码触发-change-事件"><a href="#代码触发-change-事件" class="headerlink" title="代码触发 change 事件"></a>代码触发 change 事件</h2><p>有些时候，我们希望用代码触发change事件，可以直接调用无参数的 <code>change()</code>方法来触发该事件。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/33174fcb.html"
+      title="浅谈 GET 和 POST 使用场景"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        浅谈 GET 和 POST 使用场景
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/b103e5fe.html"
+      title="移动端网页底部导航被虚拟键盘顶起解决方法"
+    >
+      <span class="post-near-title">
+        移动端网页底部导航被虚拟键盘顶起解决方法
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

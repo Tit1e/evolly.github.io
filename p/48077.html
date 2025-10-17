@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">5 / 6, 2025</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">我用 Cursor 开发了一个在线图片处理工具，希望能帮你提升效率</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #软件
+    </li>
+    
+    <li class="tag-item">
+      #Cursor
+    </li>
+    
+    <li class="tag-item">
+      #工具
+    </li>
+    
+    <li class="tag-item">
+      #AI
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <h2 id="TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率"><a href="#TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率" class="headerlink" title="TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率"></a>TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率</h2><p>平时无论是写博客、做分享，还是日常工作中，图片处理总是免不了的一个环节。有时候只是想简单裁剪一下图片、转换个格式，或者批量调整一下尺寸，却常常需要打开庞大的桌面软件，或者在各种在线工具间反复横跳，体验不佳，效率也不高。特别是处理一些私密图片时，总担心上传到服务器后的安全问题。</p>
+<p>基于这些痛点和思考，我利用业余时间开发了一款名为 TrimSpace 的在线图片处理工具。我的初衷很简单：打造一个像流水线一样高效、安全、便捷的图片处理工具，让大家可以专注于创作本身，而不是在繁琐的图片处理上浪费时间。</p>
+<p>你可以在这里访问它：<a target="_blank" rel="noopener" href="https://trimspace.online/zh">trimspace.online</a></p>
+<h3 id="TrimSpace-能做什么？"><a href="#TrimSpace-能做什么？" class="headerlink" title="TrimSpace 能做什么？"></a>TrimSpace 能做什么？</h3><p>TrimSpace 集合了我认为最常用也最核心的一些图片处理功能，并且会持续迭代和完善。目前它的主要特性包括：</p>
+<h4 id="1-强大的批量处理能力"><a href="#1-强大的批量处理能力" class="headerlink" title="1. 强大的批量处理能力"></a>1. 强大的批量处理能力</h4><p>这是我个人非常喜欢也觉得非常实用的一个功能。想象一下，当你有几十甚至上百张图片需要统一调整大小、转换格式，或者应用同一种滤镜效果时，一张张手动处理简直是噩梦。</p>
+<p>TrimSpace 的批量处理功能可以让你：</p>
+<ul>
+<li><p>一次上传多张图片：直接拖拽或选择文件，非常方便。</p>
+</li>
+<li><p>统一参数设置：无论是尺寸、格式还是其他处理选项，只需设置一次。</p>
+</li>
+<li><p>一键应用到所有图片：瞬间完成所有处理，大幅提升效率。</p>
+</li>
+</ul>
+<p>这个功能在我处理博客配图、整理相册时帮了大忙，希望也能帮到你。</p>
+<h4 id="2-灵活自由的裁剪工具"><a href="#2-灵活自由的裁剪工具" class="headerlink" title="2. 灵活自由的裁剪工具"></a>2. 灵活自由的裁剪工具</h4><p>裁剪是图片处理中最常见的需求之一。TrimSpace 提供了非常灵活的裁剪工具：</p>
+<ul>
+<li><p>自定义尺寸和比例：你可以输入精确的像素值，或者选择常用的宽高比，如1:1, 16:9, 4:3等。</p>
+</li>
+<li><p>精确的位置调整：通过拖拽和调整选框，可以精确控制裁剪区域。</p>
+</li>
+<li><p>实时预览：调整过程中可以实时看到裁剪后的效果。</p>
+</li>
+</ul>
+<p>无论是社交媒体配图、文章插图，还是个人头像，都能轻松裁剪出完美适配的尺寸。</p>
+<h4 id="3-广泛的多格式支持"><a href="#3-广泛的多格式支持" class="headerlink" title="3. 广泛的多格式支持"></a>3. 广泛的多格式支持</h4><p>不同的平台和场景对图片格式有不同的要求。TrimSpace 支持多种主流图片格式的输入和输出：</p>
+<ul>
+<li><p>输入支持：PNG, JPG&#x2F;JPEG, WebP, AVIF, SVG。值得一提的是，SVG格式会被转换为PNG进行后续处理。</p>
+</li>
+<li><p>输出支持：PNG, JPEG, WebP, ICO。你可以根据需求灵活选择导出的格式，并且可以调节JPEG和WebP的压缩质量。</p>
+</li>
+</ul>
+<p>这意味着你可以轻松地将图片转换为最适合的格式，例如将高兼容性的JPG转换为体积更小、画质更优的WebP格式。</p>
+<h4 id="4-用户数据安全至上"><a href="#4-用户数据安全至上" class="headerlink" title="4. 用户数据安全至上"></a>4. 用户数据安全至上</h4><p>我知道，很多人在处理图片时，尤其是涉及个人隐私或商业敏感内容的图片，会非常担心数据安全问题。“我的图片上传到服务器了吗？会不会被泄露？”</p>
+<p>在设计 TrimSpace 时，我将用户数据安全放在了首位。除了ICO格式的转换因为技术特殊性需要在服务器端处理外，其他所有的图片处理操作（包括裁剪、缩放、滤镜、格式转换等）都是在你的浏览器本地完成的！ 这意味着图片数据根本不会离开你的电脑，极大地降低了数据泄露的风险。我们不存储用户的任何图片（ICO转换完成后也会立即删除），你可以放心使用。</p>
+<h4 id="5-无需注册，即开即用"><a href="#5-无需注册，即开即用" class="headerlink" title="5. 无需注册，即开即用"></a>5. 无需注册，即开即用</h4><p>我希望 TrimSpace 是一个尽可能降低使用门槛的工具。因此：</p>
+<ul>
+<li><p>无需注册：打开网站就能直接使用。</p>
+</li>
+<li><p>免费基础功能：对于未登录的用户，每天可以免费处理3张图片，对于大部分临时性的需求应该足够了。</p>
+</li>
+<li><p>登录后无限制：如果你需要处理更多图片，可以选择登录，登录后将不再有处理数量的限制。</p>
+</li>
+</ul>
+<p>我希望这种方式能够让更多人方便快捷地体验到 TrimSpace 的便利。</p>
+<h4 id="6-现代化的浏览体验"><a href="#6-现代化的浏览体验" class="headerlink" title="6. 现代化的浏览体验"></a>6. 现代化的浏览体验</h4><p>TrimSpace 兼容所有主流的现代浏览器，如 Chrome, Firefox, Safari, Edge 等。我们采用了响应式设计，无论你是在PC端还是平板设备上，都能获得流畅的操作体验。</p>
+<h3 id="如何使用-TrimSpace？"><a href="#如何使用-TrimSpace？" class="headerlink" title="如何使用 TrimSpace？"></a>如何使用 TrimSpace？</h3><p>使用流程也非常简单直观，基本上遵循了“上传 -&gt; 选择工具 -&gt; 编辑处理 -&gt; 导出结果”的思路：</p>
+<ol>
+<li><p>上传图片：你可以直接将图片拖拽到上传区域，或者点击浏览文件按钮来选择。支持一次性上传多张图片进行批量处理。</p>
+</li>
+<li><p>选择工具：在左侧的工具栏中，你可以找到自由裁剪、旋转、滤镜、背景、边框等多种处理工具。你可以添加多个处理步骤，形成一个处理工作流。</p>
+</li>
+<li><p>编辑处理：针对每个处理步骤，右侧会显示相应的参数调整选项。你可以通过直观的控件来微调每个操作，并在预览区域实时看到变化。如果添加了多个处理步骤，还可以通过拖动来重新排列它们的顺序。</p>
+</li>
+<li><p>导出结果：完成所有编辑后，选择你需要的输出格式（PNG, JPEG, WebP, ICO）和质量设置（如果适用）。你可以下载单张处理后的图片，或者将所有处理过的图片打包成一个ZIP文件一次性下载。如果开启了自动下载功能，处理完成后会自动开始下载，进一步提升效率。</p>
+</li>
+</ol>
+<h3 id="一点开发心路和未来展望"><a href="#一点开发心路和未来展望" class="headerlink" title="一点开发心路和未来展望"></a>一点开发心路和未来展望</h3><p>开发 TrimSpace 的过程，对我来说也是一个不断学习和挑战的过程。从最初的一个想法，到功能设计、技术选型，再到一行行代码的实现和反复调试，期间遇到了不少难题，但也收获了很多。每次看到有用户使用了我做的工具，并且觉得好用，那种成就感是难以言喻的。</p>
+<p>当然，TrimSpace 目前还处于不断完善的阶段。未来，我计划：</p>
+<ul>
+<li><p>增加更多实用的图片处理功能：例如更丰富的滤镜效果、智能抠图、图片压缩优化等。</p>
+</li>
+<li><p>持续优化性能和用户体验：让处理速度更快，操作更流畅。</p>
+</li>
+<li><p>倾听用户反馈：如果你在使用过程中有任何建议或遇到任何问题，都非常欢迎通过网站上的方式联系我。</p>
+</li>
+</ul>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>TrimSpace 是我用心打磨的一款工具，希望能为你繁杂的图片处理工作带来一丝清爽和高效。如果你也经常需要和图片打交道，不妨试试看，或许它能成为你得力的助手。</p>
+<p>再次附上地址：<a target="_blank" rel="noopener" href="https://trimspace.online/zh">trimspace.online</a></p>
+<p>欢迎体验，也期待你的宝贵反馈！</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/145.html"
+      title="uniapp 中 v-for 循环内 input 输入时自动失焦问题"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        uniapp 中 v-for 循环内 input 输入时自动失焦问题
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/49269.html"
+      title="你好呀，2025"
+    >
+      <span class="post-near-title">
+        你好呀，2025
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

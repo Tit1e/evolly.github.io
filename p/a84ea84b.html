@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 3, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">一个前端面试题引发的思考</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>昨晚群上有个小伙伴扔出了一个前端面试题，内容是这样的：</p>
+<blockquote>
+<p>写个js函数func(str)，传参str为一个字符串，实现把这个字符串语句中的单词（空格隔开的）次序逆序。比如把 I am a coder变成 coder a am I，不允许使用reverse，join，substring，split。</p>
+</blockquote>
+<span id="more"></span>
+<p>如果没有附加条件实现起来很容易，当然加了条件做出这题也不是很难。这都不是重点。重点是我从这个题引发出来的想法，当然这些想法只代表我个人。</p>
+<p>昨晚看到题目的时候手上没有电脑，所以不了了之，今天就做了一下。</p>
+<p>我写完后的代码是下面这个样子的：</p>
+<pre><code class="javascript">function str2(str) &#123;
+            var arr = [];
+            var words = &#39;&#39;;
+            for (var i = 0; length = str.length, i &lt; length; i++) &#123;
+                if (str[i] != &quot; &quot; &amp;&amp; i != length - 1) &#123;
+                    words += str[i];
+                &#125; else if (str[i] === &quot; &quot;) &#123;
+                    arr.unshift(words);
+                    arr.unshift(str[i]);
+                    words = &quot;&quot;;
+                &#125; else if (str[i] != &quot; &quot; &amp;&amp; i === length - 1) &#123;
+                    words += str[i];
+                    arr.unshift(words);
+                    words = &quot;&quot;;
+                &#125;
+            &#125;
+            var result = &quot;&quot;;
+            for (var j = 0; length2 = arr.length, j &lt; length2; j++) &#123;
+                result += arr[j];
+            &#125;
+            return result;
+        &#125;
+</code></pre>
+<p>我的思路是循环传入的字符串，然后根据空格开分割字符串，将空格之间的单词拼成新的小字符串，然后添加到一个数组中，空格单独添加为一个数组元素，最后循环数组，将数组中的元素拼成一个新的字符串。</p>
+<p>然后我将自己的代码发到了群上，然后有个人默默的发了个自己的代码的截图出来，看到后我愣了一下，第一反应是：这么短？！然后看了下他的思路，自己敲了一遍，没啥毛病。</p>
+<p>这是他的代码：</p>
+<pre><code class="javascript">function strr(start) &#123;
+            let temp = &#39;&#39;;
+            let re = &#39;&#39;;
+            for (let i = 0; i &lt; start.length; i++) &#123;
+                if (start[i] !== &#39; &#39;) &#123;
+                    temp = temp + start[i];
+                &#125; else &#123;
+                    re = temp + &#39; &#39; + re;
+                    temp = &#39;&#39;;
+                &#125;
+            &#125;
+            re = temp + &#39; &#39; + re;
+            return re;
+        &#125;
+</code></pre>
+<p>他的思路和我差不多，也是根据空格判断，但他是遇到空格直接拼成字符串了，而不是像我一样要经过数组，所以就少了一个循环，节省了时间。</p>
+<p>虽然两个函数在字符串较短的情况下运行时间差不多，但是一旦字符串变长或者处理大量字符串的时候，运行速度上的差距就会体现出来。我觉得这不是代码能力上的问题，而是思维上的问题。实现一个效果、功能可以有很多种方法，但是能立马想到用一种比较好的方法就不是每个人能做到的了。这就需要拓展自己的思维，多看别人的代码，从别人的代码中学习他人的思维，或者不断地积累，从项目中总结。</p>
+<p><strong>仍需努力,你我共勉。</strong></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/b079cd31.html"
+      title="apply和call的区别"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        apply和call的区别
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/27a6e4df.html"
+      title="面试总结"
+    >
+      <span class="post-near-title">
+        面试总结
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

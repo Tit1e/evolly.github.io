@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">7 / 23, 2018</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">jsTree 不同节点不同右键菜单</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>公司系统中有个菜单管理的模块，用到了 <a target="_blank" rel="noopener" href="https://www.jstree.com/">jsTree</a> 的右键菜单功能，但是有个问题，就是菜单只有两级，一级菜单允许添加子菜单，二级菜单不允许添加子菜单，这就需要根据选中的菜单渲染不同的右键菜单。网上找了一番，在 <a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37355951/article/details/78320254">这里</a> 找到了解决方法。我在自己博客再记录一次，为了加深印象，也为了日后方便查找。</p>
+<span id="more"></span>
+<h3 id="引入资源"><a href="#引入资源" class="headerlink" title="引入资源"></a>引入资源</h3><pre><code class="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css&quot; /&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="用于初始化的-DOM-节点"><a href="#用于初始化的-DOM-节点" class="headerlink" title="用于初始化的 DOM 节点"></a>用于初始化的 DOM 节点</h3><pre><code class="html">&lt;div id=&quot;jstree_demo_div&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><pre><code class="js">//模拟数据
+var DATA = [&#123;
+  &quot;id&quot;: &quot;276&quot;,
+  &quot;text&quot;: &quot;分析&quot;,
+  &quot;parent_id&quot;: &quot;0&quot;,
+  &quot;children&quot;: [&#123;
+    &quot;parent_id&quot;: &quot;276&quot;,
+    &quot;id&quot;: &quot;281&quot;,
+    &quot;text&quot;: &quot;监测概况&quot;
+  &#125;]
+&#125;]
+//初始化
+$(function () &#123;
+  $(&#39;#jstree_demo_div&#39;).jstree(&#123;
+    core: &#123;
+      &#39;data&#39;: DATA, //数据
+    &#125;,
+    &#39;contextmenu&#39;: &#123;
+      &#39;items&#39;: customMenu //右键点击触发的函数，下面会讲到
+    &#125;,
+    &#39;plugins&#39;: [&#39;contextmenu&#39;] //右键菜单插件，必须加载这个插件才能使用右键菜单
+  &#125;)
+&#125;)
+</code></pre>
+<h3 id="不同右键菜单的关键"><a href="#不同右键菜单的关键" class="headerlink" title="不同右键菜单的关键"></a>不同右键菜单的关键</h3><p>这个函数是让 jsTree 有不同右键菜单的关键，当右键点击的时候，会执行这个函数，我们只要根据某个参数来判断当前是什么菜单，然后根据这个菜单来 return 右键菜单的对象就行了。</p>
+<pre><code class="js">function customMenu(node) &#123;
+  var items = &#123;
+    &quot;new&quot;: &#123;
+      &quot;label&quot;: &quot;新建子菜单&quot;,
+      &quot;action&quot;: function (data) &#123;
+        // code...
+      &#125;
+    &#125;,
+    &quot;edit&quot;: &#123;
+      &quot;label&quot;: &quot;编辑菜单&quot;,
+      &quot;action&quot;: function (data) &#123;
+        // code...
+      &#125;
+    &#125;,
+    &quot;delete&quot;: &#123;
+      &quot;label&quot;: &quot;删除菜单&quot;,
+      &quot;action&quot;: function (data) &#123;
+        // code...
+      &#125;
+    &#125;
+  &#125;
+  // parent_id 为 0 的是一级菜单
+  if(node.original.parent_id !== &#39;0&#39;)&#123;
+    delete items.new
+  &#125;
+  return items
+&#125;
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tit1e/Demos/tree/master/50-jsTree">参考代码</a></p>
+<p><a target="_blank" rel="noopener" href="https://tit1e.github.io/Demos/50-jsTree/">demo</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/9be7dff.html"
+      title="从零开始：Ubuntu 部署 Node 环境"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        从零开始：Ubuntu 部署 Node 环境
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/8dba54ec.html"
+      title="MAMP 配置虚拟主机"
+    >
+      <span class="post-near-title">
+        MAMP 配置虚拟主机
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

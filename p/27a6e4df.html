@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 2, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">面试总结</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>今天去参加了一次前端的面试，这是我转行以来遇到的第二次面试。第一次面试都没问什么技术上的问题，问了一些基本情况就进了公司。这次是我遇到的比较正规的面试了，吧？因为实在没有经历过几次面试，也不好判断什么。自我觉得今天表现得不是很好，问得的确挺基础，但是工作中关注点都在实现功能上了，基础的东西的确有些淡忘。趁现在还有记忆做下总结。</p>
+<span id="more"></span>
+
+<h3 id="工作中用到的HTML5的新特性"><a href="#工作中用到的HTML5的新特性" class="headerlink" title="工作中用到的HTML5的新特性"></a>工作中用到的HTML5的新特性</h3><p>这个还真把我问住了，平时经常把HTML5挂嘴边，但是真要我说出点东西来我还真说不出来。查了下资料，发现其实很多东西在工作中是有用到的，但是我并不知道这是HTML5才添加进去。比如各类标签:<code>&lt;header&gt;</code>、<code>&lt;footer&gt;</code>、<code>&lt;nav&gt;</code>、<code>&lt;video&gt;</code>等。<br><a target="_blank" rel="noopener" href="http://www.voidcn.com/blog/rh57b1f7/article/p-6394442.html">参考资料（不完全）</a></p>
+<h3 id="前端模版渲染"><a href="#前端模版渲染" class="headerlink" title="前端模版渲染"></a>前端模版渲染</h3><p>我不是非常理解这个意思，所以我把这篇博客中的内容说了一下<br><a target="_blank" rel="noopener" href="http://tit1e.xyz/2017/02/02/22.js_for_temp/">Javascript循环添加</a></p>
+<h3 id="块级元素和行内元素的区别"><a href="#块级元素和行内元素的区别" class="headerlink" title="块级元素和行内元素的区别"></a>块级元素和行内元素的区别</h3><p>我的第一反应是块级元素会自动进行换行，而行内元素不会，块级元素能设置<code>padding</code>、<code>margin</code>、<code>width</code>、<code>height</code>这些属性，而行内元素不可以。<br><a target="_blank" rel="noopener" href="http://www.itdadao.com/articles/c15a1192053p0.html">参考资料</a></p>
+<h3 id="行内元素转换为块级元素的方法"><a href="#行内元素转换为块级元素的方法" class="headerlink" title="行内元素转换为块级元素的方法"></a>行内元素转换为块级元素的方法</h3><p>行内元素转换成块级元素，我不知道除了display外还有什么方法，可能其他方法没用到过，网上也没查出个所以然来。</p>
+<h3 id="一个网页加载很慢可能有哪些原因"><a href="#一个网页加载很慢可能有哪些原因" class="headerlink" title="一个网页加载很慢可能有哪些原因"></a>一个网页加载很慢可能有哪些原因</h3><p>我回答可能是因为资源加载得太多，像css,js这些，还有就是代码、图片没有进行压缩或者请求太多。<br>当然网速可能也是原因之一。还有可能是js代码写得不够精炼，太累赘。<br><a target="_blank" rel="noopener" href="http://blog.it985.com/19656.html">参考资料</a></p>
+<h3 id="伪元素和伪类"><a href="#伪元素和伪类" class="headerlink" title="伪元素和伪类"></a>伪元素和伪类</h3><p>接触得少，但是有印象，伪类我只说了<code>:hover</code>,伪元素只说了<code>::after</code>和<code>::before</code>。其他伪元素和伪类当然还有，但是我没什么印象，因为用的不是很多。像伪类还有<code>&lt;a&gt;</code>标签的样式，<code>:active</code>、<code>:link</code>、<code>:visited</code>等；为元素还有<code>::first-letter</code>、<code>::selection</code>等。<br><a target="_blank" rel="noopener" href="http://lib.csdn.net/article/css3/57025">参考资料</a></p>
+<h3 id="用typeof判断数据类型返回回来的有哪些结果"><a href="#用typeof判断数据类型返回回来的有哪些结果" class="headerlink" title="用typeof判断数据类型返回回来的有哪些结果"></a>用typeof判断数据类型返回回来的有哪些结果</h3><p>这些东西的确生疏了，这题回答得很差，因为和一些概念搞混了。</p>
+<p><code>undefined</code></p>
+<p><code>boolean</code></p>
+<p><code>string</code></p>
+<p><code>number</code></p>
+<p><code>object</code></p>
+<p><code>function</code></p>
+<p>正确答案是这些。不得不说这是个很基础的问题。</p>
+<h3 id="NaN用typeof操作后返回的类型是什么"><a href="#NaN用typeof操作后返回的类型是什么" class="headerlink" title="NaN用typeof操作后返回的类型是什么"></a>NaN用typeof操作后返回的类型是什么</h3><p>我好像说了个<code>undefined</code>，上一问没答出来挺紧张，有点没记住这段，反正是没答出来，返回的类型是<code>number</code>,并且<code>NaN</code>不等于它自身。</p>
+<h3 id="ajax的状态码200、304、404分别代表什么"><a href="#ajax的状态码200、304、404分别代表什么" class="headerlink" title="ajax的状态码200、304、404分别代表什么"></a>ajax的状态码200、304、404分别代表什么</h3><p>200代表请求成功，404表示找不到服务器，304可以请求到资源，但是和200有区别，但是具体区别我忘了。</p>
+<blockquote>
+<p>304(未修改)自从上次请求后，请求的网页未修改过。服务器返回此响应时，不会返回网页内容。<br><a target="_blank" rel="noopener" href="http://knowledge.300176.net/http/28544841114576550071.html">参考资料</a></p>
+</blockquote>
+<h3 id="jQuery中的-function-和window-onload-function-有什么区别"><a href="#jQuery中的-function-和window-onload-function-有什么区别" class="headerlink" title="jQuery中的$(function(){})和window.onload=function(){}有什么区别"></a>jQuery中的<code>$(function()&#123;&#125;)</code>和<code>window.onload=function()&#123;&#125;</code>有什么区别</h3><p>这个我因为当初有过这个疑问，所以查过资料有印象，<code>jQuery</code>是不用等到页面完全加载完成就可以开始执行，而<code>window.onload</code>不行。<br>当然还有其他区别，比如<code>window.onload</code>只能写一个，而<code>jQuery</code>的写法可以写很多个。<br><a target="_blank" rel="noopener" href="http://www.jb51.net/article/21628.htm">参考资料</a></p>
+<p>我现在记得的就这些了，可能还有遗漏，剩下的都是关于我个人情况的一些问题，不再多说。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/a84ea84b.html"
+      title="一个前端面试题引发的思考"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        一个前端面试题引发的思考
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/db9f29d2.html"
+      title="Javascript循环添加"
+    >
+      <span class="post-near-title">
+        Javascript循环添加
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

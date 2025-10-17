@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Tit1e</title>
+  
+  
+  <link href="https://evolly.one/atom.xml" rel="self"/>
+  
+  <link href="https://evolly.one/"/>
+  <updated>2025-10-17T10:28:45.897Z</updated>
+  <id>https://evolly.one/</id>
+  
+  <author>
+    <name>Tit1e</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>fnOS 中使用 Docker 安装 n8n 中文版</title>
+    <link href="https://evolly.one/p/6730.html"/>
+    <id>https://evolly.one/p/6730.html</id>
+    <published>2025-10-17T09:45:43.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近想使用工作流让 AI 帮我处理一些事情，于是我就想到了 n8n，刚好前阵子把家里闲置的主机弄成了 fnOS，性能对比之前的群晖 DS218 play 可以说是一个天上一个地下，深切感受到了：“原来外面的世界这么美好”。</p><p>话不多说，上流程。</p><h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>fnOS 版本为 <code>V0.9.30</code></p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="1-更换镜像源（非必需）"><a href="#1-更换镜像源（非必需）" class="headerlink" title="1. 更换镜像源（非必需）"></a>1. 更换镜像源（非必需）</h3><p>如果你没有更换过飞牛的镜像源，使用的还是默认的镜像源，可能会有一些问题，比如我就遇到了 n8n 的镜像一下载完，但是本地就是不显示的问题，后来发现是镜像源的问题，换了就好了，更换方式：</p><ul><li>打开 Docker</li><li>左侧切换到【镜像仓库】菜单</li><li>右上角【设置】-【加速源设置】</li><li>【添加】，添加地址为<code>https://docker.1ms.run</code>，备注随便</li></ul><h3 id="2-下载-n8n-镜像"><a href="#2-下载-n8n-镜像" class="headerlink" title="2. 下载 n8n 镜像"></a>2. 下载 n8n 镜像</h3><p>在【镜像仓库】搜索 n8n，下载名为<code>n8nio/n8n</code>的镜像，一般是第一个。</p><h3 id="3-创建目录"><a href="#3-创建目录" class="headerlink" title="3. 创建目录"></a>3. 创建目录</h3><p>打开飞牛的【文件管理】应用，左侧切换到【我的文件】，在这个目录下新建一个【Docker】的文件夹（如果没有的话），再在【Docker】目录下新建一个【n8n】文件夹，再在【n8n】下新建一个【n8n_data】文件夹。</p><h3 id="4-下载汉化数据"><a href="#4-下载汉化数据" class="headerlink" title="4. 下载汉化数据"></a>4. 下载汉化数据</h3><p>在 <a href="https://github.com/other-blowsnow/n8n-i18n-chinese/releases">https://github.com/other-blowsnow/n8n-i18n-chinese/releases</a> 下载最新的 Source code，解压后，将【editor-ui-dist】改名为【zh-cn】，然后将这个改名后的文件夹上传到刚刚创建的【n8n】目录下，与【n8n_data】同级。</p><h3 id="5-配置-n8n-启动"><a href="#5-配置-n8n-启动" class="headerlink" title="5. 配置 n8n 启动"></a>5. 配置 n8n 启动</h3><ol><li>回到 【Docker】应用，左侧切到【本地镜像】标签，刚才下载的 n8n 镜像应该就在其中，点击启动按钮</li><li>填上容器名称，其他配置根据自己需求，我只勾选了【开机自动启动】，点击下一步</li><li>高级设置中的【存储位置】设置，新增两条映射：</li></ol><ul><li>选择【n8n_data】目录，后面的地址填上<code>/home/node/.n8n</code></li><li>选择【zh-cn】目录，后面的地址填上<code>/usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/dist</code></li></ul><ol start="4"><li>再在环境变量设置中新增两条环境变量</li></ol><ul><li><code>N8N_SECURE_COOKIE</code> 设置为 <code>false</code>（如果你在本地使用，需要添加这条，如果你的设备已经配置好了https，可以不设置这条环境变量）</li><li><code>N8N_DEFAULT_LOCALE</code> 设置为 <code>zh-CN</code>（中文显示）</li></ul><ol start="5"><li>点击【创建】</li></ol><h3 id="6-启动"><a href="#6-启动" class="headerlink" title="6. 启动"></a>6. 启动</h3><p>【Docker】应用切到【容器】标签，然后将鼠标放到链接图标上，会出现运行端口，点击端口就会打开项目。或者直接使用<code>http://[nas IP]:5678</code>直接访问。默认端口为5678，如果你改动过就使用你改后的端口。</p><p>以上就是在飞牛上使用 Docker 安装 n8n 以及汉化的过程，至于后面的流程，就看各人各自折腾了，可以用 AI 帮你写配置文件。就我用下来来说，工作流才是难点，而且对普通人来说还是比较复杂的，哪怕有 AI 的辅助。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;最近想使用工作流让 AI 帮我处理一些事情，于是我就想到了 n8n，刚好前阵子把家里闲置的主机弄成了 fnOS，性能对比之前的群晖 DS218 play 可以说是一个天上一个地下，深切感受到了：“原来外面的世界这么美好”。&lt;/p&gt;
+&lt;p&gt;话不多说，上流程。&lt;/p&gt;
+&lt;h2 </summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>uniapp 中 v-for 循环内 input 输入时自动失焦问题</title>
+    <link href="https://evolly.one/p/145.html"/>
+    <id>https://evolly.one/p/145.html</id>
+    <published>2025-09-01T08:53:45.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在开发一个商品管理系统时遇到了一个奇怪的问题：在使用 uniapp 开发的页面中，有一个商品列表，每个商品都有数量输入框，但是在输入框中输入数字时，每输入一个字符，输入框就会自动失去焦点，用户体验非常糟糕。</p><h2 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h2><p>具体场景是这样的：用户扫描商品二维码后，会在 <code>productList</code> 数组中添加一个商品对象，每个商品对象都包含商品信息和数量字段，数量字段与 input 输入框进行双向绑定。用户需要在输入框中修改商品数量，但每次输入都会导致输入框失焦。</p><h2 id="错误代码"><a href="#错误代码" class="headerlink" title="错误代码"></a>错误代码</h2><pre><code class="html">&lt;view v-for=&quot;(item, i) in productList&quot; :key=&quot;item&quot;&gt;  &lt;view class=&quot;product-item&quot;&gt;    &lt;view class=&quot;label-section&quot;&gt;      &lt;text&gt;商品数量&lt;/text&gt;      &lt;text class=&quot;required-mark&quot;&gt;*&lt;/text&gt;    &lt;/view&gt;    &lt;input      v-model=&quot;item.quantity&quot;      class=&quot;quantity-input&quot;      placeholder=&quot;请输入数量&quot;      type=&quot;number&quot;      @input=&quot;updateQuantity($event, i)&quot;    /&gt;    &lt;text class=&quot;unit-text&quot;&gt;件&lt;/text&gt;  &lt;/view&gt;&lt;/view&gt;</code></pre><pre><code class="js">updateQuantity(e, i) &#123;  const value = e &amp;&amp; e.detail.value;  this.$nextTick(() =&gt; &#123;    this.productList = this.productList.map((v, index) =&gt; (&#123;      ...v,      quantity: parseInt(i) === parseInt(index) ? parseInt(value) : v.quantity,    &#125;));  &#125;);&#125;,</code></pre><h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>问题的根本原因在于 <code>v-for</code> 中的 <code>:key=&quot;item&quot;</code> 设置不当。当 input 数据发生变化并触发模型更新后，Vue 需要重新渲染列表项。由于 key 值绑定的是整个 item 对象，而 item 对象中的 quantity 属性发生了变化，导致 Vue 认为这是一个新的列表项，从而重新创建了整个 view 组件，包括其中的 input 元素。</p><p>在 Vue 的 diff 算法中，key 是用来标识列表项唯一性的重要属性。如果 key 值发生变化，Vue 会认为这是一个全新的元素，而不是对原有元素的更新，因此会销毁旧元素并创建新元素，这就导致了 input 失去焦点。</p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>解决方法很简单，将 key 值改为数组索引或者对象中不会变化的唯一标识：</p><pre><code class="html">&lt;view v-for=&quot;(item, i) in productList&quot; :key=&quot;&#39;product-&#39; + i&quot;&gt;  &lt;view class=&quot;product-item&quot;&gt;    &lt;view class=&quot;label-section&quot;&gt;      &lt;text&gt;商品数量&lt;/text&gt;      &lt;text class=&quot;required-mark&quot;&gt;*&lt;/text&gt;    &lt;/view&gt;    &lt;input      v-model=&quot;item.quantity&quot;      class=&quot;quantity-input&quot;      placeholder=&quot;请输入数量&quot;      type=&quot;number&quot;      @input=&quot;updateQuantity($event, i)&quot;    /&gt;    &lt;text class=&quot;unit-text&quot;&gt;件&lt;/text&gt;  &lt;/view&gt;&lt;/view&gt;</code></pre><p>或者如果商品对象有唯一的 ID 字段，使用 ID 作为 key 值会更好：</p><pre><code class="html">&lt;view v-for=&quot;(item, i) in productList&quot; :key=&quot;item.id&quot;&gt;  &lt;!-- 其他代码保持不变 --&gt;&lt;/view&gt;</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在使用 <code>v-for</code> 循环渲染列表时，key 的选择非常重要：</p><ol><li><strong>不要使用会变化的对象作为 key</strong>：如果对象的属性会发生变化，Vue 会认为这是不同的元素</li><li><strong>优先使用唯一且稳定的标识</strong>：如数据库 ID、唯一编码等</li><li><strong>谨慎使用数组索引</strong>：只有在列表不会发生增删改操作时才推荐使用索引作为 key</li><li><strong>避免使用 random 或时间戳</strong>：这会导致每次渲染都重新创建元素</li></ol><p>这个问题在 Vue 开发中比较常见，特别是在处理表单列表时。正确理解 Vue 的 key 机制，能够避免很多类似的渲染问题.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;最近在开发一个商品管理系统时遇到了一个奇怪的问题：在使用 uniapp 开发的页面中，有一个商品列表，每个商品都有数量输入框，但是在输入框中输入数字时，每输入一个字符，输入框就会自动失去焦点，用户体验非常糟糕。&lt;/p&gt;
+&lt;h2 id=&quot;问题场景&quot;&gt;&lt;a href=&quot;#问题场</summary>
+      
+    
+    
+    
+    
+    <category term="学习" scheme="https://evolly.one/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="vue" scheme="https://evolly.one/tags/vue/"/>
+    
+    <category term="uni-app" scheme="https://evolly.one/tags/uni-app/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我用 Cursor 开发了一个在线图片处理工具，希望能帮你提升效率</title>
+    <link href="https://evolly.one/p/48077.html"/>
+    <id>https://evolly.one/p/48077.html</id>
+    <published>2025-05-06T08:53:45.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率"><a href="#TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率" class="headerlink" title="TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率"></a>TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率</h2><p>平时无论是写博客、做分享，还是日常工作中，图片处理总是免不了的一个环节。有时候只是想简单裁剪一下图片、转换个格式，或者批量调整一下尺寸，却常常需要打开庞大的桌面软件，或者在各种在线工具间反复横跳，体验不佳，效率也不高。特别是处理一些私密图片时，总担心上传到服务器后的安全问题。</p><p>基于这些痛点和思考，我利用业余时间开发了一款名为 TrimSpace 的在线图片处理工具。我的初衷很简单：打造一个像流水线一样高效、安全、便捷的图片处理工具，让大家可以专注于创作本身，而不是在繁琐的图片处理上浪费时间。</p><p>你可以在这里访问它：<a href="https://trimspace.online/zh">trimspace.online</a></p><h3 id="TrimSpace-能做什么？"><a href="#TrimSpace-能做什么？" class="headerlink" title="TrimSpace 能做什么？"></a>TrimSpace 能做什么？</h3><p>TrimSpace 集合了我认为最常用也最核心的一些图片处理功能，并且会持续迭代和完善。目前它的主要特性包括：</p><h4 id="1-强大的批量处理能力"><a href="#1-强大的批量处理能力" class="headerlink" title="1. 强大的批量处理能力"></a>1. 强大的批量处理能力</h4><p>这是我个人非常喜欢也觉得非常实用的一个功能。想象一下，当你有几十甚至上百张图片需要统一调整大小、转换格式，或者应用同一种滤镜效果时，一张张手动处理简直是噩梦。</p><p>TrimSpace 的批量处理功能可以让你：</p><ul><li><p>一次上传多张图片：直接拖拽或选择文件，非常方便。</p></li><li><p>统一参数设置：无论是尺寸、格式还是其他处理选项，只需设置一次。</p></li><li><p>一键应用到所有图片：瞬间完成所有处理，大幅提升效率。</p></li></ul><p>这个功能在我处理博客配图、整理相册时帮了大忙，希望也能帮到你。</p><h4 id="2-灵活自由的裁剪工具"><a href="#2-灵活自由的裁剪工具" class="headerlink" title="2. 灵活自由的裁剪工具"></a>2. 灵活自由的裁剪工具</h4><p>裁剪是图片处理中最常见的需求之一。TrimSpace 提供了非常灵活的裁剪工具：</p><ul><li><p>自定义尺寸和比例：你可以输入精确的像素值，或者选择常用的宽高比，如1:1, 16:9, 4:3等。</p></li><li><p>精确的位置调整：通过拖拽和调整选框，可以精确控制裁剪区域。</p></li><li><p>实时预览：调整过程中可以实时看到裁剪后的效果。</p></li></ul><p>无论是社交媒体配图、文章插图，还是个人头像，都能轻松裁剪出完美适配的尺寸。</p><h4 id="3-广泛的多格式支持"><a href="#3-广泛的多格式支持" class="headerlink" title="3. 广泛的多格式支持"></a>3. 广泛的多格式支持</h4><p>不同的平台和场景对图片格式有不同的要求。TrimSpace 支持多种主流图片格式的输入和输出：</p><ul><li><p>输入支持：PNG, JPG&#x2F;JPEG, WebP, AVIF, SVG。值得一提的是，SVG格式会被转换为PNG进行后续处理。</p></li><li><p>输出支持：PNG, JPEG, WebP, ICO。你可以根据需求灵活选择导出的格式，并且可以调节JPEG和WebP的压缩质量。</p></li></ul><p>这意味着你可以轻松地将图片转换为最适合的格式，例如将高兼容性的JPG转换为体积更小、画质更优的WebP格式。</p><h4 id="4-用户数据安全至上"><a href="#4-用户数据安全至上" class="headerlink" title="4. 用户数据安全至上"></a>4. 用户数据安全至上</h4><p>我知道，很多人在处理图片时，尤其是涉及个人隐私或商业敏感内容的图片，会非常担心数据安全问题。“我的图片上传到服务器了吗？会不会被泄露？”</p><p>在设计 TrimSpace 时，我将用户数据安全放在了首位。除了ICO格式的转换因为技术特殊性需要在服务器端处理外，其他所有的图片处理操作（包括裁剪、缩放、滤镜、格式转换等）都是在你的浏览器本地完成的！ 这意味着图片数据根本不会离开你的电脑，极大地降低了数据泄露的风险。我们不存储用户的任何图片（ICO转换完成后也会立即删除），你可以放心使用。</p><h4 id="5-无需注册，即开即用"><a href="#5-无需注册，即开即用" class="headerlink" title="5. 无需注册，即开即用"></a>5. 无需注册，即开即用</h4><p>我希望 TrimSpace 是一个尽可能降低使用门槛的工具。因此：</p><ul><li><p>无需注册：打开网站就能直接使用。</p></li><li><p>免费基础功能：对于未登录的用户，每天可以免费处理3张图片，对于大部分临时性的需求应该足够了。</p></li><li><p>登录后无限制：如果你需要处理更多图片，可以选择登录，登录后将不再有处理数量的限制。</p></li></ul><p>我希望这种方式能够让更多人方便快捷地体验到 TrimSpace 的便利。</p><h4 id="6-现代化的浏览体验"><a href="#6-现代化的浏览体验" class="headerlink" title="6. 现代化的浏览体验"></a>6. 现代化的浏览体验</h4><p>TrimSpace 兼容所有主流的现代浏览器，如 Chrome, Firefox, Safari, Edge 等。我们采用了响应式设计，无论你是在PC端还是平板设备上，都能获得流畅的操作体验。</p><h3 id="如何使用-TrimSpace？"><a href="#如何使用-TrimSpace？" class="headerlink" title="如何使用 TrimSpace？"></a>如何使用 TrimSpace？</h3><p>使用流程也非常简单直观，基本上遵循了“上传 -&gt; 选择工具 -&gt; 编辑处理 -&gt; 导出结果”的思路：</p><ol><li><p>上传图片：你可以直接将图片拖拽到上传区域，或者点击浏览文件按钮来选择。支持一次性上传多张图片进行批量处理。</p></li><li><p>选择工具：在左侧的工具栏中，你可以找到自由裁剪、旋转、滤镜、背景、边框等多种处理工具。你可以添加多个处理步骤，形成一个处理工作流。</p></li><li><p>编辑处理：针对每个处理步骤，右侧会显示相应的参数调整选项。你可以通过直观的控件来微调每个操作，并在预览区域实时看到变化。如果添加了多个处理步骤，还可以通过拖动来重新排列它们的顺序。</p></li><li><p>导出结果：完成所有编辑后，选择你需要的输出格式（PNG, JPEG, WebP, ICO）和质量设置（如果适用）。你可以下载单张处理后的图片，或者将所有处理过的图片打包成一个ZIP文件一次性下载。如果开启了自动下载功能，处理完成后会自动开始下载，进一步提升效率。</p></li></ol><h3 id="一点开发心路和未来展望"><a href="#一点开发心路和未来展望" class="headerlink" title="一点开发心路和未来展望"></a>一点开发心路和未来展望</h3><p>开发 TrimSpace 的过程，对我来说也是一个不断学习和挑战的过程。从最初的一个想法，到功能设计、技术选型，再到一行行代码的实现和反复调试，期间遇到了不少难题，但也收获了很多。每次看到有用户使用了我做的工具，并且觉得好用，那种成就感是难以言喻的。</p><p>当然，TrimSpace 目前还处于不断完善的阶段。未来，我计划：</p><ul><li><p>增加更多实用的图片处理功能：例如更丰富的滤镜效果、智能抠图、图片压缩优化等。</p></li><li><p>持续优化性能和用户体验：让处理速度更快，操作更流畅。</p></li><li><p>倾听用户反馈：如果你在使用过程中有任何建议或遇到任何问题，都非常欢迎通过网站上的方式联系我。</p></li></ul><h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>TrimSpace 是我用心打磨的一款工具，希望能为你繁杂的图片处理工作带来一丝清爽和高效。如果你也经常需要和图片打交道，不妨试试看，或许它能成为你得力的助手。</p><p>再次附上地址：<a href="https://trimspace.online/zh">trimspace.online</a></p><p>欢迎体验，也期待你的宝贵反馈！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率&quot;&gt;&lt;a href=&quot;#TrimSpace：我做了一个在线图片处理工具，希望能帮你提升效率&quot; class=&quot;headerlink&quot; title=&quot;TrimSpace：我做了一个在线图片处理工具，希望</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="软件" scheme="https://evolly.one/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+    <category term="Cursor" scheme="https://evolly.one/tags/Cursor/"/>
+    
+    <category term="工具" scheme="https://evolly.one/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="AI" scheme="https://evolly.one/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>你好呀，2025</title>
+    <link href="https://evolly.one/p/49269.html"/>
+    <id>https://evolly.one/p/49269.html</id>
+    <published>2024-12-31T14:13:01.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>2024 年的最后一天，还是想照常来写一篇年终总结。</p><p>今年对我来说是打击非常大的一年，因为工作，上半年直接半年没有收入，下半年靠着前同事才稳住脚步，但是生活上依旧非常难受，没有安全感，像被掐着脖子过了一年，呼吸困难，但是也死不了，有好几次差点崩溃，这种月光没有安全感的日子对我来说太难太难受了。但这也让我明白了很多，以我的条件，靠打工是没有出路的，况且经过连着两家公司欠薪，已经彻底对打工失去了信心，所以只能另寻他路，但现在也还没有头绪。</p><p>今年跟咪咪也收获了很多快乐，年初 1 月 23 日的时候提了深蓝，虽然提车一小时后就出险，然后开进了 4S 店，但是后来它陪伴我们走遍了杭州周边，最远只跑到过上海，获取千岛湖更远。截止今天，它陪我们走过了 18918.4KM，明年，希望我们能去更多更远的地方，我想开着它跟咪咪去更多的省份，去体验更多。</p><p>今年咪咪去了三次日本，每次回来都会千辛万苦回一大堆零食酒水，很感动。现在她正在日本跨着年，她会比我早一小时进入 2025 年，我将在国内 11 点的时候向她送上祝福。</p><p>0 点的时候我们同时送上了祝福。我觉得自己正在改变，变得更有仪式感。其实说自己没有仪式感我是不认可的，我觉得自己是一个注重仪式感的人，只是我认为的仪式感，是我会为时间沉淀而来的事物，献上仪式感，比如经过时间沉淀的感情，而咪咪觉得的仪式感是平时各种小节日之类的，以前我觉得没必要，或者说会排斥，每年都是类似的过，过这种节日完全没意思，我想在普通的生活中去创造我俩的仪式感，去纪念独属于我们的纪念日。但是现在每逢过节看到别人发的朋友圈，不知道是不是出于攀比，我也会想让咪咪在节日有这样的氛围，因为她喜欢。所以今年新年，我想布置一下家里，让家里有一些新年的氛围，增添一些喜庆的元素。</p><p>前天的时候我妈夜班下班，不小心被电线绊倒，左边膝盖髌骨粉碎性骨折，明天早上 10 点多就要动手术了，希望手术顺利，在 2025 开个好头，2025 低开高走。</p><p>2025，万事顺遂。朋友家人都能身体健康，永远快乐，真的快乐。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;2024 年的最后一天，还是想照常来写一篇年终总结。&lt;/p&gt;
+&lt;p&gt;今年对我来说是打击非常大的一年，因为工作，上半年直接半年没有收入，下半年靠着前同事才稳住脚步，但是生活上依旧非常难受，没有安全感，像被掐着脖子过了一年，呼吸困难，但是也死不了，有好几次差点崩溃，这种月光没有</summary>
+      
+    
+    
+    
+    
+    <category term="年终总结" scheme="https://evolly.one/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    
+    <category term="碎碎念" scheme="https://evolly.one/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sourcetree 报错 PuTTY&#39;s cache and carry on connecting</title>
+    <link href="https://evolly.one/p/56019.html"/>
+    <id>https://evolly.one/p/56019.html</id>
+    <published>2024-09-20T14:56:38.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h2><p>前几天在公司还了一台电脑，重新安装了开发环境，然后用 SourceTree 推代码的时候报错了，想起来上一台电脑刚用的时候也出现过这个问题，所以记录一下。</p><h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-09-20-150207.png"></p><pre><code class="shell">git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks fetch --no-tags originThe host key is not cached for this server:gitee.com (port 22)You have no guarantee that the server is the computeryou think it is.The server&#39;s ssh-ed25519 key fingerprint is:ssh-ed25519 255 SHA256:+ULzij2u99B9eWYFTw1Q4ErYG/aepHLbu96xxxxxxxxxIf you trust this host, enter &quot;y&quot; to add the key to完成时带有错误，见上文。PuTTY&#39;s cache and carry on connecting.If you want to carry on connecting just once, withoutadding the key to the cache, enter &quot;n&quot;.If you do not trust this host, press Return to abandon theconnection.Store key in cache? (y/n, Return cancels connection, i for more info)</code></pre><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>选择【工具】，然后点击【选项】。 然后在【SSH客户端】更换成 openSSH ，然后就可以推拉代码了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前因&quot;&gt;&lt;a href=&quot;#前因&quot; class=&quot;headerlink&quot; title=&quot;前因&quot;&gt;&lt;/a&gt;前因&lt;/h2&gt;&lt;p&gt;前几天在公司还了一台电脑，重新安装了开发环境，然后用 SourceTree 推代码的时候报错了，想起来上一台电脑刚用的时候也出现过这个问题，</summary>
+      
+    
+    
+    
+    
+    <category term="软件" scheme="https://evolly.one/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关闭 Google 智能镜头</title>
+    <link href="https://evolly.one/p/32182.html"/>
+    <id>https://evolly.one/p/32182.html</id>
+    <published>2024-08-28T16:09:19.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>前几天手贱不小心把 Google 智能镜头给打开了，然后就发现它在我浏览网页的时候时不时地就弹出来，我本身不使用这个功能，但这个东西我感觉应该还是要占用一定系统资源的，所以想着将它关闭，网上找了一圈教程，方法挺多，但是随着 chrome 更新，有些教程上的的方法不一定准确，所以这里记录一下我自己的方法。</p><h2 id="关闭-Google-智能镜头"><a href="#关闭-Google-智能镜头" class="headerlink" title="关闭 Google 智能镜头"></a>关闭 Google 智能镜头</h2><ol><li>chrome 访问 <a href="chrome://flags/">chrome:&#x2F;&#x2F;flags&#x2F;</a> </li><li>在顶部搜索框搜索 <code>Lens</code></li><li>将 <code>Lens overlay</code> 设置为 <code>Disabled</code></li></ol><p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-09-02-HapiGo%20%E5%89%AA%E8%B4%B4%E6%9D%BF%20-%202024-9-2%2023.10.25.png"></p><p>这样就关闭了 Google 智能镜头。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;前几天手贱不小心把 Google 智能镜头给打开了，然后就发现它在我浏览网页的时候时不时地就弹出来，我本身不使用这个功能，但这个东西我感觉应该还是要占用一定系统资源的，所以想着将它关闭，网上找了一圈教程，方法挺多，但是随着 chrome 更新，有些教程上的的方法不一定准确，</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="软件" scheme="https://evolly.one/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Cursor 搭配 DeepSeek，给你丝滑的体验</title>
+    <link href="https://evolly.one/p/38281.html"/>
+    <id>https://evolly.one/p/38281.html</id>
+    <published>2024-08-18T04:16:34.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>第一次知道 Cursor 的时候还是它刚出来的时候，那时候的它非常简陋，侧边栏只有一个目录树，另一个是搜索栏还是什么，我对它的第一印象是：Sublime + Github Copilot，功能非常地简单，甚至可以说是简陋，体验一番后就将它卸载了。</p><p>最近，网上 Cursor 的声音又多起来了，在 X 上，订阅的 Newsletter 中有看到有不少人提起 Cursor，现在它已经与 VS Code 融为一体，可以做到无缝切换，这让我有了兴趣，毕竟 VS Code 是我的主力编辑器，如果它体验可以做到跟 VS Code 一样，再加上它 AI 上的加持，那么我很有可能将主力编辑器替换为 Cursor。</p><p>一番试用之后，让我有些惊喜，我在 VS Code 上试用的是 Codeium 插件，但是这个插件对网络要求比较高，哪怕我挂着代理，还是会经常出现问题。而 Cursor 是直接在编辑器中集成了 AI，效率比插件高很多，体验也更为丝滑。</p><p>Cursor 可以通过开通订阅使用它内置的各家的 AI 模型：</p><p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-08-18-043514.png"></p><p>但是 Cursor 的订阅价格比较贵，后来我怕发现它支持自定义 OpenAI API，而DeepSeek 兼容 OpenAI API，下面是设置教程：</p><p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-08-18-044258.png"></p><ol><li>点击编辑器右上角齿轮，打开设置界面。</li><li>点击设置界面左侧 Models。</li><li>点击 Add models，DeepSeek 目前有两种模型：<code>deepseek-chat</code> 与 <code>deepseek-coder</code>，可以都加上，然后根据实际情况使用（使用过程中可以切换语言模型）。</li><li>在下方 OpenAI API Key 处填入 DeepSeek 的 Key，DeepSeek 的 Key 可以在 <a href="https://platform.deepseek.com/api_keys">Deepseek 开放平台</a>生成。</li><li>点击 Override OpenAI Base URL，在下方输入框输入<code>https://api.deepseek.com/v1</code>。</li><li>点击 Verify 按钮验证是否正常，验证后可能会出现一个提示，大致意思是你订阅了 Pro 就可以不使用自定义 API 了，忽略就行，然后就可以正常试用了。<br>使用效果：</li></ol><p><img src="http://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-08-18-045854.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;第一次知道 Cursor 的时候还是它刚出来的时候，那时候的它非常简陋，侧边栏只有一个目录树，另一个是搜索栏还是什么，我对它的第一印象是：Sublime + Github Copilot，功能非常地简单，甚至可以说是简陋，体验一番后就将它卸载了。&lt;/p&gt;
+&lt;p&gt;最近，网上 </summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="软件" scheme="https://evolly.one/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>国内银行现状</title>
+    <link href="https://evolly.one/p/61808.html"/>
+    <id>https://evolly.one/p/61808.html</id>
+    <published>2024-02-05T09:40:54.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>上个月我妈给我去银行转账，算是见识到了银行踢皮球的能力。</p><p>首先我妈的钱是存在存折里，农商银行，那天我妈把钱都取出来，想直接转我中国银行卡，不过有一笔 50 左右的手续费，柜员建议我妈去农业银行转，这样可以省下这比手续费。我妈平时省吃俭用，如果只是花点时间就能省下 50 块钱，自然是会采用这种方案。哪怕是我也会毫不犹豫去其他地方转，因为另一个银行只相距几百米，电动车马上就能到。</p><p>于是我妈先回家翻了一通农业银行卡，等我妈到了农业银行，银行的柜员说不行，建议我妈直接去中国银行，相当于直接去往我卡里存钱，我妈也懒得跟柜员撤，想着去一趟算了，虽然中国银行在隔壁镇。期间，我妈还开错路，走了回头路。</p><p>结果到了中国银行说也不行，虽然我不知道具体原因，难道是因为没有实体卡所以不行？通过我妈的转述，我也不敢肯定具体原因是什么，毕竟我亲眼见识过我妈的转述能力。</p><p>最后我妈受不了，还是去了农商银行，交了 42 块的手续费。耗时好几个小时，提心吊胆带着十几万现金，吹了一路冷风，那天还刚好是最冷的一天，零下五六度，电瓶车还骑没电，确实让人生气。</p><p>到现在我也还是不知道农业银行跟中国银行为什么不行。是柜员嫌麻烦，糊弄一下不懂的老年人，还是有其他真的无法办理的原因，我不得而知。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;上个月我妈给我去银行转账，算是见识到了银行踢皮球的能力。&lt;/p&gt;
+&lt;p&gt;首先我妈的钱是存在存折里，农商银行，那天我妈把钱都取出来，想直接转我中国银行卡，不过有一笔 50 左右的手续费，柜员建议我妈去农业银行转，这样可以省下这比手续费。我妈平时省吃俭用，如果只是花点时间就能省</summary>
+      
+    
+    
+    
+    
+    <category term="碎碎念" scheme="https://evolly.one/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+    <category term="吐槽" scheme="https://evolly.one/tags/%E5%90%90%E6%A7%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>刻录 iStoreOS 系统记录</title>
+    <link href="https://evolly.one/p/24776.html"/>
+    <id>https://evolly.one/p/24776.html</id>
+    <published>2024-01-08T14:00:41.000Z</published>
+    <updated>2025-10-17T10:28:45.897Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>上周日将家里的拨号软路由拆了，我用的软路由是之前在前年 5 月份买的 R2S，因为最近家里的科学上网老不稳定，周日折腾了好久依旧不行，加上最新版的 Apple TV现在可以用代理了，可以完美地将它设置成旁路由，所以想了想就把软路由拆了。</p><p>本文仅做记录，以便将来再次折腾时查阅。 </p><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-Xnip2024-01-08_22-14-32.png"></p><h2 id="使用软件"><a href="#使用软件" class="headerlink" title="使用软件"></a>使用软件</h2><p><a href="https://etcher.balena.io/">balenaEtcher - Flash OS images to SD cards &amp; USB drives</a></p><h2 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h2><p>TF 卡读卡器</p><h2 id="刻录过程"><a href="#刻录过程" class="headerlink" title="刻录过程"></a>刻录过程</h2><h3 id="1-下载镜像"><a href="#1-下载镜像" class="headerlink" title="1.下载镜像"></a>1.下载镜像</h3><p>打开 <a href="https://fw.koolcenter.com/iStoreOS/">KoolCenter 固件下载服务器</a>，进入对应软路由型号的目录，<code>.img.gz</code> 结尾的文件就是镜像文件，选择想要的镜像文件下载，一般选择最新的镜像，可以从文件名上的时间戳来或后面的上传时间判断。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-Xnip2024-01-08_22-24-13.png"></p><h3 id="2-烧录镜像"><a href="#2-烧录镜像" class="headerlink" title="2.烧录镜像"></a>2.烧录镜像</h3><p>2.1 TF 开插入读卡器，读卡器插入电脑 USB 接口。<br>2.2 打开 balenaEtcher，点击【从文件烧录】，选择下载的镜像。<br>2.3 接着选择目标磁盘，记得确认磁盘大小，确保没有选错。系统盘一般是隐藏的。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-143028.png"></p><p>然后点击开始烧录即可，一开始需要你输入一下开机密码进行验证，然后就是刻录，刻录完还会进行一次验证，最后会弹出一个弹窗，选择推出。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-143401.png"></p><p>到这里就完成了 iStore OS 镜像的刻录，很简单，跟 U 盘刻录 windows 系统差不多。</p><h2 id="iStore-OS-其他说明"><a href="#iStore-OS-其他说明" class="headerlink" title="iStore OS  其他说明"></a>iStore OS  其他说明</h2><p>iStore OS 的默认管理地址是 <strong>192.168.100.1</strong>，默认账号密码是 root&#x2F;password。</p><p>iStore OS 手动安装的插件，无法通过商店卸载，需要通过终端命令行卸载：</p><pre><code class="bash">ssh root@192.168.100.1</code></pre><p>IP 根据实际情况调整。</p><p>列出所有已安装的应用：</p><pre><code class="bash">opkg list_installed</code></pre><p>卸载应用：</p><pre><code class="bash">is-opkg remove &#39;nps&#39; &#39;luci-app-nps&#39; &#39;luci-i18n-nps-zh-cn&#39; &#39;app-meta-nps&#39;</code></pre><p>上面命令是批量卸载应用，单个卸载只需要填对应的应用名称。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot; title=&quot;前提&quot;&gt;&lt;/a&gt;前提&lt;/h2&gt;&lt;p&gt;上周日将家里的拨号软路由拆了，我用的软路由是之前在前年 5 月份买的 R2S，因为最近家里的科学上网老不稳定，周日折腾了好久依旧不行，加上最</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="软路由" scheme="https://evolly.one/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>你好呀，2024</title>
+    <link href="https://evolly.one/p/65267.html"/>
+    <id>https://evolly.one/p/65267.html</id>
+    <published>2023-12-31T12:54:16.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>感觉疫情离我们已经过去很久很久，但细细一回想，22 年的 12 月 31 日，新冠感染人数已经从峰值开始回落，同事已经陆续阳完回来上班，而我一副破罐子破摔样子，每天等着被感染，因为这一天迟早会来。</p><h3 id="一些变化"><a href="#一些变化" class="headerlink" title="一些变化"></a>一些变化</h3><h4 id="卖富士买理光"><a href="#卖富士买理光" class="headerlink" title="卖富士买理光"></a>卖富士买理光</h4><p>2 月份，我卖掉用两三年的富士，入手了理光 GR3x.离谱的是这台二手富士，我用了几年,最后反而还涨价了。当然，理光涨的也很离谱，贴了点钱入的理光。</p><p>本来富士我打算本地面交，结果咸鱼遇上个广东还是深圳的学生。开始我不知道，甚至不知道对方是性别，因为对方很少用咸鱼，信息不是很完善，甚至没有芝麻信用，像一个新号，所以我压根没有打算卖给她，但我们还是聊了挺久，最终以互相祝福告别。</p><p>几天后她又来找我，因为她看我相机挂了好几天也一直没卖出去。最终她打动了我，我当时也急着出掉回血买理光，因为理光的价格不停在上涨。于是我让她认证了芝麻信用，又加了她微信，想通过朋友圈验证她是不是个爱拍照的人，与她的交谈中，我发现她并不是一个一时头脑发热决定买相机，所以我觉得她朋友圈至少有一些关于摄影的东西，最后确实也验证了我的想法，于是我把机身与 15-14 的镜头打包卖给了她。</p><p>还有一个 35f2 的镜头，我出给了杭州的一个买家，没有当面交易，但他急着用，因为马上要去旅游，打算寄出的时候，我发现镜头上有一个非常细小的刻痕，应该是之前借人的时候，把我 UV镜磕碎时候伤到的，不过这人也没多计较，说不影响成像，镜头在他机子上有点问题，他说可能是固件原因，没找我麻烦，总之还是顺利完成交易。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-12-31-133652.jpg"></p><center style="font-size:1.5rem;color:#666">理光拍的第一张照片</center><p>今年带着相机走了好多地方，上海、莫干山、舟山、杭州的各个景点，这是这几年来，我走过最多地方的一年。</p><h4 id="入住新房"><a href="#入住新房" class="headerlink" title="入住新房"></a>入住新房</h4><p>5 月份房子交付后，我开始着手处理房子相关的东西，其实东西也不多主要就是美缝、然后再在墙上添加几个插座，为了装电动窗帘。只有处理完这些才能安装柜子。6 月 30 日晚，刚好是周五，我下班后拎着行李箱正式入住新家，可惜家里一塌糊涂，只有一个睡觉的沙发。然后我开始改装家里电路，把家里大部分灯光以及空调接入了米家。自己随心所欲地布置家里可太有成就感了。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-12-31-140824.jpg"></p><center style="font-size:1.5rem;color:#666">告别住了两年的房子</center><h4 id="购入九号电动车"><a href="#购入九号电动车" class="headerlink" title="购入九号电动车"></a>购入九号电动车</h4><p>家离地铁站有一段距离，走路的话大概有一公里多。刚来的时候我每天步行上下班，后来觉得太累，发现家附近有公共自行车的租赁点，于是开始骑自行车去地铁站。但自行车还是麻烦，光走出小区就得花五六分钟，然后走到租赁点又要花费五六分钟，有时还会遇到借不到车或者车位满了还不了车的情况。最后决定为自己添置一个“大件”——电动自行车。毕竟我要在这里长期居住，电动车作为周围几公里范围内的出行工具，还是必不可少的。看了一圈后，我下单了九号 V30C，是刚出的一个新型号，很便宜，定位就是家庭的买菜车。目前使用快 5 个月，总体来说体验很好。期间出现过几次自动开锁失败，但过了几天又恢复了，可能是传感器因为灰尘覆盖导致失灵。冬天电池电量下降较快，因为用的磷酸电池，但也正是这个原因，它才便宜嘛。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-12-31-142302.jpg"></p><center style="font-size:1.5rem;color:#666">老板在给九号上电池</center><h4 id="购入方太水槽洗碗机"><a href="#购入方太水槽洗碗机" class="headerlink" title="购入方太水槽洗碗机"></a>购入方太水槽洗碗机</h4><p>这是我非常坚定一定要安装的东西，但厨房太小，如果安装嵌入式的洗碗机，我只能把我的碗篮拆掉，然后在灶下安装一个洗碗机，不过这样的话碗的存放又是一个麻烦事。最终我决定买一个方太的水槽洗碗机，虽然贵了点，但是能省去很多事，在咸鱼上淘了一个线下店铺里的样机，便宜了几千块，保修与新机一样，附带免费安装。因为厨房太小，安装那天师傅搞好久才给我弄上，期间还收到了其他业主的投诉，因为切割台面跟柜子噪音巨大，最后我上门道了个歉，周末装修不允许发出太大的噪音。目前试用 4 个月，已经完全离不开。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-12-31-143013.jpg"></p><center style="font-size:1.5rem;color:#666">安装后效果</center><h3 id="明年计划"><a href="#明年计划" class="headerlink" title="明年计划"></a>明年计划</h3><h4 id="买车"><a href="#买车" class="headerlink" title="买车"></a>买车</h4><p>因为住的确实比较远，所以打算在明年购入一辆代步汽车，目前看中的深蓝 S7。今天去 4S 店线下看了实车，感觉还不错，不出意外的话会在明年上半年购入，希望它能带给我更多不同的生活。</p><h4 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h4><p>今年把很多时间都花在娱乐上，因为谈恋爱，生活发生了挺大的变化，以前一个人时候的节奏被完全打乱，但这无法避免，明年希望逐渐在感情与自己之间找到平衡。</p><p>不想立太多的 flag，生活总是充满了不确定，今年的很多事情也并不在计划之内，不确定是一个中性词，它会带来惊吓，但也会带来惊喜。</p><p>积极面对未知，感受当下，享受过程。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;感觉疫情离我们已经过去很久很久，但细细一回想，22 年的 12 月 31 日，新冠感染人数已经从峰值开始回落，同事已经陆续阳完回来上班，而我一副破罐子破摔样子，每天等着被感染，因为这一天迟早会来。&lt;/p&gt;
+&lt;h3 id=&quot;一些变化&quot;&gt;&lt;a href=&quot;#一些变化&quot; clas</summary>
+      
+    
+    
+    
+    
+    <category term="年终总结" scheme="https://evolly.one/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    
+    <category term="碎碎念" scheme="https://evolly.one/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>群晖 Emby 套件安装 MeiamSubtitles 插件</title>
+    <link href="https://evolly.one/p/38944.html"/>
+    <id>https://evolly.one/p/38944.html</id>
+    <published>2023-04-15T11:35:55.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>为了更好的观影体验，打算给群晖上 Emby 套件装个 <a href="https://github.com/91270/MeiamSubtitles">MeiamSubtitles</a> 来自动下载中文字幕。起先在网上看了一下教程，基本上就是下载文件，然后上传到群晖中的某个目录中，重启 Emby 就结束了。但在昨晚实际操作中，没想到有大坑：</p><ol><li>SFTP 连上了，但无法访问根目录，只能看到共享文件夹。</li><li>想通过链接直接下载 Zip，在根目录解压然后移动，但是解压命令无效。</li><li>插件好不容易装上了，但是插列表不显示。</li></ol><p>下面来说我最终是怎么成功装上插件的：</p><p>本想通过 SFTP 直接上传文件到对应目录，但是始终无法访问根目录，网上的方法都试了一遍，修改配置文件之类。最终我想到为什么不直接通过浏览器的 DSM 来传呢…传入之后，只要通过终端复制或移动一下文件就够了。</p><h2 id="1-启动群晖-SSH-功能并登录"><a href="#1-启动群晖-SSH-功能并登录" class="headerlink" title="1. 启动群晖 SSH 功能并登录"></a>1. 启动群晖 SSH 功能并登录</h2><p>先在控制面板启动 SSH 功能</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-114950.png"></p><p>终端登录</p><pre><code class="bash">ssh admin@192.168.1.2 -p 22</code></pre><p>我用的是 admin 账号，用其他有管理员权限账号也可以。如果用不了 admin 账号，可能是用户面板把 admin 禁用了，启用就好。</p><p>取得 root 权限</p><pre><code class="bash">suso -i</code></pre><h2 id="2-上传插件至群晖"><a href="#2-上传插件至群晖" class="headerlink" title="2. 上传插件至群晖"></a>2. 上传插件至群晖</h2><p>在 <a href="https://github.com/91270/MeiamSubtitles/releases">MeiamSubtitles Release</a> 下载最新的插件，解压，然后通过浏览器将文件上传至比较方便的目录。</p><p>可通过【右键】-【属性】查看文件夹路径。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-120000.png"></p><h2 id="3-复制文件至插件目录"><a href="#3-复制文件至插件目录" class="headerlink" title="3. 复制文件至插件目录"></a>3. 复制文件至插件目录</h2><p>保险起见，将插件复制到这三个目录中，可以使用 <code>cd</code> 先查看一下路径是否存在，不用用户路径可能会不一样，特别是第三个目录。</p><pre><code class="bash">cp -r /volume1/Downloads/Emby/. /var/packages/EmbyServer/var/pluginscp -r /volume1/Downloads/Emby/. /var/packages/EmbyServer/target/system/pluginscp -r /volume1/Downloads/Emby/. /volume1/@appdata/EmbyServer/plugins</code></pre><h2 id="4-修改文件权限"><a href="#4-修改文件权限" class="headerlink" title="4. 修改文件权限"></a>4. 修改文件权限</h2><p>此时重启 Emby，然后去插件列表查看，可能依旧没有发现安装的插件，因为 Emby 可能没有权限读取插件文件，所以需要重新设置一下文件的权限：</p><pre><code class="bash">cd /var/packages/EmbyServer/var/pluginschown -R emby:emby Emby*.dllsudo chmod 777 Emby*.dllcd /var/packages/EmbyServer/target/system/pluginschown -R emby:emby Emby*.dllsudo chmod 777 Emby*.dllcd /volume1/@appdata/EmbyServer/pluginschown -R emby:emby Emby*.dllsudo chmod 777 Emby*.dll</code></pre><p>此时再重启 Emby，就会发现插件已经成功装上。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-121008.png"></p><p>最后别忘了关闭 SSH 跟禁用 admin 账户。</p><p>网上看教程好像 10 分钟就能搞定，然而昨天我实际却摸索了三四个小时，实践果然是检验真理的唯一标准。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;为了更好的观影体验，打算给群晖上 Emby 套件装个 &lt;a href=&quot;https://github.com/91270/MeiamSubtitles&quot;&gt;MeiamSubtitles&lt;/a&gt; 来自动下载中文字幕。起先在网上看了一下教程，基本上就是下载文件，然后上传到群晖中的</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="学习" scheme="https://evolly.one/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OpenWrt 新建磁盘分区、删除磁盘分区和挂载磁盘分区</title>
+    <link href="https://evolly.one/p/6571.html"/>
+    <id>https://evolly.one/p/6571.html</id>
+    <published>2023-04-15T03:09:49.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>去年买了个 R2S 来当软路由，为了省心，开箱即用，自带了定制化的 OpenWrt 系统，运行还算稳定，没有出现死机、重启等现象，其实我也只是用了它的 OpenClash 功能，其他不用的功能一律被我关闭，所以整个机子的负载一直都处在一个比较低的状态：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-031824.png"></p><p>这几天在折腾 Emby ，装插件，昨天折腾了半天群晖的 SFTP 权限，死活装不上，所以我打算将 Emby 装到 R2S 上来（不过最后还是没装在这里），反正闲着也是闲着，就在拉 Docker 镜像这一步的时候，就出问题了，提示我磁盘空间不足，于是就有了我后续一系列的折腾，下面开始正题。</p><p>###1. 通过终端连接至 OpenWrt 并获取管理员权限</p><pre><code class="shell"># 每人根据实际情况调整ssh root@192.168.2.1# 输入密码登录后，先获取管理员权限sudo -i</code></pre><h3 id="2-查看磁盘使用情况"><a href="#2-查看磁盘使用情况" class="headerlink" title="2. 查看磁盘使用情况"></a>2. 查看磁盘使用情况</h3><pre><code class="shell">df -h</code></pre><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-082222.png"></p><p>可以看到目前以挂载的分区的使用情况，上面挂载在 <code>/data</code> 下的 <code>/dev/mmcblk0p3</code> 就是我昨天新添加的分区。</p><p>###3. 查看所有磁盘信息（包括未挂载磁盘）</p><pre><code class="shell">fdisk -l</code></pre><p>可以看到有两个磁盘，上面的不用管，很明显。下面的 <code>/dev/mmcblk0</code> 就是我插的 32G 内存卡。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-082744.png"></p><p>可以看到现在内存卡有三个分区，从第 2 步的信息来看，<code>mmcblk02</code> 分区被创建了，但并没有被挂载。</p><h3 id="4-创建新的磁盘分区"><a href="#4-创建新的磁盘分区" class="headerlink" title="4. 创建新的磁盘分区"></a>4. 创建新的磁盘分区</h3><h4 id="4-1-进入磁盘"><a href="#4-1-进入磁盘" class="headerlink" title="4.1 进入磁盘"></a>4.1 进入磁盘</h4><pre><code class="shell">fdisk /dev/sda</code></pre><p>输入 <code>m</code> 可以获取帮助。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-083324.png"></p><h4 id="4-2-添加新分区"><a href="#4-2-添加新分区" class="headerlink" title="4.2 添加新分区"></a>4.2 添加新分区</h4><p>输入 <code>n</code> 并回车。</p><h4 id="4-3-选择分区类型"><a href="#4-3-选择分区类型" class="headerlink" title="4.3 选择分区类型"></a>4.3 选择分区类型</h4><p>输入 <code>p</code> 选择分区类型，也可以直接回车，默认为 <code>p</code>。</p><h4 id="4-4-选择分区号"><a href="#4-4-选择分区号" class="headerlink" title="4.4 选择分区号"></a>4.4 选择分区号</h4><p>可选1-4，我已经创建了三个，所以只能选 4，一般默认就好。</p><h4 id="4-5-选择起始扇区"><a href="#4-5-选择起始扇区" class="headerlink" title="4.5 选择起始扇区"></a>4.5 选择起始扇区</h4><p>这里有个坑，导致我昨天明明有很多的剩余空间，但只能创建出 31M的分区，从第 3 步的磁盘信息中可以看到，我的扇区不是从最开始（2048）进行分配的，而是从 65536 开始的，如果你的的磁盘最前面的扇区没有被分配，那么分区的时候，默认是从 2048 开始的，所以这时候，就需要我手动填写。<code>mmcblk02</code> 的结束扇区是 1703935，所以我昨天创建 <code>mmcblk03</code> 的时候，开始扇区填写的是 1703936。</p><h4 id="4-6-选择结束扇区"><a href="#4-6-选择结束扇区" class="headerlink" title="4.6 选择结束扇区"></a>4.6 选择结束扇区</h4><p>结束扇区的话，默认会到最后（或者下个分区开始扇区的前一位），如果你不想分配完，那也可以手动指定。</p><h4 id="4-7退出磁盘操作"><a href="#4-7退出磁盘操作" class="headerlink" title="4.7退出磁盘操作"></a>4.7退出磁盘操作</h4><p>按 <code>w</code> 保存并退出。</p><pre><code class="shell">fdisk -l</code></pre><p>查新查看磁盘信息，会发现刚才创建的分区 <code>mmcblk0p4</code> 已经显示，31M，因为我只剩这么点未分配的空间了。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-085156.png"></p><p>这是操作的所有步骤</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-085344.png"></p><h3 id="5-格式化分区"><a href="#5-格式化分区" class="headerlink" title="5. 格式化分区"></a>5. 格式化分区</h3><p>此时刚建好的分区还不能挂载，因为还不知道文件系统的类型，因此需要格式化一下，我将它格式化成了 ext4 格式。</p><pre><code class="shell">mkfs.ext4 /dev/mmcblk0p4</code></pre><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-090132.png"></p><h3 id="6-挂载分区"><a href="#6-挂载分区" class="headerlink" title="6. 挂载分区"></a>6. 挂载分区</h3><p>先在根目录创建一个目录，用于挂载分区</p><pre><code class="shell">cd /mkdir data2</code></pre><p>然后进行挂载</p><pre><code class="shell">mount /dev/mmcblk0p4 /data2</code></pre><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-090245.png"></p><p>可以看到已经被成功挂载了，已经可以正常使用 data2 目录了。权限可以根据用途自行设置。</p><h3 id="7-卸载分区"><a href="#7-卸载分区" class="headerlink" title="7. 卸载分区"></a>7. 卸载分区</h3><pre><code class="shell">umount /data2</code></pre><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-090749.png"></p><h3 id="8-删除分区"><a href="#8-删除分区" class="headerlink" title="8. 删除分区"></a>8. 删除分区</h3><h4 id="8-1-进入磁盘操作"><a href="#8-1-进入磁盘操作" class="headerlink" title="8.1 进入磁盘操作"></a>8.1 进入磁盘操作</h4><pre><code class="shell">fdisk /dev/mmcblk0</code></pre><h4 id="8-2-查看分区信息"><a href="#8-2-查看分区信息" class="headerlink" title="8.2 查看分区信息"></a>8.2 查看分区信息</h4><p>输入 <code>p</code> 回车，查看分区的信息</p><h4 id="8-3-删除分区"><a href="#8-3-删除分区" class="headerlink" title="8.3 删除分区"></a>8.3 删除分区</h4><p>按 <code>d</code> 删除分区，然后输入要删除的分区编号，回车。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-04-15-091255.png"></p><p>磁盘分区相关的基本操作就这些，结果是，我分好了区，最终还是没顺利把 Emby 跑起来，最后还是在群晖上顺利安装上了插件，只是过程依旧艰辛，下篇文章再讲。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;去年买了个 R2S 来当软路由，为了省心，开箱即用，自带了定制化的 OpenWrt 系统，运行还算稳定，没有出现死机、重启等现象，其实我也只是用了它的 OpenClash 功能，其他不用的功能一律被我关闭，所以整个机子的负载一直都处在一个比较低的状态：&lt;/p&gt;
+&lt;p&gt;&lt;im</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="学习" scheme="https://evolly.one/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微信键盘 Mac 版试用以及删除方式</title>
+    <link href="https://evolly.one/p/60289.html"/>
+    <id>https://evolly.one/p/60289.html</id>
+    <published>2023-01-04T08:10:29.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>前阵子微信键盘安卓跟 iOS 端发布，我立马下载试用了一下，初步体验下来，我总结了以下优缺点（仅代表个人）：</p><h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul><li>智能加空格</li><li>语音输入结尾不加句号</li><li>UI 简洁，媲美原生</li><li>支持小鹤双拼（这是最重要的）</li><li>智能纠错</li></ul><h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><ul><li>光标移动体验不是很好</li><li>输入法上方工具栏高度比原生的高，输入法唤出后，使得屏幕的有效空间变得更小</li><li>智能纠错（没错，缺点也是这个，因为我觉得不是很智能，如下图）</li><li>快捷短语需要三个字才能触发</li></ul><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2023-01-04-WechatIMG4031.jpeg"></p><p>不是很懂这个纠错的机制，反正我是觉得这个错别字是挺明显的。</p><p>虽然有些缺点，不过整体瑕不掩瑜，于是现在成了我的主力输入法（还有一个原因是 iOS 自带的输入法联想真是太笨了）。</p><h3 id="更新说明"><a href="#更新说明" class="headerlink" title="更新说明"></a>更新说明</h3><hr><p><strong>微信输入法 Mac\Windows 端正式版现在均已发布，大家可以到<a href="https://z.weixin.qq.com/">官网下载</a>体验，下文提到的一些缺点也已经修正，不具有参考价值。</strong></p><h3 id="以下是原文"><a href="#以下是原文" class="headerlink" title="以下是原文"></a>以下是原文</h3><hr><p>我开始期待 Mac 端，因为一些快捷短语就在网上搜索微信输入法 PC 端，没想到还真有泄漏的版本了。体验了一下，响应速度还行（对我来说），不过没有双拼，只支持全拼，那我就只能暂时放弃，不过好消息是至少它有在开发。想要尝鲜的可以下载体验下：</p><h4 id="点击下载（Mac-端）"><a href="#点击下载（Mac-端）" class="headerlink" title="点击下载（Mac 端）"></a><a href="https://dl.lancdn.com/landian/soft/wetype/mac/WeTypeInstaller_0.8.1_67.zip">点击下载（Mac 端）</a></h4><p>我体验之后马上就删了，等正式版。下面三个目录是微信键盘的应用本体、缓存目录，全部删除即可完全卸载。</p><pre><code>/Library/Input Methods/WeType.app~/Library/Application Support/WeType~/Library/Caches/WeType</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;前阵子微信键盘安卓跟 iOS 端发布，我立马下载试用了一下，初步体验下来，我总结了以下优缺点（仅代表个人）：&lt;/p&gt;
+&lt;h3 id=&quot;优点：&quot;&gt;&lt;a href=&quot;#优点：&quot; class=&quot;headerlink&quot; title=&quot;优点：&quot;&gt;&lt;/a&gt;优点：&lt;/h3&gt;&lt;ul&gt;
+&lt;l</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="软件" scheme="https://evolly.one/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac 升级到 Montenrey 后 Electron 打包报错 Error: Exit code: ENOENT. spawn /usr/bin/python ENOENT</title>
+    <link href="https://evolly.one/p/27138.html"/>
+    <id>https://evolly.one/p/27138.html</id>
+    <published>2022-04-07T12:28:22.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>前段时间把给我这台 2015 早期的 13 寸 MacBook Pro 换了电池，换了主板（升级内存），然后把系统也升级到了 Monterey。平时使用倒无所谓，然后昨天我 SendToflomo改了一些小问题，想重新发版的时候，发现打包报错：</p><pre><code class="js">Error: Exit code: ENOENT. spawn /usr/bin/python ENOENT</code></pre><p>查了一下，原来 Monterey 把系统内置的 python 2.7 移除了，对 python 开发者来说也许是一件好事，但对我来说却是给我造成了极大的困扰。我折腾了好久，网上找了一圈方法，其实在 vue-cli-plugin-electron-builder 的 <a href="https://github.com/electron-userland/electron-builder/issues/6767">issue#6767</a> 中已经有人提了解决方法，就是把 electron-builder 升级至 <code>v23.0.3</code>。但是 vue-cli-plugin-electron-builder 的作者并没有更新，最后我在另一个 <a href="https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/1691">issue#1691</a> 找到了解决方法，其实就是这位兄弟 fork 了 vue-cli-plugin-electron-builder，然后将依赖的 electron-builder 的版本进行了升级。而我们要做的就是将 vue-cli-plugin-electron-builder 的引用地址改一下，改为如下：</p><pre><code class="json">&quot;devDependencies&quot;: &#123;  &quot;vue-cli-plugin-electron-builder&quot;: &quot;git://github.com/spuky/vue-cli-plugin-electron-builder#b6826fc&quot;&#125;</code></pre><p>然后删除 node_modules 重新安装依赖，之后就能正常打包了。</p><p>如果是直接用 electron-builder 进行打包的，那么直接升级版本应该就可以解决。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;前段时间把给我这台 2015 早期的 13 寸 MacBook Pro 换了电池，换了主板（升级内存），然后把系统也升级到了 Monterey。平时使用倒无所谓，然后昨天我 SendToflomo改了一些小问题，想重新发版的时候，发现打包报错：&lt;/p&gt;
+&lt;pre&gt;&lt;code</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="Mac" scheme="https://evolly.one/tags/Mac/"/>
+    
+    <category term="electron" scheme="https://evolly.one/tags/electron/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ssh 使用 key 登录报“Permissions 0644 for xxxxxx are too open”</title>
+    <link href="https://evolly.one/p/47751.html"/>
+    <id>https://evolly.one/p/47751.html</id>
+    <published>2022-04-06T13:12:37.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天在使用 ssh key 登录服务器的时候报错了，提示：<strong>Permissions 0644 for xxxxxx are too open</strong>。</p><p>经过晚上一番搜索，原来是 ssh key 的读写权限过于开放，过多的用户可以读取，可能导致安全问题，因此需要改一下 ssh key 的读写权限：</p><pre><code class="shell">chmod 400 path/to/key</code></pre><p>后续安装 nvm 过程中，我还遇到了 <strong>The unauthenticated git protocol on port 9418 is no longer supported</strong> 的问题，解决方式是使用 http(s) 地址来 clone 仓库，而不是用 ssh。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;今天在使用 ssh key 登录服务器的时候报错了，提示：&lt;strong&gt;Permissions 0644 for xxxxxx are too open&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;经过晚上一番搜索，原来是 ssh key 的读写权限过于开放，过多的用户可以读取，可</summary>
+      
+    
+    
+    
+    
+    <category term="ssh" scheme="https://evolly.one/tags/ssh/"/>
+    
+    <category term="终端" scheme="https://evolly.one/tags/%E7%BB%88%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>斐讯 K2P 官改固件 AP 设置</title>
+    <link href="https://evolly.one/p/6650.html"/>
+    <id>https://evolly.one/p/6650.html</id>
+    <published>2022-03-28T13:28:28.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天把移动的光猫重新改回拨号模式，也就是放弃了 IPv6。因为现在的无线过于闹心，而且其实开通 IPv6 后我其实几乎没在外面用过，而屋子里无线不好我是天天在被折磨，所以还是将拨号模式改了回来，顺便将光猫移到房间内，如此一来，少了一堵墙的阻挡，5G 的信号大大增强，之前下载东西，房间内跟房间外是两个速度，能相差 7、8 兆。路由器也在前几天被我刷回了官改固件。</p><p>下面说下如何设置 AP 模式：</p><ol><li>从光猫 <strong>LAN</strong> 口过来的线插到 K2P 的 <strong>LAN</strong> 口。</li><li>浏览器输入 K2P 的控制台地址 <code>192.168.2.1</code>，点击<strong>「功能设置」-「LAN 设置」</strong>。</li><li>把 IP 地址修改为和光猫同一网段，保存，等待路由器重启完成。像我的移动光猫控制台地址为<code>192.168.1.1</code>，那么我就设置成了<code>192.168.1.3</code>，总之不要与其他 IP 冲突。</li></ol><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-28-134050.png"></p><ol start="4"><li>重启完成后输入刚设置的 IP 再次进入路由器后台，<strong>「功能设置」-「DHCP 服务」</strong>，关闭 DHCP，保存，然后路由器又会重启，重启完成后无线应该就能正常使用了。</li></ol><p>这个方法有一个缺陷，就是会白白浪费一个 WAN 口，恩山上也有改网口的<a href="https://www.right.com.cn/forum/thread-218337-1-1.html">教程</a>。我没这么多 LAN 口要用，所以懒得折腾，稳定最重要。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;今天把移动的光猫重新改回拨号模式，也就是放弃了 IPv6。因为现在的无线过于闹心，而且其实开通 IPv6 后我其实几乎没在外面用过，而屋子里无线不好我是天天在被折磨，所以还是将拨号模式改了回来，顺便将光猫移到房间内，如此一来，少了一堵墙的阻挡，5G 的信号大大增强，之前下载</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="K2P" scheme="https://evolly.one/tags/K2P/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过 GitHub Actions 同步 Hexo 博客至 Gitee</title>
+    <link href="https://evolly.one/p/65512.html"/>
+    <id>https://evolly.one/p/65512.html</id>
+    <published>2022-03-15T02:09:27.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://evolly.one/p/26406.html">上一篇</a>我讲了通过 GitHub Actions 自动部署博客。GitHub 是国外的服务，国内对应的有 Gitee，Gitee 也提供了 Gitee Pages 服务，可以托管静态页面，不过 GItee 对内容有内容审查，没有 GitHub 那么开放。我这次折腾也顺便把博客同步到了 Gitee。</p><h2 id="创建账号"><a href="#创建账号" class="headerlink" title="创建账号"></a>创建账号</h2><p>首先创建注册 Gitee 账户就不细说了，注册好后顺便把微信公众号绑定好，不然后面部署的时候可能会导致失败。</p><h2 id="设置-Actions-secrets"><a href="#设置-Actions-secrets" class="headerlink" title="设置 Actions secrets"></a>设置 Actions secrets</h2><p>在<strong>私有仓库</strong>的 Actions secrets 中再添加两个 secret，在上一篇中我已经加了一个 secret，现在再加一个 Gitee 的登录密码跟 git 的本地私钥。</p><p>Gitee 的本地密码用处是后续需要脚本模拟人工操作，部署 Gitee Pages，因为 Gitee Pages 每次更新都需要手动点击部署按钮。</p><p>本地私钥的话是为了有权限往 Gitee 仓库推送代码。因为现在是两个不同的平台之间同步代码，所以需拉取 Github 上博客的公开仓库，然后推送到 Gitee 的目标仓库。正常情况下用过 Github，本地电脑应该已经生成了 KEY。</p><p>我使用的是 Mac，KEY 生成的目录默认是<code>~/.ssh</code>：</p><p><code>id_rsa</code> 是私钥，<code>id_ras.pub</code> 是公钥。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-024626.png"></p><p>通过 <code>cat ~/.ssh/id_rsa</code> 可以读取公&#x2F;私钥内容。</p><p>公钥需要添加到 Gitee 中：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-025028.png"></p><p>私钥添加到 GitHub 的博客私有仓库。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-025348.png"></p><p>接下来在 GItee 创建一个仓库，仓库名最好与账户同名。至于原因可以看<a href="https://gitee.com/help/articles/4136#article-header1">这里</a>。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-025621.png"></p><p>创建好后我的是这样的：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-030122.png"></p><p>顺便把 Gitee Pages 服务开通：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-031650.png"></p><p>第一次我们需要手动点一下更新，否则后面脚本会执行失败。</p><p>接下来写配置：</p><pre><code class="yaml">name: gitee-deployon:  push:    branches: [main]  workflow_dispatch:jobs:  build:    runs-on: ubuntu-latest    steps:      - name: Sync to Gitee        uses: wearerequired/git-mirror-action@master        env:          # 注意在 Settings-&gt;Secrets 配置 GITEE_RSA_PRIVATE_KEY          SSH_PRIVATE_KEY: $&#123;&#123; secrets.GITEE_RSA_PRIVATE_KEY &#125;&#125;        with:          # 注意替换为你的 GitHub 源仓库地址          source-repo: git@github.com:Tit1e/evolly.github.io.git          # 注意替换为你的 Gitee 目标仓库地址          destination-repo: git@gitee.com:tit1e/tit1e.git      - name: Build Gitee Pages        uses: yanglbme/gitee-pages-action@main        with:          # 注意替换为你的 Gitee 用户名          gitee-username: tit1e          # 注意在 Settings-&gt;Secrets 配置 GITEE_PASSWORD          gitee-password: $&#123;&#123; secrets.GITEE_PASSWORD &#125;&#125;          # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错          gitee-repo: tit1e/tit1e          # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）          branch: master</code></pre><p>这是单独一个配置文件，我实际配置文件跟这个略有不同，因为我之前还有一个 Hexo 自动部署的脚本。</p><p>如果两个脚本分开写，那么在文章提交后，两个脚本同时执行，但博客自动部署脚本需要安装依赖，生成静态文件，这需要不少时间，而同步 Gitee 的脚本立马就可以执行，这会导致 Gitee 拉取到的代码永远是旧的，因此我把两个脚本合到一起，并规定了执行顺序，下面是我实际的使用脚本：</p><pre><code class="yaml">name: 部署 GitHub Pages 并同步至 Gitee Pageson:  push:    branches:      - main # master 分支有 push 行为时就触发这个 actionjobs:  build-and-deploy:    runs-on: ubuntu-latest    steps:      - name: Checkout        uses: actions/checkout@master      - name: Build and Deploy        # 使用专门部署 Hexo 到 GitHub pages 的 action        uses: Tit1e/hexo-deploy-github-pages-action@master        env:          PERSONAL_TOKEN: $&#123;&#123; secrets.HEXO_DEPLOY &#125;&#125; # secret 名          PUBLISH_REPOSITORY: Tit1e/evolly.github.io # 公共仓库，格式：GitHub 用户名/仓库名          BRANCH: master # 分支，填 gh-pages 就行          PUBLISH_DIR: ./public # 部署 public 目录下的文件  async-gitee:      # 需要 build-and-deploy 这个 job 执行完再执行当前脚本    needs: build-and-deploy    runs-on: ubuntu-latest    steps:      - name: Sync to Gitee        uses: wearerequired/git-mirror-action@master        env:          # 注意在 Settings-&gt;Secrets 配置 GITEE_RSA_PRIVATE_KEY          SSH_PRIVATE_KEY: $&#123;&#123; secrets.GITEE_RSA_PRIVATE_KEY &#125;&#125;        with:          # 注意替换为你的 GitHub 源仓库地址          source-repo: git@github.com:Tit1e/evolly.github.io.git          # 注意替换为你的 Gitee 目标仓库地址          destination-repo: git@gitee.com:tit1e/tit1e.git      - name: Build Gitee Pages        uses: yanglbme/gitee-pages-action@main        with:          # 注意替换为你的 Gitee 用户名          gitee-username: tit1e          # 注意在 Settings-&gt;Secrets 配置 GITEE_PASSWORD          gitee-password: $&#123;&#123; secrets.GITEE_PASSWORD &#125;&#125;          # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错          gitee-repo: tit1e/tit1e          # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）          branch: master</code></pre><p>第二个 job 添加了<code>needs: build-and-deploy</code>这个配置。有了它，第二个脚本就会在第一个脚本执行之后才开始执行，这样就能保证拉到的博客是最新的。</p><p><strong>注意 Gitee 一定要绑定微信公众号。</strong></p><p>然后就提交博客源码可以看下执行结果，正常的话 Gitee 会收到登陆提醒。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-15-032443.png"></p><p>如果有报错，可以对照错误找<a href="https://github.com/yanglbme/gitee-pages-action#%E9%94%99%E8%AF%AF%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">解决方案</a>。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://evolly.one/p/26406.html&quot;&gt;上一篇&lt;/a&gt;我讲了通过 GitHub Actions 自动部署博客。GitHub 是国外的服务，国内对应的有 Gitee，Gitee 也提供了 Gitee Pages 服务，可以托管静态页</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="github" scheme="https://evolly.one/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 GitHub Actions 自动部署 Hexo 博客</title>
+    <link href="https://evolly.one/p/26406.html"/>
+    <id>https://evolly.one/p/26406.html</id>
+    <published>2022-03-12T10:24:07.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>前几天抽空把拖很久的博客自动部署做了，现在博客可以提交<code>.md</code>文件后实现自动部署。</p><p>我的博客是使用 Hexo 搭建的，之前都是在本地机器上通过命令来部署，对我来说其实也还好，因为我几乎不在移动端编写大段的文字，主要这次想折腾。有了 Actions 以后，我可以在移动端访问 GitHub，通过在线编辑的方式发布文章。就当是个尝试。</p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先我们需要准备两个仓库：一个私有仓库，一个公有仓库。</p><p>私有仓库是用来存放整个博客项目的，包括配置文件，文章源代码等，因为里面有一些个人的配置，所以不能公开；公有仓库则是用来存放 Hexo 编译出来的静态文件。</p><p>这两个仓库的工作流程就是：在私有仓库编写博客，写完后将文件推送至远端仓库。当指定的分支有更新时，会自动触发 Actions，Actions 会执行我们配置的命令，重新编译博客的静态文件，然后把静态文件更新到公开仓库的固定分支。</p><p>上述流程涉及到了 Actions 自动往仓库推送的操作，正常情况下肯定是不行，因为虽然我的仓库是公开的，但是这个仓库的所有者是我，正常情况下只有我可以向它推送，因此如果要让“陌生人”也有推送权限，我需要给这个“陌生人”一个“通行证”，到时候仓库看到这个“通行证”就知道是我给“陌生人”权限了。</p><p>我们可以在这里生成 <a href="https://github.com/settings/tokens/new">Github Token</a>。Expiration 选择永不过期，否则你就得定时更新 Token。权限的话按照下方图上勾选即可。生成后注意保存 Token，因为 Token 只在生成后出现一次，关闭页面后就再也看不到了。如果不小心关了，也没关系，删除原来的重新生成一个就行。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-034553.png"></p><p>之后需要将这个 Token 添加到<strong>私有仓库</strong>的 <code>Secrets</code> 中。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-035230.png"></p><p>名称无所谓，随便填写，你自己能认识就好。</p><h2 id="配置流程"><a href="#配置流程" class="headerlink" title="配置流程"></a>配置流程</h2><p>接下来在私有仓库根目录编写配置文件：</p><ol><li>在博客仓库（私有仓库）根目录新建 <code>.github</code>文件夹</li><li>在 <code>.github</code>文件夹下新建 <code>workflows</code>文件夹</li><li>在<code>workflows</code>文件夹下新建 xxxx.yml 文件（命名随意）</li></ol><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-054356.png"></p><p>接下来就是编写 yml 配置文件：</p><p>注意配置中的 <strong>PERSONAL_TOKEN</strong>值要与之前添加的 <strong>Secrets</strong> 对应，否则脚本在执行的时候会获取不到 Token 导致无权限。</p><pre><code class="yaml">name: 部署 GitHub Pageson:  push:    branches:      - main # master 分支有 push 行为时就触发这个 actionjobs:  build-and-deploy:    runs-on: ubuntu-latest    steps:      - name: Checkout        uses: actions/checkout@master      - name: Build and Deploy        # 使用专门部署 Hexo 到 GitHub pages 的 action        uses: Tit1e/hexo-deploy-github-pages-action@master        env:          PERSONAL_TOKEN: $&#123;&#123; secrets.HEXO_DEPLOY &#125;&#125; # secret 名          PUBLISH_REPOSITORY: Tit1e/evolly.github.io # 公共仓库，格式：GitHub 用户名/仓库名          BRANCH: master # 分支，根据实际填写          PUBLISH_DIR: ./public # 部署 public 目录下的文件，hexo 一般都是这个目录，可根据实际调整  async-gitee:    needs: build-and-deploy    runs-on: ubuntu-latest    steps:      - name: Sync to Gitee        uses: wearerequired/git-mirror-action@master        env:          # 注意在 Settings-&gt;Secrets 配置 GITEE_RSA_PRIVATE_KEY          SSH_PRIVATE_KEY: $&#123;&#123; secrets.GITEE_RSA_PRIVATE_KEY &#125;&#125;        with:          # 注意替换为你的 GitHub 源仓库地址          source-repo: git@github.com:Tit1e/evolly.github.io.git          # 注意替换为你的 Gitee 目标仓库地址          destination-repo: git@gitee.com:tit1e/tit1e.git</code></pre><p>上面配置中用到了大佬编写的第三方部署插件 <a href="https://github.com/theme-keep/hexo-deploy-github-pages-action">hexo-deploy-github-pages-action</a>，不过插件中配置的 node 版本与我本地的不一致，导致 Hexo 无法正常编译，所以我 <code>fork</code> 了一份，将 <code>node</code> 版本改成了 <code>v12</code>。修改的地方如下图，其实我觉得 node 版本可以做成配置项，由用户自己定义。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-061546.png"></p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>配置中的分支名字一定要跟实际的仓库对应。</p><p>最后，我的 Hexo 版本还停留在 Hexo 3，这个版本的主题是要用户自行下载，然后放到 <code>themes</code> 文件夹下。但是这个主题本身也是一个 <code>git</code> 仓库，这种情况，主题文件夹不会被提交。我的解决办法是：删除主题文件夹根目录中的 <code>.git</code> 文件夹，这样这主题文件就能正常被提交。Hexo 5 主题可以从依赖引入，也就是说可以通过 <code>npm i</code> 进行安装，不会有上述情况。</p><p>最后将私有仓库提交至 GitHub，我不清楚 Actions 第一次提交会不会执行，不行就再改点东西提交一次。</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-063312.png"></p><p>正常我们就可以在 Actions 标签中看到我们配置的 workflows，以及每次的运行结果，还能点进去看具体的运行日志。</p><p><a href="https://juejin.cn/post/6943895271751286821">参考文章</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;前几天抽空把拖很久的博客自动部署做了，现在博客可以提交&lt;code&gt;.md&lt;/code&gt;文件后实现自动部署。&lt;/p&gt;
+&lt;p&gt;我的博客是使用 Hexo 搭建的，之前都是在本地机器上通过命令来部署，对我来说其实也还好，因为我几乎不在移动端编写大段的文字，主要这次想折腾。有了 Ac</summary>
+      
+    
+    
+    
+    
+    <category term="折腾" scheme="https://evolly.one/tags/%E6%8A%98%E8%85%BE/"/>
+    
+    <category term="hexo" scheme="https://evolly.one/tags/hexo/"/>
+    
+    <category term="github" scheme="https://evolly.one/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>uniapp App 端实现应用锁（指纹或人脸解锁后才能使用）</title>
+    <link href="https://evolly.one/p/18863.html"/>
+    <id>https://evolly.one/p/18863.html</id>
+    <published>2021-10-20T13:45:28.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在自己用 uniapp 写应用玩，想实现一个软件锁的效果，折腾了不少时间，折腾出来了。</p><p>软件锁的界面一般是一个遮罩盖住整个页面，然后进行人脸或指纹验证，验证通过就关闭遮罩这么个逻辑。</p><p>我一开始使用 fixed 进行全屏覆盖，但是显然没这么简单：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-20-IMG_4AA27485D686-1.jpeg"></p><p>这个遮罩无法覆盖原生的头部与底部栏。</p><p>此方法作罢，继续寻找尝试，最后发现 nvue 页面可以实现全屏幕的覆盖而不受影响原生控件的影响。</p><p>为什么呢，因为用这种方式实现的遮罩其实并不是在软件首页，而是跳转至了一个专门用来做遮罩的二级页面，这个二级页面什么也没有（当然要有其他你也可以自己加），没有原生的头部，二级页面自然也没有底部的导航栏。上面这个特点普通的 vue 页面就能做到，但是 nvue 页面还有一个特点是可以将页面的背景图片设置为透明，这是普通页面无法做到的。uniapp 的多级页面显示其实就是一层一层往上叠加页面，把下面的遮盖住，但是如果上面的页面是透明的，那么下面的页面自然就显示出来了。</p><p>当然如果没有透明度要求那直接用普通页面做也可以满足。</p><p> 下面来说下实现过程：</p><p>首先新建一个页面，我命名为 <code>mask.nvue</code> <strong>（注意扩展名是 nvue）</strong>：</p><pre><code class="html">&lt;template&gt;  &lt;!-- blurEffect 是 nvue 中的 view 标签独有的属性，可选值有：dark/extralight/light/none，用于背景高斯模糊 --&gt;  &lt;!-- nvue 中 css 的使用限制很大，无法使用 filter 等属性 --&gt;    &lt;view class=&quot;mask&quot; blurEffect=&quot;dark&quot;&gt;&lt;/view&gt;&lt;/template&gt;</code></pre><pre><code class="js">&lt;script&gt;    export default &#123;        onLoad() &#123;              // 进入页面就开启验证            uni.startSoterAuthentication(&#123;                requestAuthModes: [&#39;facial&#39;, &#39;fingerPrint&#39;],                success: res =&gt; &#123;                      // 因为识别有动画效果，所以延迟一秒等动画完成再返回                    setTimeout(() =&gt; &#123;                        uni.navigateBack(&#123;&#125;)                    &#125;, 1000)                &#125;            &#125;)        &#125;    &#125;&lt;/script&gt;</code></pre><pre><code class="css">&lt;style scoped&gt;    .mask &#123;        position: fixed;        left: 0;        top: 0;        right: 0;        bottom: 0;    &#125;&lt;/style&gt;</code></pre><p>然后在 pages.json 中添加路由：</p><pre><code class="json">&#123;  &quot;path&quot;: &quot;pages/mask/mask&quot;,  &quot;style&quot;: &#123;    &quot;navigationStyle&quot;: &quot;custom&quot;,    &quot;app-plus&quot;: &#123;            &quot;animationType&quot;: &quot;none&quot;, // 不使用页面切换动画，否则就会被发现是页面切换      &quot;background&quot;: &quot;transparent&quot;, //页面设置透明背景      &quot;popGesture&quot;: &quot;none&quot; //禁用侧滑返回，防止用户取消验证使用侧滑返回而绕过检验    &#125;  &#125;&#125;</code></pre><p>这样就完成了，使用的话你只要直接在应用进入首页的时候，把页面跳转至验证页面就可以了，验证成功自动返回首页。</p><pre><code class="js">// /pages/index/indexonLoad()&#123;  uni.navigateTo(&#123;    url: &#39;/pages/mask/mask&#39;  &#125;)&#125;</code></pre><p>当然，在跳转前你需要使用 <a href="https://uniapp.dcloud.io/api/system/authentication?id=checkissoterenrolledindevice">uni.checkIsSoterEnrolledInDevice(OBJECT)</a> 判断当前设置是否已经录入了指纹或者 Face ID并且在软件设置中打开了启用软件锁的开关（如果有的话），否则就不需要验证。</p><p>这是触发的效果：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-20-IMG_6A70B3F75CE0-1.jpeg"></p><h3 id="GitHub-仓库地址"><a href="#GitHub-仓库地址" class="headerlink" title="GitHub 仓库地址"></a><a href="https://github.com/Tit1e/uni-components/tree/main/pages/mask">GitHub 仓库地址</a></h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;最近在自己用 uniapp 写应用玩，想实现一个软件锁的效果，折腾了不少时间，折腾出来了。&lt;/p&gt;
+&lt;p&gt;软件锁的界面一般是一个遮罩盖住整个页面，然后进行人脸或指纹验证，验证通过就关闭遮罩这么个逻辑。&lt;/p&gt;
+&lt;p&gt;我一开始使用 fixed 进行全屏覆盖，但是显然没这么简单</summary>
+      
+    
+    
+    
+    
+    <category term="学习" scheme="https://evolly.one/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="uniapp" scheme="https://evolly.one/tags/uniapp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>uniapp APP 端使用 canvas 绘制 IM 群聊头像</title>
+    <link href="https://evolly.one/p/10213.html"/>
+    <id>https://evolly.one/p/10213.html</id>
+    <published>2021-10-19T14:00:51.000Z</published>
+    <updated>2025-10-17T10:28:45.896Z</updated>
+    
+    <content type="html"><![CDATA[<p>前阵子公司要我们用 uniapp 开发应用，经过不断折腾也算是上线了，最近有要求我们给 app 接入腾讯的 IM，IM 有个群聊功能，本来我以为群聊的头像是 IM 为我们生成好的，结果发现要我们自己处理。我发现微信群的头像在群创建后就固定了，不会随着群成员更换头像而改变，我猜测应该是创建的时候用 canvas 或其他方式生成了一张静态图片然后被存了起来。</p><p>一开始我在网上找了很多插件，总之不太行，还有很多是后端处理的方案，但我这要前端处理也没有办法，最终试了一圈，还是自己画吧。</p><p>先分析一下头像可能出现的情况：</p><p><strong>最少的情况：</strong></p><p>成群最少三个，三个时三个头像在图中间平铺。</p><p><strong>四个时比较特殊：</strong></p><p>头像呈现一个“田”字，而不是大多数的三等分。</p><p><strong>5 至 6 个时：</strong></p><p>一排三个 ，另一排两个或三个，少的那排头像永远居中，上下两排在垂直方式也是居中排列。</p><p><strong>7 至 9 个时：</strong></p><p>两排三个，剩下一排 1 至 3 个，此时行数已经撑满整个头像区域。</p><p>到这里基本已经完成了大半，剩下的就是绘制了。</p><p>绘制完成后我将 canvas 转成了 base64，并通过  <code>@loaded</code> 传递了出来，用户可以后续自行处理。</p><p>最终效果：</p><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-20-IMG_0354.PNG"></p><p>代码在这里贴一下：</p><pre><code class="html">&lt;template&gt;    &lt;canvas        :style=&quot;&#123;height: canvasSize + &#39;px&#39;, width: canvasSize + &#39;px&#39;&#125;&quot;        :canvas-id=&quot;canvasId&quot;        :id=&quot;canvasId&quot;    &gt;    &lt;/canvas&gt;&lt;/template&gt;</code></pre><pre><code class="js">&lt;script&gt;        export default &#123;        props: &#123;            // 不满三个的行显示在上面还是在下面，默认在上面（同微信）            avatarReverse: &#123;                type: Boolean,                default: true            &#125;,            // 头像数组            images: &#123;                type: Array,                default: () =&gt; ([])            &#125;,            // 头像背景色            backgroundColor: &#123;                type: String,                default: &#39;#ffffff&#39;            &#125;,            // 边框宽度            borderWidth: &#123;                type: Number,                default: 2            &#125;,            // 每个头像的尺寸            avatarSize: &#123;                type: Number,                default: 30            &#125;        &#125;,        data() &#123;            // 如果同时渲染多个，会出现 id 重复问题，所以 加上时间戳跟随机数            const now = (+new Date() + Math.random().toFixed(4) * 10000)            return &#123;                canvasId: `__myCanvas$&#123;now&#125;`,                avatarArray: [],                colNumber: 3            &#125;        &#125;,        computed: &#123;            canvasSize() &#123;                return this.avatarSize * 3 + this.borderWidth * 4            &#125;,            avatarSize2() &#123;                return (this.canvasSize - this.borderWidth * 3) / 2            &#125;,            pointMap() &#123;                // 这里的 1，2，3 为每行 / 每列的数组长度                return &#123;                    1: (this.canvasSize - this.avatarSize) / 2,                    2: (this.canvasSize - (this.avatarSize * 2 + this.borderWidth)) / 2,                    3: this.borderWidth                &#125;            &#125;        &#125;,        created() &#123;            this.init()        &#125;,        mounted() &#123;            this.drawAvatar()        &#125;,        methods: &#123;            drawAvatar() &#123;                const ctx = uni.createCanvasContext(this.canvasId, this)                ctx.setFillStyle(this.backgroundColor)                ctx.fillRect(0, 0, this.canvasSize, this.canvasSize)                for (let i = 0; i &lt; this.avatarArray.length; i++) &#123;                    const item = this.avatarArray[i]                    // 按九宫格分的情况                    if (this.colNumber === 3) &#123;                        const colStart = this.pointMap[this.avatarArray.length]                        const rowStart = this.pointMap[item.length]                        for (let v = 0; v &lt; item.length; v++) &#123;                            ctx.drawImage(                                item[v],                                rowStart + (this.avatarSize + this.borderWidth) * v, colStart + (this.avatarSize + this                                    .borderWidth) * i, this.avatarSize, this.avatarSize)                        &#125;                    &#125;                    // 按4宫格分的情况                    if (this.colNumber === 2) &#123;                        for (let v = 0; v &lt; item.length; v++) &#123;                            ctx.drawImage(                                item[v],                                this.borderWidth + (this.borderWidth + this.avatarSize2) * i,                                this.borderWidth + (this.borderWidth + this.avatarSize2) * v,                                this.avatarSize2,                                this.avatarSize2)                        &#125;                    &#125;                &#125;                ctx.draw(true, ret =&gt; &#123;                    // #ifdef APP-PLUS                    uni.canvasToTempFilePath(&#123;                        x: 0, // 起点坐标                        y: 0,                        width: this.canvasSize, // canvas 宽                        height: this.canvasSize, // canvas 高                        canvasId: this.canvasId, // canvas id                        success: res =&gt; &#123;                            const savedFilePath = res.tempFilePath // 相对路径                            const path = plus.io.convertLocalFileSystemURL(savedFilePath) // 绝对路径                            const fileReader = new plus.io.FileReader()                            fileReader.readAsDataURL(path)                            fileReader.onloadend = (res) =&gt; &#123; // 读取文件成功完成的回调函数                                this.$emit(&#39;loaded&#39;, res.target.result)                            &#125;                        &#125;                    &#125;)                    // #endif                &#125;)            &#125;,            init() &#123;                const images = this.images.slice(0, 9)                this.avatarArray = this.splitArray(this.avatarReverse ? images.reverse() : images)            &#125;,            splitArray(data) &#123;                if (data.length === 4) &#123;                    this.colNumber = 2                &#125;                const result = []                for (let i = 0, len = data.length; i &lt; len; i += this.colNumber) &#123;                    result.push(data.slice(i, i + this.colNumber))                &#125;                return this.avatarReverse ? result.reverse() : result            &#125;        &#125;    &#125;&lt;/script&gt;</code></pre><h3 id="GitHub-组件地址"><a href="#GitHub-组件地址" class="headerlink" title="GitHub 组件地址"></a><a href="https://github.com/Tit1e/uni-components/tree/main/pages/groupAvatar/components/gAvatar">GitHub 组件地址</a></h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;前阵子公司要我们用 uniapp 开发应用，经过不断折腾也算是上线了，最近有要求我们给 app 接入腾讯的 IM，IM 有个群聊功能，本来我以为群聊的头像是 IM 为我们生成好的，结果发现要我们自己处理。我发现微信群的头像在群创建后就固定了，不会随着群成员更换头像而改变，我</summary>
+      
+    
+    
+    
+    
+    <category term="学习" scheme="https://evolly.one/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="uniapp" scheme="https://evolly.one/tags/uniapp/"/>
+    
+    <category term="canvas" scheme="https://evolly.one/tags/canvas/"/>
+    
+  </entry>
+  
+</feed>

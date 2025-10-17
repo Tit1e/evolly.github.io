@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">1 / 28, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Vue3.0 新特性学习（一）</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>Vue3 出来已经有一段时间了，昨天翻了一遍官方文档，今天尝试了一下，顺便做个与 Vue2 的差异记录。</p>
+<p>关于 Vue3 包的体积，性能上的区别我就不再多说，因为这对我们使用者来说是没得选的，性能有提升更好，没提升之前 Vue2 的版本不也照样用嘛。所以这篇文章主要说开发体验上的区别。</p>
+<h3 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h3><p>我们从创建应用说起，Vue2 使用的是 <code>new Vue</code> 的方式创建应用，而 Vue3 使用的是调用 Vue 实例上的  <code>Vue.createApp</code> 方法创建。</p>
+<pre><code class="javascript">// 2.x
+const vm = new Vue(&#123;
+  //...options
+&#125;)
+vm.$mount(&#39;#app&#39;)
+
+// 3.x
+const vm = Vue.createApp(&#123;
+  //...options
+&#125;)
+vm.mount(&#39;#app&#39;)
+</code></pre>
+<p>Vue3 中一些全局的方法可以链式调用了：</p>
+<pre><code class="javascript">const app = Vue.createApp(&#123;&#125;)
+app.component(&#39;component&#39;, component)
+  .directive(&#39;directive&#39;, directive)
+  .use(plugin)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<p><strong>⚠️注意别这么用：</strong></p>
+<pre><code class="javascript">// 错误用法
+const app = Vue.createApp(&#123;&#125;).mount(&#39;#app&#39;)
+app.component(&#39;component&#39;, component)
+  .directive(&#39;directive&#39;, directive)
+  .use(plugin)
+</code></pre>
+<p>因为 <code>moun</code> 返回的是<strong>根组件实例</strong>，而不是<strong>应用实例</strong>。</p>
+<h4 id="扩展属性区别"><a href="#扩展属性区别" class="headerlink" title="扩展属性区别"></a>扩展属性区别</h4><p>Vue3 中 ，全局 confg 中新增了一个 globalProperties 属性，它是一个对象，对象里面的属性全局都可以访问到。</p>
+<pre><code class="javascript">// Vue2 中在 Vue 上挂载 axios
+import axios from &#39;axios&#39;
+Vue.prototype.$axios = axios
+
+// Vue3 中在 Vue 上挂载 axios
+const app = Vue.createApp(&#123;&#125;)
+app.config.globalProperties.$axios = axios
+</code></pre>
+<h4 id="注册组件区别"><a href="#注册组件区别" class="headerlink" title="注册组件区别"></a>注册组件区别</h4><pre><code class="javascript">// Vue2 中注册组件
+Vue.component(&#39;component-name&#39;, &#123; ...options &#125;)
+
+// Vue3 中注册组件
+const app = Vue.createApp(&#123;&#125;)
+app.component(&#39;component-name&#39;, &#123; ...options &#125;)
+</code></pre>
+<p>Vue3 的组件注册方式解决了 Vue2 的全局组件污染问题。</p>
+<pre><code class="html">&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;test&gt;&lt;/test&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;app2&quot;&gt;
+      &lt;test&gt;&lt;/test&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<pre><code class="javascript">// Vue2
+Vue.component(&#39;test&#39;,&#123;template: &#39;&lt;div&gt;test-component&lt;/div&gt;&#39;&#125;)
+const vm = new Vue(&#123;
+  el: &#39;#app&#39;,
+&#125;)
+const vm2 = new Vue(&#123;
+  el: &#39;#app2&#39;,
+&#125;)
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-025748.png"></p>
+<p>可以看到 <code>test</code> 组件只注册了一次，但是 <code>vm</code> 与 <code>vm2</code> 都可以使用 <code>test</code> 组件。这可能会不经意导致组件名称冲突组件被覆盖。</p>
+<p>而 Vue3 则不会出现这种情况：</p>
+<pre><code class="javascript">const app = Vue.createApp(&#123;&#125;)
+app.component(&#39;test&#39;,&#123;template: &#39;&lt;div&gt;app1&lt;/div&gt;&#39;&#125;)
+app.mount(&#39;#app&#39;)
+const app2 = Vue.createApp(&#123;&#125;)
+app2.component(&#39;test&#39;,&#123;template: &#39;&lt;div&gt;app2&lt;/div&gt;&#39;&#125;)
+app2.mount(&#39;#app2&#39;)
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-031004.png"></p>
+<p><code>Vue.component</code> 只是一个代表，其实类似这样的 API，比如<code>Vue.directive</code>， <code>Vue.mixin</code> 都存在这样的问题。Vue3 已经全都规避掉了。</p>
+<p><strong>接下来其实你完全可以按照 Vue2 的习惯来编写代码，Vue3 并没有抛弃 Vue2 的写法，不过有一点需要注意的是，Vue2 和 Vue3 的生命周期钩子有所区别：</strong></p>
+<ul>
+<li>Vue2 中的 <strong>beforeDestroy</strong> 变成了 <strong>beforeUnmount</strong></li>
+<li>VUe2 中的 <strong>destroyed</strong> 变成了 <strong>unmounted</strong></li>
+<li>Vue3 中新增了为了方便调试的 <strong>renderTracked</strong> 和 <strong>renderTriggered</strong> 钩子</li>
+</ul>
+<p><u><strong>还有个新特性，就是Vue3 终于不限制单一跟节点了！！！</strong></u></p>
+<h3 id="组合式-API"><a href="#组合式-API" class="headerlink" title="组合式 API"></a>组合式 API</h3><p>Vue3 对开发者来说最大的区别应该就是 <strong>组合式 API</strong> 了吧（至少对我来说是的）。</p>
+<h4 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h4><p>Vue3 中新增了一个 <code>setup()</code> 选项，官方文档上是这样定义它的：</p>
+<blockquote>
+<p>一个组件选项，在创建组件<strong>之前</strong>执行，一旦 <code>props</code> 被解析，并作为组合式 API 的入口点</p>
+</blockquote>
+<p><code>setup</code> 接受两个参数，第一个为 <code>props</code>， 第二个是 <code>context</code>，<code>props</code> 很好理解，这个 <code>context</code> 包含的内容我们打印看下：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-060904.png"></p>
+<p><code>props</code> 解析后 <code>setup</code> 就会被调用，那么这么说来，它应该比 <strong>beforeCreate</strong> 钩子早执行，验证一下：</p>
+<pre><code class="javascript">// html 省略
+const vm = Vue.createApp(&#123;
+  setup(props, context)&#123;
+    console.log(3)
+  &#125;,
+  beforeCreate() &#123;
+    console.log(1)
+  &#125;,
+  created() &#123;
+    console.log(2)
+  &#125;,
+&#125;)
+vm.mount(&#39;#app&#39;)
+</code></pre>
+<p>执行结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-28-130150.png"></p>
+<p>没有猜错，早于 <strong>beforeCreate</strong> 钩子执行。</p>
+<h4 id="在-setup-内部创建响应式数据"><a href="#在-setup-内部创建响应式数据" class="headerlink" title="在 setup 内部创建响应式数据"></a>在 setup 内部创建响应式数据</h4><pre><code class="html">&lt;body&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &#123;&#123;v&#125;&#125;&#123;&#123;c.a&#125;&#125;&#123;&#123;obj.a&#125;&#125;
+  &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>在 <code>setup</code> 内部<strong>使用或修改</strong>响应式数据，不能单纯地使用直接用变量名，而是需要用 <code>.value</code> 的方式取值。但是在外部使用的时候，Vue 会自动帮你展开，所以在模板或其他地方使用的时候，直接使用变量就行了。</p>
+<pre><code class="javascript">const options = &#123;
+  setup()&#123;
+    // 创建响应式数据
+    
+    // 单个
+    const v = Vue.ref(0)
+    console.log(v.value) // 0
+    
+    // 使用 ref 创建的响应式对象
+    const c = Vue.ref(&#123;a: 1&#125;)
+    console.log(c.value.a) // 1
+    
+    // 响应式对象，外部可通过 obj.a 修改 obj的属性
+    const obj = Vue.reactive(&#123;
+      a: 1,
+      b: 2
+    &#125;)
+    return &#123;
+      v,
+      c,
+      obj
+    &#125;
+  &#125;,
+  created()&#123;
+    // 修改 v 与 obj.a 的值
+    this.v = 3
+    this.c.a = 2
+    this.obj.a = 0
+  &#125;
+&#125;
+Vue.createApp(options).mount(&#39;#app&#39;)
+</code></pre>
+<p>上面主要说的是 <strong>ref</strong> 与 <strong>reactive</strong>，下面说 <strong>toRef</strong> 与 <strong>toRefs</strong>。</p>
+<p><strong>toRef</strong> 用于为为源响应式对象上的 property 新创建一个 <strong>ref</strong>。它接受两个参数，第一个是响应式对象，第二个是要提出来的属性名。</p>
+<pre><code class="javascript">const options = &#123;
+  setup()&#123;
+    const obj = Vue.reactive(&#123;
+      a: 1
+    &#125;)
+    const obja = Vue.toRef(obj, &#39;a&#39;)
+    const b_obja = obj.a
+    return &#123;
+      obj,
+      obja,
+      b_obja
+    &#125;
+  &#125;,
+  created()&#123;
+    console.log(this.obja)
+    console.log(this.obj.a)
+    this.obja = 2
+    console.log(this.obja)
+    console.log(this.obj.a)
+    this.obj.a = 3
+    console.log(this.obja)
+    console.log(this.obj.a)
+  &#125;
+&#125;
+Vue.createApp(options).mount(&#39;#app&#39;)
+</code></pre>
+<p>运行结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-28-142417.png"></p>
+<p>由此可见，虽然将 a 从 obj 中剥离了出来，但是它们之间还是保持着响应式连接，因此当改变 obja 或 obj.a 的值的时候，双方的值都会相应改变。</p>
+<p><strong>toRefs</strong> 则是将一个响应式对象转换为普通对象，其中结果对象的每个属性都是指向原始对象相应属性的 ref。说白了就是 <strong>toRef</strong> 的一个批量快捷操作。</p>
+<pre><code class="javascript">const options = &#123;
+  setup(props) &#123;
+    const &#123;name, age&#125; = Vue.toRefs(props)
+    const obj = Vue.reactive(&#123;
+      a: 1,
+      b: 2
+    &#125;)
+    const b_obj = Vue.toRefs(obj)
+    return &#123;
+      ...b_obj, name, age, obj
+    &#125;
+  &#125;,
+  created()&#123;
+    console.log(this.a, this.b, this.name, this.age, this.obj)
+    this.obj.a = 3
+    console.log(this.a, this.obj.a)
+    this.a = 4
+    console.log(this.a, this.obj.a)
+  &#125;,
+&#125;
+//在这传入 props
+Vue.createApp(options, &#123; name: &#39;张三&#39;, age: 3 &#125;).mount(&#39;#app&#39;)
+</code></pre>
+<p>执行结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-28-144705.png"></p>
+<p>可以看出 a 与 obj.a 也依旧保持着响应式连接。</p>
+<p><a href="https://evolly.one/2021/01/29/155-learn-vue3-2/">Vue3.0 新特性学习（二）</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/59db349d.html"
+      title="Vue3.0 新特性学习（二）"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Vue3.0 新特性学习（二）
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/f0cf2f8c.html"
+      title="Mac 时间机器 Time Machine 备份提速"
+    >
+      <span class="post-near-title">
+        Mac 时间机器 Time Machine 备份提速
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

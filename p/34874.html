@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">8 / 14, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">群晖使用移动宽带 IPv6 进行外网自定义域名访问</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #群晖
+    </li>
+    
+    <li class="tag-item">
+      #Synology
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前几天了解到移动宽带 IPv6 已经铺开，于是心心念的让群晖自定义域名访问的想法又从心底浮现。自认为至少在这方面我的执行力还是挺高，说干就干，网上一通查，大致的思路就是：</p>
+<ol>
+<li>移动光猫【连接模式】改为【桥接】。</li>
+<li>通过自己的路由器拨号上网，，开启 IPv6。</li>
+<li>域名新增一个 IPv6 的解析，解析地址为群晖的地址。</li>
+<li>因为 IPv6 的地址可能是动态的，所以需要在群晖上创建一个定时任务，让域名不断地指向群晖的实际地址。</li>
+</ol>
+<p><strong>上面只是粗略的步骤，还有很多需要注意的细节在具体过程中会提到。</strong></p>
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>先说一下我原本的光猫与路由器的连接模式是光猫联网，然后路由器 DHCP 自动分配 IP 地址联网，然后发送无线。正常来说大部分家庭应该都是这种模式。这种情况下，我的光猫的 IP 是 <code>192.168.1.1</code>，路由器的 IP 为 <code>192.168.2.1</code>。</p>
+<p>我的路由器是 K2P，刷了padavan 固件，之后的说明都在这个基础上展开，其他的路由器大致应该都差不多，再再网上搜一下应该没什么大问题。</p>
+<p>群晖系统我升级了 DSM 7.0，但问题不大，跟之前相比基本只是 UI 有点区别。</p>
+<p>域名是阿里云申请的。</p>
+<h2 id="1-修改光猫连接模式为【桥接】"><a href="#1-修改光猫连接模式为【桥接】" class="headerlink" title="1. 修改光猫连接模式为【桥接】"></a>1. 修改光猫连接模式为【桥接】</h2><p>首先要登录移动光猫的后台，访问地址一般在光猫背后的信息中：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-Xnip2021-08-14_19-32-11.png"></p>
+<p>在当前的环境下可以直接访问到光猫的后台，但之后修改连接模式后就将无法直接访问。</p>
+<p>路由器后面的信息中也提供了后台的管理账号，但是这个账号功能有所阉割，权限还是不够大，但是移动的后台超级管理员账号其实都是统一的，网上一搜就行：</p>
+<ul>
+<li>移动光猫账号： CMCCAdmin 密码：aDm8H%MdA</li>
+<li>华为的：telecomadmin 密码：admintelecom</li>
+<li>中国移动光纤宽带 ip：192.168.100.1 的超级账号：telecomadmin 密码：nE7jA%5m</li>
+</ul>
+<p>我的用第一个就能登录。进入后进入【网络】-【宽带设置】-【网络连接】</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-Xnip2021-08-14_19-33-13.png"></p>
+<p>【链接名称】处应该是个可以选择的下拉框，选择第二项，可以看到下方的封装类型为 PPPoE，这就对了。</p>
+<p>然后将【连接模式】由【路由】改为【桥接】，正常情况下默认应该是【路由】模式。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-Xnip2021-08-14_19-34-14.png"></p>
+<p>点击下方【保存&#x2F;应用】按钮，等设置完成，页面刷新，可以等刷新完成再确认一下设置是否生效。</p>
+<p><strong>网上有些教程这一步是先删除这个配置，然后重新建一个，我也试过，发现跟修改后直接保存没什么区别。</strong></p>
+<h2 id="2-路由器拨号上网，并开启-IPv6"><a href="#2-路由器拨号上网，并开启-IPv6" class="headerlink" title="2. 路由器拨号上网，并开启 IPv6"></a>2. 路由器拨号上网，并开启 IPv6</h2><p>之后登录路由器后台，进入【外网 WAN】-【外网设置】。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-120517.png"></p>
+<p>设置如图，DNS 我选择了自动获取。</p>
+<p>宽带的用户名与密码如果忘记了就打 10086 的宽带服务重置一下就行。</p>
+<p>将这项设置完成后，网应该可以正常访问了，如果不行就等 <strong>IPv6</strong> 设置完成后重启一下路由器。</p>
+<p>接着进入【外网 WAN】-【IPv6 协议】。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-121037.png"></p>
+<p>如果成功的话，这时在当前网络的信息中应该可以看到 IPv6 的地址。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-121535.png"></p>
+<p>移动的 IPv6 以 2049 开头。</p>
+<h2 id="3-域名新增解析"><a href="#3-域名新增解析" class="headerlink" title="3. 域名新增解析"></a>3. 域名新增解析</h2><p>先进入群晖，【控制面板】-【网络】-【网络界面】。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-123149.png"></p>
+<p>找到 IPv6 的地址，复制 <code>/64</code> 之前的值。</p>
+<p>在浏览器访问试一下，在地址栏中输入<code>[IPv6地址]</code>，正常应该能进入群晖的系统或者系统登录页面。</p>
+<p>接着进入阿里云域名解析后台，新增一条 AAAA 的记录：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-122637.png"></p>
+<p>我的主机记录是 nas，用的二级域名，到时候我的访问地址就是 <code>nas.xxxx.xxx</code>，比如 <code>nas.baidu.com</code>。</p>
+<p><strong>如果你想用一级域名访问，那就保持其他值不变，分别添加两条主机记录分别为 <code>@</code> 和 <code>www</code> 的记录。</strong></p>
+<p>等待解析，如果 IPv6 地址在这段时间内没变动的话，解析完成后输入域名应该就可以访问到群晖。</p>
+<h2 id="4-群晖创建定时任务，将域名指向最新的-IPv6"><a href="#4-群晖创建定时任务，将域名指向最新的-IPv6" class="headerlink" title="4.群晖创建定时任务，将域名指向最新的 IPv6"></a>4.群晖创建定时任务，将域名指向最新的 IPv6</h2><p>阿里云进入 AccessKey 管理。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-image-20210814204334731.png"></p>
+<p>可能会出现这个弹窗，因为我就自己用，正常也不会有什么人来攻击我，所以就选第一个。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-image-20210814204440249.png"></p>
+<p>如果没有创建过 AccessKey，那就创建一个，我已经创建过了，所以直接点击后面的【查看 Secret】，有个验证，通过之后就可以看到AccessKey ID 和 AccessKey Secret，复制下来备用。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-124644.png"></p>
+<p>进入群晖系统，开启 ssh，需要确认一下网卡的名称，后续有用到。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-130142.png"></p>
+<p>开启后，打开终端，输入下面命令然后回车，之后会让你输入账户密码。</p>
+<pre><code class="bash">ssh 用户名@群晖ip地址
+</code></pre>
+<p>登录成功后继续在终端输入</p>
+<pre><code class="bash">ifconfig
+</code></pre>
+<p>会出现网卡的信息，根据之前看到的 IP 地址找到网卡名称。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-130944.png"></p>
+<p>记住网卡名称，或者暂时不要关闭终端。</p>
+<p>接着下载 <a target="_blank" rel="noopener" href="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-aliddns.sh">aliddns.sh</a>，下载后可以重新命一下名，去除前缀。</p>
+<p>用代码编辑器打开，如果没有推荐使用 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VSCode</a>。</p>
+<p>将前面 4 项跟据你的实际情况填入，第 20 行的网卡名称需要确认一下，看跟之前终端看到的是否一致，一般都是这个名字，如果不是，就将它改成终端中实际的名字，保存。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-131329.png"></p>
+<p>将这个脚本上传至群晖，目录可以自己定。</p>
+<p>通过文件属性获取文件的地址，复制。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-140310.png"></p>
+<p>现在终端验证一下脚本是否有效：</p>
+<p>在终端输入命令：</p>
+<pre><code class="bash">sh /volume1/Tit1e/ddns/aliddns.sh
+</code></pre>
+<p>如果运行结果的最后面是“updated record” 或 “added record”，那就说明脚本执行成功了。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-132341.png"></p>
+<p>最后，在群晖的【控制面板】-【任务计划】面板新增一个任务：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-image-20210814212727302.png"></p>
+<p>具体设置：</p>
+<p>常规中是设置计划名称跟执行的账户，选择有执行权限的账号就行。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-132859.png"></p>
+<p>运行频率为每隔 5 分钟运行一次。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-132928.png"></p>
+<p>在文本域填入脚本存放位置。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-133029.png"></p>
+<p>保存。</p>
+<p>到这里所有的步骤就完成了，可以在浏览器验证一下：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-134851.png"></p>
+<p>可以在阿里云的解析日志中查看脚本的执行结果，如果地址没变，则脚本运行不会产生日志：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-08-14-133610.png"></p>
+<p>我用的脚本来自网上某片文章，但由于这几天看了太多类似的文章，我已经无法知晓来源，如果你是作者可以联系我，我会在文章中注明来源。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/18047.html"
+      title="Parallels Desktop 16 无法连接网络以及无法使用 USB 解决方法"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        Parallels Desktop 16 无法连接网络以及无法使用 USB 解决方法
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/17442.html"
+      title="ClashX 忽略指定域名"
+    >
+      <span class="post-near-title">
+        ClashX 忽略指定域名
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

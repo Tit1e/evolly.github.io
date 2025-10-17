@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 12, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">div 包裹 img 底部出现空隙问题</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>工作中我们有时候会遇到一个 div 包裹着一个 img 的时候, img 底部和 div 之间会有空隙, 如下图所示: </p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144347.png"></p>
+<span id="more"></span>
+
+<p>页面代码如下: </p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style=&quot;background-color:blueviolet&quot;&gt;
+  &lt;div style=&quot;background-color:#000;color:#fff;&quot;&gt;
+    &lt;img src=&quot;./2.png&quot;&gt;
+  &lt;/div&gt;
+    &lt;script&gt;
+
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>这是什么造成的呢? 这样看也许你看不出来, 但是像下面这样也许你就大概知道是为什么了:</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144403.png"></p>
+<p>没错, 就是因为 <code>&lt;img&gt;</code> 不是块级元素,所以在一个 DIV 中它相当于一个文字, 而文字是有 baseline 的, 英文四线格中, baseline 处于倒数第二条而不是最后一条, 所以在图像底部才会出现一段空隙. 所以可以推测出: 在文字变大的时候, 空隙也会相应变大:</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144416.png"></p>
+<p>在<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img"> MDN </a>中有这样一段文字来描述 <code>&lt;img&gt;</code> 标签: </p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144435.png"></p>
+<p>那么什么是替换元素呢? </p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144447.png"></p>
+<p>也就是说 <code>&lt;img&gt;</code> 是一个可以设置款高的行内元素, 是不是和 css 属性中的 <code>display: inline-block</code> 有点像呢? 不过 <code>&lt;img&gt;</code> 可是一个实打实的 <strong>行内元素</strong> (第 3 排第 4 个):</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144508.png"></p>
+<p>到这里已经完全了解了问题产生的原因, 那么相应解决问题的方法也就比较好找了:</p>
+<ol>
+<li>设置图片的 <code>vertical-align</code> 属性为 <code>bottom / top / middle</code> , 这样 <code>&lt;img&gt;</code> 的 baseline 就是最下面的线了,  也就不会产生空隙了. </li>
+<li>既然因为它是替换元素的缘故, 那把它转为块级元素不就好了吗? 所以设置<code>display: block</code> 也可以解决这个问题.</li>
+<li>把父元素的高度直接设置为图片想要的高度, 如果这个高度不是图片默认的高度, 再把图片的高度设为<code>height: 100%</code> 也可以解决这个问题.</li>
+</ol>
+<p>效果如图: </p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144519.png"></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/b66cd88a.html"
+      title="块级元素靠右的实现方式"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        块级元素靠右的实现方式
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/33174fcb.html"
+      title="浅谈 GET 和 POST 使用场景"
+    >
+      <span class="post-near-title">
+        浅谈 GET 和 POST 使用场景
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

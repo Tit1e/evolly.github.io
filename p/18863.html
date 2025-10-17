@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 20, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">uniapp App 端实现应用锁（指纹或人脸解锁后才能使用）</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #uniapp
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>最近在自己用 uniapp 写应用玩，想实现一个软件锁的效果，折腾了不少时间，折腾出来了。</p>
+<p>软件锁的界面一般是一个遮罩盖住整个页面，然后进行人脸或指纹验证，验证通过就关闭遮罩这么个逻辑。</p>
+<p>我一开始使用 fixed 进行全屏覆盖，但是显然没这么简单：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-20-IMG_4AA27485D686-1.jpeg"></p>
+<p>这个遮罩无法覆盖原生的头部与底部栏。</p>
+<p>此方法作罢，继续寻找尝试，最后发现 nvue 页面可以实现全屏幕的覆盖而不受影响原生控件的影响。</p>
+<p>为什么呢，因为用这种方式实现的遮罩其实并不是在软件首页，而是跳转至了一个专门用来做遮罩的二级页面，这个二级页面什么也没有（当然要有其他你也可以自己加），没有原生的头部，二级页面自然也没有底部的导航栏。上面这个特点普通的 vue 页面就能做到，但是 nvue 页面还有一个特点是可以将页面的背景图片设置为透明，这是普通页面无法做到的。uniapp 的多级页面显示其实就是一层一层往上叠加页面，把下面的遮盖住，但是如果上面的页面是透明的，那么下面的页面自然就显示出来了。</p>
+<p>当然如果没有透明度要求那直接用普通页面做也可以满足。</p>
+<p> 下面来说下实现过程：</p>
+<p>首先新建一个页面，我命名为 <code>mask.nvue</code> <strong>（注意扩展名是 nvue）</strong>：</p>
+<pre><code class="html">&lt;template&gt;
+  &lt;!-- blurEffect 是 nvue 中的 view 标签独有的属性，可选值有：dark/extralight/light/none，用于背景高斯模糊 --&gt;
+  &lt;!-- nvue 中 css 的使用限制很大，无法使用 filter 等属性 --&gt;
+    &lt;view class=&quot;mask&quot; blurEffect=&quot;dark&quot;&gt;&lt;/view&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="js">&lt;script&gt;
+    export default &#123;
+        onLoad() &#123;
+              // 进入页面就开启验证
+            uni.startSoterAuthentication(&#123;
+                requestAuthModes: [&#39;facial&#39;, &#39;fingerPrint&#39;],
+                success: res =&gt; &#123;
+                      // 因为识别有动画效果，所以延迟一秒等动画完成再返回
+                    setTimeout(() =&gt; &#123;
+                        uni.navigateBack(&#123;&#125;)
+                    &#125;, 1000)
+                &#125;
+            &#125;)
+        &#125;
+    &#125;
+&lt;/script&gt;
+</code></pre>
+<pre><code class="css">&lt;style scoped&gt;
+    .mask &#123;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    &#125;
+&lt;/style&gt;
+</code></pre>
+<p>然后在 pages.json 中添加路由：</p>
+<pre><code class="json">&#123;
+  &quot;path&quot;: &quot;pages/mask/mask&quot;,
+  &quot;style&quot;: &#123;
+    &quot;navigationStyle&quot;: &quot;custom&quot;,
+    &quot;app-plus&quot;: &#123;
+            &quot;animationType&quot;: &quot;none&quot;, // 不使用页面切换动画，否则就会被发现是页面切换
+      &quot;background&quot;: &quot;transparent&quot;, //页面设置透明背景
+      &quot;popGesture&quot;: &quot;none&quot; //禁用侧滑返回，防止用户取消验证使用侧滑返回而绕过检验
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>这样就完成了，使用的话你只要直接在应用进入首页的时候，把页面跳转至验证页面就可以了，验证成功自动返回首页。</p>
+<pre><code class="js">// /pages/index/index
+onLoad()&#123;
+  uni.navigateTo(&#123;
+    url: &#39;/pages/mask/mask&#39;
+  &#125;)
+&#125;
+</code></pre>
+<p>当然，在跳转前你需要使用 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/system/authentication?id=checkissoterenrolledindevice">uni.checkIsSoterEnrolledInDevice(OBJECT)</a> 判断当前设置是否已经录入了指纹或者 Face ID并且在软件设置中打开了启用软件锁的开关（如果有的话），否则就不需要验证。</p>
+<p>这是触发的效果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-10-20-IMG_6A70B3F75CE0-1.jpeg"></p>
+<h3 id="GitHub-仓库地址"><a href="#GitHub-仓库地址" class="headerlink" title="GitHub 仓库地址"></a><a target="_blank" rel="noopener" href="https://github.com/Tit1e/uni-components/tree/main/pages/mask">GitHub 仓库地址</a></h3>
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/26406.html"
+      title="使用 GitHub Actions 自动部署 Hexo 博客"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        使用 GitHub Actions 自动部署 Hexo 博客
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/10213.html"
+      title="uniapp APP 端使用 canvas 绘制 IM 群聊头像"
+    >
+      <span class="post-near-title">
+        uniapp APP 端使用 canvas 绘制 IM 群聊头像
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

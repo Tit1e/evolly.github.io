@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">1 / 10, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Vue 项目新增 PWA 支持初次尝试</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前阵子制作了我的个人摄影网站 <a target="_blank" rel="noopener" href="https://album.animalcrossing.life/">Tit1e’s Photo Studio</a>。由于是网站，因此每次访问的时候总是有些麻烦，虽然现在移动端已经可以把书签添加至桌面，但是打开的时候依旧是浏览器的界面，丑丑的工具栏跟地址栏依旧显示在界面上，而且把书签添加到桌面这种操作也太没技术含量了，于是我想到了 PWA。这玩意儿我一直在用，但是自己从来没实践过，于是正好趁着这个机会实践一番，项目本身很简单，拿来试手正好。</p>
+<p>我这个项目改造很简单，添加 PAW 插件：</p>
+<pre><code class="bash"># 如果没装脚手架，那需要先安装一下 vue-cli
+vue add pwa
+</code></pre>
+<p>但是我执行这一步的时候报错了，原因是因为 node 版本过低，依赖冲突。我原本使用的是 9.6 版本的 node，不行。又换了 11.8 的版本，依旧冲突。最后我直接使用了最新的 15.5.1 的版本。</p>
+<p>执行完成后，你的项目中会多出一些文件。</p>
+<p>首先修改 vue.config.js，在配置文件中新增下列配置项：</p>
+<pre><code class="js">module.exports = &#123;
+  pwa: &#123;
+    manifestOptions: &#123;
+      short_name: &quot;Title&#39;s Album&quot;, // 名称缩写
+      name: &quot;Title&#39;s Album&quot;, // 全名
+      start_url: &quot;index.html&quot;, // 启动页面
+      display: &quot;standalone&quot;, // 启动过渡动画
+      background_color: &quot;#1f212b&quot;, // 背景颜色
+      theme_color: &quot;#1f212b&quot; // 主题颜色
+    &#125;,
+    iconPaths: &#123;
+      favicon32: &#39;icon.png&#39;,
+      favicon16: &#39;icon.png&#39;,
+      appleTouchIcon: &#39;icon.png&#39;,
+      maskIcon: &#39;icon.png&#39;,
+      msTileImage: &#39;icon.png&#39;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>icon.png 就是之后添加到桌面后的图标，放置位置在 public 目录下。</p>
+<p>然后在 <code>public/index.html</code> 的 <code>header</code> 中加入 <code>&lt;meta name=&quot;theme-color&quot; content=&quot;#1f212b&quot;&gt;</code>。</p>
+<p>在 src 目录下新建 <code>service-worker.js</code> 文件：</p>
+<p>下面的代码来自网上，我目前还不是很明白里面的缓存机制，如果不建这个文件，打包的时候 Vue 会自行生成一个 <code>service-worker.js</code></p>
+<pre><code class="js">importScripts(&quot;https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js&quot;);
+
+
+workbox.core.setCacheNameDetails(&#123;
+  prefix: &#39;photo-album&#39;,
+  suffix: &#39;v1.1.1&#39;
+&#125;);
+
+workbox.core.skipWaiting(); // 强制等待中的 Service Worker 被激活
+workbox.core.clientsClaim(); // Service Worker 被激活后使其立即获得页面控制权
+
+// 缓存web的css资源
+workbox.routing.registerRoute(
+  // Cache CSS files
+  /.*\.css/,
+  // 使用缓存，但尽快在后台更新
+  workbox.strategies.staleWhileRevalidate(&#123;
+    // 使用自定义缓存名称
+    cacheName: &#39;css-cache&#39;
+  &#125;)
+);
+
+// 缓存web的js资源
+workbox.routing.registerRoute(
+  // 缓存JS文件
+  /.*\.js/,
+  // 使用缓存，但尽快在后台更新
+  workbox.strategies.staleWhileRevalidate(&#123;
+    // 使用自定义缓存名称
+    cacheName: &#39;js-cache&#39;
+  &#125;)
+);
+
+// 缓存web的图片资源
+workbox.routing.registerRoute(
+  /\.(?:png|gif|jpg|jpeg|svg)$/,
+  workbox.strategies.staleWhileRevalidate(&#123;
+    cacheName: &#39;images&#39;,
+    plugins: [
+      new workbox.expiration.Plugin(&#123;
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60 // 设置缓存有效期为30天
+      &#125;)
+    ]
+  &#125;)
+);
+
+// 我们很多资源在其他域名上，比如cdn、oss等，这里做单独处理，需要支持跨域
+workbox.routing.registerRoute(
+  /^https:\/\/cdn\.my\.com\/.*\.(jpe?g|png|gif|svg)/,
+  workbox.strategies.staleWhileRevalidate(&#123;
+    cacheName: &#39;cdn-images&#39;,
+    plugins: [
+      new workbox.expiration.Plugin(&#123;
+        maxEntries: 60,
+        maxAgeSeconds: 5 * 24 * 60 * 60 // 设置缓存有效期为5天
+      &#125;)
+    ],
+    fetchOptions: &#123;
+      credentials: &#39;include&#39; // 支持跨域
+    &#125;
+  &#125;)
+);
+
+// 缓存 list 请求的数据
+workbox.routing.registerRoute(
+  new RegExp(&#39;https://xxxxx&#39;),
+  workbox.strategies.networkFirst(&#123;
+    cacheName: &#39;list&#39;
+  &#125;)
+);
+
+
+workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+</code></pre>
+<p>然后打包部署就可以了。</p>
+<p>扫码体验：</p>
+<p><img src="https://photo-album-1251959693.cos.ap-nanjing.myqcloud.com/photo-album-qrcode.png"></p>
+<p>然后打开浏览器，找到【添加到主屏幕】（我用的 iOS，安卓应该也有类似的功能）</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-10-IMG_7636.PNG?imageMogr2/thumbnail/!40p"></p>
+<p>访问效果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-10-IMG_7637.PNG?imageMogr2/thumbnail/!40p"></p>
+<p>这只是一次 PWA 的简单尝试，实际项目中情况会比这个复杂得多，日后有机会再深入。</p>
+<p>既然用到了 PWA，我又想到了 Vue 的 SSR，服务器端渲染我也没有接触过，后面有机会我再把项目改造一番。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/623be0b4.html"
+      title="将本地某个文件夹备份或同步至群晖"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        将本地某个文件夹备份或同步至群晖
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/17d0eeef.html"
+      title="你好啊，2021"
+    >
+      <span class="post-near-title">
+        你好啊，2021
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

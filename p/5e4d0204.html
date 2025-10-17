@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 6, 2017</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">JavaScript高级程序设计笔记（二）</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><ul>
+<li><h2 id="和-操作符-age-和-age的区别在于age-是先运算后-1，而-age是先-1后运算-操作同理-javascript-var-age-18-var-nextAge-age-age-19-nextAge-18-上面的运算结果顺序其实是这样的：-var-age-18-var-nextAge-age-age-age-1；"><a href="#和-操作符-age-和-age的区别在于age-是先运算后-1，而-age是先-1后运算-操作同理-javascript-var-age-18-var-nextAge-age-age-19-nextAge-18-上面的运算结果顺序其实是这样的：-var-age-18-var-nextAge-age-age-age-1；" class="headerlink" title="++和--操作符* age++和++age的区别在于age++是先运算后+1，而++age是先+1后运算,--操作同理  javascript     var age = 18;     var nextAge = age++;     age;  //19;     nextAge;  //18     //上面的运算结果顺序其实是这样的：     var age = 18;     var nextAge = age;     age = age + 1；   "></a><code>++</code>和<code>--</code>操作符<br>* <code>age++</code>和<code>++age</code>的区别在于<code>age++</code>是先运算后+1，而<code>++age</code>是先+1后运算,<code>--</code>操作同理<br>  <code>javascript     var age = 18;     var nextAge = age++;     age;  //19;     nextAge;  //18     //上面的运算结果顺序其实是这样的：     var age = 18;     var nextAge = age;     age = age + 1；   </code></h2><pre><code>var age = 18;
+var nextAge = ++age;
+age;  //19
+nextAge;  //19
+//这次的运算结果是这样的：
+var age = 18;
+age = age + 1；
+var nextAge = age;
+</code></pre>
+<pre><code>&lt;!-- more --&gt;
+</code></pre>
+</li>
+<li><code>+</code>和<code>-</code>操作符<ul>
+<li><code>+</code>和<code>-</code>操作符放在数字前面，<code>+</code>操作符对数字无影响，<code>-</code>操作符是将数字变为负数</li>
+<li><code>+</code>和<code>-</code>操作符放在非数字前面，则这两个操作符会像<code>Number()</code>一样对这个值进行转换</li>
+<li><code>+</code>操作符用一个数字和一个字符串相加的时候，数字会先被转换为字符串，然后进行拼接操作</li>
+<li>例：<pre><code class="javascript">  var a = -true;
+  a; //-1
+  var b = +true
+  b;  //1
+  var c = 1 + &#39;1&#39;;
+  c;  //&quot;11&quot;
+  var d = &#39;1&#39; + 1;
+  d;  //&quot;11&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+<li><code>=</code>、<code>==</code>和<code>===</code> <ul>
+<li><code>=</code>表示赋值</li>
+<li><code>==</code>只比较左右两边的值，不比较数据类型</li>
+<li><code>===</code>全等，比较左右两边的值和数据类型</li>
+<li>例：<pre><code class="javascript">  var a = 5;
+  a;  //5
+  5 == &#39;5&#39;;  //true
+  5 === &#39;5&#39;  //false
+  5 === 5;  //true
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h4><ul>
+<li><h2 id="continue和break语句-循环中continue会立即停止当前循环，从头开始执行循环-循环中break会立即退出当前循环，并执行循环后面的代码-例：-96-96-96-javascript-var-num-for-var-i-x3D-0-i-lt-10-i-if-i-x3D-x3D-5-break-num-x3D-i-alert-num-x2F-x2F-4"><a href="#continue和break语句-循环中continue会立即停止当前循环，从头开始执行循环-循环中break会立即退出当前循环，并执行循环后面的代码-例：-96-96-96-javascript-var-num-for-var-i-x3D-0-i-lt-10-i-if-i-x3D-x3D-5-break-num-x3D-i-alert-num-x2F-x2F-4" class="headerlink" title="continue和break语句* 循环中continue会立即停止当前循环，从头开始执行循环* 循环中break会立即退出当前循环，并执行循环后面的代码* 例：  &#96;&#96;&#96;javascript  var num;  for(var i &#x3D; 0;i&lt;10;i++){    if(i&#x3D;&#x3D;5){        break;        }    num &#x3D; i;  }  alert(num); &#x2F;&#x2F;4"></a><code>continue</code>和<code>break</code>语句<br>* 循环中<code>continue</code>会立即停止当前循环，从头开始执行循环<br>* 循环中<code>break</code>会立即<strong>退出</strong>当前循环，并执行循环后面的代码<br>* 例：<br>  &#96;&#96;&#96;javascript<br>  var num;<br>  for(var i &#x3D; 0;i&lt;10;i++){<br>    if(i&#x3D;&#x3D;5){<br>        break;<br>        }<br>    num &#x3D; i;<br>  }<br>  alert(num); &#x2F;&#x2F;4</h2><pre><code>var num;
+for(var i=0;i&lt;10;i++)&#123;
+    if(i==5)&#123;
+        continue;
+    &#125;
+num =i;
+&#125;
+</code></pre>
+  alert(num);  &#x2F;&#x2F;9<pre><code>
+</code></pre>
+</li>
+<li><code>switch</code>语句<ul>
+<li><code>switch</code>语句中每个case后面都需要加一个<code>break;</code></li>
+<li><code>default</code>表示没有上述任何条件匹配是默认执行的动作，同<code>if</code>的<code>else</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><ul>
+<li><code>argunments</code>对象<ul>
+<li><code>argunments</code>对象是一个类数组，里面存的是调用函数时传入里面的参数，可以在函数内部直接获取到它，并且可以用获取数组元素的方法获取传入的参数<ul>
+<li>例：<pre><code class="javascript">function fn()&#123;
+    console.log(arguments,arguments.length,arguments[0]);
+&#125;
+fn(1,2,3,4,5);  //[1,2,3,4,5] 5  1
+</code></pre>
+</li>
+</ul>
+</li>
+<li>如果出现两个同名函数，则后定义的函数有效，前定义的函数无效</li>
+</ul>
+</li>
+</ul>
+<h4 id="基本类型和引用类型"><a href="#基本类型和引用类型" class="headerlink" title="基本类型和引用类型"></a>基本类型和引用类型</h4><ul>
+<li>定义<ul>
+<li>基本类型：简单的数据段，如Undefined，Null，Number，String，Boolean类型的值，栈内存存放这些对象的地址</li>
+<li>引用类型：有可能由多个值构成的对象，如Object，Function，Array等类型的值，堆内存存放这些具体对象</li>
+<li>例：<pre><code class="javascript">var name = &quot;Tit1e&quot;;  //基本类型
+var obj = new Object();  //引用类型
+</code></pre>
+</li>
+</ul>
+</li>
+<li>复制变量值<ul>
+<li>将基本类型复制给一个另一个变量，这两个变量互相独立，原变量重新赋值都不会影响复制后的变量</li>
+<li>将引用类型复制给一个另一个变量，改变饮用类型值的内容，复制的值也会相应的改变<ul>
+<li>例：<pre><code class="javascript">//基本类型复制
+var a = 123;
+var b = a;
+a = 456;
+a;  //456
+b;  //123
+
+//引用类型复制
+var c = new Object();
+c.name = &quot;Tit1e&quot;;
+var d = c;
+c.name;  //&quot;Tit1e&quot;
+d.name;  //&quot;Tit1e&quot;
+c.name = &quot;Evol&quot;;
+c.name;  //&quot;Evol&quot;
+d.name;  //&quot;Evol&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>函数传递参数是按值传递，也就是说传入函数的值只是一个副本，原值并不会有任何变化<ul>
+<li>例：<pre><code class="javascript">    var b = 1;
+    function a(num)&#123;
+        return num += 1;
+    &#125;
+    var c = a(b);
+    b;  //1
+    c;  //2
+    function a(obj)&#123;
+        obj.name = &quot;Tit1e&quot;;
+        obj = new Object();
+        obj.name = &quot;evol&quot;;
+        return obj;
+    &#125;
+    var b = new Object();
+    var c = a(b);
+    b;  //&quot;evol&quot;
+    c;  //&quot;Tit1e&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>检测类型<ul>
+<li><code>instanceof</code>用于检测类型<ul>
+<li>例：<pre><code class="javascript">var a = new Object();
+a instanceof Object;  //true
+a instanceof Array;  //false
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/1353a156.html"
+      title="JavaScript高级程序设计笔记（三）"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        JavaScript高级程序设计笔记（三）
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/6e5beedc.html"
+      title="JavaScript高级程序设计笔记（一）"
+    >
+      <span class="post-near-title">
+        JavaScript高级程序设计笔记（一）
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

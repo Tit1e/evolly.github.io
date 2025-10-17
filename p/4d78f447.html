@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">7 / 11, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">微信读书笔记导入 flomo</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>Kindle to Flomo 现在已经支持微信读书笔记的导入啦。我现在想着要不要给它换个名字，因为它现在已经支持 Kindle、Apple Books、微信读书三种导入方式了。这个后面再说吧。</p>
+<p>远离其实就是访问微信读书网页版，然后扫码登录，获取到 cookie，之后就模拟请求腾讯那边的接口就可以了。因为要获取cookie，模拟请求，所以这个功能在纯浏览器端肯定是无法实现的，因为存在跨域等限制。但我这个应用还有 electron 版本，有客户端就好办很多。</p>
+<p>经过一番查询，找到 electron 捕获应用内所有请求，iframe 中的请求当然也包含在内：</p>
+<pre><code class="js">// 下面两种引入方式只需选择一种就行，看在什么进程中使用
+// 主进程
+const &#123; session &#125; = require(&#39;electron&#39;)
+// 渲染进程
+const &#123; session &#125; = require(&#39;electron&#39;).remote
+
+// 过滤器，只捕获此域名下的请求
+const filter = &#123;
+  urls: [&#39;https://weread.qq.com/*&#39;]
+&#125;
+
+session.defaultSession.webRequest.onBeforeSendHeaders(filter,(details, callback) =&gt; &#123;
+    console.log(details.requestHeaders.Cookie)
+  callback(details)
+&#125;)
+</code></pre>
+<p>相关接口：</p>
+<pre><code class="js">// 获取某本书你的全部笔记
+export const get_bookmarklist = bookId =&gt; &#123;
+  return axios(&#123;
+    method: &#39;get&#39;,
+    url: &#39;/book/bookmarklist&#39;,
+    headers,
+    params: &#123;
+      bookId
+    &#125;
+  &#125;)
+&#125;
+// 获取某一本书的热门划线
+export const get_bestbookmarks = bookId =&gt; &#123;
+  return axios(&#123;
+    method: &#39;get&#39;,
+    url: &#39;/book/bestbookmarks&#39;,
+    headers,
+    params: &#123;
+      bookId
+    &#125;
+  &#125;)
+&#125;
+// 获取书架上的书籍列表
+export const get_bookshelf = (cookie) =&gt; &#123;
+  return axios(&#123;
+    method: &#39;get&#39;,
+    url: &#39;/shelf/friendCommon&#39;,
+    headers,
+    params: &#123;
+      userVid: getUid(cookie)
+    &#125;
+  &#125;)
+&#125;
+// 获取你的所有有笔记本书单
+export const get_notebooklist = () =&gt; &#123;
+  return axios(&#123;
+    method: &#39;get&#39;,
+    headers,
+    url: &#39;/user/notebooks&#39;
+  &#125;)
+&#125;
+// 获取某本书的详情
+export const get_bookinfo = bookId =&gt; &#123;
+  return axios(&#123;
+    method: &#39;get&#39;,
+    url: &#39;/book/info&#39;,
+    headers,
+    params: &#123;
+      bookId
+    &#125;
+  &#125;)
+&#125;
+
+// 获取某本书的批注
+export const get_reviewlist = (params, cookie) =&gt; &#123;
+  return axios(&#123;
+    method: &#39;get&#39;,
+    url: &#39;/web/review/list&#39;,
+    baseURL: &#39;https://weread.qq.com&#39;,
+    headers,
+    params: &#123;
+      userVid: getUid(cookie),
+      ...params
+    &#125;
+  &#125;)
+&#125;
+</code></pre>
+<p>主要的逻辑其实就是：</p>
+<ol>
+<li>用户点击导入按钮</li>
+<li>通过 iframe 访问 <a target="_blank" rel="noopener" href="https://weread.qq.com/#login">https://weread.qq.com/#login</a></li>
+<li>获取 cookie，请求图书列表</li>
+<li>如果用户为登录，那么请求就会失败，此时显示 iframe 内容，iframe 中应该有个登录二维码</li>
+<li>用户扫码登录，重新请求接口，进行后续请求</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tit1e/kindle2Flomo">查看仓库</a></p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/yixin-zzz/wr_marker">wr_marker</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/arry-lee/wereader">wereader</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/304.html"
+      title="将群晖变成 Mac 时间机器（Time Machine）返回舱"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        将群晖变成 Mac 时间机器（Time Machine）返回舱
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/de983388.html"
+      title="Mac 出现应用无法打开的一些请况处理方式总结"
+    >
+      <span class="post-near-title">
+        Mac 出现应用无法打开的一些请况处理方式总结
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

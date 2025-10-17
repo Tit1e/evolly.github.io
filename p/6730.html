@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">10 / 17, 2025</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">fnOS 中使用 Docker 安装 n8n 中文版</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>最近想使用工作流让 AI 帮我处理一些事情，于是我就想到了 n8n，刚好前阵子把家里闲置的主机弄成了 fnOS，性能对比之前的群晖 DS218 play 可以说是一个天上一个地下，深切感受到了：“原来外面的世界这么美好”。</p>
+<p>话不多说，上流程。</p>
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>fnOS 版本为 <code>V0.9.30</code></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="1-更换镜像源（非必需）"><a href="#1-更换镜像源（非必需）" class="headerlink" title="1. 更换镜像源（非必需）"></a>1. 更换镜像源（非必需）</h3><p>如果你没有更换过飞牛的镜像源，使用的还是默认的镜像源，可能会有一些问题，比如我就遇到了 n8n 的镜像一下载完，但是本地就是不显示的问题，后来发现是镜像源的问题，换了就好了，更换方式：</p>
+<ul>
+<li>打开 Docker</li>
+<li>左侧切换到【镜像仓库】菜单</li>
+<li>右上角【设置】-【加速源设置】</li>
+<li>【添加】，添加地址为<code>https://docker.1ms.run</code>，备注随便</li>
+</ul>
+<h3 id="2-下载-n8n-镜像"><a href="#2-下载-n8n-镜像" class="headerlink" title="2. 下载 n8n 镜像"></a>2. 下载 n8n 镜像</h3><p>在【镜像仓库】搜索 n8n，下载名为<code>n8nio/n8n</code>的镜像，一般是第一个。</p>
+<h3 id="3-创建目录"><a href="#3-创建目录" class="headerlink" title="3. 创建目录"></a>3. 创建目录</h3><p>打开飞牛的【文件管理】应用，左侧切换到【我的文件】，在这个目录下新建一个【Docker】的文件夹（如果没有的话），再在【Docker】目录下新建一个【n8n】文件夹，再在【n8n】下新建一个【n8n_data】文件夹。</p>
+<h3 id="4-下载汉化数据"><a href="#4-下载汉化数据" class="headerlink" title="4. 下载汉化数据"></a>4. 下载汉化数据</h3><p>在 <a target="_blank" rel="noopener" href="https://github.com/other-blowsnow/n8n-i18n-chinese/releases">https://github.com/other-blowsnow/n8n-i18n-chinese/releases</a> 下载最新的 Source code，解压后，将【editor-ui-dist】改名为【zh-cn】，然后将这个改名后的文件夹上传到刚刚创建的【n8n】目录下，与【n8n_data】同级。</p>
+<h3 id="5-配置-n8n-启动"><a href="#5-配置-n8n-启动" class="headerlink" title="5. 配置 n8n 启动"></a>5. 配置 n8n 启动</h3><ol>
+<li>回到 【Docker】应用，左侧切到【本地镜像】标签，刚才下载的 n8n 镜像应该就在其中，点击启动按钮</li>
+<li>填上容器名称，其他配置根据自己需求，我只勾选了【开机自动启动】，点击下一步</li>
+<li>高级设置中的【存储位置】设置，新增两条映射：</li>
+</ol>
+<ul>
+<li>选择【n8n_data】目录，后面的地址填上<code>/home/node/.n8n</code></li>
+<li>选择【zh-cn】目录，后面的地址填上<code>/usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/dist</code></li>
+</ul>
+<ol start="4">
+<li>再在环境变量设置中新增两条环境变量</li>
+</ol>
+<ul>
+<li><code>N8N_SECURE_COOKIE</code> 设置为 <code>false</code>（如果你在本地使用，需要添加这条，如果你的设备已经配置好了https，可以不设置这条环境变量）</li>
+<li><code>N8N_DEFAULT_LOCALE</code> 设置为 <code>zh-CN</code>（中文显示）</li>
+</ul>
+<ol start="5">
+<li>点击【创建】</li>
+</ol>
+<h3 id="6-启动"><a href="#6-启动" class="headerlink" title="6. 启动"></a>6. 启动</h3><p>【Docker】应用切到【容器】标签，然后将鼠标放到链接图标上，会出现运行端口，点击端口就会打开项目。或者直接使用<code>http://[nas IP]:5678</code>直接访问。默认端口为5678，如果你改动过就使用你改后的端口。</p>
+<p>以上就是在飞牛上使用 Docker 安装 n8n 以及汉化的过程，至于后面的流程，就看各人各自折腾了，可以用 AI 帮你写配置文件。就我用下来来说，工作流才是难点，而且对普通人来说还是比较复杂的，哪怕有 AI 的辅助。</p>
+
+  </div>
+  <div class="post-near">
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/145.html"
+      title="uniapp 中 v-for 循环内 input 输入时自动失焦问题"
+    >
+      <span class="post-near-title">
+        uniapp 中 v-for 循环内 input 输入时自动失焦问题
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

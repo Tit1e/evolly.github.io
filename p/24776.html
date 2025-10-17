@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">1 / 8, 2024</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">刻录 iStoreOS 系统记录</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #软路由
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>上周日将家里的拨号软路由拆了，我用的软路由是之前在前年 5 月份买的 R2S，因为最近家里的科学上网老不稳定，周日折腾了好久依旧不行，加上最新版的 Apple TV现在可以用代理了，可以完美地将它设置成旁路由，所以想了想就把软路由拆了。</p>
+<p>本文仅做记录，以便将来再次折腾时查阅。 </p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-Xnip2024-01-08_22-14-32.png"></p>
+<h2 id="使用软件"><a href="#使用软件" class="headerlink" title="使用软件"></a>使用软件</h2><p><a target="_blank" rel="noopener" href="https://etcher.balena.io/">balenaEtcher - Flash OS images to SD cards &amp; USB drives</a></p>
+<h2 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h2><p>TF 卡读卡器</p>
+<h2 id="刻录过程"><a href="#刻录过程" class="headerlink" title="刻录过程"></a>刻录过程</h2><h3 id="1-下载镜像"><a href="#1-下载镜像" class="headerlink" title="1.下载镜像"></a>1.下载镜像</h3><p>打开 <a target="_blank" rel="noopener" href="https://fw.koolcenter.com/iStoreOS/">KoolCenter 固件下载服务器</a>，进入对应软路由型号的目录，<code>.img.gz</code> 结尾的文件就是镜像文件，选择想要的镜像文件下载，一般选择最新的镜像，可以从文件名上的时间戳来或后面的上传时间判断。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-Xnip2024-01-08_22-24-13.png"></p>
+<h3 id="2-烧录镜像"><a href="#2-烧录镜像" class="headerlink" title="2.烧录镜像"></a>2.烧录镜像</h3><p>2.1 TF 开插入读卡器，读卡器插入电脑 USB 接口。<br>2.2 打开 balenaEtcher，点击【从文件烧录】，选择下载的镜像。<br>2.3 接着选择目标磁盘，记得确认磁盘大小，确保没有选错。系统盘一般是隐藏的。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-143028.png"></p>
+<p>然后点击开始烧录即可，一开始需要你输入一下开机密码进行验证，然后就是刻录，刻录完还会进行一次验证，最后会弹出一个弹窗，选择推出。<br><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2024-01-08-143401.png"></p>
+<p>到这里就完成了 iStore OS 镜像的刻录，很简单，跟 U 盘刻录 windows 系统差不多。</p>
+<h2 id="iStore-OS-其他说明"><a href="#iStore-OS-其他说明" class="headerlink" title="iStore OS  其他说明"></a>iStore OS  其他说明</h2><p>iStore OS 的默认管理地址是 <strong>192.168.100.1</strong>，默认账号密码是 root&#x2F;password。</p>
+<p>iStore OS 手动安装的插件，无法通过商店卸载，需要通过终端命令行卸载：</p>
+<pre><code class="bash">ssh root@192.168.100.1
+</code></pre>
+<p>IP 根据实际情况调整。</p>
+<p>列出所有已安装的应用：</p>
+<pre><code class="bash">opkg list_installed
+</code></pre>
+<p>卸载应用：</p>
+<pre><code class="bash">is-opkg remove &#39;nps&#39; &#39;luci-app-nps&#39; &#39;luci-i18n-nps-zh-cn&#39; &#39;app-meta-nps&#39;
+</code></pre>
+<p>上面命令是批量卸载应用，单个卸载只需要填对应的应用名称。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/61808.html"
+      title="国内银行现状"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        国内银行现状
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/65267.html"
+      title="你好呀，2024"
+    >
+      <span class="post-near-title">
+        你好呀，2024
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

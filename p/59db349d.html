@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">1 / 29, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Vue3.0 新特性学习（二）</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p><a href="https://evolly.one/2021/01/28/154-learn-vue3-1/">Vue3.0 新特性学习（一）</a></p>
+<p><code>setup</code> 内部也可以调用生命周期钩子，但是 Vue3 并没有提供 <code>beforeCreate</code> 和 <code>created</code> 对应的钩子，由上篇文章可知，<code>setup</code> 是早于这两个钩子执行的，因此 <code>setup</code> 本身就可以胜任这两个钩子的工作，并且官方也是这么说的：</p>
+<blockquote>
+<p>因为 <code>setup</code> 是围绕 <code>beforeCreate</code> 和 <code>created</code> 生命周期钩子运行的，所以不需要显式地定义它们。换句话说，在这些钩子中编写的任何代码都应该直接在 <code>setup</code> 函数中编写。</p>
+</blockquote>
+<p>其他的钩子名称有所改变，<code>beforeMount</code> 变成了 <code>onBeforeMount</code>，其他钩子的命名规则都与这个相同。</p>
+<pre><code class="javascript">Vue.createApp(&#123;
+  setup(props) &#123;
+    Vue.onBeforeMount(() =&gt; &#123;
+      console.log(1)
+    &#125;)
+    Vue.onMounted(() =&gt; &#123;
+      console.log(2)
+    &#125;)
+  &#125;,
+  beforeMount() &#123;
+    console.log(3)
+  &#125;,
+  mounted() &#123;
+    console.log(4)
+  &#125;,
+&#125;)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<p>运行结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-053700.png"></p>
+<p>同样的钩子，<code>setup</code> 内部的钩子调用早于外部的钩子。</p>
+<h4 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h4><pre><code class="javascript">const app = Vue.createApp(&#123;
+  setup(props) &#123;
+    const a = Vue.ref(1)
+    const b = Vue.computed(() =&gt; a.value * 2)
+    const c = Vue.computed(&#123;
+      get: () =&gt; a.value * 3,
+      set:val =&gt; a.value = val + 3
+    &#125;)
+    console.log(a.value) // 1
+    console.log(+ b.value) // 2
+    console.log(c.value) // 3
+    c.value = 2
+    console.log(c.value) // 15
+    console.log(a.value) // 5
+    console.log(b.value) // 10
+    console.log(c.value) // 15
+    return &#123;
+      a,
+      b,
+      c
+    &#125;
+  &#125;,
+&#125;)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<p>computed 用法与之前没什么差别。</p>
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><pre><code class="javascript">const app = Vue.createApp(&#123;
+  setup(props) &#123;
+    // 侦听 ref
+    const a = Vue.ref(1)
+    Vue.watch(a, (val, prevVal) =&gt; &#123;
+      console.log(`a 被改变了：新值为$&#123;val&#125;，旧值为$&#123;prevVal&#125;`)
+    &#125;)
+    a.value = 2
+
+    // 侦听 getter
+    const b = Vue.reactive(&#123;
+      x: 1,
+      y: 2
+    &#125;)
+    Vue.watch(() =&gt; b.x, (val, prevVal) =&gt; &#123;
+      console.log(`b.x 被改变了：新值为$&#123;val&#125;，旧值为$&#123;prevVal&#125;`)
+    &#125;)
+    b.x = 2
+
+    // 监听多个源
+    const &#123; c, d &#125; = Vue.toRefs(Vue.reactive(&#123; c: 3, d: 4 &#125;))
+    Vue.watch([c, d], (newValArr, preValArr) =&gt; &#123;
+      console.log(newValArr, preValArr)
+    &#125;)
+    c.value = 7
+    d.value = 7
+    return &#123;
+      a,
+      b
+    &#125;
+  &#125;,
+&#125;)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<p>运行结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-060414.png"></p>
+<h4 id="watchEffect"><a href="#watchEffect" class="headerlink" title="watchEffect"></a>watchEffect</h4><p><code>watchEffect</code> 接受一个回调函数，在这个回调函数中用到的<strong>任意一个响应式数据</strong>更新时，这个回调函数都会被执行，也就是说它可以监听多个响应式数据。它与 <code>watch</code> 很相似，但也有需要注意的地方：</p>
+<ul>
+<li><code>watchEffect</code> 无需指定要监听的属性，它自动会收集依赖，而 <code>watch</code> 必须指定。</li>
+<li><code>watchEffect</code> 因为需要收集依赖。所以它在组件初始化的时候就会运行一遍，而 <code>watch</code> 默认不会运行，除非手动配置 <code>immediate: true</code>。</li>
+<li><code>watchEffect</code> 无法知道是哪个值被更新，因此获取不到变化的新值与旧值。</li>
+</ul>
+<pre><code class="javascript">const app = Vue.createApp(&#123;
+  setup(props, context) &#123;
+    // 响应式
+    const a = Vue.ref(0)
+    // 非响应式
+    let b = 1
+    Vue.watchEffect(() =&gt; &#123;
+      console.log(`有值更新了！a：$&#123;a.value&#125;；b：$&#123;b&#125;。`)
+    &#125;)
+    setTimeout(() =&gt; &#123;
+      // 不触发 watchEffect
+      b = 5
+    &#125;, 1000)
+    setTimeout(() =&gt; &#123;
+      // 触发 watchEffect
+      a.value ++
+    &#125;, 2000)
+    return &#123;
+      listLoading,
+      toggleLoading
+    &#125;
+  &#125;,
+&#125;)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<p>运行结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-070553.png"></p>
+<p><code>watch</code> 与 <code>watchEffect</code> 都返回了一个 unwatch 方法用于取消侦听</p>
+<pre><code class="javascript">const app = Vue.createApp(&#123;
+  setup(props, context) &#123;
+    const unWatch = Vue.watch(() =&gt; &#123;&#125;)
+    // 取消侦听
+    unWatch()
+    const unWatchEffect = Vue.watchEffect(() =&gt; &#123;&#125;)
+    // 取消侦听
+    unWatchEffect()
+    return &#123;&#125;
+  &#125;,
+&#125;)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<h4 id="组合式函数"><a href="#组合式函数" class="headerlink" title="组合式函数"></a>组合式函数</h4><p>以前我们需要在组件之间共享代码时，一般使用 <code>mixins</code> 或作用域插槽。但它们都有一些硬伤：</p>
+<ul>
+<li><code>mixins</code> 多了之后变量会十分混乱，在引用文件中根本无法区分哪个变量或方法来自哪个 <code>mixins</code>。</li>
+<li>作用域插槽没有变量混乱的问题，因为它的数据<strong>只能在模板中访问</strong>，但这恰好也是它的缺点。</li>
+</ul>
+<p>在 Vue3 中，我们配合<strong>组合式 API</strong>可以编写<strong>组合式函数</strong>，可以清楚地知道该变量来自哪个组合式函数。</p>
+<p>下面是两个简单的例子：</p>
+<pre><code class="html">&lt;div id=&quot;app&quot; v-cloak&gt;
+  &lt;div&gt;
+    &#123;&#123;listLoading&#125;&#125;
+    &lt;button @click=&quot;toggleLoading&quot;&gt;改变状态&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &#123;&#123;count&#125;&#125;
+    &lt;button @click=&quot;addCount&quot;&gt;+1&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="javascript">// listLoading 状态的切换
+function useToggleLoading(user) &#123;
+  const listLoading = Vue.ref(false)
+  const toggleLoading = () =&gt; &#123;
+    listLoading.value = !listLoading.value
+  &#125;
+  return &#123;
+    listLoading,
+    toggleLoading
+  &#125;
+&#125;
+// count 计数
+function useAddCount(user) &#123;
+  const count = Vue.ref(0)
+  const addCount = () =&gt; &#123;
+    count.value++
+  &#125;
+  return &#123;
+    count,
+    addCount
+  &#125;
+&#125;
+
+const app = Vue.createApp(&#123;
+  setup(props, context) &#123;
+    // 来自 useToggleLoading
+    const &#123; listLoading, toggleLoading &#125; = useToggleLoading()
+    //来自 useAddCount
+    const &#123; count, addCount &#125; = useAddCount()
+    return &#123;
+      listLoading,
+      toggleLoading,
+      count,
+      addCount
+    &#125;
+  &#125;,
+&#125;)
+app.mount(&#39;#app&#39;)
+</code></pre>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-29-155-learn-vue3-22.gif"></p>
+<p>Vue2 与 Vue3 的主要区别就写到这里，还有其他很多我觉得用得相对较少的 API 文章中就不多介绍。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/f8824382.html"
+      title="生活再次趋于平稳"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        生活再次趋于平稳
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/69cdd845.html"
+      title="Vue3.0 新特性学习（一）"
+    >
+      <span class="post-near-title">
+        Vue3.0 新特性学习（一）
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

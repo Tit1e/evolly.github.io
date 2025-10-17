@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">9 / 1, 2025</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">uniapp 中 v-for 循环内 input 输入时自动失焦问题</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+    <li class="tag-item">
+      #vue
+    </li>
+    
+    <li class="tag-item">
+      #uni-app
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>最近在开发一个商品管理系统时遇到了一个奇怪的问题：在使用 uniapp 开发的页面中，有一个商品列表，每个商品都有数量输入框，但是在输入框中输入数字时，每输入一个字符，输入框就会自动失去焦点，用户体验非常糟糕。</p>
+<h2 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h2><p>具体场景是这样的：用户扫描商品二维码后，会在 <code>productList</code> 数组中添加一个商品对象，每个商品对象都包含商品信息和数量字段，数量字段与 input 输入框进行双向绑定。用户需要在输入框中修改商品数量，但每次输入都会导致输入框失焦。</p>
+<h2 id="错误代码"><a href="#错误代码" class="headerlink" title="错误代码"></a>错误代码</h2><pre><code class="html">&lt;view v-for=&quot;(item, i) in productList&quot; :key=&quot;item&quot;&gt;
+  &lt;view class=&quot;product-item&quot;&gt;
+    &lt;view class=&quot;label-section&quot;&gt;
+      &lt;text&gt;商品数量&lt;/text&gt;
+      &lt;text class=&quot;required-mark&quot;&gt;*&lt;/text&gt;
+    &lt;/view&gt;
+    &lt;input
+      v-model=&quot;item.quantity&quot;
+      class=&quot;quantity-input&quot;
+      placeholder=&quot;请输入数量&quot;
+      type=&quot;number&quot;
+      @input=&quot;updateQuantity($event, i)&quot;
+    /&gt;
+    &lt;text class=&quot;unit-text&quot;&gt;件&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/view&gt;
+</code></pre>
+<pre><code class="js">updateQuantity(e, i) &#123;
+  const value = e &amp;&amp; e.detail.value;
+  this.$nextTick(() =&gt; &#123;
+    this.productList = this.productList.map((v, index) =&gt; (&#123;
+      ...v,
+      quantity: parseInt(i) === parseInt(index) ? parseInt(value) : v.quantity,
+    &#125;));
+  &#125;);
+&#125;,
+</code></pre>
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>问题的根本原因在于 <code>v-for</code> 中的 <code>:key=&quot;item&quot;</code> 设置不当。当 input 数据发生变化并触发模型更新后，Vue 需要重新渲染列表项。由于 key 值绑定的是整个 item 对象，而 item 对象中的 quantity 属性发生了变化，导致 Vue 认为这是一个新的列表项，从而重新创建了整个 view 组件，包括其中的 input 元素。</p>
+<p>在 Vue 的 diff 算法中，key 是用来标识列表项唯一性的重要属性。如果 key 值发生变化，Vue 会认为这是一个全新的元素，而不是对原有元素的更新，因此会销毁旧元素并创建新元素，这就导致了 input 失去焦点。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>解决方法很简单，将 key 值改为数组索引或者对象中不会变化的唯一标识：</p>
+<pre><code class="html">&lt;view v-for=&quot;(item, i) in productList&quot; :key=&quot;&#39;product-&#39; + i&quot;&gt;
+  &lt;view class=&quot;product-item&quot;&gt;
+    &lt;view class=&quot;label-section&quot;&gt;
+      &lt;text&gt;商品数量&lt;/text&gt;
+      &lt;text class=&quot;required-mark&quot;&gt;*&lt;/text&gt;
+    &lt;/view&gt;
+    &lt;input
+      v-model=&quot;item.quantity&quot;
+      class=&quot;quantity-input&quot;
+      placeholder=&quot;请输入数量&quot;
+      type=&quot;number&quot;
+      @input=&quot;updateQuantity($event, i)&quot;
+    /&gt;
+    &lt;text class=&quot;unit-text&quot;&gt;件&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/view&gt;
+</code></pre>
+<p>或者如果商品对象有唯一的 ID 字段，使用 ID 作为 key 值会更好：</p>
+<pre><code class="html">&lt;view v-for=&quot;(item, i) in productList&quot; :key=&quot;item.id&quot;&gt;
+  &lt;!-- 其他代码保持不变 --&gt;
+&lt;/view&gt;
+</code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在使用 <code>v-for</code> 循环渲染列表时，key 的选择非常重要：</p>
+<ol>
+<li><strong>不要使用会变化的对象作为 key</strong>：如果对象的属性会发生变化，Vue 会认为这是不同的元素</li>
+<li><strong>优先使用唯一且稳定的标识</strong>：如数据库 ID、唯一编码等</li>
+<li><strong>谨慎使用数组索引</strong>：只有在列表不会发生增删改操作时才推荐使用索引作为 key</li>
+<li><strong>避免使用 random 或时间戳</strong>：这会导致每次渲染都重新创建元素</li>
+</ol>
+<p>这个问题在 Vue 开发中比较常见，特别是在处理表单列表时。正确理解 Vue 的 key 机制，能够避免很多类似的渲染问题.</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/6730.html"
+      title="fnOS 中使用 Docker 安装 n8n 中文版"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        fnOS 中使用 Docker 安装 n8n 中文版
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/48077.html"
+      title="我用 Cursor 开发了一个在线图片处理工具，希望能帮你提升效率"
+    >
+      <span class="post-near-title">
+        我用 Cursor 开发了一个在线图片处理工具，希望能帮你提升效率
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

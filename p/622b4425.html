@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">1 / 12, 2021</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">Alfred 运行终端命令升级版</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #mac
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>之前我写过一篇有关 Alfred 运行命令行的文章：<a href="https://evolly.one/2019/04/04/62-alfred-workflow/">Mac 使用 Alfred 执行终端命令</a>，用之前的方法日常使用也并没有问题。但是我心里一直有一个不爽的地方，就是按之前的方法执行命令，执行期间会先打开一个终端窗口，然后执行完了终端窗口才会关闭，当然关闭也是自己写的命令，否则执行完窗口会留在桌面。不过有窗口有一个好处就是如果报错了，错误会直接显示在窗口上，如果后台执行，我就不知道到底是为什么执行失败了。但是我依旧还是想要后台运行。</p>
+<p>今天在装一个 workflow 的时候我突然发现它可以通过 bash 运行 <code>.py</code> 文件，而且它是静默运行的，这我就奇了怪了，能运行 <code>.py</code> 那肯定也能运行 <code>.sh</code> 啊，不然没道理。然后经过我一番折腾，终于成功静默运行了终端命令。</p>
+<p>初始创建命令的步骤我就不再复述，有需要可以去看我之前的文章，里面已经作了说明：<a href="https://evolly.one/2019/04/04/62-alfred-workflow/">Mac 使用 Alfred 执行终端命令</a>。</p>
+<p>创建完之后界面上应该是这个样子，<strong>注意红色方框处</strong></p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-122812.png"></p>
+<p>按之前的方式，我会在这个方框处右键把它替换成 Terminal Command 模式，而现在，我们不需要改变它，就用 Run Script 模式。</p>
+<p>接下来有两种来运行命令：</p>
+<h3 id="1-直接运行命令"><a href="#1-直接运行命令" class="headerlink" title="1. 直接运行命令"></a>1. 直接运行命令</h3><p>双击 Run Script 可直接编写命令。不过编写命令前需要做一个准备工作，也是最关键的一个步骤，否则命令是无法执行的。</p>
+<p>打开终端，在终端中运行 <code>echo $PATH</code>，复制打印出来的一长串字符。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-123702.png"></p>
+<p>然后开始编辑脚本：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-132102.png"></p>
+<pre><code class="bash">#!/bin/bash
+PATH=&quot;替换成你复制出来的字符串&quot;
+#在这里你就可以开始编写自己的脚本了
+#如果需要传参，那顶部中间的下拉框就选择【width input as &#123;query&#125;】
+cd ~/Document/xxx &amp;&amp; echo &#39;&#123;query&#125;&#39;
+</code></pre>
+<p>保存，然后使用热键处罚就会执行了。</p>
+<h3 id="2-编写-sh脚本文件，然后通过运行脚本文件执行命令"><a href="#2-编写-sh脚本文件，然后通过运行脚本文件执行命令" class="headerlink" title="2. 编写 .sh脚本文件，然后通过运行脚本文件执行命令"></a>2. 编写 .sh脚本文件，然后通过运行脚本文件执行命令</h3><p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-132151.png"></p>
+<p>两种方式没太大区别，，这种方式主要要注意的有两点：</p>
+<ol>
+<li>.sh 文件的执行权限</li>
+<li>参数的传递获取方式</li>
+</ol>
+<pre><code class="bash">#!/bin/bash
+PATH=&quot;替换成你复制出来的字符串&quot;
+terminal-notifier -message &quot;$1&quot; -title &quot;Message&quot;
+</code></pre>
+<p>上面脚本的作用是会弹出一个通知，标题是 Message，内容是 <code>$1</code>，这个 <code>$1</code> 就是上面图中运行时传入的 <code>&#123;query&#125;</code>。不了解的可以看这里的资料：<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell-passing-arguments.html">Shell 传递参数</a>。</p>
+<p>在编辑器新建一个文件，输入好脚本，先保存至你能找到的地方。然后打开 workflow 所在文件夹位置。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-132256.png"></p>
+<p>将保存的脚本文件复制到文件夹中</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-130247.png"></p>
+<p>然后打开终端，输入 <code>chmod 777 </code>，再将脚本文件拖入终端，命令中会自动填入路径，enter。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-130345.png"></p>
+<p>最终效果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2021-01-12-%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B6%202021-01-12%2021.07.56.mov.gif"></p>
+<h2 id="2021-年-1-月-13-日更新"><a href="#2021-年-1-月-13-日更新" class="headerlink" title="2021 年 1 月 13 日更新"></a>2021 年 1 月 13 日更新</h2><p>我在工作中经常用 workflow 做一些项目的打包更新操作，然后我就优化了一下流程，其实主要是记录下 shell 中对 git 状态的一些判断：</p>
+<h4 id="判断本地的分支版本跟远程跟踪的版本是否一致"><a href="#判断本地的分支版本跟远程跟踪的版本是否一致" class="headerlink" title="判断本地的分支版本跟远程跟踪的版本是否一致"></a>判断本地的分支版本跟远程跟踪的版本是否一致</h4><pre><code class="shell">#!/bin/bash
+PATH=&quot;替换成你复制出来的字符串&quot;
+
+LOCAL=$(git log 你本地的分支名 -n 1 --pretty=format:&quot;%H&quot;)
+REMOTE=$(git log remotes/origin/你要比较的分支名 -n 1 --pretty=format:&quot;%H&quot;)
+
+if [ $LOCAL = $REMOTE ]
+then
+    # 一致时候的操作
+else
+  # 不一致时候的操作
+fi
+</code></pre>
+<h4 id="判断是否有未暂存的文件"><a href="#判断是否有未暂存的文件" class="headerlink" title="判断是否有未暂存的文件"></a>判断是否有未暂存的文件</h4><pre><code class="shell">#!/bin/bash
+PATH=&quot;替换成你复制出来的字符串&quot;
+
+if [[ -z $(git status -s) ]]
+then
+    # 文件都已暂存时候的操作
+else
+    # 有未暂存文件时候的操作
+fi
+</code></pre>
+<h4 id="shell-命令分隔符的区别"><a href="#shell-命令分隔符的区别" class="headerlink" title="shell 命令分隔符的区别"></a>shell 命令分隔符的区别</h4><p>直接在linux命令行中可以依次执行多个命令，多个命令间可采用 <code>;</code>、<code>&amp;&amp;</code> 和 <code>||</code> 分割，三个分隔符作用不同：</p>
+<ol>
+<li><p><code>;</code> 分割符：前后命令间没有必然的联系，前一个执行结束后、再执行第二个，没有逻辑关联；</p>
+</li>
+<li><p><code>&amp;&amp;</code> 分隔符：前后命令有逻辑关联，后面的命令是否执行取决于前面的命令是否执行成功，前者执行成功，才会执行后面的命令。</p>
+</li>
+<li><p><code>||</code> 分隔符：前后命令有逻辑关联，与 <code>&amp;&amp;</code> 相反，前面的命令执行失败后才能执行后面的命令。</p>
+</li>
+</ol>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/3ac9ec3a.html"
+      title="js 使用 dispatchEvent 主动触发事件"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        js 使用 dispatchEvent 主动触发事件
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/623be0b4.html"
+      title="将本地某个文件夹备份或同步至群晖"
+    >
+      <span class="post-near-title">
+        将本地某个文件夹备份或同步至群晖
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

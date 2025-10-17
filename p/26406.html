@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 12, 2022</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">使用 GitHub Actions 自动部署 Hexo 博客</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #折腾
+    </li>
+    
+    <li class="tag-item">
+      #hexo
+    </li>
+    
+    <li class="tag-item">
+      #github
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前几天抽空把拖很久的博客自动部署做了，现在博客可以提交<code>.md</code>文件后实现自动部署。</p>
+<p>我的博客是使用 Hexo 搭建的，之前都是在本地机器上通过命令来部署，对我来说其实也还好，因为我几乎不在移动端编写大段的文字，主要这次想折腾。有了 Actions 以后，我可以在移动端访问 GitHub，通过在线编辑的方式发布文章。就当是个尝试。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先我们需要准备两个仓库：一个私有仓库，一个公有仓库。</p>
+<p>私有仓库是用来存放整个博客项目的，包括配置文件，文章源代码等，因为里面有一些个人的配置，所以不能公开；公有仓库则是用来存放 Hexo 编译出来的静态文件。</p>
+<p>这两个仓库的工作流程就是：在私有仓库编写博客，写完后将文件推送至远端仓库。当指定的分支有更新时，会自动触发 Actions，Actions 会执行我们配置的命令，重新编译博客的静态文件，然后把静态文件更新到公开仓库的固定分支。</p>
+<p>上述流程涉及到了 Actions 自动往仓库推送的操作，正常情况下肯定是不行，因为虽然我的仓库是公开的，但是这个仓库的所有者是我，正常情况下只有我可以向它推送，因此如果要让“陌生人”也有推送权限，我需要给这个“陌生人”一个“通行证”，到时候仓库看到这个“通行证”就知道是我给“陌生人”权限了。</p>
+<p>我们可以在这里生成 <a target="_blank" rel="noopener" href="https://github.com/settings/tokens/new">Github Token</a>。Expiration 选择永不过期，否则你就得定时更新 Token。权限的话按照下方图上勾选即可。生成后注意保存 Token，因为 Token 只在生成后出现一次，关闭页面后就再也看不到了。如果不小心关了，也没关系，删除原来的重新生成一个就行。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-034553.png"></p>
+<p>之后需要将这个 Token 添加到<strong>私有仓库</strong>的 <code>Secrets</code> 中。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-035230.png"></p>
+<p>名称无所谓，随便填写，你自己能认识就好。</p>
+<h2 id="配置流程"><a href="#配置流程" class="headerlink" title="配置流程"></a>配置流程</h2><p>接下来在私有仓库根目录编写配置文件：</p>
+<ol>
+<li>在博客仓库（私有仓库）根目录新建 <code>.github</code>文件夹</li>
+<li>在 <code>.github</code>文件夹下新建 <code>workflows</code>文件夹</li>
+<li>在<code>workflows</code>文件夹下新建 xxxx.yml 文件（命名随意）</li>
+</ol>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-054356.png"></p>
+<p>接下来就是编写 yml 配置文件：</p>
+<p>注意配置中的 <strong>PERSONAL_TOKEN</strong>值要与之前添加的 <strong>Secrets</strong> 对应，否则脚本在执行的时候会获取不到 Token 导致无权限。</p>
+<pre><code class="yaml">name: 部署 GitHub Pages
+on:
+  push:
+    branches:
+      - main # master 分支有 push 行为时就触发这个 action
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Build and Deploy
+        # 使用专门部署 Hexo 到 GitHub pages 的 action
+        uses: Tit1e/hexo-deploy-github-pages-action@master
+        env:
+          PERSONAL_TOKEN: $&#123;&#123; secrets.HEXO_DEPLOY &#125;&#125; # secret 名
+          PUBLISH_REPOSITORY: Tit1e/evolly.github.io # 公共仓库，格式：GitHub 用户名/仓库名
+          BRANCH: master # 分支，根据实际填写
+          PUBLISH_DIR: ./public # 部署 public 目录下的文件，hexo 一般都是这个目录，可根据实际调整
+  async-gitee:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          # 注意在 Settings-&gt;Secrets 配置 GITEE_RSA_PRIVATE_KEY
+          SSH_PRIVATE_KEY: $&#123;&#123; secrets.GITEE_RSA_PRIVATE_KEY &#125;&#125;
+        with:
+          # 注意替换为你的 GitHub 源仓库地址
+          source-repo: git@github.com:Tit1e/evolly.github.io.git
+          # 注意替换为你的 Gitee 目标仓库地址
+          destination-repo: git@gitee.com:tit1e/tit1e.git
+</code></pre>
+<p>上面配置中用到了大佬编写的第三方部署插件 <a target="_blank" rel="noopener" href="https://github.com/theme-keep/hexo-deploy-github-pages-action">hexo-deploy-github-pages-action</a>，不过插件中配置的 node 版本与我本地的不一致，导致 Hexo 无法正常编译，所以我 <code>fork</code> 了一份，将 <code>node</code> 版本改成了 <code>v12</code>。修改的地方如下图，其实我觉得 node 版本可以做成配置项，由用户自己定义。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-061546.png"></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>配置中的分支名字一定要跟实际的仓库对应。</p>
+<p>最后，我的 Hexo 版本还停留在 Hexo 3，这个版本的主题是要用户自行下载，然后放到 <code>themes</code> 文件夹下。但是这个主题本身也是一个 <code>git</code> 仓库，这种情况，主题文件夹不会被提交。我的解决办法是：删除主题文件夹根目录中的 <code>.git</code> 文件夹，这样这主题文件就能正常被提交。Hexo 5 主题可以从依赖引入，也就是说可以通过 <code>npm i</code> 进行安装，不会有上述情况。</p>
+<p>最后将私有仓库提交至 GitHub，我不清楚 Actions 第一次提交会不会执行，不行就再改点东西提交一次。</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2022-03-14-063312.png"></p>
+<p>正常我们就可以在 Actions 标签中看到我们配置的 workflows，以及每次的运行结果，还能点进去看具体的运行日志。</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6943895271751286821">参考文章</a></p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/65512.html"
+      title="通过 GitHub Actions 同步 Hexo 博客至 Gitee"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        通过 GitHub Actions 同步 Hexo 博客至 Gitee
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/18863.html"
+      title="uniapp App 端实现应用锁（指纹或人脸解锁后才能使用）"
+    >
+      <span class="post-near-title">
+        uniapp App 端实现应用锁（指纹或人脸解锁后才能使用）
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

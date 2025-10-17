@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">4 / 26, 2018</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">浅谈 localStorage 和 sessionStorage</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>说到前端的本地存储，一般人都会想到 localStorage、sessionStorage 和 Cookie。但这里我暂且不谈 cookie，来说说这两个长得比较像的。</p>
+<span id="more"></span>
+<p><code>localStorage</code> 是 HTML5 的新特性，用于数据的存储，但是不同于 <code>sessionStorage</code>，它的存储期限可以是无期限，只要用户不手动去清除它。而 <code>sessionStorage</code> 则在页面被关闭时就会被清除。它们可以存储的大小都为 5M。而 <code>Cookie</code> 则如它的名字，存储空间也只有小小的 4kb。</p>
+<p>我们先来看下 <code>localStroage</code> 是个什么东西，在 chrome 的控制台直接打印，我门可以看到这些东西：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144749.png"></p>
+<p>我们可以直观地看到 <code>localStroage</code> 是一个对象，并且在有一个 length 属性，先猜测它是用来表示键值对数量的，并且我们可以看到 <code>localStroage</code> 的一些 API ：</p>
+<pre><code class="javascript">// 最常用的为上面三个
+localStorage.setItem() //设置 localStorage
+localStorage.getItem() //读取 localStorage
+localStorage.removeItem() //移除 localStorage
+
+localStorage.clear() //清空 localStorage
+localStorage.key() //获取某个位置的键名
+</code></pre>
+<p>不过需要注意的是，<code>localStorage</code> 不能直接存储对象，需要先将对象转成 json 才能存储。否则你将看到这样的结果：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144803.png"></p>
+<p>接下来我们来实际操作一下：</p>
+<pre><code class="html">  &lt;div&gt;
+    &lt;h4&gt;设置&lt;/h4&gt;
+    &lt;label&gt;
+      键：&lt;input type=&quot;text&quot; id=&quot;key&quot;&gt;
+    &lt;/label&gt;
+    &lt;label&gt;
+      值：&lt;input type=&quot;text&quot; id=&quot;input&quot;&gt;
+    &lt;/label&gt;
+    &lt;button type=&quot;button&quot; onclick=&quot;setValue()&quot;&gt;写入&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4&gt;读取&lt;/h4&gt;
+    &lt;label&gt;
+      键：&lt;input type=&quot;text&quot; id=&quot;getKey&quot;&gt;
+    &lt;/label&gt;
+    &lt;button type=&quot;button&quot; onclick=&quot;getValue()&quot;&gt;读取&lt;/button&gt;
+    &lt;p&gt;
+      读取内容：&lt;span id=&quot;value&quot;&gt;&lt;/span&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4&gt;清除&lt;/h4&gt;
+    &lt;label&gt;
+      键：&lt;input type=&quot;text&quot; id=&quot;removeKey&quot;&gt;
+    &lt;/label&gt;
+    &lt;button type=&quot;button&quot; onclick=&quot;removeValue()&quot;&gt;清除&lt;/button&gt;
+  &lt;/div&gt;
+</code></pre>
+<pre><code class="javascript">  // 设置
+  function setValue()&#123;
+    var key = document.getElementById(&#39;key&#39;).value
+    var value = document.getElementById(&#39;input&#39;).value
+    localStorage.setItem(key,value)
+  &#125;
+  // 获取
+  function getValue()&#123;
+    var getKey = document.getElementById(&#39;getKey&#39;).value
+    var value = localStorage.getItem(getKey)
+    document.getElementById(&#39;value&#39;).innerText = value
+  &#125;
+  // 移除
+  function removeValue()&#123;
+    var removeKey = document.getElementById(&#39;removeKey&#39;).value
+    localStorage.removeItem(removeKey)
+  &#125;
+</code></pre>
+<p>上面的代码渲染出来的界面应该这这样的：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144820.png"></p>
+<p>然后，在对应输入框中输入内容就可以进行操作了。<br>至于存储的内容，我们可以在控制台的 Application 中看到：</p>
+<p><img src="https://personal-1251959693.cos.ap-chengdu.myqcloud.com/2018-05-10-144835.png"></p>
+<p>值得注意的是，如果键名相同，之前的键值会被覆盖。并且，因为这些存储的内容可以在控制台被浏览和修改，所以这里并不推荐用来存一些比较私密的信息，避免信息的泄露。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/79868c28.html"
+      title="vue-cli 打包静态资源路径出错"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        vue-cli 打包静态资源路径出错
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/890d484c.html"
+      title="你好呀，2018"
+    >
+      <span class="post-near-title">
+        你好呀，2018
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

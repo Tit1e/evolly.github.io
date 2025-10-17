@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="baidu-site-verification" content="code-UjJKh3jtOo">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.0/styles/atom-one-dark.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Tit1e</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2767111597631391" crossorigin="anonymous"></script>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Tit1e" type="application/atom+xml">
+</head>
+
+<body class="dark">
+    <div class="container">
+    <header class="header">
+  <div class="title">
+      <a href="/" class="logo">Tit1e</a>
+      <div class="btn-dark"></div>
+      <script>
+        let bodyClx = document.body.classList;
+        let btnDark = document.querySelector('.btn-dark');
+        let sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+        let darkVal = localStorage.getItem('dark');
+
+        let setDark = (isDark) => {
+        bodyClx[isDark ? 'add' : 'remove']('dark');
+        localStorage.setItem('dark', isDark ? 'yes' : 'no');
+        };
+
+        setDark(darkVal ? darkVal === 'yes' : sysDark.matches);
+        requestAnimationFrame(() => bodyClx.remove('not-ready'));
+
+        btnDark.addEventListener('click', () => setDark(!bodyClx.contains('dark')));
+        sysDark.addEventListener('change', (event) => setDark(event.matches));
+      </script>
+  </div>
+    <ul class="menu">
+        
+        
+        
+        
+        <li class="menu-item ">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/archives/" class="menu-item-link">Archives</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a href="/atom.xml" class="menu-item-link">RSS</a>
+        </li>
+        
+        
+        <li class="menu-item ">
+            <a target="_blank" rel="noopener" href="https://pixeltimer.art" class="menu-item-link">Pixel Timer</a>
+        </li>
+        
+    </ul>
+    <div class="search-box">
+        <input type="search" id="search" placeholder="搜索">
+    </div>
+</header>
+    <article class="post">
+  <div class="post-meta">
+    <span class="post-time">3 / 8, 2020</span>
+  </div>
+  <div class="post-title">
+    <h1 class="title">axios 直传七牛问题</h1>
+  </div>
+  
+  <ul class="post-tags">
+    
+    <li class="tag-item">
+      #学习
+    </li>
+    
+  </ul>
+  
+  <div class="post-content">
+    <p>前几天遇到了这样一个需求：监听粘贴事件，将粘贴板中的文件上传至七牛。</p>
+<p>这个需求的实现过程我会另开一片文章，这篇文章主要用来记录我在使用 axios 直传七牛的过程中遇到的问题。</p>
+<p>我本想这不是很简单：</p>
+<pre><code class="js">function uploadFile()&#123;
+  const formData = new FormData()
+  formData.append(&#39;file&#39;, file)
+  formData.append(&#39;token&#39;, this.token)
+  formData.append(&#39;key&#39;, this.key)
+  axios.post(&#39;url&#39;, formData).then(res =&gt; &#123;
+    // code......
+  &#125;)
+&#125;
+</code></pre>
+<p>结果返回的却是：</p>
+<pre><code class="json">&#123;error: &quot;invalid multipart format: no multipart boundary param in Content-Type&quot;&#125;
+</code></pre>
+<p>然后我就开始在网上搜，试着改了 <code>Content-Type</code>，但还是没用，最后我在<a target="_blank" rel="noopener" href="https://blog.qiatia.cn/2019/05/18/Axios/">这里</a>找到了与我遇到相同问题的人，于是我用他的方法试了一下：</p>
+<pre><code class="js">import axios from &#39;axios&#39;
+
+
+function uploadFile()&#123;
+  const $axios = axios.create(&#123; withCredentials: false &#125;)
+  const formData = new FormData()
+  formData.append(&#39;file&#39;, file)
+  formData.append(&#39;token&#39;, this.token)
+  formData.append(&#39;key&#39;, this.key)
+  $axios(&#123;
+    url: &#39;url&#39;,
+    data: formData,
+    method: &#39;post&#39;
+  &#125;).then(res =&gt; &#123;
+    // code......
+  &#125;)
+&#125;
+</code></pre>
+<p>结果果然成功了！</p>
+<p>不过发生了个诡异的事情，在我写这篇文章的时候，我想重新复现一下问题，结果发现我上面直接使用 <code>axios.post</code> 也可以正常上传了，但前几天在试的时候的确是返回错误信息的！所以我现在有点怀疑人生。</p>
+
+  </div>
+  <div class="post-near">
+    
+    <a
+      class="post-near-prev"
+      href="/p/84e28f61.html"
+      title="快捷键粘贴上传至七牛"
+    >
+      <span class="arrow">←</span>
+      <span class="post-near-title">
+        快捷键粘贴上传至七牛
+      </span>
+    </a>
+    
+    
+    <a
+      class="post-near-next"
+      href="/p/a0eca76.html"
+      title="TypeError: CleanWebpackPlugin is not a constructor"
+    >
+      <span class="post-near-title">
+        TypeError: CleanWebpackPlugin is not a constructor
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    
+  </div>
+</article>
+
+    <footer class="footer">
+  <p>本博客采用 <a class="license-link" rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a>协议进行许可</p>
+  <p>
+    <span>Thanks For <a target="_blank" rel="noopener" href="https://github.com/nanxiaobei/hugo-paper" taget="_blank">hugo-paper</a></span>
+    <span style="margin-left: 10px;">&copy; 2016-2025 by Tit1e</span>
+  </p>
+</footer>
+    </div>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.0/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6349d3bc54baea0b04a65145c5e3b799";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    const block = document.querySelectorAll('.post-content')[0]
+    block.addEventListener('click', e => {
+        const {nodeName, src} = e.target
+        if(nodeName !== 'IMG') return
+        document.body.classList.add('overflow-hidden')
+        const div = document.createElement('div')
+        div.id = 'global-cover'
+        div.title = '点击关闭'
+        const a = document.createElement('a')
+        a.href = src
+        a.target="_blank"
+        a.title = '点击打开原图'
+        const img = document.createElement('img')
+        img.className = 'show-pic'
+        img.src = src
+        a.appendChild(img)
+        div.appendChild(a)
+        document.body.appendChild(div)
+    })
+    document.body.addEventListener('click', e => {
+        if(e.target.id === 'global-cover'){
+            document.body.classList.remove('overflow-hidden')
+            document.body.removeChild(e.target)
+        }
+    })
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7M04VN3JZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7M04VN3JZ4');
+</script>
+
+<script src="/js/search.js"></script>
+
+
+</body>
+</html>

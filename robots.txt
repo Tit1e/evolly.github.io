@@ -1,0 +1,18 @@
+# welcome to : evolly.one
+User-agent: *
+Allow: /
+Allow: /2016/
+Allow: /2017/
+Allow: /2018/
+Allow: /2019/
+Allow: /2020/
+Allow: /2021/
+Allow: /archives/
+Allow: /tags/
+Allow: /about/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /lib/
+Sitemap: https://evolly.one/baidusitemap.xml
